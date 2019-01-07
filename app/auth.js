@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const secret = 'temp-secret';
+require('dotenv').config();
 
 const authorized = (req,res,next) => {
 	const token =
@@ -12,7 +12,7 @@ const authorized = (req,res,next) => {
 		res.status(401).send('Unauthorized: Please log in');
 	}
 	else{
-		jwt.verify(token, secret, (err, decoded) => {
+		jwt.verify(token, process.env.TOK_SECRET, (err, decoded) => {
 			if (err) {
 				res.status(401).send('Unauthorized: Invalid token');
 			}

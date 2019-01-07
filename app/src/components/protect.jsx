@@ -7,7 +7,7 @@ export default function protect(Comp) {
 		constructor() {
 			super();
 			this.state = {
-				pass: false,
+				loading: true,
 				redirect: false
 			};
 		}
@@ -16,7 +16,7 @@ export default function protect(Comp) {
 			axios.get('/checkToken')
 				.then(res => {
 					if (res.status === 200){
-						this.setState({pass: true});
+						this.setState({loading: false});
 					}
 					else{
 						const error = new Error(res.error);
@@ -25,16 +25,16 @@ export default function protect(Comp) {
 				}).catch(err => {
 					console.error(err);
 					this.setState({
-						pass: true,
+						loading: false,
 						redirect: true
 					});
 				});
 		}
 
 		render() {			
-			const { pass, redirect } = this.state;
-			let view;
-			if (pass){
+			const { loading, redirect } = this.state;
+			let view = <h1>Loading...</h1>;
+			if (!loading){
 				if (redirect) {
 					view = <Redirect to="/login" />
 				}

@@ -4,12 +4,13 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 connection = mysql.createConnection({
-	host : 'localhost',
-	user : 'root',
-	password : 'password',
-	database : 'credentials'
+	host : process.env.DB_HOST,
+	user : process.env.DB_USER,
+	password : process.env.DB_PASS,
+	database : process.env.DB
 });
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -42,7 +43,7 @@ router.post('/', function(req, res) {
 				//Correct login info
 				if (password == results[0].pass){
 					const payload = { user };
-					const token = jwt.sign(payload, "temp-secret", {
+					const token = jwt.sign(payload, process.env.TOK_SECRET, {
 						expiresIn: '1m'
 					});
 					res.cookie('token', token, {httpOnly: true})
