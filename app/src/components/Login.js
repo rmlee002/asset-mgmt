@@ -78,32 +78,6 @@ export default class Login extends Component {
 				</form>
 			</div>
 		</div>
-		);
-
-					{/* <label>
-						<input 
-							type="text" 
-							name="user" 
-							placeholder="Username"
-							value= {this.state.user}
-							onChange = {this.handleChange} 
-							required/>
-					</label>
-					<br/>
-					<label>
-						<input 
-							type="password" 
-							name="password" 
-							placeholder="Password"
-							value= {this.state.password}
-							onChange = {this.handleChange} 
-							required />
-					</label>
-					<br />
-					<input type="submit" value="Login"/>
-				</form>
-			</div>
-		</div> */}
-		
+		);		
 	}
 }
