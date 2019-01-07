@@ -1,24 +1,17 @@
 import React, { Component } from 'react';
 import {Route, Switch, Redirect, Link} from 'react-router-dom';
+import '../Styles/App.css';
 import protect from './protect';
 import Login from './Login';
 import Home from './Home';
+import Routes from './Routes';
 
 export default class App extends Component {
 
     render(){
         return (
-            <div>
-                {/* <li><Link to ='/login'>Login</Link></li>
-                <li><Link to='/home'>Home</Link></li>
-                
-                <Switch>
-                    <Route path='/login' component={Login}/>
-                    <Route path='/home' component={protect(Home)}/>
-                </Switch> */}
-                <Redirect from='/' to='/home' />
-                <Route path='/home' component={protect(Home)} />
-                <Route path='/login' component={Login} />
+            <div className="App">
+                <Routes />
             </div>
         );
     }
