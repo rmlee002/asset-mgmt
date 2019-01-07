@@ -5,15 +5,13 @@
 	right: 0;
 	bottom: 0;
 	margin: auto;
-	padding: 30px;
+	padding: 20px;
 	width: 20%;
-	height: 50%;
+	height: 70%;
 	font-family: Raleway, sans-serif;
-	line-height: 28px;
+	line-height: 18px;
 	color: #7f858f;
 	font-weight: 300;
-	border: 2px solid grey;
-	border-radius: 5px;
 }
 
 .Vid-logo {
@@ -22,14 +20,18 @@
 }
 
 .App-header {
-/*  background-color: #282c34;*/
 	font-size: 18pt;
 	align-items: center;
 	text-align: center;
 }
 
-.Login-form {
-	font-size: 14pt;
-	align-items: center;
-	text-align: center;
-}
+@media all and (min-width: 480px) {
+	.Login {
+	  padding: 60px 0;
+	}
+  
+	.Login form {
+	  margin: 0 auto;
+	  max-width: 320px;
+	}
+}	
