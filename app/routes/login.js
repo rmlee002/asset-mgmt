@@ -44,7 +44,7 @@ router.post('/', function(req, res) {
 				if (password == results[0].pass){
 					const payload = { user };
 					const token = jwt.sign(payload, process.env.TOK_SECRET, {
-						expiresIn: '1m'
+						expiresIn: '1d'
 					});
 					res.cookie('token', token, {httpOnly: true})
 						.send({
