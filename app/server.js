@@ -2,6 +2,7 @@ const createError = require('http-errors');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const loginRouter = require('./routes/login');
+const employeeRouter = require('./routes/employee');
 const path = require('path');
 const cors = require('cors');
 const authorized = require('./auth');
@@ -13,7 +14,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
+app.set('view engine', 'ejs');
+
 app.use('/login', loginRouter);
+app.use('/employees', employeeRouter);
 
 app.get('/checkToken', authorized, (req, res) => {
 	res.sendStatus(200);
