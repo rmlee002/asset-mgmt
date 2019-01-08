@@ -6,7 +6,7 @@ const mysql = require('mysql');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-connection = mysql.createConnection({
+adminConnection = mysql.createConnection({
 	host : process.env.DB_HOST,
 	user : process.env.DB_USER,
 	password : process.env.DB_PASS,
@@ -16,13 +16,13 @@ connection = mysql.createConnection({
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-connection.connect(function(err){ 
+adminConnection.connect(function(err){ 
 	if (err) throw err;
 });
 
 router.post('/', function(req, res) {
 	const { user, password } = req.body;
-	connection.query('SELECT password AS pass FROM admins WHERE user = ?', user, function(err, results, fields){
+	adminConnection.query('SELECT password AS pass FROM admins WHERE user = ?', user, function(err, results, fields){
 		if (err){
 			console.log(err);
 			res.send({

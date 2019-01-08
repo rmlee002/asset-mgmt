@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Table, FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
+import { Table, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import moment from 'moment';
 import Links from '../Nav';
 import Manage from './Manage';
+import Add from './Add';
 
 export default class Employees extends Component {
     constructor(props){
@@ -66,6 +68,9 @@ export default class Employees extends Component {
                     <FormControl.Feedback />
                 </FormGroup>
 
+                <LinkContainer to='/employees/add'>
+                    <Add />
+                </LinkContainer>
                 
 
                 <Table className="employees">

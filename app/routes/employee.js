@@ -19,11 +19,33 @@ connection.connect(function(err){
 	if (err) throw err;
 });
 
-router.get('/employees', function(req, res, next){
-    connection.query('SELECT * FROM employees', function(err, results, fields){
+router.get('/', function(req, res, next){
+    connection.query('SELECT * FROM employees', function(err, results){
         if (err) throw err;
         res.send(JSON.stringify(results));
     });
+});
+
+router.post('/add', (req,res) => {
+	const {
+		first, last, email, affiliation, department, supervisor, reviewer,
+		time_approver, start, end, notes
+	} = req.body
+	let q = ''
+	connection.query('INSERT INTO employees (display_name, first_name, \
+		last_name, email, affiliation, department, supervisors, reviewers, \
+		time_approvers, start, end, notes)\
+		VALUES (?,?,?,?,?,?,?,?,?,?,?,?)', first + ' ' + last, first,
+		last, email, affiliation, department, supervisor, reviewer,
+		time_approver, start, end, notes, (err, results) => {
+			if (err){
+				console.log(err);
+				throw error;
+			}
+			else{
+				res.send(JSON.stringify(results));
+			}
+		});
 });
 
 module.exports = router;
