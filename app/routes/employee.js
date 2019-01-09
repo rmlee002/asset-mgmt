@@ -7,8 +7,8 @@ const connection = require('../databases/assetDB.js');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-router.get('/', function(req, res, next){
-    connection.query('SELECT * FROM employees', function(err, results){
+router.get('/', (req, res) => {
+    connection.query('SELECT * FROM employees WHERE archived=false', function(err, results){
         if (err) throw err;
         res.send(JSON.stringify(results));
     });
