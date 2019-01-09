@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Button, Modal, Form, FormGroup, FormControl, ControlLabel, Col} from 'react-bootstrap';
+import { Button, Modal, Form, FormGroup, FormControl, ControlLabel, Col, HelpBlock} from 'react-bootstrap';
+import { Redirect } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
@@ -18,6 +19,7 @@ export default class Add extends Component{
 
         this.state = {
             success: false,
+            error: false,
             show: false,
             first_name: '',
             last_name: '',
@@ -36,7 +38,8 @@ export default class Add extends Component{
     handleClose(){
         this.setState({
             show: false,
-            success: false
+            success: false,
+            error: false
         });
     }
 
@@ -96,6 +99,7 @@ export default class Add extends Component{
     }
 
     render(){
+        const isValid = this.state.first_name.length > 0 && this.state.last_name.length > 0;
         return(
             <div>
                 <Button bsStyle='link' onClick={this.handleShow}>
@@ -109,7 +113,7 @@ export default class Add extends Component{
                         <Modal.Body>
                             <form onSubmit={this.handleSubmit}>
                                 <Form horizontal>
-                                    <FormGroup controlId='first_name'>
+                                    <FormGroup controlId='first_name' validationState={this.validateFirst}>
                                         <Col componentClass={ControlLabel} sm={3}>
                                             First Name
                                         </Col>
@@ -120,9 +124,10 @@ export default class Add extends Component{
                                                 placeholder='First name'
                                                 onChange={this.handleChange}
                                             />
+                                            <HelpBlock bsClass='small'>Required</HelpBlock>
                                         </Col>
                                     </FormGroup>
-                                    <FormGroup controlId='last_name'>
+                                    <FormGroup controlId='last_name' validationState={this.validateLast}>
                                         <Col componentClass={ControlLabel} sm={3}>
                                             Last Name
                                         </Col>
@@ -131,8 +136,10 @@ export default class Add extends Component{
                                                 type='text'
                                                 value={this.state.last_name}
                                                 placeholder='Last name'
+                                                help = 'Required'
                                                 onChange={this.handleChange}
                                             />
+                                            <HelpBlock bsClass='small'>Required</HelpBlock>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup controlId='email'>
@@ -260,16 +267,16 @@ export default class Add extends Component{
                                             />
                                         </Col>
                                     </FormGroup>
-                                    <Button type = 'submit' bsStyle='success'>Add Employee</Button>
+                                    <Button type = 'submit' bsStyle='success' disabled={!isValid}>Add Employee</Button>
                                 </Form>    
                             </form>                    
                         </Modal.Body>
                         // If employee is successfully added, render success view
-                        : <h1>Success!</h1>}
+                        : <Redirect to='/employees'/>}
                     </Modal>                
             </div>
         );
-    }    
+    }
 }
 
 function nullify(value){
@@ -277,8 +284,4 @@ function nullify(value){
         return null;
     }
     return value;
-}
-
-function form(state){
-    
 }
