@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
+import Links from './Nav';
 
 export default function protect(Comp) {
 	return class extends Component {
@@ -33,10 +34,15 @@ export default function protect(Comp) {
 
 		render() {			
 			const { loading, redirect } = this.state;
-			let view = <h1>Loading...</h1>;
+			let view =
+					<div>
+						<Links />
+						<h1>Loading...</h1>
+					</div>
+					
 			if (!loading){
 				if (redirect) {
-					view = <Redirect to="/login" />
+					view = <Redirect push to="/login" />
 				}
 				else{
 					view = <Comp {...this.props} />
