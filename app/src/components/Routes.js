@@ -7,14 +7,16 @@ import Hardware from './Hardware';
 import Software from './Software';
 import protect from './protect';
 import Add from './Employees/Add';
+import Manage from './Employees/Manage';
 
 export default () => 
     <Switch>
         <Redirect exact from='/' to='/home'/>
-        <Route path='/home' component={protect(Home)} />
+        <Route path='/home' component={Home} />
         <Route path='/login' component={Login} />
         <Route exact path='/employees' component={protect(Employees)} />
         <Route path= '/employees/add' component={protect(Add)} />
         <Route path='/hardware' component={protect(Hardware)} />
         <Route path='/software' component={protect(Software)} />
+        <Route path='/employees/manage' component={protect(Manage)} />
     </Switch>
