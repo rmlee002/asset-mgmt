@@ -6,6 +6,7 @@ const employeeRouter = require('./routes/employee');
 const path = require('path');
 const cors = require('cors');
 const authorized = require('./auth');
+
 const app = express();
 
 app.use(express.json());

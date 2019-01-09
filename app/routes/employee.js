@@ -2,22 +2,10 @@ const express = require('express');
 const app = express();
 const router = express.Router();
 const bodyParser = require('body-parser');
-const mysql = require('mysql');
-require('dotenv').config();
-
-connection = mysql.createConnection({
-	host : process.env.DB_HOST,
-	user : process.env.DB_USER,
-	password : process.env.DB_PASS,
-	database : 'assets'
-});
+const connection = require('../databases/assetDB.js');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-connection.connect(function(err){ 
-	if (err) throw err;
-});
 
 router.get('/', function(req, res, next){
     connection.query('SELECT * FROM employees', function(err, results){
@@ -28,19 +16,18 @@ router.get('/', function(req, res, next){
 
 router.post('/add', (req,res) => {
 	const {
-		first, last, email, affiliation, department, supervisor, reviewer,
+		first_name, last_name, email, affiliation, department, supervisor, reviewer,
 		time_approver, start, end, notes
 	} = req.body
-	let q = ''
+
 	connection.query('INSERT INTO employees (display_name, first_name, \
 		last_name, email, affiliation, department, supervisors, reviewers, \
-		time_approvers, start, end, notes)\
-		VALUES (?,?,?,?,?,?,?,?,?,?,?,?)', first + ' ' + last, first,
-		last, email, affiliation, department, supervisor, reviewer,
-		time_approver, start, end, notes, (err, results) => {
+		time_approvers,start,end,notes)\
+		VALUES (?,?,?,?,?,?,?,?,?,?,?,?)', [first_name+' '+last_name,
+		first_name, last_name, email, affiliation, department, supervisor, reviewer,
+		time_approver, start, end, notes], (err, results) => {
 			if (err){
-				console.log(err);
-				throw error;
+				res.status(501).send("Database query error")
 			}
 			else{
 				res.send(JSON.stringify(results));
