@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Table, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
+import { Link } from'react-router-dom';
+import { Table, FormGroup, FormControl, ControlLabel, Button} from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import moment from 'moment';
 import Links from '../Nav';
@@ -28,8 +29,10 @@ export default class Employees extends Component {
             self.setState({employees: data, filtered: data});
         }).catch(err => {
             console.log(err);
+            alert(err);
         })
     }
+
     componentWillReceiveProps(nextProps){
         this.setState({
             filtered: nextProps.items
@@ -57,7 +60,6 @@ export default class Employees extends Component {
         return(
             <div>
                 <Links />
-
                 <FormGroup controlid="search">
                     <ControlLabel>Search</ControlLabel>
                     <FormControl
@@ -67,11 +69,8 @@ export default class Employees extends Component {
                     />
                     <FormControl.Feedback />
                 </FormGroup>
-
-                <LinkContainer to='/employees/add'>
-                    <Add />
-                </LinkContainer>
                 
+                <Add />
 
                 <Table className="employees">
                     <thead>
@@ -93,7 +92,7 @@ export default class Employees extends Component {
                     </thead>
                     <tbody>
                         {this.state.filtered.map(employee => 
-                            <tr key={employee.id}>
+                            <tr key={employee.user_ID}>
                                 <td>{employee.display_name}</td>
                                 <td>{employee.email}</td>
                                 <td>{employee.affiliation}</td>
@@ -103,19 +102,36 @@ export default class Employees extends Component {
                                 <td>{employee.time_approver}</td>
                                 <td>
                                     {employee.start?
-                                    moment(employee.start).utc().format('YYYY-MM-DD'):
-                                    ''}
+                                    moment(employee.start).utc().format('YYYY-MM-DD'):''}
                                 </td>
                                 <td>
                                     {employee.end?
-                                    moment(employee.end).utc().format('YYYY-MM-DD'):
-                                    ''}
+                                    moment(employee.end).utc().format('YYYY-MM-DD'):''}
                                 </td>
                                 <td><a>Assets</a></td>
                                 <td><a>Licenses</a></td>
                                 <td>{employee.notes}</td>
                                 <td>
-                                    <Manage />
+                                    {/* <Button bsStyle = 'primary' bsSize = 'small'> */}
+                                        <Link to={{
+                                            pathname: `/employees/manage/${employee.emp_id}`,
+                                            state: {
+                                                first_name: employee.first_name,
+                                                last_name: employee.last_name,
+                                                email: employee.email,
+                                                affiliation: employee.affiliation,
+                                                department: employee.department,
+                                                supervisor: employee.supervisor,
+                                                reviewer: employee.reviewer,
+                                                time_approver: employee.reviewer,
+                                                start: employee.start,
+                                                end: employee.end,
+                                                notes: employee.notes
+                                            }
+                                        }}>
+                                            Manage
+                                        </Link>
+                                    {/* </Button> */}
                                 </td>
                             </tr>
                         )}
