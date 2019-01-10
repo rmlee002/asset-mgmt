@@ -20,13 +20,13 @@ router.post('/add', (req,res) => {
 		time_approver, start, end, notes
 	} = req.body
 
-	connection.query('INSERT INTO employees (display_name, first_name, \
-		last_name, email, affiliation, department, supervisors, reviewers, \
-		time_approvers,start,end,notes)\
+	connection.query('INSERT INTO employees (display_name, first_name, last_name,\
+		email, affiliation, department, supervisor, reviewer, time_approver, start, end, notes)\
 		VALUES (?,?,?,?,?,?,?,?,?,?,?,?)', [first_name+' '+last_name,
 		first_name, last_name, email, affiliation, department, supervisor, reviewer,
 		time_approver, start, end, notes], (err, results) => {
 			if (err){
+				console.log(err)
 				res.status(501).send("Database query error")
 			}
 			else{
