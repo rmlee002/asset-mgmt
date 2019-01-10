@@ -15,7 +15,6 @@ export default () =>
         <Route path='/home' component={Home} />
         <Route path='/login' component={Login} />
         <Route exact path='/employees' component={protect(Employees)} />
-        <Route path= '/employees/add' component={protect(Add)} />
         <Route path='/hardware' component={protect(Hardware)} />
         <Route path='/software' component={protect(Software)} />
         <Route path='/employees/manage' component={protect(Manage)} />
