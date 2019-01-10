@@ -37,9 +37,20 @@ export default class Add extends Component{
 
     handleClose(){
         this.setState({
-            show: false,
             success: false,
-            error: false
+            error: false,
+            show: false,
+            first_name: '',
+            last_name: '',
+            email: '',
+            affiliation: '',
+            department: '',
+            supervisor: '',
+            reviewer: '',
+            time_approver:'',
+            start: new Date(),
+            end: new Date(),
+            notes:''
         });
     }
 
@@ -102,7 +113,7 @@ export default class Add extends Component{
         const isValid = this.state.first_name.length > 0 && this.state.last_name.length > 0;
         return(
             <div>
-                <Button bsStyle='link' onClick={this.handleShow}>
+                <Button bsStyle='primary' onClick={this.handleShow}>
                     Add employee
                 </Button>                
                     <Modal show = {this.state.show} onHide={this.handleClose}>
@@ -158,7 +169,7 @@ export default class Add extends Component{
                                     <FormGroup controlId='affiliation'>
                                         <Col componentClass={ControlLabel} sm={3}>Affiliation</Col>
                                         <Col sm={7}>
-                                            <FormControl componentClass='select' placeholder='Select affiliation' onChange={this.handleChange}>
+                                            <FormControl componentClass='select' onChange={this.handleChange}>
                                                 <option>Select...</option>
                                                 <option value='Contractor'>Contractor</option>
                                                 <option value='Employee'>Employee</option>
@@ -170,7 +181,7 @@ export default class Add extends Component{
                                     <FormGroup controlId='department'>
                                         <Col componentClass={ControlLabel} sm={3}>Department</Col>
                                         <Col sm={7}>
-                                            <FormControl componentClass='select' placeholder='Select department' onChange={this.handleChange}>
+                                            <FormControl componentClass='select' onChange={this.handleChange}>
                                                 <option>Select...</option>
                                                 <option value='CQA'>CQA</option>
                                                 <option value='VPT'>VPT</option>
@@ -280,7 +291,7 @@ export default class Add extends Component{
 }
 
 function nullify(value){
-    if (value === ''){
+    if (value === '' || value === 'Select...'){
         return null;
     }
     return value;
