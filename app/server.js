@@ -3,6 +3,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const loginRouter = require('./routes/login');
 const employeeRouter = require('./routes/employees');
+const assetRouter = require('./routes/assets.js');
 const path = require('path');
 const cors = require('cors');
 const authorized = require('./auth');
@@ -19,6 +20,7 @@ app.set('view engine', 'ejs');
 
 app.use('/login', loginRouter);
 app.use('/employees', employeeRouter);
+app.use('/assets', assetRouter);
 
 app.get('/checkToken', authorized, (req, res) => {
 	res.sendStatus(200);

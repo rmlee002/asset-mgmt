@@ -18,7 +18,7 @@ export default class Links extends Component{
                             <LinkContainer to='/employees'>
                                 <NavItem>Employees</NavItem>
                             </LinkContainer>
-                            <LinkContainer to='/hardware'>
+                            <LinkContainer to='/assets'>
                                 <NavItem>Hardware</NavItem>
                             </LinkContainer>
                             <LinkContainer to='/software'>

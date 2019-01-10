@@ -3,10 +3,10 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import Home from './Home';
 import Login from './Login';
 import Employees from './Employees/Employees';
-import Hardware from './Hardware';
 import Software from './Software';
 import protect from './protect';
 import Manage from './Employees/Manage';
+import Assets from './Assets/Assets';
 
 export default () => 
     <Switch>
@@ -14,7 +14,7 @@ export default () =>
         <Route path='/home' component={Home} />
         <Route path='/login' component={Login} />
         <Route exact path='/employees' component={protect(Employees)} />
-        <Route path='/hardware' component={protect(Hardware)} />
+        <Route path='/assets' component={protect(Assets)} />
         <Route path='/software' component={protect(Software)} />
         <Route path='/employees/manage/:emp_id' component={protect(Manage)} />
     </Switch>

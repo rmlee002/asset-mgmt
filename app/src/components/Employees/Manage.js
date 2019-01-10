@@ -35,24 +35,6 @@ export default class Manage extends Component{
         };
     }
 
-    // componentDidMount(){
-    //     let employee = this.props.location.state
-    //     this.setState({
-    //         emp_id: employee.emp_id,
-    //         first_name: employee.first_name,
-    //         last_name: employee.last_name,
-    //         email: employee.email,
-    //         affiliation: employee.affiliation,
-    //         department: employee.department,
-    //         supervisor: employee.supervisor,
-    //         reviewer: employee.reviewer,
-    //         time_approver: employee.time_approver,
-    //         start: employee.start,
-    //         end: employee.end,
-    //         notes: employee.notes
-    //     })
-    // }
-
     componentDidMount(){
         fetch('/employees/getEmployee', {
             method:'POST',
