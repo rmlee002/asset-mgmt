@@ -6,7 +6,6 @@ import Employees from './Employees/Employees';
 import Hardware from './Hardware';
 import Software from './Software';
 import protect from './protect';
-import Add from './Employees/Add';
 import Manage from './Employees/Manage';
 
 export default () => 
@@ -17,5 +16,5 @@ export default () =>
         <Route exact path='/employees' component={protect(Employees)} />
         <Route path='/hardware' component={protect(Hardware)} />
         <Route path='/software' component={protect(Software)} />
-        <Route path='/employees/manage' component={protect(Manage)} />
+        <Route path='/employees/manage/:emp_id' component={protect(Manage)} />
     </Switch>

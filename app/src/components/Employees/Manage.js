@@ -3,6 +3,7 @@ import { Button, Form, FormGroup, Col, FormControl, HelpBlock, ControlLabel, But
 import DatePicker from 'react-datepicker';
 import Links from '../Nav';
 import axios from 'axios';
+import moment from 'moment';
 
 export default class Manage extends Component{
     constructor(props){
@@ -10,13 +11,16 @@ export default class Manage extends Component{
 
         this.handleChange = this.handleChange.bind(this);
         this.handleRetire = this.handleRetire.bind(this);
+        this.handleStart = this.handleStart.bind(this);
+        this.handleEnd = this.handleEnd.bind(this);
+        this.handleUpdate = this.handleUpdate.bind(this);
 
         this.state = {
             success: false,
             error: false,
             show: false,
             showWarn: false,
-            emp_id: 0,
+            emp_id: this.props.match.params.emp_id,
             first_name: '',
             last_name: '',
             email: '',
@@ -31,22 +35,74 @@ export default class Manage extends Component{
         };
     }
 
+    // componentDidMount(){
+    //     let employee = this.props.location.state
+    //     this.setState({
+    //         emp_id: employee.emp_id,
+    //         first_name: employee.first_name,
+    //         last_name: employee.last_name,
+    //         email: employee.email,
+    //         affiliation: employee.affiliation,
+    //         department: employee.department,
+    //         supervisor: employee.supervisor,
+    //         reviewer: employee.reviewer,
+    //         time_approver: employee.time_approver,
+    //         start: employee.start,
+    //         end: employee.end,
+    //         notes: employee.notes
+    //     })
+    // }
+
     componentDidMount(){
-        let employee = this.props.location.state
-        this.setState({
-            emp_id: employee.emp_id,
-            first_name: employee.first_name,
-            last_name: employee.last_name,
-            email: employee.email,
-            affiliation: employee.affiliation,
-            department: employee.department,
-            supervisor: employee.supervisor,
-            reviewer: employee.reviewer,
-            time_approver: employee.time_approver,
-            start: employee.start,
-            end: employee.end,
-            notes: employee.notes
+        fetch('/employees/getEmployee', {
+            method:'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ emp_id: this.props.match.params.emp_id })
         })
+        .then(res => {
+            if (res.status > 400){
+                throw new Error("Bad response from server");
+            }
+            return res.json();
+        })
+        .then(data => {
+            const employee = data[0];
+            this.setState({
+                first_name: employee.first_name,
+                last_name: employee.last_name,
+                email: employee.email,
+                affiliation: employee.affiliation,
+                department: employee.department,
+                supervisor: employee.supervisor,
+                reviewer: employee.reviewer,
+                time_approver: employee.time_approver,
+                start: employee.start,
+                end: employee.end,
+                notes: employee.notes
+            })
+        })
+        .catch(err => {
+            console.log(err)
+            alert(err + "sdfsdf")
+        });
+    }
+
+    handleStart(date){
+        this.setState({
+            start: date
+        });
+    }
+
+    handleEnd(date){
+        this.setState({
+            end: date
+        });
+    }
+
+    handleChange(e){
+        this.setState({
+            [e.target.id] : e.target.value
+        });
     }
 
     handleRetire(){
@@ -63,13 +119,35 @@ export default class Manage extends Component{
         })
         .catch(err => {
             console.log(err)
-            alert(err + 'sfsdfsdf')
+            alert(err)
         })
     }
 
-    handleChange(e){
-        this.setState({
-            [e.target.id] : e.target.value
+    handleUpdate(){
+        axios.post('/employees/manage/update', {
+            emp_id: this.state.emp_id,
+            first_name: this.state.first_name,
+            last_name: this.state.last_name,
+            email: this.state.email,
+            affiliation: this.state.affiliation,
+            department: this.state.department,
+            supervisor: this.state.supervisor,
+            reviewer: this.state.reviewer,
+            time_approver: this.state.time_approver,
+            start: moment(this.state.start).format("YYYY-MM-DD"),
+            end: moment(this.state.end).format("YYYY-MM-DD"),
+            notes: this.state.notes
+        })
+        .then(res => {
+            if (res.status === 200){
+                this.props.history.push(`/employees/manage/${this.state.emp_id}`)
+            }
+            else{
+                alert('Error updating employee. Please try again')
+            }
+        })
+        .catch(err => {
+            alert(err)
         });
     }
 
@@ -80,7 +158,7 @@ export default class Manage extends Component{
             <div>
                 <Links />
                 <Button bsStyle='danger' onClick={this.handleRetire}>Retire</Button>
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={this.handleUpdate}>
                     <Form horizontal>
                         <FormGroup controlId='first_name'>
                             <Col componentClass={ControlLabel} sm={3}>
@@ -127,7 +205,7 @@ export default class Manage extends Component{
                         <FormGroup controlId='affiliation'>
                             <Col componentClass={ControlLabel} sm={3}>Affiliation</Col>
                             <Col sm={7}>
-                                <FormControl componentClass='select' defaultValue={this.props.location.state.affiliation} onChange={this.handleChange}>
+                                <FormControl componentClass='select' value={this.state.affiliation} onChange={this.handleChange}>
                                     <option>Select...</option>
                                     <option value='Contractor'>Contractor</option>
                                     <option value='Employee'>Employee</option>
@@ -139,7 +217,7 @@ export default class Manage extends Component{
                         <FormGroup controlId='department'>
                             <Col componentClass={ControlLabel} sm={3}>Department</Col>
                             <Col sm={7}>
-                                <FormControl componentClass='select' defaultValue={this.props.location.state.department} onChange={this.handleChange}>
+                                <FormControl componentClass='select' value={this.state.department} onChange={this.handleChange}>
                                     <option>Select...</option>
                                     <option value='CQA'>CQA</option>
                                     <option value='VPT'>VPT</option>
@@ -170,7 +248,6 @@ export default class Manage extends Component{
                                 <FormControl 
                                     type='text'
                                     value={this.state.supervisor}
-                                    defaultValue={this.props.location.state.supervisor}
                                     placeholder='Supervisor(s)'
                                     onChange={this.handleChange}
                                 />
@@ -184,7 +261,6 @@ export default class Manage extends Component{
                                 <FormControl 
                                     type='text'
                                     value={this.state.reviewer}
-                                    defaultValue={this.props.location.state.reviewer}
                                     placeholder='Reviewer(s)'
                                     onChange={this.handleChange}
                                 />
@@ -198,7 +274,6 @@ export default class Manage extends Component{
                                 <FormControl 
                                     type='text'
                                     value={this.state.time_approver}
-                                    defaultValue={this.props.location.state.time_approver}
                                     placeholder='Time approver(s)'
                                     onChange={this.handleChange}
                                 />
@@ -234,14 +309,12 @@ export default class Manage extends Component{
                                 <FormControl 
                                     type='text'
                                     value={this.state.notes}
-                                    defaultValue={this.props.location.state.notes}
                                     placeholder='Notes'
                                     onChange={this.handleChange}
                                 />
                             </Col>
                         </FormGroup>
                         <Button type='submit' bsStyle='success' disabled={!isValid}>Update employee</Button>
-
                     </Form>    
                 </form>                   
             </div>

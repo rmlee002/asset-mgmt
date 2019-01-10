@@ -21,6 +21,7 @@ export default class Employees extends Component {
         fetch('/employees')
         .then(function(res) {
             if (res.status >= 400){
+                alert(res.data.error)
                 throw new Error("Bad response from server");
             }
             return res.json();
@@ -44,7 +45,7 @@ export default class Employees extends Component {
         if (e.target.value !== ''){
             currList = this.state.employees;
             newList = currList.filter(item => {
-                const lower = item.display_name.toLowerCase();
+                const lower = (item.first_name+" "+item.last_name).toLowerCase();
                 const filter = e.target.value.toLowerCase();
                 return lower.includes(filter);
             });
@@ -92,7 +93,7 @@ export default class Employees extends Component {
                     <tbody>
                         {this.state.filtered.map(employee => 
                             <tr key={employee.emp_ID}>
-                                <td>{employee.display_name}</td>
+                                <td>{employee.first_name+' '+employee.last_name}</td>
                                 <td>{employee.email}</td>
                                 <td>{employee.affiliation}</td>
                                 <td>{employee.department}</td>
@@ -113,20 +114,6 @@ export default class Employees extends Component {
                                 <td>
                                        <Link to={{
                                             pathname: `/employees/manage/${employee.emp_id}`,
-                                            state: {
-                                                emp_id: employee.emp_id,
-                                                first_name: employee.first_name,
-                                                last_name: employee.last_name,
-                                                email: employee.email,
-                                                affiliation: employee.affiliation,
-                                                department: employee.department,
-                                                supervisor: employee.supervisor,
-                                                reviewer: employee.reviewer,
-                                                time_approver: employee.time_approver,
-                                                start: employee.start,
-                                                end: employee.end,
-                                                notes: employee.notes
-                                            }
                                         }}>
                                             Manage
                                         </Link>
