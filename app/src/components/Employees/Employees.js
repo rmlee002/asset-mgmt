@@ -4,7 +4,6 @@ import { Table, FormGroup, FormControl, ControlLabel, Button} from 'react-bootst
 import { LinkContainer } from 'react-router-bootstrap';
 import moment from 'moment';
 import Links from '../Nav';
-import Manage from './Manage';
 import Add from './Add';
 
 export default class Employees extends Component {
@@ -92,7 +91,7 @@ export default class Employees extends Component {
                     </thead>
                     <tbody>
                         {this.state.filtered.map(employee => 
-                            <tr key={employee.user_ID}>
+                            <tr key={employee.emp_ID}>
                                 <td>{employee.display_name}</td>
                                 <td>{employee.email}</td>
                                 <td>{employee.affiliation}</td>
@@ -112,10 +111,10 @@ export default class Employees extends Component {
                                 <td><a>Licenses</a></td>
                                 <td>{employee.notes}</td>
                                 <td>
-                                    {/* <Button bsStyle = 'primary' bsSize = 'small'> */}
-                                        <Link to={{
+                                       <Link to={{
                                             pathname: `/employees/manage/${employee.emp_id}`,
                                             state: {
+                                                emp_id: employee.emp_id,
                                                 first_name: employee.first_name,
                                                 last_name: employee.last_name,
                                                 email: employee.email,
@@ -123,7 +122,7 @@ export default class Employees extends Component {
                                                 department: employee.department,
                                                 supervisor: employee.supervisor,
                                                 reviewer: employee.reviewer,
-                                                time_approver: employee.reviewer,
+                                                time_approver: employee.time_approver,
                                                 start: employee.start,
                                                 end: employee.end,
                                                 notes: employee.notes
@@ -131,7 +130,6 @@ export default class Employees extends Component {
                                         }}>
                                             Manage
                                         </Link>
-                                    {/* </Button> */}
                                 </td>
                             </tr>
                         )}

@@ -9,11 +9,14 @@ export default class Manage extends Component{
         super(props);
 
         this.handleChange = this.handleChange.bind(this);
-        
+        this.handleRetire = this.handleRetire.bind(this);
+
         this.state = {
             success: false,
             error: false,
             show: false,
+            showWarn: false,
+            emp_id: 0,
             first_name: '',
             last_name: '',
             email: '',
@@ -28,31 +31,10 @@ export default class Manage extends Component{
         };
     }
 
-    // componentDidMount(){
-
-    //     let self=this;
-    //     axios.post('/employees/getEmployee', {
-    //         id: this.props.match.params
-    //     })
-    //     .then(res => {
-    //         if (res.status >= 400){
-    //             alert(res.data.err)
-    //         }
-    //     })
-    //     .then(data => {
-    //         self.setState({
-    //             first_name: data[0].first_name
-    //         })
-    //         alert(this.state.first_name)
-    //     })
-    //     .catch(err => {
-    //         alert(err)
-    //     })
-    // }
-
     componentDidMount(){
         let employee = this.props.location.state
         this.setState({
+            emp_id: employee.emp_id,
             first_name: employee.first_name,
             last_name: employee.last_name,
             email: employee.email,
@@ -60,10 +42,28 @@ export default class Manage extends Component{
             department: employee.department,
             supervisor: employee.supervisor,
             reviewer: employee.reviewer,
-            time_approver: employee.reviewer,
+            time_approver: employee.time_approver,
             start: employee.start,
             end: employee.end,
             notes: employee.notes
+        })
+    }
+
+    handleRetire(){
+        axios.post('/employees/manage/retire', {
+            emp_id: this.state.emp_id
+        })
+        .then(res => {
+            if (res.status === 200){
+                this.props.history.push('/employees')
+            }
+            else{
+                alert('Error retiring employee. Please try again')
+            }
+        })
+        .catch(err => {
+            console.log(err)
+            alert(err + 'sfsdfsdf')
         })
     }
 
@@ -79,6 +79,7 @@ export default class Manage extends Component{
         return(
             <div>
                 <Links />
+                <Button bsStyle='danger' onClick={this.handleRetire}>Retire</Button>
                 <form onSubmit={this.handleSubmit}>
                     <Form horizontal>
                         <FormGroup controlId='first_name'>
@@ -126,7 +127,7 @@ export default class Manage extends Component{
                         <FormGroup controlId='affiliation'>
                             <Col componentClass={ControlLabel} sm={3}>Affiliation</Col>
                             <Col sm={7}>
-                                <FormControl componentClass='select' selected={this.state.affiliation} onChange={this.handleChange}>
+                                <FormControl componentClass='select' defaultValue={this.props.location.state.affiliation} onChange={this.handleChange}>
                                     <option>Select...</option>
                                     <option value='Contractor'>Contractor</option>
                                     <option value='Employee'>Employee</option>
@@ -138,7 +139,7 @@ export default class Manage extends Component{
                         <FormGroup controlId='department'>
                             <Col componentClass={ControlLabel} sm={3}>Department</Col>
                             <Col sm={7}>
-                                <FormControl componentClass='select' placeholder='Select department' onChange={this.handleChange}>
+                                <FormControl componentClass='select' defaultValue={this.props.location.state.department} onChange={this.handleChange}>
                                     <option>Select...</option>
                                     <option value='CQA'>CQA</option>
                                     <option value='VPT'>VPT</option>
@@ -169,6 +170,7 @@ export default class Manage extends Component{
                                 <FormControl 
                                     type='text'
                                     value={this.state.supervisor}
+                                    defaultValue={this.props.location.state.supervisor}
                                     placeholder='Supervisor(s)'
                                     onChange={this.handleChange}
                                 />
@@ -182,6 +184,7 @@ export default class Manage extends Component{
                                 <FormControl 
                                     type='text'
                                     value={this.state.reviewer}
+                                    defaultValue={this.props.location.state.reviewer}
                                     placeholder='Reviewer(s)'
                                     onChange={this.handleChange}
                                 />
@@ -195,6 +198,7 @@ export default class Manage extends Component{
                                 <FormControl 
                                     type='text'
                                     value={this.state.time_approver}
+                                    defaultValue={this.props.location.state.time_approver}
                                     placeholder='Time approver(s)'
                                     onChange={this.handleChange}
                                 />
@@ -230,16 +234,15 @@ export default class Manage extends Component{
                                 <FormControl 
                                     type='text'
                                     value={this.state.notes}
+                                    defaultValue={this.props.location.state.notes}
                                     placeholder='Notes'
                                     onChange={this.handleChange}
                                 />
                             </Col>
                         </FormGroup>
-                        <ButtonToolbar>
-                            <Button type='submit' bsStyle='success' disabled={!isValid}>Update employee</Button>
-                            <Button bsStyle='danger'>Retire</Button>
-                        </ButtonToolbar>
-                         </Form>    
+                        <Button type='submit' bsStyle='success' disabled={!isValid}>Update employee</Button>
+
+                    </Form>    
                 </form>                   
             </div>
         );
