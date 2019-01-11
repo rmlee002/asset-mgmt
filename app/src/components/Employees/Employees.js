@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from'react-router-dom';
-import { Table, FormGroup, FormControl, ControlLabel, Button} from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
+import { Table, FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
 import moment from 'moment';
+import axios from 'axios';
 import Links from '../Nav';
 import Add from './Add';
 
@@ -18,15 +18,13 @@ export default class Employees extends Component {
 
     componentDidMount(){
         let self = this;
-        fetch('/employees')
+        axios.get('/employees')
         .then(function(res) {
             if (res.status >= 400){
                 alert(res.data.error)
                 throw new Error("Bad response from server");
             }
-            return res.json();
-        }).then(data => {
-            self.setState({employees: data, filtered: data});
+            self.setState({employees: res.data, filtered: res.data});
         }).catch(err => {
             console.log(err);
             alert(err);

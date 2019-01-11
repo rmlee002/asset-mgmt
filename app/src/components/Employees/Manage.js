@@ -36,19 +36,14 @@ export default class Manage extends Component{
     }
 
     componentDidMount(){
-        fetch('/employees/getEmployee', {
-            method:'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ emp_id: this.props.match.params.emp_id })
+        axios.post('/employees/getEmployee',{
+            emp_id: this.props.match.params.emp_id
         })
         .then(res => {
             if (res.status > 400){
                 throw new Error("Bad response from server");
             }
-            return res.json();
-        })
-        .then(data => {
-            const employee = data[0];
+            const employee = res.data[0];
             this.setState({
                 first_name: employee.first_name,
                 last_name: employee.last_name,
@@ -64,9 +59,9 @@ export default class Manage extends Component{
             })
         })
         .catch(err => {
-            console.log(err)
-            alert(err + "sdfsdf")
-        });
+            alert(err)
+            console.log(err);
+        })
     }
 
     handleStart(date){

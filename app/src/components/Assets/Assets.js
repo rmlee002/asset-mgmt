@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { FormGroup, ControlLabel, FormControl, Table } from 'react-bootstrap';
 import moment from 'moment';
 import Links from '../Nav';
+import axios from 'axios';
 
 export default class Assets extends Component{
     constructor(props){
@@ -15,15 +16,13 @@ export default class Assets extends Component{
 
     componentDidMount(){
         let self = this;
-        fetch('/assets')
+        axios.get('/assets')
         .then(function(res) {
             if (res.status >= 400){
                 alert(res.data.error)
                 throw new Error("Bad response from server");
             }
-            return res.json();
-        }).then(data => {
-            self.setState({assets: data, filtered: data});
+            self.setState({assets: res.data, filtered: res.data});
         }).catch(err => {
             console.log(err);
             alert(err);
@@ -83,7 +82,8 @@ export default class Assets extends Component{
                             <th>In Date</th>
                             <th>Out Date</th>
                             <th>Contract</th>
-                            <th>History</th>
+                            <th>Asset History</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -94,7 +94,7 @@ export default class Assets extends Component{
                                 <td>{item.serial_number}</td>
                                 <td>{item.warranty_provider}</td>
                                 <td>{item.owner}</td>
-                                <td>{item.cost}</td>
+                                <td>{item.cost?'$'+item.cost.toFixed(2):''}</td>
                                 <td>{item.comment}</td>
                                 <td>{item.vendor}</td>
                                 <td>{item.order_number}</td>
@@ -108,7 +108,8 @@ export default class Assets extends Component{
                                         moment(item.out).utc().format('YYYY-MM-DD'):''}
                                 </td>
                                 <td>{item.contract}</td>
-                                <td><a>View history</a></td>
+                                <td><a>History</a></td>
+                                <td><a>Manage</a></td>
                             </tr>
                         )}
                     </tbody>
