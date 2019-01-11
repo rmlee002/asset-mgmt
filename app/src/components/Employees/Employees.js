@@ -110,11 +110,11 @@ export default class Employees extends Component {
                                 <td><a>Licenses</a></td>
                                 <td>{employee.notes}</td>
                                 <td>
-                                       <Link to={{
-                                            pathname: `/employees/manage/${employee.emp_id}`,
-                                        }}>
-                                            Manage
-                                        </Link>
+                                    <Link to={{
+                                        pathname: `/employees/manage/${employee.emp_id}`,
+                                    }}>
+                                        Manage
+                                    </Link>
                                 </td>
                             </tr>
                         )}
