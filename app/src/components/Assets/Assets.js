@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { FormGroup, ControlLabel, FormControl, Table } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 import Links from '../Nav';
+import Add from './Add';
 import axios from 'axios';
 
 export default class Assets extends Component{
@@ -66,6 +68,8 @@ export default class Assets extends Component{
                     <FormControl.Feedback />
                 </FormGroup>
 
+                <Add />
+
                 <Table>
                     <thead>
                         <tr>
@@ -81,7 +85,7 @@ export default class Assets extends Component{
                             <th>Warranty</th>
                             <th>In Date</th>
                             <th>Out Date</th>
-                            <th>Contract</th>
+                            <th>Department</th>
                             <th>Asset History</th>
                             <th></th>
                         </tr>
@@ -107,8 +111,8 @@ export default class Assets extends Component{
                                     {item.out?
                                         moment(item.out).utc().format('YYYY-MM-DD'):''}
                                 </td>
-                                <td>{item.contract}</td>
-                                <td><a>History</a></td>
+                                <td>{item.department}</td>
+                                <td><Link to={`/assets/history/${item.asset_id}`}>History</Link></td>
                                 <td><a>Manage</a></td>
                             </tr>
                         )}

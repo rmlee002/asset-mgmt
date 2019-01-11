@@ -7,6 +7,7 @@ import Software from './Software';
 import protect from './protect';
 import Manage from './Employees/Manage';
 import Assets from './Assets/Assets';
+import History from './Assets/History';
 
 export default () => 
     <Switch>
@@ -14,7 +15,8 @@ export default () =>
         <Route path='/home' component={Home} />
         <Route path='/login' component={Login} />
         <Route exact path='/employees' component={protect(Employees)} />
-        <Route path='/assets' component={protect(Assets)} />
+        <Route exact path='/assets' component={protect(Assets)} />
+        <Route path='/assets/history/:asset_id' component={protect(History)} />
         <Route path='/software' component={protect(Software)} />
         <Route path='/employees/manage/:emp_id' component={protect(Manage)} />
     </Switch>

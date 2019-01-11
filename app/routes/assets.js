@@ -14,4 +14,12 @@ router.get('/', (req, res) => {
     });
 });
 
+router.post('/history', (req, res) => {
+    connection.query('SELECT first_name, last_name FROM employees WHERE\
+        emp_id IN (SELECT emp_id FROM history WHERE asset_id=?)', req.body.asset_id, function(err, results){
+        if (err) throw err;
+        res.send(JSON.stringify(results));
+    })
+})
+
 module.exports = router;

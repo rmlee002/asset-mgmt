@@ -62,19 +62,19 @@ export default class Add extends Component{
 
     handleStart(date){
         this.setState({
-            start: date
+            start: moment(date).format("YYYY-MM-DD")
         });
     }
 
     handleEnd(date){
         this.setState({
-            end: date
+            end: moment(date).format("YYYY-MM-DD")
         });
     }
 
     handleChange(e){
         this.setState({
-            [e.target.id] : e.target.value
+            [e.target.id] : nullify(e.target.value)
         });
     }
 
@@ -83,15 +83,15 @@ export default class Add extends Component{
         axios.post('/employees/add', {
             first_name: this.state.first_name,
             last_name: this.state.last_name,
-            email: nullify(this.state.email),
-            affiliation: nullify(this.state.affiliation),
-            department: nullify(this.state.department),
-            supervisor: nullify(this.state.supervisor),
-            reviewer: nullify(this.state.reviewer),
-            time_approver: nullify(this.state.time_approver),
-            start: moment(this.state.start).format("YYYY-MM-DD"),
-            end: moment(this.state.end).format("YYYY-MM-DD"),
-            notes: nullify(this.state.notes)
+            email: this.state.email,
+            affiliation: this.state.affiliation,
+            department: this.state.department,
+            supervisor: this.state.supervisor,
+            reviewer: this.state.reviewer,
+            time_approver: this.state.time_approver,
+            start: this.state.start,
+            end: this.state.end,
+            notes: this.state.notes
         })
         .then(res => {
             if (res.status >= 400){
@@ -116,175 +116,175 @@ export default class Add extends Component{
                 <Button bsStyle='primary' onClick={this.handleShow}>
                     Add employee
                 </Button>                
-                    <Modal show = {this.state.show} onHide={this.handleClose}>
-                        <Modal.Header closeButton>
-                            <Modal.Title>Add employee</Modal.Title>
-                        </Modal.Header>
-                        {!this.state.success? //If employee has not yet been added
-                        <Modal.Body>
-                            <form onSubmit={this.handleSubmit}>
-                                <Form horizontal>
-                                    <FormGroup controlId='first_name' validationState={this.validateFirst}>
-                                        <Col componentClass={ControlLabel} sm={3}>
-                                            First Name
-                                        </Col>
-                                        <Col sm={7}>
-                                            <FormControl
-                                                type='text'
-                                                value={this.state.first_name}
-                                                placeholder='First name'
-                                                onChange={this.handleChange}
-                                            />
-                                            <HelpBlock bsClass='small'>Required</HelpBlock>
-                                        </Col>
-                                    </FormGroup>
-                                    <FormGroup controlId='last_name' validationState={this.validateLast}>
-                                        <Col componentClass={ControlLabel} sm={3}>
-                                            Last Name
-                                        </Col>
-                                        <Col sm={7}>
-                                            <FormControl
-                                                type='text'
-                                                value={this.state.last_name}
-                                                placeholder='Last name'
-                                                help = 'Required'
-                                                onChange={this.handleChange}
-                                            />
-                                            <HelpBlock bsClass='small'>Required</HelpBlock>
-                                        </Col>
-                                    </FormGroup>
-                                    <FormGroup controlId='email'>
-                                        <Col componentClass={ControlLabel} sm={3}>
-                                            Email
-                                        </Col>
-                                        <Col sm={7}>
-                                            <FormControl
-                                                type='email'
-                                                value={this.state.email}
-                                                placeholder='Email'
-                                                onChange={this.handleChange}
-                                            />
-                                        </Col>                                
-                                    </FormGroup>
-                                    <FormGroup controlId='affiliation'>
-                                        <Col componentClass={ControlLabel} sm={3}>Affiliation</Col>
-                                        <Col sm={7}>
-                                            <FormControl componentClass='select' onChange={this.handleChange}>
-                                                <option>Select...</option>
-                                                <option value='Contractor'>Contractor</option>
-                                                <option value='Employee'>Employee</option>
-                                                <option value='Part-time/Hourly'>Part-time/Hourly</option>
-                                                <option value='Intern'>Intern</option>
-                                            </FormControl>
-                                        </Col>
-                                    </FormGroup>
-                                    <FormGroup controlId='department'>
-                                        <Col componentClass={ControlLabel} sm={3}>Department</Col>
-                                        <Col sm={7}>
-                                            <FormControl componentClass='select' onChange={this.handleChange}>
-                                                <option>Select...</option>
-                                                <option value='CQA'>CQA</option>
-                                                <option value='VPT'>VPT</option>
-                                                <option value='TCoE'>TCoE</option>
-                                                <option value='TI'>TI</option>
-                                                <option value='Sharepoint'>Sharepoint</option>                                        
-                                                <option value='NGC'>NGC</option>
-                                                <option value='NAVSUP'>NAVSUP</option>                                        
-                                                <option value='MHV'>MHV</option>
-                                                <option value='IDC'>IDC</option>                                        
-                                                <option value='VA'>VA</option>
-                                                <option value='BD'>BD</option>
-                                                <option value='Cm/Tools'>CM/Tools</option>
-                                                <option value='DITD'>DITD</option>
-                                                <option value='BD'>BD</option>
-                                                <option value='HR'>HR</option>
-                                                <option value='Accounting'>Accounting</option>
-                                                <option value='Legal'>Legal</option>
-                                                <option value='IT'>IT</option>
-                                            </FormControl>
-                                        </Col>
-                                    </FormGroup>
-                                    <FormGroup controlId='supervisor'>
-                                        <Col componentClass={ControlLabel} sm={3}>
-                                            Supervisor(s)
-                                        </Col>
-                                        <Col sm={7}>
-                                            <FormControl 
-                                                type='text'
-                                                value={this.state.supervisor}
-                                                placeholder='Supervisor(s)'
-                                                onChange={this.handleChange}
-                                            />
-                                        </Col>
-                                    </FormGroup>
-                                    <FormGroup controlId='reviewer'>
-                                        <Col componentClass={ControlLabel} sm={3}>
-                                            Reviewer(s)
-                                        </Col>
-                                        <Col sm={7}>
-                                            <FormControl 
-                                                type='text'
-                                                value={this.state.reviewer}
-                                                placeholder='Reviewer(s)'
-                                                onChange={this.handleChange}
-                                            />
-                                        </Col>
-                                    </FormGroup>
-                                    <FormGroup controlId='time_approver'>
-                                        <Col componentClass={ControlLabel} sm={3}>
-                                            Time Approver(s)
-                                        </Col>
-                                        <Col sm={7}>
-                                            <FormControl 
-                                                type='text'
-                                                value={this.state.time_approver}
-                                                placeholder='Time approver(s)'
-                                                onChange={this.handleChange}
-                                            />
-                                        </Col>
-                                    </FormGroup>
-                                    <FormGroup controlId='start'>
-                                        <Col componentClass={ControlLabel} sm={3}>
-                                            Start date
-                                        </Col>
-                                        <Col sm={7}>
-                                            <DatePicker
-                                                selected={this.state.start}
-                                                onChange={this.handleStart}
-                                            />
-                                        </Col>
-                                    </FormGroup>
-                                    <FormGroup controlId='end'>
-                                        <Col componentClass={ControlLabel} sm={3}>
-                                            End date
-                                        </Col>
-                                        <Col sm={7}>
-                                            <DatePicker
-                                                selected={this.state.end}
-                                                onChange={this.handleEnd}
-                                            />
-                                        </Col>
-                                    </FormGroup>
-                                    <FormGroup controlId='notes'>
-                                        <Col componentClass={ControlLabel} sm={3}>
-                                            Notes
-                                        </Col>
-                                        <Col sm={7}>
-                                            <FormControl 
-                                                type='text'
-                                                value={this.state.notes}
-                                                placeholder='Notes'
-                                                onChange={this.handleChange}
-                                            />
-                                        </Col>
-                                    </FormGroup>
-                                    <Button type = 'submit' bsStyle='success' disabled={!isValid}>Add Employee</Button>
-                                </Form>    
-                            </form>                    
-                        </Modal.Body>
-                        // If employee is successfully added, render success view
-                        : <Redirect to='/employees'/>}
-                    </Modal>                
+                <Modal show = {this.state.show} onHide={this.handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Add Employee</Modal.Title>
+                    </Modal.Header>
+                    {!this.state.success? //If employee has not yet been added
+                    <Modal.Body>
+                        <form onSubmit={this.handleSubmit}>
+                            <Form horizontal>
+                                <FormGroup controlId='first_name' validationState={this.validateFirst}>
+                                    <Col componentClass={ControlLabel} sm={3}>
+                                        First Name
+                                    </Col>
+                                    <Col sm={7}>
+                                        <FormControl
+                                            type='text'
+                                            value={this.state.first_name}
+                                            placeholder='First name'
+                                            onChange={this.handleChange}
+                                        />
+                                        <HelpBlock bsClass='small'>Required</HelpBlock>
+                                    </Col>
+                                </FormGroup>
+                                <FormGroup controlId='last_name' validationState={this.validateLast}>
+                                    <Col componentClass={ControlLabel} sm={3}>
+                                        Last Name
+                                    </Col>
+                                    <Col sm={7}>
+                                        <FormControl
+                                            type='text'
+                                            value={this.state.last_name}
+                                            placeholder='Last name'
+                                            help = 'Required'
+                                            onChange={this.handleChange}
+                                        />
+                                        <HelpBlock bsClass='small'>Required</HelpBlock>
+                                    </Col>
+                                </FormGroup>
+                                <FormGroup controlId='email'>
+                                    <Col componentClass={ControlLabel} sm={3}>
+                                        Email
+                                    </Col>
+                                    <Col sm={7}>
+                                        <FormControl
+                                            type='email'
+                                            value={this.state.email}
+                                            placeholder='Email'
+                                            onChange={this.handleChange}
+                                        />
+                                    </Col>                                
+                                </FormGroup>
+                                <FormGroup controlId='affiliation'>
+                                    <Col componentClass={ControlLabel} sm={3}>Affiliation</Col>
+                                    <Col sm={7}>
+                                        <FormControl componentClass='select' onChange={this.handleChange}>
+                                            <option>Select...</option>
+                                            <option value='Contractor'>Contractor</option>
+                                            <option value='Employee'>Employee</option>
+                                            <option value='Part-time/Hourly'>Part-time/Hourly</option>
+                                            <option value='Intern'>Intern</option>
+                                        </FormControl>
+                                    </Col>
+                                </FormGroup>
+                                <FormGroup controlId='department'>
+                                    <Col componentClass={ControlLabel} sm={3}>Department</Col>
+                                    <Col sm={7}>
+                                        <FormControl componentClass='select' onChange={this.handleChange}>
+                                            <option>Select...</option>
+                                            <option value='CQA'>CQA</option>
+                                            <option value='VPT'>VPT</option>
+                                            <option value='TCoE'>TCoE</option>
+                                            <option value='TI'>TI</option>
+                                            <option value='Sharepoint'>Sharepoint</option>                                        
+                                            <option value='NGC'>NGC</option>
+                                            <option value='NAVSUP'>NAVSUP</option>                                        
+                                            <option value='MHV'>MHV</option>
+                                            <option value='IDC'>IDC</option>                                        
+                                            <option value='VA'>VA</option>
+                                            <option value='BD'>BD</option>
+                                            <option value='Cm/Tools'>CM/Tools</option>
+                                            <option value='DITD'>DITD</option>
+                                            <option value='BD'>BD</option>
+                                            <option value='HR'>HR</option>
+                                            <option value='Accounting'>Accounting</option>
+                                            <option value='Legal'>Legal</option>
+                                            <option value='IT'>IT</option>
+                                        </FormControl>
+                                    </Col>
+                                </FormGroup>
+                                <FormGroup controlId='supervisor'>
+                                    <Col componentClass={ControlLabel} sm={3}>
+                                        Supervisor(s)
+                                    </Col>
+                                    <Col sm={7}>
+                                        <FormControl 
+                                            type='text'
+                                            value={this.state.supervisor}
+                                            placeholder='Supervisor(s)'
+                                            onChange={this.handleChange}
+                                        />
+                                    </Col>
+                                </FormGroup>
+                                <FormGroup controlId='reviewer'>
+                                    <Col componentClass={ControlLabel} sm={3}>
+                                        Reviewer(s)
+                                    </Col>
+                                    <Col sm={7}>
+                                        <FormControl 
+                                            type='text'
+                                            value={this.state.reviewer}
+                                            placeholder='Reviewer(s)'
+                                            onChange={this.handleChange}
+                                        />
+                                    </Col>
+                                </FormGroup>
+                                <FormGroup controlId='time_approver'>
+                                    <Col componentClass={ControlLabel} sm={3}>
+                                        Time Approver(s)
+                                    </Col>
+                                    <Col sm={7}>
+                                        <FormControl 
+                                            type='text'
+                                            value={this.state.time_approver}
+                                            placeholder='Time approver(s)'
+                                            onChange={this.handleChange}
+                                        />
+                                    </Col>
+                                </FormGroup>
+                                <FormGroup controlId='start'>
+                                    <Col componentClass={ControlLabel} sm={3}>
+                                        Start date
+                                    </Col>
+                                    <Col sm={7}>
+                                        <DatePicker
+                                            selected={this.state.start}
+                                            onChange={this.handleStart}
+                                        />
+                                    </Col>
+                                </FormGroup>
+                                <FormGroup controlId='end'>
+                                    <Col componentClass={ControlLabel} sm={3}>
+                                        End date
+                                    </Col>
+                                    <Col sm={7}>
+                                        <DatePicker
+                                            selected={this.state.end}
+                                            onChange={this.handleEnd}
+                                        />
+                                    </Col>
+                                </FormGroup>
+                                <FormGroup controlId='notes'>
+                                    <Col componentClass={ControlLabel} sm={3}>
+                                        Notes
+                                    </Col>
+                                    <Col sm={7}>
+                                        <FormControl 
+                                            type='text'
+                                            value={this.state.notes}
+                                            placeholder='Notes'
+                                            onChange={this.handleChange}
+                                        />
+                                    </Col>
+                                </FormGroup>
+                                <Button type = 'submit' bsStyle='success' disabled={!isValid}>Add Employee</Button>
+                            </Form>    
+                        </form>                    
+                    </Modal.Body>
+                    // If employee is successfully added, render success view
+                    : <Redirect to='/employees'/>}
+                </Modal>                
             </div>
         );
     }
