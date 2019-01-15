@@ -4,8 +4,9 @@ import DatePicker from 'react-datepicker';
 import Links from '../Nav';
 import axios from 'axios';
 import moment from 'moment';
+import "../../../node_modules/react-datepicker/dist/react-datepicker.css";
 
-export default class Manage extends Component{
+export default class ManageEmployee extends Component{
     constructor(props){
         super(props);
 
@@ -19,19 +20,18 @@ export default class Manage extends Component{
             success: false,
             error: false,
             show: false,
-            showWarn: false,
             emp_id: this.props.match.params.emp_id,
-            first_name: '',
-            last_name: '',
-            email: '',
-            affiliation: '',
-            department: '',
-            supervisor: '',
-            reviewer: '',
-            time_approver:'',
-            start: new Date(),
-            end: new Date(),
-            notes:''
+            first_name: null,
+            last_name: null,
+            email: null,
+            affiliation: null,
+            department: null,
+            supervisor: null,
+            reviewer: null,
+            time_approver:null,
+            start: null,
+            end: null,
+            notes:null
         };
     }
 
@@ -41,6 +41,7 @@ export default class Manage extends Component{
         })
         .then(res => {
             if (res.status > 400){
+                alert(res.data.error)
                 throw new Error("Bad response from server");
             }
             const employee = res.data[0];
@@ -65,15 +66,29 @@ export default class Manage extends Component{
     }
 
     handleStart(date){
-        this.setState({
-            start: date
-        });
+        if(date){
+            this.setState({
+                start: moment(date).format("YYYY-MM-DD")
+            });
+        }
+        else{
+            this.setState({
+                start: null
+            })
+        }
     }
 
     handleEnd(date){
-        this.setState({
-            end: date
-        });
+        if(date){
+            this.setState({
+                end: moment(date).format("YYYY-MM-DD")
+            });
+        }
+        else{
+            this.setState({
+                end: null
+            })
+        }
     }
 
     handleChange(e){
@@ -117,7 +132,7 @@ export default class Manage extends Component{
         })
         .then(res => {
             if (res.status === 200){
-                this.props.history.push(`/employees/manage/${this.state.emp_id}`)
+                this.forceUpdate();
             }
             else{
                 alert('Error updating employee. Please try again')
@@ -129,7 +144,7 @@ export default class Manage extends Component{
     }
 
     render(){
-        const isValid = this.state.first_name.length > 0 && this.state.last_name.length > 0;
+        const isValid = this.state.first_name && this.state.last_name;
         
         return(
             <div>

@@ -3,7 +3,6 @@ import { Button, Modal, Form, FormGroup, FormControl, ControlLabel, Col, HelpBlo
 import { Redirect } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
-
 import "../../../node_modules/react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
 
@@ -21,17 +20,17 @@ export default class Add extends Component{
             success: false,
             error: false,
             show: false,
-            first_name: '',
-            last_name: '',
-            email: '',
-            affiliation: '',
-            department: '',
-            supervisor: '',
-            reviewer: '',
-            time_approver:'',
-            start: new Date(),
-            end: new Date(),
-            notes:''
+            first_name: null,
+            last_name: null,
+            email: null,
+            affiliation: null,
+            department: null,
+            supervisor: null,
+            reviewer: null,
+            time_approver:null,
+            start: null,
+            end: null,
+            notes:null
         };
     }
 
@@ -40,17 +39,17 @@ export default class Add extends Component{
             success: false,
             error: false,
             show: false,
-            first_name: '',
-            last_name: '',
-            email: '',
-            affiliation: '',
-            department: '',
-            supervisor: '',
-            reviewer: '',
-            time_approver:'',
-            start: new Date(),
-            end: new Date(),
-            notes:''
+            first_name: null,
+            last_name: null,
+            email: null,
+            affiliation: null,
+            department: null,
+            supervisor: null,
+            reviewer: null,
+            time_approver:null,
+            start: null,
+            end: null,
+            notes:null
         });
     }
 
@@ -61,20 +60,34 @@ export default class Add extends Component{
     }
 
     handleStart(date){
-        this.setState({
-            start: moment(date).format("YYYY-MM-DD")
-        });
+        if(date){
+            this.setState({
+                start: moment(date).format("YYYY-MM-DD")
+            });
+        }
+        else{
+            this.setState({
+                start: null
+            })
+        }
     }
 
     handleEnd(date){
-        this.setState({
-            end: moment(date).format("YYYY-MM-DD")
-        });
+        if(date){
+            this.setState({
+                end: moment(date).format("YYYY-MM-DD")
+            });
+        }
+        else{
+            this.setState({
+                end: null
+            })
+        }
     }
 
     handleChange(e){
         this.setState({
-            [e.target.id] : nullify(e.target.value)
+            [e.target.id] : e.target.value
         });
     }
 
@@ -110,7 +123,7 @@ export default class Add extends Component{
     }
 
     render(){
-        const isValid = this.state.first_name.length > 0 && this.state.last_name.length > 0;
+        const isValid = this.state.first_name && this.state.last_name;
         return(
             <div>
                 <Button bsStyle='primary' onClick={this.handleShow}>
@@ -288,11 +301,4 @@ export default class Add extends Component{
             </div>
         );
     }
-}
-
-function nullify(value){
-    if (value === '' || value === 'Select...'){
-        return null;
-    }
-    return value;
 }
