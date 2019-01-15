@@ -90,7 +90,7 @@ export default class Employees extends Component {
                     </thead>
                     <tbody>
                         {this.state.filtered.map(employee => 
-                            <tr key={employee.emp_ID}>
+                            <tr>
                                 <td>{employee.first_name+' '+employee.last_name}</td>
                                 <td>{employee.email}</td>
                                 <td>{employee.affiliation}</td>
@@ -110,9 +110,7 @@ export default class Employees extends Component {
                                 <td><a>Licenses</a></td>
                                 <td>{employee.notes}</td>
                                 <td>
-                                    <Link to={{
-                                        pathname: `/employees/manage/${employee.emp_id}`,
-                                    }}>
+                                    <Link to={`/employees/manage/${employee.emp_id}`}>
                                         Manage
                                     </Link>
                                 </td>

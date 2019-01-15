@@ -9,7 +9,10 @@ app.use(bodyParser.json());
 
 router.get('/', (req, res) => {
     connection.query('SELECT * FROM employees WHERE archived=0', function(err, results){
-        if (err) throw err;
+        if (err){
+			console.log(err)
+			res.status(500).send("Database query error")
+		}
         res.send(JSON.stringify(results));
     });
 });
@@ -29,7 +32,7 @@ router.post('/add', (req,res) => {
 				res.status(500).send("Database query error")
 			}
 			else{
-				res.send(JSON.stringify(results));
+				res.status(200).send("Success!")
 			}
 		});
 });
