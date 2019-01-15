@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Button, Modal, Form, FormGroup, FormControl, ControlLabel, Col, HelpBlock} from 'react-bootstrap';
-import { Redirect } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
@@ -11,27 +10,28 @@ export default class Add extends Component{
     constructor(props){
         super(props)
 
-        this.handleShow = this.handleShow.bind(this)
-        this.handleClose = this.handleClose.bind(this)
-        this.handleChange = this.handleChange.bind(this)
-        this.handleIn = this.handleIn.bind(this)
-        this.handleOut = this.handleOut.bind(this)
+        this.handleShow = this.handleShow.bind(this);
+        this.handleClose = this.handleClose.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleIn = this.handleIn.bind(this);
+        this.handleOut = this.handleOut.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
 
         this.state = {
             show: false,
-            description: '',
-            model: '',
-            serial_number: '',
-            warranty_providder: '',
-            owner: '',
-            cost: '',
-            comment: '',
-            vendor: '',
-            order_num: '',
-            warranty: '',
-            in: new Date(),
-            out: new Date(),
-            contract: ''
+            description: null,
+            model: null,
+            serial_number: null,
+            warranty_provider: null,
+            owner: null,
+            cost: null,
+            comment: null,
+            vendor: null,
+            order_num: null,
+            warranty: null,
+            inDate: null,
+            outDate: null,
+            department: null
         }
     }
 
@@ -44,42 +44,57 @@ export default class Add extends Component{
     handleClose(){
         this.setState({
             show: false,
-            description: '',
-            model: '',
-            serial_number: '',
-            warranty_providder: '',
-            owner: '',
-            cost: 0,
-            comment: '',
-            vendor: '',
-            order_num: '',
-            warranty: '',
-            in: new Date(),
-            out: new Date(),
-            department: ''
+            description: null,
+            model: null,
+            serial_number: null,
+            warranty_provider: null,
+            owner: null,
+            cost: null,
+            comment: null,
+            vendor: null,
+            order_num: null,
+            warranty: null,
+            inDate: null,
+            outDate: null,
+            department: null
         })
     }
 
     handleIn(date){
-        this.setState({
-            in: moment(date).format("YYYY-MM-DD")
-        });
+        if(date){
+            this.setState({
+                inDate: moment(date).format("YYYY-MM-DD")
+            });
+        }
+        else{
+            this.setState({
+                inDate: null
+            })
+        }
     }
 
     handleOut(date){
-        this.setState({
-            out: moment(date).format("YYYY-MM-DD")
-        });
+        if(date){
+            this.setState({
+                outDate: moment(date).format("YYYY-MM-DD")
+            });
+        }
+        else{
+            this.setState({
+                outDate: null
+            })
+        }
     }
 
     handleChange(e){
         this.setState({
-            [e.target.id]: nullify(e.target.value)
+            [e.target.id]: e.target.value
         })
     }
 
     handleSubmit(){
         axios.post('/assets/add', {
+            description: this.state.description,
             model: this.state.model,
             serial_number: this.state.serial_number,
             warranty_provider: this.state.warranty_provider,
@@ -89,19 +104,31 @@ export default class Add extends Component{
             vendor: this.state.vendor,
             order_num: this.state.order_num,
             warranty: this.state.warranty,
-            in: this.state.in,
-            out: this.state.in,
+            inDate: this.state.inDate,
+            outDate: this.state.outDate,
             department: this.state.department
+        })
+        .then(res => {
+            if (res.status === 200) {
+                this.forceUpdate();
+            }
+            else{
+                alert('Error updating employee. Please try again')
+            }
+        })
+        .catch(err => {
+            alert(err)
+            console.log(err)
         })
     }
 
     render(){
-        const isValid = this.state.description.length > 0
+        const isValid = this.state.description?true:false
         return(
             <div>
                 <Button bsStyle='primary' onClick={this.handleShow}>
                     Add asset
-                </Button> 
+                </Button>
                 <Modal show = {this.state.show} onHide={this.handleClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>Add Asset</Modal.Title>
@@ -240,24 +267,24 @@ export default class Add extends Component{
                                         />
                                     </Col>
                                 </FormGroup>
-                                <FormGroup controlId='in'>
+                                <FormGroup controlId='inDate'>
                                     <Col componentClass={ControlLabel} sm={3}>
                                         In Date
                                     </Col>
                                     <Col sm={7}>
                                         <DatePicker
-                                            selected={this.state.in}
+                                            selected={this.state.inDate}
                                             onChange={this.handleIn}
                                         />
                                     </Col>
                                 </FormGroup>
-                                <FormGroup controlId='out'>
+                                <FormGroup controlId='outDate'>
                                     <Col componentClass={ControlLabel} sm={3}>
                                         Out Date
                                     </Col>
                                     <Col sm={7}>
                                         <DatePicker
-                                            selected={this.state.out}
+                                            selected={this.state.outDate}
                                             onChange={this.handleOut}
                                         />
                                     </Col>
@@ -291,18 +318,11 @@ export default class Add extends Component{
                                     </Col>
                                 </FormGroup>
                             </Form>
-                            <Button type = 'submit' bsStyle='success' disabled={!isValid}>Add Employee</Button>
+                            <Button type='submit' bsStyle='success' disabled={!isValid}>Add Asset</Button>
                         </form>
                     </Modal.Body>
                 </Modal>
             </div>
         );
     }
-}
-
-function nullify(value){
-    if (value === '' || value === 'Select...'){
-        return null;
-    }
-    return value;
 }

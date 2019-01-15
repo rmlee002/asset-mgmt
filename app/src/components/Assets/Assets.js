@@ -5,6 +5,7 @@ import moment from 'moment';
 import Links from '../Nav';
 import Add from './Add';
 import axios from 'axios';
+import ChangeOwner from './ChangeOwner';
 
 export default class Assets extends Component{
     constructor(props){
@@ -68,6 +69,7 @@ export default class Assets extends Component{
                     <FormControl.Feedback />
                 </FormGroup>
 
+                
                 <Add />
 
                 <Table>
@@ -86,7 +88,7 @@ export default class Assets extends Component{
                             <th>In Date</th>
                             <th>Out Date</th>
                             <th>Department</th>
-                            <th>Asset History</th>
+                            <th></th>
                             <th></th>
                         </tr>
                     </thead>
@@ -104,16 +106,16 @@ export default class Assets extends Component{
                                 <td>{item.order_number}</td>
                                 <td>{item.warranty}</td>
                                 <td>
-                                    {item.in?
-                                        moment(item.in).utc().format('YYYY-MM-DD'):''}
+                                    {item.inDate?
+                                        moment(item.inDate).utc().format('YYYY-MM-DD'):''}
                                 </td>
                                 <td>
-                                    {item.out?
+                                    {item.outDate?
                                         moment(item.out).utc().format('YYYY-MM-DD'):''}
                                 </td>
                                 <td>{item.department}</td>
                                 <td><Link to={`/assets/history/${item.asset_id}`}>History</Link></td>
-                                <td><a>Manage</a></td>
+                                <td><Link to={`/assets/manage/${item.asset_id}`}>Manage</Link></td>
                             </tr>
                         )}
                     </tbody>
