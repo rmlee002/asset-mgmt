@@ -151,25 +151,25 @@ export default class ManageAsset extends Component{
         })
         .then(res => {            
             if (res.status === 200) {
-                let startDate = new Date();
-                Axios.post('/assets/addHistory/', {
-                    asset_id: this.state.asset_id,
-                    emp_id: this.state.owner_id,
-                    start: moment(startDate).format("YYYY-MM-DD")
-                })
-                .then(res2 => {
-                    if (res2.status >= 400){
-                        alert(res2.data.error)
-                        throw new Error("Bad response from server")
-                    }
-                    else{
+                // let startDate = new Date();
+                // Axios.post('/assets/addHistory/', {
+                //     asset_id: this.state.asset_id,
+                //     emp_id: this.state.owner_id,
+                //     start: moment(startDate).format("YYYY-MM-DD")
+                // })
+                // .then(res2 => {
+                //     if (res2.status >= 400){
+                //         alert(res2.data.error)
+                //         throw new Error("Bad response from server")
+                //     }
+                //     else{
                         
-                    }
-                })
-                .catch(err2 => {
-                    alert(err2)
-                    console.log(err2)
-                })
+                //     }
+                // })
+                // .catch(err2 => {
+                //     alert(err2)
+                //     console.log(err2)
+                // })
             }
             else{
                 alert('Error updating employee. Please try again')
@@ -178,9 +178,7 @@ export default class ManageAsset extends Component{
         .catch(err => {
             alert(err)
             console.log(err)
-        })
-
-        
+        })        
     }
 
     render(){
@@ -257,11 +255,11 @@ export default class ManageAsset extends Component{
                                 /> */}
                                 <EditOwner handleOwnerNull={this.handleOwnerNull} handleOwner={this.handleOwner} onBlur={this.onBlur}/>
                             </Col>
-                            <Col>
+                            {/* <Col>
                                 <LinkContainer to={`/assets/manage/${this.state.asset_id}/editOwner`}>
                                     <Button>Change Owner</Button>
                                 </LinkContainer>
-                            </Col>
+                            </Col> */}
                         </FormGroup>
                         <FormGroup controlId='cost'>
                             <Col componentClass={ControlLabel} sm={3}>
