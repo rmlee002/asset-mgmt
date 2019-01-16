@@ -5,6 +5,7 @@ import moment from 'moment';
 import axios from 'axios';
 import Links from '../Nav';
 import Add from './Add';
+import memoize from 'memoize-one';
 
 export default class Employees extends Component {
     constructor(props){
@@ -14,9 +15,14 @@ export default class Employees extends Component {
             filtered: []
         }
         this.handleChange = this.handleChange.bind(this);
+        this.refresh = this.refresh.bind(this);
     }
 
     componentDidMount(){
+        this.refresh()
+    }
+
+    refresh(){
         let self = this;
         axios.get('/employees')
         .then(function(res) {
@@ -37,21 +43,21 @@ export default class Employees extends Component {
         })
     }
 
+    filter = memoize(
+        (list, filterText) => list.filter(item => (item.first_name+' '+item.last_name).toLowerCase().includes(filterText.toLowerCase()))
+    )
+
     handleChange(e){
-        let currList = [];
-        let newList = [];
         if (e.target.value !== ''){
-            currList = this.state.employees;
-            newList = currList.filter(item => {
-                const lower = (item.first_name+" "+item.last_name).toLowerCase();
-                const filter = e.target.value.toLowerCase();
-                return lower.includes(filter);
-            });
+            this.setState({
+                filtered: this.filter(this.state.employees, e.target.value)
+            })
         }
-        else {
-            newList = this.state.employees;
+        else{
+            this.setState({
+                filtered: this.state.employees
+            })
         }
-        this.setState({ filtered: newList});
     }
 
     render(){
@@ -68,7 +74,7 @@ export default class Employees extends Component {
                     <FormControl.Feedback />
                 </FormGroup>
                 
-                <Add />
+                <Add refresh={this.refresh}/>
 
                 <Table className="employees">
                     <thead>

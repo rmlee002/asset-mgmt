@@ -111,9 +111,8 @@ export default class Add extends Component{
                 alert(res.data.error);
             }
             else{
-                this.setState({
-                    success: true
-                });
+                this.handleClose();
+                this.props.refresh();
             }
         })
         .catch(err => {
