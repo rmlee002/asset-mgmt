@@ -16,9 +16,12 @@ export default class ManageAsset extends Component{
         this.handleChange = this.handleChange.bind(this)
         this.handleIn = this.handleIn.bind(this)
         this.handleOut = this.handleOut.bind(this)
-        this.handleSubmit = this.handleOut.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
+        this.onBlur = this.onBlur.bind(this)
+        this.handleOwnerNull = this.handleOwnerNull.bind(this)
 
         this.state={
+            asset_id: null,
             description: null,
             model: null,
             serial_number: null,
@@ -60,7 +63,7 @@ export default class ManageAsset extends Component{
                 warranty: asset.warranty,
                 inDate: asset.inDate,
                 outDate: asset.outDate,
-                contract: asset.contract
+                department: asset.department
             })
         })
         .catch(err => {
@@ -71,16 +74,35 @@ export default class ManageAsset extends Component{
 
     handleChange(e){
         this.setState({
-            [e.target.id]: e.target.value
+            [e.target.id]: nullify(e.target.value)
         })
     }
 
+    //For autosuggest component to select owner
     handleOwner = (e,{suggestion, suggestionValue}) => {
         this.setState({
             owner: suggestionValue,
             owner_id: suggestion.emp_id
         })
         
+    }
+
+    //For autosuggest component to account for selecting a suggested owner and then deleting
+    handleOwnerNull(){
+        this.setState({
+            owner: null,
+            owner_id: null
+        })
+    }
+
+    //For autosuggest component to select owner
+    onBlur = (event, { highlightedSuggestion }) => {
+        if (highlightedSuggestion){
+            this.setState({
+                owner: highlightedSuggestion.first_name+' '+highlightedSuggestion.last_name,
+                owner_id: highlightedSuggestion.asset_id
+            })
+        }
     }
 
     handleIn(date){
@@ -109,28 +131,31 @@ export default class ManageAsset extends Component{
         }
     }
 
-    handleSubmit(){
+    handleSubmit(e){
+        e.preventDefault();
+        alert()
         Axios.post('/assets/updateAsset', {
-            description: this.description,
-            model: this.model,
-            serial_number: this.serial_number,
-            warranty_provider: this.warranty_provider,
-            owner: this.owner,
-            cost: this.cost,
-            comment: this.comment,
-            vendor: this.vendor,
-            order_num: this.order_num,
-            warranty: this.warranty,
-            inDate: this.inDate,
-            outDate: this.outDate,
-            contract: this.contract
+            description: this.state.description,
+            model: this.state.model,
+            serial_number: this.state.serial_number,
+            warranty_provider: this.state.warranty_provider,
+            owner: this.state.owner,
+            cost: this.state.cost,
+            comment: this.state.comment,
+            vendor: this.state.vendor,
+            order_num: this.state.order_num,
+            warranty: this.state.warranty,
+            inDate: this.state.inDate,
+            outDate: this.state.outDate,
+            department: this.state.department,
+            asset_id: this.state.asset_id
         })
-        .then(res => {
-            if (res.status !== 200) {
+        .then(res => {            
+            if (res.status === 200) {
                 let startDate = new Date();
-                Axios.post('/assets/manage/addHistory/', {
+                Axios.post('/assets/addHistory/', {
                     asset_id: this.state.asset_id,
-                    emp_id: this.state.emp_id,
+                    emp_id: this.state.owner_id,
                     start: moment(startDate).format("YYYY-MM-DD")
                 })
                 .then(res2 => {
@@ -139,7 +164,7 @@ export default class ManageAsset extends Component{
                         throw new Error("Bad response from server")
                     }
                     else{
-                        this.forceUpdate()
+                        alert('success')
                     }
                 })
                 .catch(err2 => {
@@ -152,7 +177,7 @@ export default class ManageAsset extends Component{
             }
         })
         .catch(err => {
-            alert(err)
+            alert(err +' dsfsdf')
             console.log(err)
         })
 
@@ -231,7 +256,7 @@ export default class ManageAsset extends Component{
                                     value={this.state.owner}
                                     placeholder='Owner'
                                 /> */}
-                                <EditOwner handleOwner={this.handleOwner}/>
+                                <EditOwner handleOwnerNull={this.handleOwnerNull} handleOwner={this.handleOwner} onBlur={this.onBlur}/>
                             </Col>
                             <Col>
                                 <LinkContainer to={`/assets/manage/${this.state.asset_id}/editOwner`}>
@@ -360,4 +385,11 @@ export default class ManageAsset extends Component{
             </div>
         );
     }
+}
+
+function nullify(value){
+    if (value === '' || value==='Select...') {
+        return null
+    }
+    return value
 }

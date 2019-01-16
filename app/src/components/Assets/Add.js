@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, Modal, Form, FormGroup, FormControl, ControlLabel, Col, HelpBlock} from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
+import EditOwner from './EditOwner';
 
 import "../../../node_modules/react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
@@ -16,6 +17,9 @@ export default class Add extends Component{
         this.handleIn = this.handleIn.bind(this);
         this.handleOut = this.handleOut.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleOwner = this.handleOwner.bind(this);
+        this.onBlur=this.onBlur.bind(this);
+        this.handleOwnerNull=this.handleOwnerNull.bind(this);
 
         this.state = {
             show: false,
@@ -24,6 +28,7 @@ export default class Add extends Component{
             serial_number: null,
             warranty_provider: null,
             owner: null,
+            owner_id: null,
             cost: null,
             comment: null,
             vendor: null,
@@ -49,6 +54,7 @@ export default class Add extends Component{
             serial_number: null,
             warranty_provider: null,
             owner: null,
+            owner_id: null,
             cost: null,
             comment: null,
             vendor: null,
@@ -86,13 +92,37 @@ export default class Add extends Component{
         }
     }
 
-    handleChange(e){
+    handleOwner = (e,{suggestion, suggestionValue}) => {
         this.setState({
-            [e.target.id]: e.target.value
+            owner: suggestionValue,
+            owner_id: suggestion.emp_id
+        })        
+    }
+
+    handleOwnerNull(){
+        this.setState({
+            owner: null,
+            owner_id: null
         })
     }
 
-    handleSubmit(){
+    onBlur = (event, { highlightedSuggestion }) => {
+        if (highlightedSuggestion){
+            this.setState({
+                owner: highlightedSuggestion.first_name+' '+highlightedSuggestion.last_name,
+                owner_id: highlightedSuggestion.asset_id
+            })
+        }
+    }
+
+    handleChange(e){
+        this.setState({
+            [e.target.id]: nullify(e.target.value)
+        })
+    }
+
+    handleSubmit(e){
+        e.preventDefault();
         axios.post('/assets/add', {
             description: this.state.description,
             model: this.state.model,
@@ -110,7 +140,31 @@ export default class Add extends Component{
         })
         .then(res => {
             if (res.status === 200) {
-                this.forceUpdate();
+                // const desc = this.state.description
+                this.handleClose();
+                this.props.refresh();
+
+                // const start = new Date();
+                // axios.post('/assets/addHistory', {
+                //     asset_id: 
+                //     emp_id: this.state.owner_id,
+                //     start: moment(start).format('YYYY-MM-DD'),
+                //     end: null
+                // })
+                // .then(res => {
+                //     if (res.status === 200){
+                //         this.handleClose();
+                //         this.props.refresh();
+                //         // this.props.onSuccessfulAdd(desc);
+                //     }
+                //     else{
+                //         alert('Error adding to asset history')
+                //     }
+                // })
+                // .catch(err => {
+                //     alert(err)
+                //     console.log(err)
+                // })
             }
             else{
                 alert('Error updating employee. Please try again')
@@ -194,12 +248,13 @@ export default class Add extends Component{
                                         Owner
                                     </Col>
                                     <Col sm={7}>
-                                        <FormControl
+                                        {/* <FormControl
                                             type='text'
                                             value={this.state.owner}
                                             placeholder='Owner'
                                             onChange={this.handleChange}
-                                        />
+                                        /> */}
+                                        <EditOwner handleOwnerNull={this.handleOwnerNull} handleOwner={this.handleOwner} onBlur={this.onBlur}/>
                                     </Col>
                                 </FormGroup>
                                 <FormGroup controlId='cost'>
@@ -324,5 +379,12 @@ export default class Add extends Component{
                 </Modal>
             </div>
         );
+    }    
+}
+
+function nullify(value){
+    if (value === '' || value==='Select...') {
+        return null
     }
+    return value
 }

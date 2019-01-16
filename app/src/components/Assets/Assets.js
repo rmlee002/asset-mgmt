@@ -5,7 +5,7 @@ import moment from 'moment';
 import Links from '../Nav';
 import Add from './Add';
 import axios from 'axios';
-import ChangeOwner from './ChangeOwner';
+import memoize from 'memoize-one';
 
 export default class Assets extends Component{
     constructor(props){
@@ -15,9 +15,15 @@ export default class Assets extends Component{
             filtered: []
         }
         this.handleChange = this.handleChange.bind(this);
+        this.onSuccessfulAdd = this.onSuccessfulAdd.bind(this);
+        this.refresh = this.refresh.bind(this);
     }
 
     componentDidMount(){
+        this.refresh();
+    }
+
+    refresh(){
         let self = this;
         axios.get('/assets')
         .then(function(res) {
@@ -32,27 +38,43 @@ export default class Assets extends Component{
         })
     }
 
-    handleChange(e){
-        let currList = [];
-        let newList = [];
-        if (e.target.value !== ''){
-            currList = this.state.assets;
-            newList = currList.filter(item => {
-                const lower = (item.description).toLowerCase();
-                const filter = e.target.value.toLowerCase();
-                return lower.includes(filter);
-            });
-        }
-        else {
-            newList = this.state.assets;
-        }
-        this.setState({ filtered: newList});
-    }
+    filter = memoize(
+        (list, filterText) => list.filter(item => (item.description).toLowerCase().includes(filterText.toLowerCase()))
+    )
 
-    componentWillReceiveProps(nextProps){
+    handleChange(e){
+        // let currList = [];
+        // let newList = [];
+        // if (e.target.value !== ''){
+        //     currList = this.state.assets;
+        //     newList = currList.filter(item => {
+        //         const lower = (item.description).toLowerCase();
+        //         const filter = e.target.value.toLowerCase();
+        //         return lower.includes(filter);
+        //     });
+        // }
+        // else {
+        //     newList = this.state.assets;
+        // }
+        // this.setState({ filtered: newList});
+
+        if (e.target.value !== ''){
+            this.setState({
+                filtered: this.filter(this.state.assets, e.target.value)
+            })
+        }
+        else{
+            this.setState({
+                filtered: this.state.assets
+            })
+        }
+        
+    }    
+
+    onSuccessfulAdd(desc){
         this.setState({
-            filtered: nextProps.items
-        })
+            filtered: this.filter(this.state.assets, desc)
+        })  
     }
 
     render(){
@@ -69,8 +91,7 @@ export default class Assets extends Component{
                     <FormControl.Feedback />
                 </FormGroup>
 
-                
-                <Add />
+                <Add refresh={this.refresh} onSuccessfulAdd={this.onSuccessfulAdd}/>
 
                 <Table>
                     <thead>
@@ -103,7 +124,7 @@ export default class Assets extends Component{
                                 <td>{item.cost?'$'+item.cost.toFixed(2):''}</td>
                                 <td>{item.comment}</td>
                                 <td>{item.vendor}</td>
-                                <td>{item.order_number}</td>
+                                <td>{item.order_num}</td>
                                 <td>{item.warranty}</td>
                                 <td>
                                     {item.inDate?
@@ -111,7 +132,7 @@ export default class Assets extends Component{
                                 </td>
                                 <td>
                                     {item.outDate?
-                                        moment(item.out).utc().format('YYYY-MM-DD'):''}
+                                        moment(item.outDate).utc().format('YYYY-MM-DD'):''}
                                 </td>
                                 <td>{item.department}</td>
                                 <td><Link to={`/assets/history/${item.asset_id}`}>History</Link></td>
