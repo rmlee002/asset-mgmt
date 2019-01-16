@@ -133,7 +133,6 @@ export default class ManageAsset extends Component{
 
     handleSubmit(e){
         e.preventDefault();
-        alert()
         Axios.post('/assets/updateAsset', {
             description: this.state.description,
             model: this.state.model,
@@ -164,7 +163,7 @@ export default class ManageAsset extends Component{
                         throw new Error("Bad response from server")
                     }
                     else{
-                        alert('success')
+                        
                     }
                 })
                 .catch(err2 => {
@@ -177,7 +176,7 @@ export default class ManageAsset extends Component{
             }
         })
         .catch(err => {
-            alert(err +' dsfsdf')
+            alert(err)
             console.log(err)
         })
 
