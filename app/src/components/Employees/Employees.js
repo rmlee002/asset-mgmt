@@ -37,12 +37,6 @@ export default class Employees extends Component {
         })
     }
 
-    componentWillReceiveProps(nextProps){
-        this.setState({
-            filtered: nextProps.items
-        })
-    }
-
     filter = memoize(
         (list, filterText) => list.filter(item => (item.first_name+' '+item.last_name).toLowerCase().includes(filterText.toLowerCase()))
     )
@@ -112,7 +106,11 @@ export default class Employees extends Component {
                                     {employee.end?
                                     moment(employee.end).utc().format('YYYY-MM-DD'):''}
                                 </td>
-                                <td><a>Assets</a></td>
+                                <td>
+                                    <Link to={`/employees/${employee.emp_id}/assets`}>
+                                        Assets
+                                    </Link>
+                                </td>
                                 <td><a>Licenses</a></td>
                                 <td>{employee.notes}</td>
                                 <td>

@@ -51,6 +51,10 @@ router.post('/getEmployee', (req,res) => {
 	})
 })
 
+router.post('/history', (req,res) => {
+	const emp_id = req.body.emp_id;
+})
+
 router.post('/manage/update', (req,res) => {
 	const {
 		emp_id, first_name, last_name, email, affiliation, department, supervisor, 
