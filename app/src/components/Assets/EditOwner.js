@@ -18,7 +18,6 @@ export default class EditOwner extends Component{
 
         this.getSuggestions = this.getSuggestions.bind(this)
         this.onChange = this.onChange.bind(this)
-        this.handleOwner = this.handleOwner.bind(this)
         this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(this)
         this.onSuggestionsFetchRequested = this.onSuggestionsFetchRequested.bind(this)
 
@@ -54,15 +53,15 @@ export default class EditOwner extends Component{
         );
     }       
    
-    onChange = (event, { newValue }) => {
+    onChange = (event, { newValue, method }) => {
         this.setState({
           value: newValue
         });
+
+        if(newValue === ''){
+            this.props.handleOwnerNull();
+        }
     };
-    
-    handleOwner = (event, {suggestion, suggestionValue}) => {
-        alert(suggestionValue)
-    }
 
     onSuggestionsFetchRequested = ({ value }) => {
         this.setState({
@@ -72,7 +71,7 @@ export default class EditOwner extends Component{
 
     onSuggestionsClearRequested() {
         this.setState({
-          filtered: []
+            filtered: []
         });
     }
 
@@ -81,7 +80,8 @@ export default class EditOwner extends Component{
         const inputProps = {
             placeholder: 'Type a name',
             value,
-            onChange: this.onChange
+            onChange: this.onChange,
+            onBlur: this.props.onBlur
         }
         return(
             <Autosuggest
