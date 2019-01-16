@@ -87,7 +87,7 @@ export default class Add extends Component{
 
     handleChange(e){
         this.setState({
-            [e.target.id] : e.target.value
+            [e.target.id] : nullify(e.target.value)
         });
     }
 
@@ -301,4 +301,11 @@ export default class Add extends Component{
             </div>
         );
     }
+}
+
+function nullify(value){
+    if (value === '' || value==='Select...') {
+        return null
+    }
+    return value
 }
