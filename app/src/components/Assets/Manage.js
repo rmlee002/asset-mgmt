@@ -19,6 +19,7 @@ export default class ManageAsset extends Component{
         this.handleSubmit = this.handleSubmit.bind(this)
         this.onBlur = this.onBlur.bind(this)
         this.handleOwnerNull = this.handleOwnerNull.bind(this)
+        this.handleRetire = this.handleRetire.bind(this)
 
         this.state={
             asset_id: null,
@@ -130,6 +131,24 @@ export default class ManageAsset extends Component{
         }
     }
 
+    handleRetire(){
+        Axios.post('/assets/retire', {
+            asset_id: this.state.asset_id
+        })
+        .then(res => {
+            if (res.status === 200){
+                this.props.history.push('/assets')
+            }
+            else{
+                alert(res.data.error)
+            }
+        })
+        .catch(err => {
+            console.log(err)
+            alert(err)
+        })
+    }
+
     handleSubmit(e){
         e.preventDefault();
         Axios.post('/assets/updateAsset', {
@@ -171,7 +190,7 @@ export default class ManageAsset extends Component{
                 // })
             }
             else{
-                alert('Error updating employee. Please try again')
+                alert(res.data.error)
             }
         })
         .catch(err => {
@@ -186,6 +205,7 @@ export default class ManageAsset extends Component{
         return(
             <div>
                 <Links />
+                <Button bsStyle='danger' onClick={this.handleRetire}>Retire</Button>
                 <form onSubmit={this.handleSubmit}>
                     <Form horizontal>
                         <FormGroup controlId='description'>
