@@ -45,7 +45,7 @@ export default class ManageAsset extends Component{
         })
         .then(res => {
             if (res.status >= 400){
-                alert(res.statusText)
+                alert(res.data.error);
             }
             const asset = res.data[0]
             this.setState({

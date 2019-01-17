@@ -67,7 +67,7 @@ export default class AddAsset extends Component{
                 this.props.history.push(`/employees/${this.props.match.params.emp_id}/assets`);
             }
             else{
-                alert(res.statusText)
+                alert(res.data.error);
             }
         })
         .catch(err => {

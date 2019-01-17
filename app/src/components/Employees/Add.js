@@ -108,7 +108,7 @@ export default class Add extends Component{
         })
         .then(res => {
             if (res.status >= 400){
-                alert(res.statusText);
+                alert(res.data.error);
             }
             else{
                 this.handleClose();

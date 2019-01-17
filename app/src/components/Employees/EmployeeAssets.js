@@ -19,7 +19,7 @@ export default class EmployeeAssets extends Component{
         })
         .then(res => {
             if (res.status >= 400){
-                alert(res.statusText)
+                alert(res.data.error);
             }
             this.setState({
                 assets: res.data

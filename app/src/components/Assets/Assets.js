@@ -29,7 +29,7 @@ export default class Assets extends Component{
         axios.get('/assets')
         .then(function(res) {
             if (res.status >= 400){
-                alert(res.statusText)
+                alert(res.data.error)
                 throw new Error("Bad response from server");
             }
             self.setState({assets: res.data, filtered: res.data});

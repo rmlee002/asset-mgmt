@@ -41,7 +41,7 @@ export default class ManageEmployee extends Component{
         })
         .then(res => {
             if (res.status > 400){
-                alert(res.statusText);
+                alert(res.data.error);
             }
             const employee = res.data[0];
             this.setState({

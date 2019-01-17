@@ -27,7 +27,7 @@ export default class Employees extends Component {
         axios.get('/employees')
         .then(function(res) {
             if (res.status >= 400){
-                alert(res.statusText)
+                alert(res.data.error);
             }
             self.setState({employees: res.data, filtered: res.data});
         }).catch(err => {

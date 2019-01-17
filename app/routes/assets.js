@@ -11,7 +11,9 @@ router.get('/', (req, res) => {
     connection.query('SELECT * FROM hardware WHERE archived=0', function(err, results){
         if (err){
             console.log(err);
-            res.status(500).send("Database query error")
+            res.status(500).send({
+                error: "Database query error"
+            })
         }
         res.send(JSON.stringify(results));
     });
@@ -22,7 +24,9 @@ router.post('/history', (req, res) => {
         emp_id IN (SELECT emp_id FROM history WHERE asset_id=?)', req.body.asset_id, function(err, results){
         if (err){
             console.log(err);
-            res.status(500).send("Database query error")
+            res.status(500).send({
+                error: "Database query error"
+            })
         }
         res.send(JSON.stringify(results));
     })
@@ -36,10 +40,12 @@ router.post('/add', (req, res) =>{
         asset.order_num, asset.warranty, asset.inDate, asset.department], (err, results) => {
             if (err) {
                 console.log(err)
-                res.status(500).send("Database query error")
+                res.status(500).send({
+                    error: "Database query error"
+                })
             }
             else{
-                res.status(200).send("Success!")
+                res.status(200)
             }            
         })
 })
@@ -48,7 +54,9 @@ router.post('/getAsset', (req,res) => {
     connection.query('SELECT * FROM hardware WHERE asset_id=?', req.body.asset_id, (err, results) => {
         if (err) {
             console.log(err);
-            throw err;
+            res.status(500).send({
+                error: "Database query error"
+            })
         }
         res.send(JSON.stringify(results));
     })
@@ -65,10 +73,12 @@ router.post('/updateAsset', (req,res) => {
             vendor, order_num, warranty, inDate, outDate, department, asset_id], (err, results) =>{
             if(err){
                 console.log(err)
-                res.status(500).send("Database query error")
+                res.status(500).send({
+                    error: "Database query error"
+                })
             }
             else{
-                res.status(200).send("Success")
+                res.status(200)
             }
         })
 })
@@ -78,10 +88,12 @@ router.post('/addHistory', (req,res) => {
     connection.query('INSERT INTO history VALUES (?,?,?,NULL)', [asset_id,emp_id,start], (err,results) => {
         if(err){
             console.log(err)
-            res.status(500).send("Database query error")
+            res.status(500).send({
+                error: "Database query error"
+            })
         }
         else{
-            res.status(200).send("Success");
+            res.status(200)
         }
     })
 })

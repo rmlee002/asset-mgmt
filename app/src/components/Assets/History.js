@@ -18,7 +18,7 @@ export default class History extends Component{
         })
         .then(res =>{
             if (res.status >= 400){
-                alert(res.statusText);
+                alert(res.data.error);
             }
             this.setState({
                 owners: res.data
