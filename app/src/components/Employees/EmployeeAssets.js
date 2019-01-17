@@ -13,7 +13,7 @@ export default class EmployeeAssets extends Component{
         }
     }
 
-    componentDidMount(){
+    componentDidMount(){        
         Axios.post('/employees/history', {
             emp_id: this.props.match.params.emp_id
         })
@@ -27,7 +27,7 @@ export default class EmployeeAssets extends Component{
             })
         })
         .catch(err =>{
-            alert(err + " sdfsdf")
+            alert(err)
             console.log(err)
         })
     }
@@ -52,7 +52,15 @@ export default class EmployeeAssets extends Component{
                         </tr>
                     </thead>
                     <tbody>
-
+                        {this.state.assets.map(item => 
+                            <tr>
+                                <td>{item.description}</td>
+                                <td>{item.model}</td>
+                                <td>{item.serial_number}</td>
+                                <td>{item.comment}</td>
+                                <td></td>
+                            </tr>                
+                        )}
                     </tbody>
                 </Table>
             </div>

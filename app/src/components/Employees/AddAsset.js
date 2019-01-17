@@ -19,7 +19,9 @@ export default class AddAsset extends Component{
     }
 
     componentDidMount(){
-        Axios.get('/assets')
+        Axios.post('/employees/addAsset', {
+            emp_id: this.props.match.params.emp_id
+        })
         .then(res => {
             if (res.status >= 400){
                 alert(res.data.error)
@@ -65,7 +67,7 @@ export default class AddAsset extends Component{
                 this.props.history.push(`/employees/${this.props.match.params.emp_id}/assets`);
             }
             else{
-                
+                alert(res.data.error)
             }
         })
         .catch(err => {
@@ -91,6 +93,7 @@ export default class AddAsset extends Component{
                 <Table>
                     <thead>
                         <tr>
+                            <th>Asset ID</th>
                             <th>Description</th>
                             <th>Model</th>
                             <th>Serial Number</th>
@@ -99,8 +102,9 @@ export default class AddAsset extends Component{
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.filtered.map(item => 
+                        {this.state.filtered.map(item =>                             
                             <tr>
+                                <td>{item.asset_id}</td>
                                 <td>{item.description}</td>
                                 <td>{item.model}</td>
                                 <td>{item.serial_number}</td>

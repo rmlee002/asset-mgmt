@@ -53,6 +53,17 @@ router.post('/getEmployee', (req,res) => {
 
 router.post('/history', (req,res) => {
 	const emp_id = req.body.emp_id;
+	connection.query('SELECT description, model, serial_number, comment\
+		FROM hardware WHERE asset_id IN (SELECT asset_id FROM history where emp_id=?)',
+		emp_id, (err,results) => {
+			if (err){
+				console.log(err)
+				res.status(500).send("Database query error")
+			}
+			else{
+				res.send(JSON.stringify(results))
+			}
+		})
 })
 
 router.post('/manage/update', (req,res) => {
@@ -85,5 +96,20 @@ router.post('/manage/retire', (req,res) => {
 		}
 	})
 });
+
+router.post('/addAsset', (req,res) => {
+	const id = req.body.emp_id;
+	connection.query('SELECT asset_id, description, model, serial_number, comment\
+		FROM hardware WHERE asset_id NOT IN (SELECT asset_id FROM history WHERE emp_id=?)',
+		id, (err, results) => {
+			if (err){
+				console.log(err)
+				res.status(500).send("Database query error")
+			}
+			else{
+				res.send(JSON.stringify(results))
+			}
+		})
+})
 
 module.exports = router;
