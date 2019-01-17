@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { FormGroup, ControlLabel, FormControl, Table } from 'react-bootstrap';
+import { FormGroup, ControlLabel, FormControl, Table, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { LinkContainer } from 'react-router-bootstrap';
 import moment from 'moment';
 import Links from '../Nav';
 import Add from './Add';
@@ -43,21 +44,6 @@ export default class Assets extends Component{
     )
 
     handleChange(e){
-        // let currList = [];
-        // let newList = [];
-        // if (e.target.value !== ''){
-        //     currList = this.state.assets;
-        //     newList = currList.filter(item => {
-        //         const lower = (item.description).toLowerCase();
-        //         const filter = e.target.value.toLowerCase();
-        //         return lower.includes(filter);
-        //     });
-        // }
-        // else {
-        //     newList = this.state.assets;
-        // }
-        // this.setState({ filtered: newList});
-
         if (e.target.value !== ''){
             this.setState({
                 filtered: this.filter(this.state.assets, e.target.value)
@@ -91,7 +77,11 @@ export default class Assets extends Component{
                     <FormControl.Feedback />
                 </FormGroup>
 
-                <Add refresh={this.refresh} onSuccessfulAdd={this.onSuccessfulAdd}/>
+                {/* <Add refresh={this.refresh} onSuccessfulAdd={this.onSuccessfulAdd}/> */}
+
+                <LinkContainer to='/assets/add'>
+                    <Button bsStyle='primary'>Add assets</Button>
+                </LinkContainer>
 
                 <Table>
                     <thead>

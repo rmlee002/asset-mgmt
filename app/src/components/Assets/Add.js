@@ -15,7 +15,7 @@ export default class Add extends Component{
         this.handleClose = this.handleClose.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleIn = this.handleIn.bind(this);
-        this.handleOut = this.handleOut.bind(this);
+        // this.handleOut = this.handleOut.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         // this.handleOwner = this.handleOwner.bind(this);
         // this.onBlur=this.onBlur.bind(this);
@@ -35,7 +35,7 @@ export default class Add extends Component{
             order_num: null,
             warranty: null,
             inDate: null,
-            outDate: null,
+            // outDate: null,
             department: null
         }
     }
@@ -61,7 +61,7 @@ export default class Add extends Component{
             order_num: null,
             warranty: null,
             inDate: null,
-            outDate: null,
+            // outDate: null,
             department: null
         })
     }
@@ -79,25 +79,25 @@ export default class Add extends Component{
         }
     }
 
-    handleOut(date){
-        if(date){
-            this.setState({
-                outDate: moment(date).format("YYYY-MM-DD")
-            });
-        }
-        else{
-            this.setState({
-                outDate: null
-            })
-        }
-    }
+    // handleOut(date){
+    //     if(date){
+    //         this.setState({
+    //             outDate: moment(date).format("YYYY-MM-DD")
+    //         });
+    //     }
+    //     else{
+    //         this.setState({
+    //             outDate: null
+    //         })
+    //     }
+    // }
 
-    handleOwner = (e,{suggestion, suggestionValue}) => {
-        this.setState({
-            owner: suggestionValue,
-            owner_id: suggestion.emp_id
-        })        
-    }
+    // handleOwner = (e,{suggestion, suggestionValue}) => {
+    //     this.setState({
+    //         owner: suggestionValue,
+    //         owner_id: suggestion.emp_id
+    //     })        
+    // }
 
     // handleOwnerNull(){
     //     this.setState({
@@ -128,14 +128,14 @@ export default class Add extends Component{
             model: this.state.model,
             serial_number: this.state.serial_number,
             warranty_provider: this.state.warranty_provider,
-            owner: this.state.owner,
+            // owner: this.state.owner,
             cost: this.state.cost,
             comment: this.state.comment,
             vendor: this.state.vendor,
             order_num: this.state.order_num,
             warranty: this.state.warranty,
             inDate: this.state.inDate,
-            outDate: this.state.outDate,
+            // outDate: this.state.outDate,
             department: this.state.department
         })
         .then(res => {
@@ -333,7 +333,7 @@ export default class Add extends Component{
                                         />
                                     </Col>
                                 </FormGroup>
-                                <FormGroup controlId='outDate'>
+                                {/* <FormGroup controlId='outDate'>
                                     <Col componentClass={ControlLabel} sm={3}>
                                         Out Date
                                     </Col>
@@ -343,7 +343,7 @@ export default class Add extends Component{
                                             onChange={this.handleOut}
                                         />
                                     </Col>
-                                </FormGroup>
+                                </FormGroup> */}
                                 <FormGroup controlId='department'>
                                     <Col componentClass={ControlLabel} sm={3}>Department</Col>
                                     <Col sm={7}>

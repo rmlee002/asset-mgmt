@@ -7,6 +7,7 @@ import Software from './Software';
 import protect from './protect';
 import ManageEmployee from './Employees/Manage';
 import Assets from './Assets/Assets';
+import AddAssets from './Assets/AddNew';
 import History from './Assets/History';
 import ManageAsset from './Assets/Manage';
 import EmployeeAssets from './Employees/EmployeeAssets';
@@ -19,6 +20,7 @@ export default () =>
         <Route path='/login' component={Login} />
         <Route exact path='/employees' component={protect(Employees)} />
         <Route exact path='/assets' component={protect(Assets)} />
+        <Route path='/assets/add' component={protect(AddAssets)} />
         <Route path='/assets/history/:asset_id' component={protect(History)} />
         <Route exact path='/assets/manage/:asset_id' component={protect(ManageAsset)} />
         <Route path='/software' component={protect(Software)} />
