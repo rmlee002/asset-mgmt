@@ -36,7 +36,7 @@ router.post('/add', (req,res) => {
 				})
 			}
 			else{
-				res.status(200)
+				res.status(200).send("Success")
 			}
 		});
 });
@@ -89,7 +89,7 @@ router.post('/manage/update', (req,res) => {
 				})
 			}
 			else{
-				res.status(200)
+				res.status(200).send("Success")
 			}
 		})
 })
@@ -104,7 +104,7 @@ router.post('/manage/retire', (req,res) => {
             })
 		}
 		else{
-			res.status(200)
+			res.status(200).send("Success")
 		}
 	})
 });

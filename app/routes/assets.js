@@ -45,7 +45,7 @@ router.post('/add', (req, res) =>{
                 })
             }
             else{
-                res.status(200)
+                res.status(200).send("Success")
             }            
         })
 })
@@ -78,7 +78,7 @@ router.post('/updateAsset', (req,res) => {
                 })
             }
             else{
-                res.status(200)
+                res.status(200).send("Success")
             }
         })
 })
@@ -93,7 +93,22 @@ router.post('/addHistory', (req,res) => {
             })
         }
         else{
-            res.status(200)
+            res.status(200).send("Success")
+        }
+    })
+})
+
+router.post('/retire', (req, res) => {
+    const asset_id = req.body.asset_id
+    connection.query('UPDATE hardware SET archived=TRUE WHERE asset_id=?', asset_id, (err,result) => {
+        if (err){
+            console.log(err)
+            res.status(500).send({
+                error: "Database query error"
+            })
+        }
+        else{
+            res.status(200).send("Success")
         }
     })
 })
