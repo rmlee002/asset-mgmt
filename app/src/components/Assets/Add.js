@@ -17,9 +17,9 @@ export default class Add extends Component{
         this.handleIn = this.handleIn.bind(this);
         this.handleOut = this.handleOut.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleOwner = this.handleOwner.bind(this);
-        this.onBlur=this.onBlur.bind(this);
-        this.handleOwnerNull=this.handleOwnerNull.bind(this);
+        // this.handleOwner = this.handleOwner.bind(this);
+        // this.onBlur=this.onBlur.bind(this);
+        // this.handleOwnerNull=this.handleOwnerNull.bind(this);
 
         this.state = {
             show: false,
@@ -27,8 +27,8 @@ export default class Add extends Component{
             model: null,
             serial_number: null,
             warranty_provider: null,
-            owner: null,
-            owner_id: null,
+            // owner: null,
+            // owner_id: null,
             cost: null,
             comment: null,
             vendor: null,
@@ -53,8 +53,8 @@ export default class Add extends Component{
             model: null,
             serial_number: null,
             warranty_provider: null,
-            owner: null,
-            owner_id: null,
+            // owner: null,
+            // owner_id: null,
             cost: null,
             comment: null,
             vendor: null,
@@ -99,21 +99,21 @@ export default class Add extends Component{
         })        
     }
 
-    handleOwnerNull(){
-        this.setState({
-            owner: null,
-            owner_id: null
-        })
-    }
+    // handleOwnerNull(){
+    //     this.setState({
+    //         owner: null,
+    //         owner_id: null
+    //     })
+    // }
 
-    onBlur = (event, { highlightedSuggestion }) => {
-        if (highlightedSuggestion){
-            this.setState({
-                owner: highlightedSuggestion.first_name+' '+highlightedSuggestion.last_name,
-                owner_id: highlightedSuggestion.asset_id
-            })
-        }
-    }
+    // onBlur = (event, { highlightedSuggestion }) => {
+    //     if (highlightedSuggestion){
+    //         this.setState({
+    //             owner: highlightedSuggestion.first_name+' '+highlightedSuggestion.last_name,
+    //             owner_id: highlightedSuggestion.asset_id
+    //         })
+    //     }
+    // }
 
     handleChange(e){
         this.setState({
@@ -243,20 +243,20 @@ export default class Add extends Component{
                                         />
                                     </Col>
                                 </FormGroup>
-                                <FormGroup controlId='owner'>
+                                {/* <FormGroup controlId='owner'>
                                     <Col componentClass={ControlLabel} sm={3}>
                                         Owner
                                     </Col>
                                     <Col sm={7}>
-                                        {/* <FormControl
+                                        <FormControl
                                             type='text'
                                             value={this.state.owner}
                                             placeholder='Owner'
                                             onChange={this.handleChange}
-                                        /> */}
+                                        />
                                         <EditOwner handleOwnerNull={this.handleOwnerNull} handleOwner={this.handleOwner} onBlur={this.onBlur}/>
                                     </Col>
-                                </FormGroup>
+                                </FormGroup> */}
                                 <FormGroup controlId='cost'>
                                     <Col componentClass={ControlLabel} sm={3}>
                                         Cost
