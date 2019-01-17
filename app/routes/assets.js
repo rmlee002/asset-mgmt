@@ -31,9 +31,9 @@ router.post('/history', (req, res) => {
 router.post('/add', (req, res) =>{
     const asset = req.body;
     connection.query(`INSERT INTO hardware (description, model, serial_number, warranty_provider,\
-        owner, cost, comment, vendor, order_num, warranty, inDate, outDate, department) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)`, [asset.description, asset.model,
-        asset.serial_number, asset.warranty_provider, asset.owner, asset.cost, asset.comment, asset.vendor,
-        asset.order_num, asset.warranty, asset.inDate, asset.outDate, asset.department], (err, results) => {
+        cost, comment, vendor, order_num, warranty, inDate, department) VALUES (?,?,?,?,?,?,?,?,?,?,?)`, [asset.description, asset.model,
+        asset.serial_number, asset.warranty_provider, asset.cost, asset.comment, asset.vendor,
+        asset.order_num, asset.warranty, asset.inDate, asset.department], (err, results) => {
             if (err) {
                 console.log(err)
                 res.status(500).send("Database query error")
