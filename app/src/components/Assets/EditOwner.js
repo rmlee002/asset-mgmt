@@ -32,8 +32,7 @@ export default class EditOwner extends Component{
         Axios.get('/employees')
         .then(res => {
             if (res.status >= 400){
-                alert(res.data.error)
-                throw new Error("Bad response from server")
+                alert(res.statusText);
             }
             this.setState({
                 employees: res.data

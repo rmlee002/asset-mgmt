@@ -41,8 +41,7 @@ export default class ManageEmployee extends Component{
         })
         .then(res => {
             if (res.status > 400){
-                alert(res.data.error)
-                throw new Error("Bad response from server");
+                alert(res.statusText);
             }
             const employee = res.data[0];
             this.setState({

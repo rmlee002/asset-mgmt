@@ -68,7 +68,7 @@ export default class AddAssets extends Component{
                 this.props.history.push('/assets')
             }
             else{
-                alert('Error updating employee. Please try again')
+                alert(res.statusText)
             }
         })
         .catch(err => {

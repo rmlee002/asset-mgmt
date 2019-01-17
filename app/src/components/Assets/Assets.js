@@ -29,7 +29,7 @@ export default class Assets extends Component{
         axios.get('/assets')
         .then(function(res) {
             if (res.status >= 400){
-                alert(res.data.error)
+                alert(res.statusText)
                 throw new Error("Bad response from server");
             }
             self.setState({assets: res.data, filtered: res.data});
@@ -57,11 +57,11 @@ export default class Assets extends Component{
         
     }    
 
-    onSuccessfulAdd(desc){
-        this.setState({
-            filtered: this.filter(this.state.assets, desc)
-        })  
-    }
+    // onSuccessfulAdd(desc){
+    //     this.setState({
+    //         filtered: this.filter(this.state.assets, desc)
+    //     })  
+    // }
 
     render(){
         return(
