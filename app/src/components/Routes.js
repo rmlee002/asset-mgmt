@@ -3,7 +3,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import Home from './Home';
 import Login from './Login';
 import Employees from './Employees/Employees';
-import Software from './Software';
+import Software from './Software/Software';
 import protect from './protect';
 import ManageEmployee from './Employees/Manage';
 import Assets from './Assets/Assets';
