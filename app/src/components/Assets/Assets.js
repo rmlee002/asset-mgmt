@@ -16,7 +16,6 @@ export default class Assets extends Component{
             filtered: []
         }
         this.handleChange = this.handleChange.bind(this);
-        this.onSuccessfulAdd = this.onSuccessfulAdd.bind(this);
         this.refresh = this.refresh.bind(this);
     }
 
