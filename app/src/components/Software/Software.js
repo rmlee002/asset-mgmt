@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Table, FormGroup, ControlLabel, FormControl, Button, ButtonToolbar } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 import Links from '../Nav';
 
@@ -7,7 +9,41 @@ export default class Employees extends Component {
         return(
             <div>
                 <Links />
-                <h1>Software</h1>
+                <FormGroup controlid="search">
+                    <ControlLabel>Search</ControlLabel>
+                    <FormControl
+                        type='text'
+                        placeholder='Enter software'
+                        onChange = {this.handleChange}
+                    />
+                    <FormControl.Feedback />
+                </FormGroup>
+                <ButtonToolbar>
+                    <Button bsStyle='primary'>Add License</Button>
+                    <Button bsStyle='primary'>View all active licenses</Button>
+                </ButtonToolbar>
+                <Table>
+                    <thead>
+                        <tr>
+                            <th>License</th>
+                            <th>Subscription Cost</th>                            
+                            <th>Total Monthly Cost</th>
+                            <th>Active Users</th>
+                            <th>Expected Annual Cost</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Sample License</td>
+                            <td>$20/mo</td>                            
+                            <td>$2000</td>
+                            <td><Link to='/software/1/users'>100</Link></td>
+                            <td>$24,000</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </Table>
             </div>
         );
     }
