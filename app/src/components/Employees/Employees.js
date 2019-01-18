@@ -61,7 +61,7 @@ export default class Employees extends Component {
                     <ControlLabel>Search</ControlLabel>
                     <FormControl
                         type='text'
-                        placeholder='Enter values'
+                        placeholder='Enter a name'
                         onChange = {this.handleChange}
                     />
                     <FormControl.Feedback />
