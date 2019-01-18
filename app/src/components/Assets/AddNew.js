@@ -9,10 +9,11 @@ export default class AddAssets extends Component{
     constructor(props){
         super(props)
 
-        this.handleChange = this.handleChange.bind(this);
+        // this.handleChange = this.handleChange.bind(this);
         this.handleIn = this.handleIn.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.addAsset = this.addAsset.bind(this);
+        this.handleAdd = this.handleAdd.bind(this);
+        this.handleRemove = this.handleRemove.bind(this)
 
         this.state = {
             show: false,
@@ -32,23 +33,28 @@ export default class AddAssets extends Component{
         }
     }
 
-    handleChange(e){
-        if (['description','model','serial_number','cost','comment','department'].includes(e.target.id)){
-            let assets = [...this.state.assets]
-            assets[e.target.dataset.id][e.target.id] = nullify(e.target.value)
-            this.setState({ assets })
-        }
-        else{
-            this.setState({
-                [e.target.id]: nullify(e.target.value)
-            }) 
-        }        
+    handleAssetChange = index => e => {
+        let assets = [...this.state.assets]
+        assets[index][e.target.id] = nullify(e.target.value)
+        this.setState({ assets })             
     }
 
-    addAsset(e){
+    handleOrderChange(e){
+        this.setState({
+            [e.target.id]: nullify(e.target.value)
+        })
+    }
+
+    handleAdd(){
         this.setState((prevState) => ({
             assets: [...prevState.assets, {description:null, model:null, serial_number:null, cost:null, comment:null, department:null}]
         }))
+    }
+
+    handleRemove(index){
+        this.setState({
+            assets: this.state.assets.filter((asset, assetIndex) => index !== assetIndex)
+        })
     }
 
     handleIn(date){
@@ -67,17 +73,12 @@ export default class AddAssets extends Component{
     handleSubmit(e){
         e.preventDefault();
         axios.post('/assets/add', {
-            description: this.state.description,
-            model: this.state.model,
-            serial_number: this.state.serial_number,
-            warranty_provider: this.state.warranty_provider,
-            cost: this.state.cost,
-            comment: this.state.comment,
-            vendor: this.state.vendor,
             order_num: this.state.order_num,
-            warranty: this.state.warranty,
+            vendor: this.state.vendor,
             inDate: this.state.inDate,
-            department: this.state.department
+            warranty: this.state.warranty,            
+            warranty_provider: this.state.warranty_provider,
+            assets: JSON.stringify(this.state.assets)
         })
         .then(res => {
             if (res.status === 200) {
@@ -109,7 +110,7 @@ export default class AddAssets extends Component{
                                     type='text'
                                     value={this.state.order_num}
                                     placeholder='Order Number'
-                                    onChange={this.handleChange}
+                                    onChange={this.handleOrderChange.bind(this)}
                                 />
                             </Col>
                         </FormGroup>
@@ -122,7 +123,7 @@ export default class AddAssets extends Component{
                                     type='text'
                                     value={this.state.vendor}
                                     placeholder='Vendor'
-                                    onChange={this.handleChange}
+                                    onChange={this.handleOrderChange.bind(this)}
                                 />
                             </Col>
                         </FormGroup>         
@@ -146,7 +147,7 @@ export default class AddAssets extends Component{
                                     type='text'
                                     value={this.state.warranty_provider}
                                     placeholder='Warranty Provider'
-                                    onChange={this.handleChange}
+                                    onChange={this.handleOrderChange.bind(this)}
                                 />
                             </Col>
                         </FormGroup>
@@ -159,12 +160,13 @@ export default class AddAssets extends Component{
                                     type='text'
                                     value={this.state.warranty}
                                     placeholder='Warranty'
-                                    onChange={this.handleChange}
+                                    onChange={this.handleOrderChange.bind(this)}
                                 />
                             </Col>
                         </FormGroup>                       
                         {this.state.assets.map((item, index) => 
                             <div>
+                                <Button bsStyle='danger' onClick={() => this.handleRemove(index)}>Remove</Button>
                                 <FormGroup controlId='description'>
                                     <Col componentClass={ControlLabel} sm={3}>
                                         Description
@@ -174,11 +176,11 @@ export default class AddAssets extends Component{
                                             type='text'
                                             value={this.state.description}
                                             placeholder='Description'
-                                            onChange={this.handleChange}
+                                            onChange={this.handleAssetChange(index)}
                                         />
                                         <HelpBlock bsClass='small'>Required</HelpBlock>
                                     </Col>
-                                </FormGroup>
+                                </FormGroup>                                
                                 <FormGroup controlId='model'>
                                     <Col componentClass={ControlLabel} sm={3}>
                                         Model
@@ -188,7 +190,7 @@ export default class AddAssets extends Component{
                                             type='text'
                                             value={this.state.model}
                                             placeholder='Model'
-                                            onChange={this.handleChange}
+                                            onChange={this.handleAssetChange(index)}
                                         />
                                     </Col>
                                 </FormGroup>
@@ -201,7 +203,7 @@ export default class AddAssets extends Component{
                                             type='text'
                                             value={this.state.serial_number}
                                             placeholder='Serial Number'
-                                            onChange={this.handleChange}
+                                            onChange={this.handleAssetChange(index)}
                                         />
                                     </Col>
                                 </FormGroup>
@@ -214,7 +216,7 @@ export default class AddAssets extends Component{
                                             type='number'
                                             value={this.state.cost}
                                             placeholder='Cost'
-                                            onChange={this.handleChange}
+                                            onChange={this.handleAssetChange(index)}
                                         />
                                     </Col>
                                 </FormGroup>
@@ -227,14 +229,14 @@ export default class AddAssets extends Component{
                                             type='text'
                                             value={this.state.comment}
                                             placeholder='Comment'
-                                            onChange={this.handleChange}
+                                            onChange={this.handleAssetChange(index)}
                                         />
                                     </Col>
                                 </FormGroup>
                                 <FormGroup controlId='department'>
                                     <Col componentClass={ControlLabel} sm={3}>Department</Col>
                                     <Col sm={7}>
-                                        <FormControl componentClass='select' onChange={this.handleChange}>
+                                        <FormControl componentClass='select' onChange={this.handleAssetChange(index)}>
                                             <option>Select...</option>
                                             <option value='CQA'>CQA</option>
                                             <option value='VPT'>VPT</option>
@@ -260,17 +262,13 @@ export default class AddAssets extends Component{
                                     </Col>
                                 </FormGroup>
                             </div>
-                        )}
-
-
-
-                        
+                        )}                        
                     </Form>
                     <ButtonToolbar>
-                        <Button onClick={this.addAsset} block>Add asset</Button>
+                        <Button onClick={this.handleAdd} block>Add asset</Button>
                     </ButtonToolbar>
                     <ButtonToolbar>
-                        <Button type='submit' bsStyle='success' disabled={!isValid} block>Submit</Button>
+                        <Button type='submit' bsStyle='success' block>Submit</Button>
                     </ButtonToolbar>
                     
                 </form>
