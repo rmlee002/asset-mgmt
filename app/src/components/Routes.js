@@ -19,14 +19,14 @@ export default () =>
         <Redirect exact from='/' to='/home'/>
         <Route path='/home' component={Home} />
         <Route path='/login' component={Login} />
-        <Route exact path='/employees' component={protect(Employees)} />
-        <Route exact path='/assets' component={protect(Assets)} />
+        <Route exact path='/employees' component={Employees} />
+        <Route exact path='/assets' component={Assets} />
         <Route path='/assets/add' component={protect(AddAssets)} />
-        <Route path='/assets/history/:asset_id' component={protect(History)} />
+        <Route path='/assets/history/:asset_id' component={History} />
         <Route exact path='/assets/manage/:asset_id' component={protect(ManageAsset)} />
-        <Route exact path='/software' component={protect(Software)} />
+        <Route exact path='/software' component={Software} />
         <Route path='/employees/manage/:emp_id' component={protect(ManageEmployee)} />
-        <Route exact path='/employees/:emp_id/assets' component={protect(EmployeeAssets)} />
+        <Route exact path='/employees/:emp_id/assets' component={EmployeeAssets} />
         <Route path ='/employees/:emp_id/addAsset' component={protect(AddAsset)} />
-        <Route path='/software/:license_id/users' component={protect(Users)} />
+        <Route path='/software/:license_id/users' component={Users} />
     </Switch>
