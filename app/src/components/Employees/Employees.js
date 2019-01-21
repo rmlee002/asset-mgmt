@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from'react-router-dom';
-import { Table, FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
+import { Table, FormGroup, FormControl, ControlLabel, Button} from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import moment from 'moment';
 import axios from 'axios';
 import Links from '../Nav';
-import Add from './Add';
 import memoize from 'memoize-one';
 
 export default class Employees extends Component {
@@ -67,7 +67,9 @@ export default class Employees extends Component {
                     <FormControl.Feedback />
                 </FormGroup>
                 
-                <Add refresh={this.refresh}/>
+                <LinkContainer to='/employees/add'>
+                    <Button bsStyle='primary'>Add employee</Button>
+                </LinkContainer>                
 
                 <Table className="employees">
                     <thead>

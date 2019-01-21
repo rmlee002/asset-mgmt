@@ -13,6 +13,7 @@ import ManageAsset from './Assets/Manage';
 import EmployeeAssets from './Employees/EmployeeAssets';
 import AddAsset from './Employees/AddAsset';
 import Users from './Software/Users';
+import AddEmployee from './Employees/Add'
 
 export default () => 
     <Switch>
@@ -20,13 +21,14 @@ export default () =>
         <Route path='/home' component={Home} />
         <Route path='/login' component={Login} />
         <Route exact path='/employees' component={Employees} />
+        <Route path='/employees/add' component={AddEmployee} />
+        <Route path='/employees/manage/:emp_id' component={protect(ManageEmployee)} />
+        <Route exact path='/employees/:emp_id/assets' component={EmployeeAssets} />
+        <Route path ='/employees/:emp_id/addAsset' component={protect(AddAsset)} />
         <Route exact path='/assets' component={Assets} />
         <Route path='/assets/add' component={protect(AddAssets)} />
         <Route path='/assets/history/:asset_id' component={History} />
         <Route exact path='/assets/manage/:asset_id' component={protect(ManageAsset)} />
-        <Route exact path='/software' component={Software} />
-        <Route path='/employees/manage/:emp_id' component={protect(ManageEmployee)} />
-        <Route exact path='/employees/:emp_id/assets' component={EmployeeAssets} />
-        <Route path ='/employees/:emp_id/addAsset' component={protect(AddAsset)} />
+        <Route exact path='/software' component={Software} />       
         <Route path='/software/:license_id/users' component={Users} />
     </Switch>

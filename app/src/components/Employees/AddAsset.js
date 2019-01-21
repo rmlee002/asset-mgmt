@@ -90,6 +90,7 @@ export default class AddAsset extends Component{
                     <FormControl.Feedback />
                 </FormGroup>
 
+                
                 <Table>
                     <thead>
                         <tr>
