@@ -73,7 +73,7 @@ export default class Login extends Component {
 						bsSize="large"
 						type="submit"
 					>
-					Login
+						Login
 					</Button>
 				</form>
 			</div>
