@@ -39,7 +39,7 @@ export default class AddAsset extends Component{
     }
 
     filter = memoize(
-        (list, filterText) => list.filter(item => (item.description).toLowerCase().includes(filterText.toLowerCase()))
+        (list, filterText) => list.filter(item => (item.serial_number).toLowerCase().includes(filterText.toLowerCase()))
     )
 
     handleChange(e){
@@ -94,7 +94,6 @@ export default class AddAsset extends Component{
                     <thead>
                         <tr>
                             <th>Asset ID</th>
-                            <th>Description</th>
                             <th>Model</th>
                             <th>Serial Number</th>
                             <th>Comment</th>
@@ -105,7 +104,6 @@ export default class AddAsset extends Component{
                         {this.state.filtered.map(item =>                             
                             <tr>
                                 <td>{item.asset_id}</td>
-                                <td>{item.description}</td>
                                 <td>{item.model}</td>
                                 <td>{item.serial_number}</td>
                                 <td>{item.comment}</td>                          
