@@ -4,7 +4,8 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import "../../../node_modules/react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
-import Links from '../Nav'
+import Links from '../Nav';
+import Departments from '../Departments';
 
 export default class AddEmployee extends Component{
     constructor(props){
@@ -155,27 +156,7 @@ export default class AddEmployee extends Component{
                         <FormGroup controlId='department'>
                             <Col componentClass={ControlLabel} sm={3}>Department</Col>
                             <Col sm={7}>
-                                <FormControl componentClass='select' onChange={this.handleChange}>
-                                    <option>Select...</option>
-                                    <option value='CQA'>CQA</option>
-                                    <option value='VPT'>VPT</option>
-                                    <option value='TCoE'>TCoE</option>
-                                    <option value='TI'>TI</option>
-                                    <option value='Sharepoint'>Sharepoint</option>                                        
-                                    <option value='NGC'>NGC</option>
-                                    <option value='NAVSUP'>NAVSUP</option>                                        
-                                    <option value='MHV'>MHV</option>
-                                    <option value='IDC'>IDC</option>                                        
-                                    <option value='VA'>VA</option>
-                                    <option value='BD'>BD</option>
-                                    <option value='Cm/Tools'>CM/Tools</option>
-                                    <option value='DITD'>DITD</option>
-                                    <option value='BD'>BD</option>
-                                    <option value='HR'>HR</option>
-                                    <option value='Accounting'>Accounting</option>
-                                    <option value='Legal'>Legal</option>
-                                    <option value='IT'>IT</option>
-                                </FormControl>
+                                <Departments />
                             </Col>
                         </FormGroup>
                         <FormGroup controlId='supervisor'>
