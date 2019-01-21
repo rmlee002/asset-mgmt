@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-router.post('/', function(req, res) {
+router.post('/login', function(req, res) {
 	const { user, password } = req.body;
 	adminConnection.query('SELECT password AS pass FROM admins WHERE user = ?', user, function(err, results, fields){
 		if (err){
@@ -35,19 +35,20 @@ router.post('/', function(req, res) {
 						expiresIn: '1d'
 					});
 					res.cookie('token', token, {httpOnly: true})
-						.send({
-							"code": 200
-						});
+						.status(200).send('Success!');
 				}
 				//Incorrect password
 				else{
-					res.send({
-						"code": 401,
+					res.status(400).send({
 						"error": 'Invalid password'});
 				}
 			}
 		}	
 	});
 }); 
+
+router.get('/logout', (req,res)=>{
+	res.clearCookie('token').send()
+})
 
 module.exports = router;

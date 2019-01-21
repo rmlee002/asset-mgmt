@@ -1,7 +1,7 @@
 const createError = require('http-errors');
 const express = require('express');
 const cookieParser = require('cookie-parser');
-const loginRouter = require('./routes/login');
+const authenticateRouter = require('./routes/authenticate');
 const employeeRouter = require('./routes/employees');
 const assetRouter = require('./routes/assets.js');
 const path = require('path');
@@ -18,7 +18,7 @@ app.use(cors());
 
 app.set('view engine', 'ejs');
 
-app.use('/login', loginRouter);
+app.use('/authenticate', authenticateRouter);
 app.use('/employees', employeeRouter);
 app.use('/assets', assetRouter);
 

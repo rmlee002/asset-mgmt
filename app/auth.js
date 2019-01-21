@@ -13,7 +13,7 @@ const authorized = (req,res,next) => {
 	}
 	else{
 		jwt.verify(token, process.env.TOK_SECRET, (err, decoded) => {
-			if (err) {
+			if (err) {				
 				res.status(401).send('Unauthorized: Invalid token');
 			}
 			else{

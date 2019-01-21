@@ -22,12 +22,12 @@ export default class Login extends Component {
 
 	handleSubmit = (event) => {
 		event.preventDefault()
-		axios.post("/login", {
+		axios.post("/authenticate/login", {
 			user: this.state.user,
 			password: this.state.password
 		})
 		.then(res => {
-			if (res.data.code !== 200){
+			if (res.status !== 200){
 				alert(res.data.error);
 			}
 			else{
