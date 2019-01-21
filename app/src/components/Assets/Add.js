@@ -1,68 +1,58 @@
 import React, { Component } from 'react';
-import { Button, Modal, Form, FormGroup, FormControl, ControlLabel, Col, HelpBlock} from 'react-bootstrap';
+import { Button, Modal, Form, FormGroup, FormControl, ControlLabel, Col, HelpBlock, ButtonToolbar } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
-import EditOwner from './EditOwner';
-
-import "../../../node_modules/react-datepicker/dist/react-datepicker.css";
+import Links from '../Nav';
 import axios from 'axios';
 
-export default class Add extends Component{
+export default class AddAssets extends Component{
     constructor(props){
         super(props)
 
-        this.handleShow = this.handleShow.bind(this);
-        this.handleClose = this.handleClose.bind(this);
-        this.handleChange = this.handleChange.bind(this);
+        // this.handleChange = this.handleChange.bind(this);
         this.handleIn = this.handleIn.bind(this);
-        // this.handleOut = this.handleOut.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        // this.handleOwner = this.handleOwner.bind(this);
-        // this.onBlur=this.onBlur.bind(this);
-        // this.handleOwnerNull=this.handleOwnerNull.bind(this);
+        this.handleAdd = this.handleAdd.bind(this);
+        this.handleRemove = this.handleRemove.bind(this)
 
         this.state = {
             show: false,
-            description: null,
-            model: null,
-            serial_number: null,
             warranty_provider: null,
-            // owner: null,
-            // owner_id: null,
-            cost: null,
-            comment: null,
             vendor: null,
             order_num: null,
             warranty: null,
             inDate: null,
-            // outDate: null,
-            department: null
+            assets: [{
+                model: null,
+                serial_number: null,               
+                cost: null,
+                comment: null,               
+                department: null
+            }]           
         }
     }
 
-    handleShow(){
+    handleAssetChange = index => e => {
+        let assets = [...this.state.assets]
+        assets[index][e.target.id] = nullify(e.target.value)
+        this.setState({ assets })             
+    }
+
+    handleOrderChange(e){
         this.setState({
-            show: true
+            [e.target.id]: nullify(e.target.value)
         })
     }
 
-    handleClose(){
+    handleAdd(){
+        this.setState((prevState) => ({
+            assets: [...prevState.assets, {model:null, serial_number:null, cost:null, comment:null, department:null}]
+        }))
+    }
+
+    handleRemove(index){
         this.setState({
-            show: false,
-            description: null,
-            model: null,
-            serial_number: null,
-            warranty_provider: null,
-            // owner: null,
-            // owner_id: null,
-            cost: null,
-            comment: null,
-            vendor: null,
-            order_num: null,
-            warranty: null,
-            inDate: null,
-            // outDate: null,
-            department: null
+            assets: this.state.assets.filter((asset, assetIndex) => index !== assetIndex)
         })
     }
 
@@ -79,95 +69,22 @@ export default class Add extends Component{
         }
     }
 
-    // handleOut(date){
-    //     if(date){
-    //         this.setState({
-    //             outDate: moment(date).format("YYYY-MM-DD")
-    //         });
-    //     }
-    //     else{
-    //         this.setState({
-    //             outDate: null
-    //         })
-    //     }
-    // }
-
-    // handleOwner = (e,{suggestion, suggestionValue}) => {
-    //     this.setState({
-    //         owner: suggestionValue,
-    //         owner_id: suggestion.emp_id
-    //     })        
-    // }
-
-    // handleOwnerNull(){
-    //     this.setState({
-    //         owner: null,
-    //         owner_id: null
-    //     })
-    // }
-
-    // onBlur = (event, { highlightedSuggestion }) => {
-    //     if (highlightedSuggestion){
-    //         this.setState({
-    //             owner: highlightedSuggestion.first_name+' '+highlightedSuggestion.last_name,
-    //             owner_id: highlightedSuggestion.asset_id
-    //         })
-    //     }
-    // }
-
-    handleChange(e){
-        this.setState({
-            [e.target.id]: nullify(e.target.value)
-        })
-    }
-
     handleSubmit(e){
         e.preventDefault();
         axios.post('/assets/add', {
-            description: this.state.description,
-            model: this.state.model,
-            serial_number: this.state.serial_number,
-            warranty_provider: this.state.warranty_provider,
-            // owner: this.state.owner,
-            cost: this.state.cost,
-            comment: this.state.comment,
-            vendor: this.state.vendor,
             order_num: this.state.order_num,
-            warranty: this.state.warranty,
+            vendor: this.state.vendor,
             inDate: this.state.inDate,
-            // outDate: this.state.outDate,
-            department: this.state.department
+            warranty: this.state.warranty,            
+            warranty_provider: this.state.warranty_provider,
+            assets: JSON.stringify(this.state.assets)
         })
         .then(res => {
             if (res.status === 200) {
-                // const desc = this.state.description
-                this.handleClose();
-                this.props.refresh();
-
-                // const start = new Date();
-                // axios.post('/assets/addHistory', {
-                //     asset_id: 
-                //     emp_id: this.state.owner_id,
-                //     start: moment(start).format('YYYY-MM-DD'),
-                //     end: null
-                // })
-                // .then(res => {
-                //     if (res.status === 200){
-                //         this.handleClose();
-                //         this.props.refresh();
-                //         // this.props.onSuccessfulAdd(desc);
-                //     }
-                //     else{
-                //         alert('Error adding to asset history')
-                //     }
-                // })
-                // .catch(err => {
-                //     alert(err)
-                //     console.log(err)
-                // })
+                this.props.history.push('/assets')
             }
             else{
-                alert('Error updating employee. Please try again')
+                alert(res.data.error)
             }
         })
         .catch(err => {
@@ -175,35 +92,79 @@ export default class Add extends Component{
             console.log(err)
         })
     }
-
+    
     render(){
-        const isValid = this.state.description?true:false
         return(
             <div>
-                <Button bsStyle='primary' onClick={this.handleShow}>
-                    Add asset
-                </Button>
-                <Modal show = {this.state.show} onHide={this.handleClose}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Add Asset</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <form onSubmit={this.handleSubmit}>
-                            <Form horizontal>
-                                <FormGroup controlId='description'>
-                                    <Col componentClass={ControlLabel} sm={3}>
-                                        Description
-                                    </Col>
-                                    <Col sm={7}>
-                                        <FormControl
-                                            type='text'
-                                            value={this.state.description}
-                                            placeholder='Description'
-                                            onChange={this.handleChange}
-                                        />
-                                        <HelpBlock bsClass='small'>Required</HelpBlock>
-                                    </Col>
-                                </FormGroup>
+                <Links />
+                <form onSubmit={this.handleSubmit}>
+                    <Form horizontal>
+                        <FormGroup controlId='order_num'>
+                            <Col componentClass={ControlLabel} sm={3}>
+                                Order Number
+                            </Col>
+                            <Col sm={7}>
+                                <FormControl
+                                    type='text'
+                                    value={this.state.order_num}
+                                    placeholder='Order Number'
+                                    onChange={this.handleOrderChange.bind(this)}
+                                />
+                            </Col>
+                        </FormGroup>
+                        <FormGroup controlId='vendor'>
+                            <Col componentClass={ControlLabel} sm={3}>
+                                Vendor
+                            </Col>
+                            <Col sm={7}>
+                                <FormControl
+                                    type='text'
+                                    value={this.state.vendor}
+                                    placeholder='Vendor'
+                                    onChange={this.handleOrderChange.bind(this)}
+                                />
+                            </Col>
+                        </FormGroup>         
+                        <FormGroup controlId='inDate'>
+                            <Col componentClass={ControlLabel} sm={3}>
+                                In Date
+                            </Col>
+                            <Col sm={7}>
+                                <DatePicker
+                                    selected={this.state.inDate}
+                                    onChange={this.handleIn}
+                                />
+                            </Col>
+                        </FormGroup>               
+                        <FormGroup controlId='warranty_provider'>
+                            <Col componentClass={ControlLabel} sm={3}>
+                                Warranty Provider
+                            </Col>
+                            <Col sm={7}>
+                                <FormControl
+                                    type='text'
+                                    value={this.state.warranty_provider}
+                                    placeholder='Warranty Provider'
+                                    onChange={this.handleOrderChange.bind(this)}
+                                />
+                            </Col>
+                        </FormGroup>
+                        <FormGroup controlId='warranty'>
+                            <Col componentClass={ControlLabel} sm={3}>
+                                Warranty
+                            </Col>
+                            <Col sm={7}>
+                                <FormControl
+                                    type='text'
+                                    value={this.state.warranty}
+                                    placeholder='Warranty'
+                                    onChange={this.handleOrderChange.bind(this)}
+                                />
+                            </Col>
+                        </FormGroup>                       
+                        {this.state.assets.map((item, index) => 
+                            <div>
+                                <Button bsStyle='danger' onClick={() => this.handleRemove(index)}>Remove</Button>                          
                                 <FormGroup controlId='model'>
                                     <Col componentClass={ControlLabel} sm={3}>
                                         Model
@@ -213,7 +174,7 @@ export default class Add extends Component{
                                             type='text'
                                             value={this.state.model}
                                             placeholder='Model'
-                                            onChange={this.handleChange}
+                                            onChange={this.handleAssetChange(index)}
                                         />
                                     </Col>
                                 </FormGroup>
@@ -226,37 +187,10 @@ export default class Add extends Component{
                                             type='text'
                                             value={this.state.serial_number}
                                             placeholder='Serial Number'
-                                            onChange={this.handleChange}
+                                            onChange={this.handleAssetChange(index)}
                                         />
                                     </Col>
                                 </FormGroup>
-                                <FormGroup controlId='warranty_provider'>
-                                    <Col componentClass={ControlLabel} sm={3}>
-                                        Warranty Provider
-                                    </Col>
-                                    <Col sm={7}>
-                                        <FormControl
-                                            type='text'
-                                            value={this.state.warranty_provider}
-                                            placeholder='Warranty Provider'
-                                            onChange={this.handleChange}
-                                        />
-                                    </Col>
-                                </FormGroup>
-                                {/* <FormGroup controlId='owner'>
-                                    <Col componentClass={ControlLabel} sm={3}>
-                                        Owner
-                                    </Col>
-                                    <Col sm={7}>
-                                        <FormControl
-                                            type='text'
-                                            value={this.state.owner}
-                                            placeholder='Owner'
-                                            onChange={this.handleChange}
-                                        />
-                                        <EditOwner handleOwnerNull={this.handleOwnerNull} handleOwner={this.handleOwner} onBlur={this.onBlur}/>
-                                    </Col>
-                                </FormGroup> */}
                                 <FormGroup controlId='cost'>
                                     <Col componentClass={ControlLabel} sm={3}>
                                         Cost
@@ -266,7 +200,7 @@ export default class Add extends Component{
                                             type='number'
                                             value={this.state.cost}
                                             placeholder='Cost'
-                                            onChange={this.handleChange}
+                                            onChange={this.handleAssetChange(index)}
                                         />
                                     </Col>
                                 </FormGroup>
@@ -279,75 +213,14 @@ export default class Add extends Component{
                                             type='text'
                                             value={this.state.comment}
                                             placeholder='Comment'
-                                            onChange={this.handleChange}
+                                            onChange={this.handleAssetChange(index)}
                                         />
                                     </Col>
                                 </FormGroup>
-                                <FormGroup controlId='vendor'>
-                                    <Col componentClass={ControlLabel} sm={3}>
-                                        Vendor
-                                    </Col>
-                                    <Col sm={7}>
-                                        <FormControl
-                                            type='text'
-                                            value={this.state.vendor}
-                                            placeholder='Vendor'
-                                            onChange={this.handleChange}
-                                        />
-                                    </Col>
-                                </FormGroup>
-                                <FormGroup controlId='order_num'>
-                                    <Col componentClass={ControlLabel} sm={3}>
-                                        Order Number
-                                    </Col>
-                                    <Col sm={7}>
-                                        <FormControl
-                                            type='text'
-                                            value={this.state.order_num}
-                                            placeholder='Order Number'
-                                            onChange={this.handleChange}
-                                        />
-                                    </Col>
-                                </FormGroup>
-                                <FormGroup controlId='warranty'>
-                                    <Col componentClass={ControlLabel} sm={3}>
-                                        Warranty
-                                    </Col>
-                                    <Col sm={7}>
-                                        <FormControl
-                                            type='text'
-                                            value={this.state.warranty}
-                                            placeholder='Warranty'
-                                            onChange={this.handleChange}
-                                        />
-                                    </Col>
-                                </FormGroup>
-                                <FormGroup controlId='inDate'>
-                                    <Col componentClass={ControlLabel} sm={3}>
-                                        In Date
-                                    </Col>
-                                    <Col sm={7}>
-                                        <DatePicker
-                                            selected={this.state.inDate}
-                                            onChange={this.handleIn}
-                                        />
-                                    </Col>
-                                </FormGroup>
-                                {/* <FormGroup controlId='outDate'>
-                                    <Col componentClass={ControlLabel} sm={3}>
-                                        Out Date
-                                    </Col>
-                                    <Col sm={7}>
-                                        <DatePicker
-                                            selected={this.state.outDate}
-                                            onChange={this.handleOut}
-                                        />
-                                    </Col>
-                                </FormGroup> */}
                                 <FormGroup controlId='department'>
                                     <Col componentClass={ControlLabel} sm={3}>Department</Col>
                                     <Col sm={7}>
-                                        <FormControl componentClass='select' onChange={this.handleChange}>
+                                        <FormControl componentClass='select' onChange={this.handleAssetChange(index)}>
                                             <option>Select...</option>
                                             <option value='CQA'>CQA</option>
                                             <option value='VPT'>VPT</option>
@@ -372,14 +245,20 @@ export default class Add extends Component{
                                         </FormControl>
                                     </Col>
                                 </FormGroup>
-                            </Form>
-                            <Button type='submit' bsStyle='success' disabled={!isValid}>Add Asset</Button>
-                        </form>
-                    </Modal.Body>
-                </Modal>
+                            </div>
+                        )}                        
+                    </Form>
+                    <ButtonToolbar>
+                        <Button onClick={this.handleAdd} block>Add asset</Button>
+                    </ButtonToolbar>
+                    <ButtonToolbar>
+                        <Button type='submit' bsStyle='success' block>Submit</Button>
+                    </ButtonToolbar>
+                    
+                </form>
             </div>
         );
-    }    
+    }
 }
 
 function nullify(value){

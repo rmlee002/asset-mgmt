@@ -39,7 +39,7 @@ export default class Assets extends Component{
     }
 
     filter = memoize(
-        (list, filterText) => list.filter(item => (item.description).toLowerCase().includes(filterText.toLowerCase()))
+        (list, filterText) => list.filter(item => (item.serial_number).toLowerCase().includes(filterText.toLowerCase()))
     )
 
     handleChange(e){
@@ -55,12 +55,6 @@ export default class Assets extends Component{
         }
         
     }    
-
-    // onSuccessfulAdd(desc){
-    //     this.setState({
-    //         filtered: this.filter(this.state.assets, desc)
-    //     })  
-    // }
 
     render(){
         return(
@@ -85,7 +79,6 @@ export default class Assets extends Component{
                 <Table>
                     <thead>
                         <tr>
-                            <th>Description</th>
                             <th>Model</th>
                             <th>Serial Number</th>
                             <th>Warranty Provider</th>
@@ -105,7 +98,6 @@ export default class Assets extends Component{
                     <tbody>
                         {this.state.filtered.map(item =>
                             <tr key={item.asset_id}>
-                                <td>{item.description}</td>
                                 <td>{item.model}</td>
                                 <td>{item.serial_number}</td>
                                 <td>{item.warranty_provider}</td>

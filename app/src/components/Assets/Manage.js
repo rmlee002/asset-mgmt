@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Button, Form , FormGroup, Col, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
-import { Link } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import Links from '../Nav';
 import Axios from 'axios';
@@ -20,10 +18,10 @@ export default class ManageAsset extends Component{
         this.onBlur = this.onBlur.bind(this)
         this.handleOwnerNull = this.handleOwnerNull.bind(this)
         this.handleRetire = this.handleRetire.bind(this)
+        this.refresh = this.refresh.bind(this)
 
         this.state={
             asset_id: null,
-            description: null,
             model: null,
             serial_number: null,
             warranty_provider: null,
@@ -41,6 +39,10 @@ export default class ManageAsset extends Component{
     }
 
     componentDidMount(){
+        this.refresh()
+    }
+
+    refresh(){
         Axios.post('/assets/getAsset', {
             asset_id: this.props.match.params.asset_id
         })
@@ -51,7 +53,6 @@ export default class ManageAsset extends Component{
             const asset = res.data[0]
             this.setState({
                 asset_id: asset.asset_id,
-                description: asset.description,
                 model: asset.model,
                 serial_number: asset.serial_number,
                 warranty_provider: asset.warranty_provider,
@@ -152,7 +153,6 @@ export default class ManageAsset extends Component{
     handleSubmit(e){
         e.preventDefault();
         Axios.post('/assets/updateAsset', {
-            description: this.state.description,
             model: this.state.model,
             serial_number: this.state.serial_number,
             warranty_provider: this.state.warranty_provider,
@@ -200,28 +200,12 @@ export default class ManageAsset extends Component{
     }
 
     render(){
-        const isValid = this.state.description?true:false;
-
         return(
             <div>
                 <Links />
                 <Button bsStyle='danger' onClick={this.handleRetire}>Retire</Button>
                 <form onSubmit={this.handleSubmit}>
                     <Form horizontal>
-                        <FormGroup controlId='description'>
-                            <Col componentClass={ControlLabel} sm={3}>
-                                Description
-                            </Col>
-                            <Col sm={7}>
-                                <FormControl
-                                    type='text'
-                                    value={this.state.description}
-                                    placeholder='Description'
-                                    onChange={this.handleChange}
-                                />
-                                <HelpBlock bsClass='small'>Required</HelpBlock>
-                            </Col>
-                        </FormGroup>
                         <FormGroup controlId='model'>
                             <Col componentClass={ControlLabel} sm={3}>
                                 Model
@@ -396,7 +380,7 @@ export default class ManageAsset extends Component{
                             </Col>
                         </FormGroup>
                     </Form>
-                    <Button type = 'submit' bsStyle='success' disabled={!isValid}>Update Asset</Button>
+                    <Button type = 'submit' bsStyle='success'>Update Asset</Button>
                 </form>
             </div>
         );

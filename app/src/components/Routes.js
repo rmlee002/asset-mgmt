@@ -7,7 +7,7 @@ import Software from './Software/Software';
 import protect from './protect';
 import ManageEmployee from './Employees/Manage';
 import Assets from './Assets/Assets';
-import AddAssets from './Assets/AddNew';
+import AddAssets from './Assets/Add';
 import History from './Assets/History';
 import ManageAsset from './Assets/Manage';
 import EmployeeAssets from './Employees/EmployeeAssets';

@@ -32,36 +32,18 @@ router.post('/history', (req, res) => {
     })
 })
 
-// router.post('/add', (req, res) =>{
-//     const asset = req.body;
-//     connection.query(`INSERT INTO hardware (description, model, serial_number, warranty_provider,\
-//         cost, comment, vendor, order_num, warranty, inDate, department) VALUES (?,?,?,?,?,?,?,?,?,?,?)`, [asset.description, asset.model,
-//         asset.serial_number, asset.warranty_provider, asset.cost, asset.comment, asset.vendor,
-//         asset.order_num, asset.warranty, asset.inDate, asset.department], (err, results) => {
-//             if (err) {
-//                 console.log(err)
-//                 res.status(500).send({
-//                     error: "Database query error"
-//                 })
-//             }
-//             else{
-//                 res.status(200).send("Success")
-//             }            
-//         })
-// })
-
 router.post('/add', (req,res)=>{
     let assets = JSON.parse(req.body.assets)
     values = assets.map(extract)
 
     function extract(asset){
-        return [asset.description, asset.model, asset.serial_number,
+        return [asset.model, asset.serial_number,
             req.body.warranty_provider, asset.cost, asset.comment,
             req.body.vendor, req.body.order_num, req.body.warranty, 
             req.body.inDate, asset.department]
     }
     
-    connection.query('INSERT INTO hardware (description,model,serial_number,warranty_provider,cost,comment,vendor,order_num,warranty,inDate,department) VALUES ?',
+    connection.query('INSERT INTO hardware (model,serial_number,warranty_provider,cost,comment,vendor,order_num,warranty,inDate,department) VALUES ?',
         [values], (err, results) => {
         if (err){
             console.log(err)
@@ -88,12 +70,12 @@ router.post('/getAsset', (req,res) => {
 })
 
 router.post('/updateAsset', (req,res) => {
-    const {description, model, serial_number, warranty_provider, owner, cost, comment, vendor, 
+    const {model, serial_number, warranty_provider, owner, cost, comment, vendor, 
         order_num, warranty, inDate, outDate, department, asset_id} = req.body;
 
-    connection.query('UPDATE hardware SET description=?, model=?, serial_number=?, warranty_provider=?,\
+    connection.query('UPDATE hardware SET model=?, serial_number=?, warranty_provider=?,\
         owner=?, cost=?, comment=?, vendor=?, order_num=?, warranty=?, inDate=?, outDate=?, department=?\
-        WHERE asset_id=?', [description, model, serial_number, warranty_provider, owner, cost, comment, 
+        WHERE asset_id=?', [model, serial_number, warranty_provider, owner, cost, comment, 
             vendor, order_num, warranty, inDate, outDate, department, asset_id], (err, results) =>{
             if(err){
                 console.log(err)
