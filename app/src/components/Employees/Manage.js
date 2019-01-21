@@ -15,6 +15,7 @@ export default class ManageEmployee extends Component{
         this.handleStart = this.handleStart.bind(this);
         this.handleEnd = this.handleEnd.bind(this);
         this.handleUpdate = this.handleUpdate.bind(this);
+        this.refresh = this.refresh.bind(this);
 
         this.state = {
             success: false,
@@ -36,6 +37,10 @@ export default class ManageEmployee extends Component{
     }
 
     componentDidMount(){
+        this.refresh()
+    }
+
+    refresh(){
         axios.post('/employees/getEmployee',{
             emp_id: this.props.match.params.emp_id
         })
@@ -131,7 +136,7 @@ export default class ManageEmployee extends Component{
         })
         .then(res => {
             if (res.status === 200){
-                this.forceUpdate();
+                this.refresh();
             }
             else{
                 alert('Error updating employee. Please try again')
