@@ -13,23 +13,17 @@ export default class Employees extends Component {
         this.state = {
             employees: [],
             filtered: []
-        }
+        };
         this.handleChange = this.handleChange.bind(this);
-        this.refresh = this.refresh.bind(this);
     }
 
     componentDidMount(){
-        this.refresh()
-    }
-
-    refresh(){
-        let self = this;
         axios.get('/employees')
-        .then(function(res) {
+        .then(res => {
             if (res.status >= 400){
                 alert(res.data.error);
             }
-            self.setState({employees: res.data, filtered: res.data});
+            this.setState({employees: res.data, filtered: res.data});
         }).catch(err => {
             console.log(err);
             alert(err);
