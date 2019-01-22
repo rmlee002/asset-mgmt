@@ -6,6 +6,7 @@ import Axios from 'axios';
 import moment from 'moment';
 import EditOwner from './EditOwner';
 import "../../../node_modules/react-datepicker/dist/react-datepicker.css";
+import Departments from '../Departments';
 
 export default class ManageAsset extends Component{
     constructor(props){
@@ -19,6 +20,8 @@ export default class ManageAsset extends Component{
         this.handleOwnerNull = this.handleOwnerNull.bind(this)
         this.handleRetire = this.handleRetire.bind(this)
         this.refresh = this.refresh.bind(this)
+        this.handleDepartment = this.handleDepartment.bind(this);
+        this.handleCreateDepartmentOption = this.handleCreateDepartmentOption.bind(this);
 
         this.state={
             asset_id: null,
@@ -33,7 +36,7 @@ export default class ManageAsset extends Component{
             warranty: null,
             inDate: null,
             outDate: null,
-            department: null,
+            value: null,
             owner_id: null,
         }
     }
@@ -64,13 +67,23 @@ export default class ManageAsset extends Component{
                 warranty: asset.warranty,
                 inDate: asset.inDate,
                 outDate: asset.outDate,
-                department: asset.department
+                value: asset.department.split(', ').map(department => ({value: department, label: department}))
             })
         })
         .catch(err => {
             alert(err)
             console.log(err)
         })
+    }
+
+    handleDepartment(value){
+        this.setState({value})
+    }
+
+    handleCreateDepartmentOption(value){
+        this.setState({
+            value: [...this.state.value, {value: value, label: value}]
+        })        
     }
 
     handleChange(e){
@@ -164,30 +177,12 @@ export default class ManageAsset extends Component{
             warranty: this.state.warranty,
             inDate: this.state.inDate,
             outDate: this.state.outDate,
-            department: this.state.department,
+            department: this.state.value.map(val => val.value).join(', '),
             asset_id: this.state.asset_id
         })
         .then(res => {            
             if (res.status === 200) {
-                // let startDate = new Date();
-                // Axios.post('/assets/addHistory/', {
-                //     asset_id: this.state.asset_id,
-                //     emp_id: this.state.owner_id,
-                //     start: moment(startDate).format("YYYY-MM-DD")
-                // })
-                // .then(res2 => {
-                //     if (res2.status >= 400){
-                //         alert(res2.data.error)
-                //         throw new Error("Bad response from server")
-                //     }
-                //     else{
-                        
-                //     }
-                // })
-                // .catch(err2 => {
-                //     alert(err2)
-                //     console.log(err2)
-                // })
+                
             }
             else{
                 alert(res.data.error)
@@ -354,29 +349,7 @@ export default class ManageAsset extends Component{
                         <FormGroup controlId='department'>
                             <Col componentClass={ControlLabel} sm={3}>Department</Col>
                             <Col sm={7}>
-                                <FormControl componentClass='select' value={this.state.department} onChange={this.handleChange}>
-                                    <option>Select...</option>
-                                    <option value='CQA'>CQA</option>
-                                    <option value='VPT'>VPT</option>
-                                    <option value='TCoE'>TCoE</option>
-                                    <option value='TI'>TI</option>
-                                    <option value='Sharepoint'>Sharepoint</option>                                        
-                                    <option value='NGC'>NGC</option>
-                                    <option value='NAVSUP'>NAVSUP</option>                                        
-                                    <option value='MHV'>MHV</option>
-                                    <option value='IDC'>IDC</option>                                        
-                                    <option value='VA'>VA</option>
-                                    <option value='BD'>BD</option>
-                                    <option value='Cm/Tools'>CM/Tools</option>
-                                    <option value='DITD'>DITD</option>
-                                    <option value='BD'>BD</option>
-                                    <option value='Northrop'>Northrop</option>
-                                    <option value='Overhead'>Overhead</option>
-                                    <option value='HR'>HR</option>
-                                    <option value='Accounting'>Accounting</option>
-                                    <option value='Legal'>Legal</option>
-                                    <option value='IT'>IT</option>
-                                </FormControl>
+                                <Departments createDept = {this.handleCreateDepartmentOption} handleChange={this.handleDepartment} value={this.state.value}/>
                             </Col>
                         </FormGroup>
                     </Form>

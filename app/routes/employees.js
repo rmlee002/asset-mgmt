@@ -78,6 +78,8 @@ router.post('/manage/update', (req,res) => {
 	const {
 		emp_id, first_name, last_name, email, affiliation, department, supervisor, 
 		reviewer, time_approver, start, end, notes} = req.body
+	
+	console.log(start + " " + end)
 	connection.query('UPDATE employees SET first_name=?, last_name=?, email=?, affiliation=?,\
 		department=?, supervisor=?, reviewer=?, time_approver=?, start=?, end=?, notes=? WHERE emp_id=?',
 		[first_name, last_name, email, affiliation, department, supervisor, reviewer,

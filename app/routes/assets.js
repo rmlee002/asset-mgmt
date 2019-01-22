@@ -40,7 +40,7 @@ router.post('/add', (req,res)=>{
         return [asset.model, asset.serial_number,
             req.body.warranty_provider, asset.cost, asset.comment,
             req.body.vendor, req.body.order_num, req.body.warranty, 
-            req.body.inDate, asset.department]
+            req.body.inDate, asset.value.map(val => val.value).join(', ')]
     }
     
     connection.query('INSERT INTO hardware (model,serial_number,warranty_provider,cost,comment,vendor,order_num,warranty,inDate,department) VALUES ?',

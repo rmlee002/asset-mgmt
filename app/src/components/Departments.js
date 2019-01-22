@@ -7,9 +7,8 @@ export default class Departments extends Component{
         super(props)
 
         this.onCreateOption = this.onCreateOption.bind(this)
-        this.refresh = this.refresh.bind(this)
         this.handleChange = this.handleChange.bind(this)
-        this.handleInputChange = this.handleInputChange.bind(this)
+        // this.handleInputChange = this.handleInputChange.bind(this)
 
         this.state={
             options: [],
@@ -19,10 +18,6 @@ export default class Departments extends Component{
     }
 
     componentDidMount(){
-        this.refresh();
-    }
-
-    refresh(){
         Axios.get('/departments')
         .then(res => {
             if (res.status===200){  
@@ -39,15 +34,16 @@ export default class Departments extends Component{
         })
     }
 
-    handleChange(value, actionMeta){
+    handleChange(value){
         this.setState({value})
     }
 
-    handleInputChange = (inputValue) => {
-        this.setState({ inputValue });
-    };
+    // handleInputChange = (inputValue) => {
+    //     this.setState({ inputValue })
+    // };
 
     onCreateOption(option){
+        const { options, inputValue, value } = this.state
         Axios.post('/departments', {
             value: option,
             label: option
@@ -57,7 +53,10 @@ export default class Departments extends Component{
                 alert(res.data.error)
             }
             else{
-                this.refresh();
+                this.setState({
+                    options: [...options, {value: option, label: option}]
+                });
+                this.props.createDept(option)
             }
         })
         .catch(err => {
@@ -70,12 +69,12 @@ export default class Departments extends Component{
             <CreatableSelect 
                 isClearable 
                 isMulti 
-                inputValue={this.state.inputValue}
+                // inputValue={this.state.inputValue}
                 options={this.state.options} 
-                onInputChange={this.handleInputChange}
-                onChange={this.handleChange}
+                // onInputChange={this.handleInputChange}
+                onChange={this.props.handleChange}
                 onCreateOption={this.onCreateOption}
-                value={this.state.value}
+                value={this.props.value}
             >
             </CreatableSelect>
         );

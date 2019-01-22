@@ -5,6 +5,8 @@ import Links from '../Nav';
 import axios from 'axios';
 import moment from 'moment';
 import "../../../node_modules/react-datepicker/dist/react-datepicker.css";
+import Departments from '../Departments';
+import Select from 'react-select';
 
 export default class ManageEmployee extends Component{
     constructor(props){
@@ -15,18 +17,18 @@ export default class ManageEmployee extends Component{
         this.handleStart = this.handleStart.bind(this);
         this.handleEnd = this.handleEnd.bind(this);
         this.handleUpdate = this.handleUpdate.bind(this);
+        this.handleDepartment = this.handleDepartment.bind(this);
+        this.handleCreateDepartmentOption = this.handleCreateDepartmentOption.bind(this);
+        this.handleAffiliation = this.handleAffiliation.bind(this)
         this.refresh = this.refresh.bind(this);
 
         this.state = {
-            success: false,
-            error: false,
-            show: false,
+            value: [],
             emp_id: this.props.match.params.emp_id,
             first_name: null,
             last_name: null,
             email: null,
             affiliation: null,
-            department: null,
             supervisor: null,
             reviewer: null,
             time_approver:null,
@@ -54,7 +56,7 @@ export default class ManageEmployee extends Component{
                 last_name: employee.last_name,
                 email: employee.email,
                 affiliation: employee.affiliation,
-                department: employee.department,
+                value: employee.department.split(', ').map(department => ({value: department, label: department})),
                 supervisor: employee.supervisor,
                 reviewer: employee.reviewer,
                 time_approver: employee.time_approver,
@@ -101,6 +103,22 @@ export default class ManageEmployee extends Component{
         });
     }
 
+    handleAffiliation(value){
+        this.setState({
+            affiliation: value.value
+        })
+    }
+
+    handleDepartment(value){
+        this.setState({value})
+    }
+
+    handleCreateDepartmentOption(value){
+        this.setState({
+            value: [...this.state.value, {value: value, label: value}]
+        })        
+    }
+
     handleRetire(){
         axios.post('/employees/manage/retire', {
             emp_id: this.state.emp_id
@@ -126,12 +144,12 @@ export default class ManageEmployee extends Component{
             last_name: this.state.last_name,
             email: this.state.email,
             affiliation: this.state.affiliation,
-            department: this.state.department,
+            department: this.state.value.map(val => val.value).join(', '),
             supervisor: this.state.supervisor,
             reviewer: this.state.reviewer,
             time_approver: this.state.time_approver,
-            start: moment(this.state.start).format("YYYY-MM-DD"),
-            end: moment(this.state.end).format("YYYY-MM-DD"),
+            start: this.state.start,
+            end: this.state.end,
             notes: this.state.notes
         })
         .then(res => {
@@ -201,39 +219,30 @@ export default class ManageEmployee extends Component{
                         <FormGroup controlId='affiliation'>
                             <Col componentClass={ControlLabel} sm={3}>Affiliation</Col>
                             <Col sm={7}>
-                                <FormControl componentClass='select' value={this.state.affiliation} onChange={this.handleChange}>
+                                {/* <FormControl componentClass='select' value={this.state.affiliation} onChange={this.handleChange}>
                                     <option>Select...</option>
                                     <option value='Contractor'>Contractor</option>
                                     <option value='Employee'>Employee</option>
                                     <option value='Part-time/Hourly'>Part-time/Hourly</option>
                                     <option value='Intern'>Intern</option>
-                                </FormControl>
+                                </FormControl> */}
+                                <Select
+                                    onChange={this.handleAffiliation}
+                                    options={[
+                                        {value: 'Contractor', label: 'Contractor'},
+                                        {value: 'Employee', label: 'Employee'},
+                                        {value: 'Part-time/Hourly', label: 'Part-time/Hourly' },
+                                        {value: 'Intern', label: 'Intern'}
+                                    ]}
+                                    value={{value: this.state.affiliation, label: this.state.affiliation}}
+                                >
+                                </Select>
                             </Col>
                         </FormGroup>
                         <FormGroup controlId='department'>
                             <Col componentClass={ControlLabel} sm={3}>Department</Col>
                             <Col sm={7}>
-                                <FormControl componentClass='select' value={this.state.department} onChange={this.handleChange}>
-                                    <option>Select...</option>
-                                    <option value='CQA'>CQA</option>
-                                    <option value='VPT'>VPT</option>
-                                    <option value='TCoE'>TCoE</option>
-                                    <option value='TI'>TI</option>
-                                    <option value='Sharepoint'>Sharepoint</option>                                        
-                                    <option value='NGC'>NGC</option>
-                                    <option value='NAVSUP'>NAVSUP</option>                                        
-                                    <option value='MHV'>MHV</option>
-                                    <option value='IDC'>IDC</option>                                        
-                                    <option value='VA'>VA</option>
-                                    <option value='BD'>BD</option>
-                                    <option value='Cm/Tools'>CM/Tools</option>
-                                    <option value='DITD'>DITD</option>
-                                    <option value='BD'>BD</option>
-                                    <option value='HR'>HR</option>
-                                    <option value='Accounting'>Accounting</option>
-                                    <option value='Legal'>Legal</option>
-                                    <option value='IT'>IT</option>
-                                </FormControl>
+                                <Departments createDept = {this.handleCreateDepartmentOption} handleChange={this.handleDepartment} value={this.state.value}/> 
                             </Col>
                         </FormGroup>
                         <FormGroup controlId='supervisor'>

@@ -4,6 +4,7 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import Links from '../Nav';
 import axios from 'axios';
+import Departments from '../Departments';
 
 export default class AddAssets extends Component{
     constructor(props){
@@ -14,9 +15,11 @@ export default class AddAssets extends Component{
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleAdd = this.handleAdd.bind(this);
         this.handleRemove = this.handleRemove.bind(this)
+        this.handleDepartment = this.handleDepartment.bind(this);
+        this.handleCreateDepartmentOption = this.handleCreateDepartmentOption.bind(this);
+        this.click = this.click.bind(this)
 
         this.state = {
-            show: false,
             warranty_provider: null,
             vendor: null,
             order_num: null,
@@ -26,10 +29,14 @@ export default class AddAssets extends Component{
                 model: null,
                 serial_number: null,               
                 cost: null,
-                comment: null,               
-                department: null
+                comment: null,
+                value: []
             }]           
         }
+    }
+
+    click(){
+        alert(this.state.assets[0].value.map(val => val.value).join(', '))
     }
 
     handleAssetChange = index => e => {
@@ -42,6 +49,18 @@ export default class AddAssets extends Component{
         this.setState({
             [e.target.id]: nullify(e.target.value)
         })
+    }
+
+    handleDepartment= index => val => {
+        let assets = [...this.state.assets]
+        assets[index].value = val
+        this.setState({ assets })
+    }
+
+    handleCreateDepartmentOption = index => val => {
+        let assets = [...this.state.assets]
+        assets[index].value = [...assets[index].value, {value: val, label: val}]
+        this.setState({ assets })        
     }
 
     handleAdd(){
@@ -97,6 +116,7 @@ export default class AddAssets extends Component{
         return(
             <div>
                 <Links />
+                <Button onClick={this.click}>Click</Button>
                 <form onSubmit={this.handleSubmit}>
                     <Form horizontal>
                         <FormGroup controlId='order_num'>
@@ -220,29 +240,7 @@ export default class AddAssets extends Component{
                                 <FormGroup controlId='department'>
                                     <Col componentClass={ControlLabel} sm={3}>Department</Col>
                                     <Col sm={7}>
-                                        <FormControl componentClass='select' onChange={this.handleAssetChange(index)}>
-                                            <option>Select...</option>
-                                            <option value='CQA'>CQA</option>
-                                            <option value='VPT'>VPT</option>
-                                            <option value='TCoE'>TCoE</option>
-                                            <option value='TI'>TI</option>
-                                            <option value='Sharepoint'>Sharepoint</option>                                        
-                                            <option value='NGC'>NGC</option>
-                                            <option value='NAVSUP'>NAVSUP</option>                                        
-                                            <option value='MHV'>MHV</option>
-                                            <option value='IDC'>IDC</option>                                        
-                                            <option value='VA'>VA</option>
-                                            <option value='BD'>BD</option>
-                                            <option value='Cm/Tools'>CM/Tools</option>
-                                            <option value='DITD'>DITD</option>
-                                            <option value='BD'>BD</option>
-                                            <option value='Northrop'>Northrop</option>
-                                            <option value='Overhead'>Overhead</option>
-                                            <option value='HR'>HR</option>
-                                            <option value='Accounting'>Accounting</option>
-                                            <option value='Legal'>Legal</option>
-                                            <option value='IT'>IT</option>
-                                        </FormControl>
+                                        <Departments createDept = {this.handleCreateDepartmentOption(index)} handleChange={this.handleDepartment(index)} value={this.state.assets[index].value}/>
                                     </Col>
                                 </FormGroup>
                             </div>
