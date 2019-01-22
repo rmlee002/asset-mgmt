@@ -78,8 +78,8 @@ export default class Assets extends Component{
                 <Table>
                     <thead>
                         <tr>
-                            <th>Model</th>
                             <th>Serial Number</th>
+                            <th>Model</th>                            
                             <th>Warranty Provider</th>
                             <th>Owner</th>
                             <th>Cost</th>
@@ -89,7 +89,6 @@ export default class Assets extends Component{
                             <th>Warranty</th>
                             <th>In Date</th>
                             <th>Out Date</th>
-                            <th>Department</th>
                             <th></th>
                             <th></th>
                         </tr>
@@ -97,8 +96,8 @@ export default class Assets extends Component{
                     <tbody>
                         {this.state.filtered.map(item =>
                             <tr key={item.asset_id}>
-                                <td>{item.model}</td>
                                 <td>{item.serial_number}</td>
+                                <td>{item.model}</td>                                
                                 <td>{item.warranty_provider}</td>
                                 <td>{item.owner}</td>
                                 <td>{item.cost?'$'+item.cost.toFixed(2):''}</td>
@@ -114,7 +113,6 @@ export default class Assets extends Component{
                                     {item.outDate?
                                         moment(item.outDate).utc().format('YYYY-MM-DD'):''}
                                 </td>
-                                <td>{item.department}</td>
                                 <td><Link to={`/assets/history/${item.asset_id}`}>History</Link></td>
                                 <td><Link to={`/assets/manage/${item.asset_id}`}>Manage</Link></td>
                             </tr>

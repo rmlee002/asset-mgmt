@@ -4,7 +4,6 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import Links from '../Nav';
 import axios from 'axios';
-import Departments from '../Departments';
 
 export default class AddAssets extends Component{
     constructor(props){
@@ -15,8 +14,6 @@ export default class AddAssets extends Component{
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleAdd = this.handleAdd.bind(this);
         this.handleRemove = this.handleRemove.bind(this)
-        this.handleDepartment = this.handleDepartment.bind(this);
-        this.handleCreateDepartmentOption = this.handleCreateDepartmentOption.bind(this);
 
         this.state = {
             warranty_provider: null,
@@ -29,7 +26,6 @@ export default class AddAssets extends Component{
                 serial_number: null,               
                 cost: null,
                 comment: null,
-                value: []
             }]           
         }
     }
@@ -46,21 +42,9 @@ export default class AddAssets extends Component{
         })
     }
 
-    handleDepartment= index => val => {
-        let assets = [...this.state.assets]
-        assets[index].value = val
-        this.setState({ assets })
-    }
-
-    handleCreateDepartmentOption = index => val => {
-        let assets = [...this.state.assets]
-        assets[index].value = [...assets[index].value, {value: val, label: val}]
-        this.setState({ assets })        
-    }
-
     handleAdd(){
         this.setState((prevState) => ({
-            assets: [...prevState.assets, {model:null, serial_number:null, cost:null, comment:null, department:null}]
+            assets: [...prevState.assets, {model:null, serial_number:null, cost:null, comment:null}]
         }))
     }
 
@@ -178,20 +162,7 @@ export default class AddAssets extends Component{
                         </FormGroup>                       
                         {this.state.assets.map((item, index) => 
                             <div>
-                                <Button bsStyle='danger' onClick={() => this.handleRemove(index)}>Remove</Button>                          
-                                <FormGroup controlId='model'>
-                                    <Col componentClass={ControlLabel} sm={3}>
-                                        Model
-                                    </Col>
-                                    <Col sm={7}>
-                                        <FormControl
-                                            type='text'
-                                            value={this.state.model}
-                                            placeholder='Model'
-                                            onChange={this.handleAssetChange(index)}
-                                        />
-                                    </Col>
-                                </FormGroup>
+                                <Button bsStyle='danger' onClick={() => this.handleRemove(index)}>Remove</Button>                              
                                 <FormGroup controlId='serial_number'>
                                     <Col componentClass={ControlLabel} sm={3}>
                                         Serial Number
@@ -201,6 +172,19 @@ export default class AddAssets extends Component{
                                             type='text'
                                             value={this.state.serial_number}
                                             placeholder='Serial Number'
+                                            onChange={this.handleAssetChange(index)}
+                                        />
+                                    </Col>
+                                </FormGroup>
+                                <FormGroup controlId='model'>
+                                    <Col componentClass={ControlLabel} sm={3}>
+                                        Model
+                                    </Col>
+                                    <Col sm={7}>
+                                        <FormControl
+                                            type='text'
+                                            value={this.state.model}
+                                            placeholder='Model'
                                             onChange={this.handleAssetChange(index)}
                                         />
                                     </Col>
@@ -229,12 +213,6 @@ export default class AddAssets extends Component{
                                             placeholder='Comment'
                                             onChange={this.handleAssetChange(index)}
                                         />
-                                    </Col>
-                                </FormGroup>
-                                <FormGroup controlId='department'>
-                                    <Col componentClass={ControlLabel} sm={3}>Department</Col>
-                                    <Col sm={7}>
-                                        <Departments createDept = {this.handleCreateDepartmentOption(index)} handleChange={this.handleDepartment(index)} value={this.state.assets[index].value}/>
                                     </Col>
                                 </FormGroup>
                             </div>

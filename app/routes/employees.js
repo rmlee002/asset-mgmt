@@ -59,7 +59,7 @@ router.post('/getEmployee', (req,res) => {
 
 router.post('/history', (req,res) => {
 	const emp_id = req.body.emp_id;
-	connection.query('SELECT description, model, serial_number, comment\
+	connection.query('SELECT model, serial_number, comment\
 		FROM hardware WHERE asset_id IN (SELECT asset_id FROM history where emp_id=?)',
 		emp_id, (err,results) => {
 			if (err){
@@ -113,7 +113,7 @@ router.post('/manage/retire', (req,res) => {
 
 router.post('/addAsset', (req,res) => {
 	const id = req.body.emp_id;
-	connection.query('SELECT asset_id, description, model, serial_number, comment\
+	connection.query('SELECT asset_id, model, serial_number, comment\
 		FROM hardware WHERE asset_id NOT IN (SELECT asset_id FROM history WHERE emp_id=?)',
 		id, (err, results) => {
 			if (err){

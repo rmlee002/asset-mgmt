@@ -94,9 +94,8 @@ export default class AddAsset extends Component{
                 <Table>
                     <thead>
                         <tr>
-                            <th>Asset ID</th>
-                            <th>Model</th>
                             <th>Serial Number</th>
+                            <th>Model</th>                            
                             <th>Comment</th>
                             <th></th>
                         </tr>
@@ -104,9 +103,8 @@ export default class AddAsset extends Component{
                     <tbody>
                         {this.state.filtered.map(item =>                             
                             <tr>
-                                <td>{item.asset_id}</td>
-                                <td>{item.model}</td>
                                 <td>{item.serial_number}</td>
+                                <td>{item.model}</td>                                
                                 <td>{item.comment}</td>                          
                                 <td>
                                     <Button bsStyle='success' bsSize='small' onClick={() => this.handleClick(item.asset_id)}>

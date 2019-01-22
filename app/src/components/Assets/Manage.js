@@ -19,8 +19,6 @@ export default class ManageAsset extends Component{
         this.handleOwner = this.handleOwner.bind(this)
         this.handleRetire = this.handleRetire.bind(this)
         this.refresh = this.refresh.bind(this)
-        this.handleDepartment = this.handleDepartment.bind(this);
-        this.handleCreateDepartmentOption = this.handleCreateDepartmentOption.bind(this);
 
         this.state={
             asset_id: null,
@@ -63,24 +61,13 @@ export default class ManageAsset extends Component{
                 order_num: asset.order_num,
                 warranty: asset.warranty,
                 inDate: asset.inDate,
-                outDate: asset.outDate,
-                value: asset.department.split(', ').map(department => ({value: department, label: department}))
+                outDate: asset.outDate
             })
         })
         .catch(err => {
             alert(err)
             console.log(err)
         })
-    }
-
-    handleDepartment(value){
-        this.setState({value})
-    }
-
-    handleCreateDepartmentOption(value){
-        this.setState({
-            value: [...this.state.value, {value: value, label: value}]
-        })        
     }
 
     handleChange(e){
@@ -156,7 +143,6 @@ export default class ManageAsset extends Component{
             warranty: this.state.warranty,
             inDate: this.state.inDate,
             outDate: this.state.outDate,
-            department: this.state.value.map(val => val.value).join(', '),
             asset_id: this.state.asset_id
         })
         .then(res => {            
@@ -179,20 +165,7 @@ export default class ManageAsset extends Component{
                 <Links />
                 <Button bsStyle='danger' onClick={this.handleRetire}>Retire</Button>
                 <form onSubmit={this.handleSubmit}>
-                    <Form horizontal>
-                        <FormGroup controlId='model'>
-                            <Col componentClass={ControlLabel} sm={3}>
-                                Model
-                            </Col>
-                            <Col sm={7}>
-                                <FormControl
-                                    type='text'
-                                    value={this.state.model}
-                                    placeholder='Model'
-                                    onChange={this.handleChange}
-                                />
-                            </Col>
-                        </FormGroup>
+                    <Form horizontal>                        
                         <FormGroup controlId='serial_number'>
                             <Col componentClass={ControlLabel} sm={3}>
                                 Serial Number
@@ -202,6 +175,19 @@ export default class ManageAsset extends Component{
                                     type='text'
                                     value={this.state.serial_number}
                                     placeholder='Serial Number'
+                                    onChange={this.handleChange}
+                                />
+                            </Col>
+                        </FormGroup>
+                        <FormGroup controlId='model'>
+                            <Col componentClass={ControlLabel} sm={3}>
+                                Model
+                            </Col>
+                            <Col sm={7}>
+                                <FormControl
+                                    type='text'
+                                    value={this.state.model}
+                                    placeholder='Model'
                                     onChange={this.handleChange}
                                 />
                             </Col>
@@ -312,12 +298,6 @@ export default class ManageAsset extends Component{
                                     selected={this.state.outDate}
                                     onChange={this.handleOut}
                                 />
-                            </Col>
-                        </FormGroup>
-                        <FormGroup controlId='department'>
-                            <Col componentClass={ControlLabel} sm={3}>Department</Col>
-                            <Col sm={7}>
-                                <Departments createDept = {this.handleCreateDepartmentOption} handleChange={this.handleDepartment} value={this.state.value}/>
                             </Col>
                         </FormGroup>
                     </Form>

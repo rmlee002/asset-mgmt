@@ -40,10 +40,10 @@ router.post('/add', (req,res)=>{
         return [asset.model, asset.serial_number,
             req.body.warranty_provider, asset.cost, asset.comment,
             req.body.vendor, req.body.order_num, req.body.warranty, 
-            req.body.inDate, asset.value.map(val => val.value).join(', ')]
+            req.body.inDate]
     }
     
-    connection.query('INSERT INTO hardware (model,serial_number,warranty_provider,cost,comment,vendor,order_num,warranty,inDate,department) VALUES ?',
+    connection.query('INSERT INTO hardware (model,serial_number,warranty_provider,cost,comment,vendor,order_num,warranty,inDate) VALUES ?',
         [values], (err, results) => {
         if (err){
             console.log(err)
@@ -71,12 +71,12 @@ router.post('/getAsset', (req,res) => {
 
 router.post('/updateAsset', (req,res) => {
     const {model, serial_number, warranty_provider, owner, owner_id, cost, comment, vendor, 
-        order_num, warranty, inDate, outDate, department, asset_id} = req.body;
+        order_num, warranty, inDate, outDate, asset_id} = req.body;
 
     connection.query('UPDATE hardware SET model=?, serial_number=?, warranty_provider=?,\
         owner=?, owner_id=?, cost=?, comment=?, vendor=?, order_num=?, warranty=?, inDate=?, outDate=?, department=?\
         WHERE asset_id=?', [model, serial_number, warranty_provider, owner, owner_id, cost, comment, 
-            vendor, order_num, warranty, inDate, outDate, department, asset_id], (err, results) =>{
+            vendor, order_num, warranty, inDate, outDate, asset_id], (err, results) =>{
             if(err){
                 console.log(err)
                 res.status(500).send({

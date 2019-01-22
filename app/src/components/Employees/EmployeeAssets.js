@@ -43,8 +43,8 @@ export default class EmployeeAssets extends Component{
                 <Table>
                     <thead>
                         <tr>
-                            <th>Model</th>
                             <th>Serial Number</th>
+                            <th>Model</th>                            
                             <th>Comment</th>
                             <th>Start Date</th>
                         </tr>
@@ -52,8 +52,8 @@ export default class EmployeeAssets extends Component{
                     <tbody>
                         {this.state.assets.map(item => 
                             <tr>
-                                <td>{item.model}</td>
                                 <td>{item.serial_number}</td>
+                                <td>{item.model}</td>                                
                                 <td>{item.comment}</td>
                                 <td></td>
                             </tr>                
