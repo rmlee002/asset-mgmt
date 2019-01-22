@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, FormControl, ControlLabel, Col, HelpBlock} from 'react-bootstrap';
+import { Button, Form, FormGroup, FormControl, ControlLabel, Col } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import "../../../node_modules/react-datepicker/dist/react-datepicker.css";
@@ -71,7 +71,7 @@ export default class AddEmployee extends Component{
 
     handleAffiliation(value){
         this.setState({
-            affiliation: value.value
+            affiliation: value?value.value:null
         })
     }
 

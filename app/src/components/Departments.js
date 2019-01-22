@@ -8,12 +8,10 @@ export default class Departments extends Component{
 
         this.onCreateOption = this.onCreateOption.bind(this)
         this.handleChange = this.handleChange.bind(this)
-        // this.handleInputChange = this.handleInputChange.bind(this)
 
         this.state={
             options: [],
             value: [],
-            inputValue: ''
         }
     }
 
@@ -38,12 +36,9 @@ export default class Departments extends Component{
         this.setState({value})
     }
 
-    // handleInputChange = (inputValue) => {
-    //     this.setState({ inputValue })
-    // };
 
     onCreateOption(option){
-        const { options, inputValue, value } = this.state
+        const { options, value } = this.state
         Axios.post('/departments', {
             value: option,
             label: option
@@ -69,9 +64,7 @@ export default class Departments extends Component{
             <CreatableSelect 
                 isClearable 
                 isMulti 
-                // inputValue={this.state.inputValue}
                 options={this.state.options} 
-                // onInputChange={this.handleInputChange}
                 onChange={this.props.handleChange}
                 onCreateOption={this.onCreateOption}
                 value={this.props.value}
