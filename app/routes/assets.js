@@ -20,8 +20,8 @@ router.get('/', (req, res) => {
 });
 
 router.post('/history', (req, res) => {
-    connection.query('SELECT first_name, last_name FROM employees WHERE\
-        emp_id IN (SELECT emp_id FROM history WHERE asset_id=?)', req.body.asset_id, function(err, results){
+    connection.query('SELECT * FROM (SELECT history.asset_id, employees.first_name, employees.last_name, history.start, history.end\
+        FROM history INNER JOIN employees ON employees.emp_id=history.emp_id) AS j WHERE asset_id=?', req.body.asset_id, function(err, results){
         if (err){
             console.log(err);
             res.status(500).send({

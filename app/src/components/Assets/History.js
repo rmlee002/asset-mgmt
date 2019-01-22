@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Table, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import Links from '../Nav';
 import axios from 'axios';
+import moment from 'moment';
 
 export default class History extends Component{
     constructor(props){
@@ -56,14 +57,14 @@ export default class History extends Component{
                         {this.state.owners.map(owner => 
                             <tr>
                                 <td>{owner.first_name+' '+owner.last_name}</td>
-                                {/* <td>
+                                <td>
                                     {owner.start?
                                         moment(owner.start).utc().format('YYYY-MM-DD'):''}
                                 </td>
                                 <td>
                                     {owner.end?
                                         moment(owner.end).utc().format('YYYY-MM-DD'):''}
-                                </td> */}
+                                </td>
                             </tr>
                         )}
                     </tbody>

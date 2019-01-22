@@ -88,9 +88,7 @@ export default class AddAsset extends Component{
                         onChange = {this.handleChange}
                     />
                     <FormControl.Feedback />
-                </FormGroup>
-
-                
+                </FormGroup>                
                 <Table>
                     <thead>
                         <tr>
