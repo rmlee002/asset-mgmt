@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
+import { Table, FormGroup, FormControl, ControlLabel, Button, Modal } from 'react-bootstrap';
 import Axios from 'axios';
 import memoize from 'memoize-one';
 import moment from 'moment';
@@ -55,25 +55,14 @@ export default class AddAsset extends Component{
         }        
     }    
 
-    handleClick(id){
-        const startDate = new Date();
-        Axios.post('/assets/addHistory',{
-            asset_id: id,
-            emp_id: this.props.match.params.emp_id,
-            start: moment(startDate).format('YYYY-MM-DD')
+    handleClick(){
+        this.setState({
+            show: true
         })
-        .then(res => {
-            if (res.status === 200){
-                this.props.history.push(`/employees/${this.props.match.params.emp_id}/assets`);
-            }
-            else{
-                alert(res.data.error);
-            }
-        })
-        .catch(err => {
-            alert(err)
-            console.log(err)
-        })
+    }
+
+    handleSubmit(id){
+
     }
 
     render(){
@@ -84,7 +73,7 @@ export default class AddAsset extends Component{
                     <ControlLabel>Search</ControlLabel>
                     <FormControl
                         type='text'
-                        placeholder='Type a name'
+                        placeholder='Enter serial number'
                         onChange = {this.handleChange}
                     />
                     <FormControl.Feedback />
@@ -113,6 +102,14 @@ export default class AddAsset extends Component{
                         )}
                     </tbody>
                 </Table>
+                {/* <Modal show={this.state.show}>
+                    <Modal.Header>
+                        <Modal.Title>Add asset</Modal.Title>                        
+                    </Modal.Header>
+                    <Modal.Body>
+
+                    </Modal.Body>
+                </Modal> */}
             </div>
         );
     }

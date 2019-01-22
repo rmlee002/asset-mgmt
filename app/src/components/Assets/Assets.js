@@ -63,13 +63,11 @@ export default class Assets extends Component{
                     <ControlLabel>Search</ControlLabel>
                     <FormControl
                         type='text'
-                        placeholder='Enter values'
+                        placeholder='Enter serial number'
                         onChange = {this.handleChange}
                     />
                     <FormControl.Feedback />
                 </FormGroup>
-
-                {/* <Add refresh={this.refresh} onSuccessfulAdd={this.onSuccessfulAdd}/> */}
 
                 <LinkContainer to='/assets/add'>
                     <Button bsStyle='primary'>Add assets</Button>
