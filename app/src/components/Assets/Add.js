@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Modal, Form, FormGroup, FormControl, ControlLabel, Col, HelpBlock, ButtonToolbar } from 'react-bootstrap';
+import { Button, Form, FormGroup, FormControl, ControlLabel, Col, ButtonToolbar } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import Links from '../Nav';
@@ -17,7 +17,6 @@ export default class AddAssets extends Component{
         this.handleRemove = this.handleRemove.bind(this)
         this.handleDepartment = this.handleDepartment.bind(this);
         this.handleCreateDepartmentOption = this.handleCreateDepartmentOption.bind(this);
-        this.click = this.click.bind(this)
 
         this.state = {
             warranty_provider: null,
@@ -33,10 +32,6 @@ export default class AddAssets extends Component{
                 value: []
             }]           
         }
-    }
-
-    click(){
-        alert(this.state.assets[0].value.map(val => val.value).join(', '))
     }
 
     handleAssetChange = index => e => {
@@ -116,7 +111,6 @@ export default class AddAssets extends Component{
         return(
             <div>
                 <Links />
-                <Button onClick={this.click}>Click</Button>
                 <form onSubmit={this.handleSubmit}>
                     <Form horizontal>
                         <FormGroup controlId='order_num'>

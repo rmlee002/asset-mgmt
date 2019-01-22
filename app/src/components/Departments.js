@@ -38,7 +38,7 @@ export default class Departments extends Component{
 
 
     onCreateOption(option){
-        const { options, value } = this.state
+        const options = this.state.options
         Axios.post('/departments', {
             value: option,
             label: option

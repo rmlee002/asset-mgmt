@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import moment from 'moment';
 import Links from '../Nav';
-import Add from './Add';
 import axios from 'axios';
 import memoize from 'memoize-one';
 
