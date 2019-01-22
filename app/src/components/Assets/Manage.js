@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Button, Form , FormGroup, Col, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
+import { Button, Form , FormGroup, Col, ControlLabel, FormControl } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import Links from '../Nav';
 import Axios from 'axios';
 import moment from 'moment';
-import EditOwner from './EditOwner';
+import EmployeeSelect from '../EmployeeSelect';
 import "../../../node_modules/react-datepicker/dist/react-datepicker.css";
 import Departments from '../Departments';
 
@@ -16,8 +16,7 @@ export default class ManageAsset extends Component{
         this.handleIn = this.handleIn.bind(this)
         this.handleOut = this.handleOut.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
-        this.onBlur = this.onBlur.bind(this)
-        this.handleOwnerNull = this.handleOwnerNull.bind(this)
+        this.handleOwner = this.handleOwner.bind(this)
         this.handleRetire = this.handleRetire.bind(this)
         this.refresh = this.refresh.bind(this)
         this.handleDepartment = this.handleDepartment.bind(this);
@@ -35,9 +34,7 @@ export default class ManageAsset extends Component{
             order_num: null,
             warranty: null,
             inDate: null,
-            outDate: null,
-            value: null,
-            owner_id: null,
+            outDate: null
         }
     }
 
@@ -93,30 +90,11 @@ export default class ManageAsset extends Component{
     }
 
     //For autosuggest component to select owner
-    handleOwner = (e,{suggestion, suggestionValue}) => {
-        this.setState({
-            owner: suggestionValue,
-            owner_id: suggestion.emp_id
+    handleOwner(value){
+        this.setState({ 
+            owner: value?value.label:null,
+            owner_id: value?value.value:null
         })
-        
-    }
-
-    //For autosuggest component to account for selecting a suggested owner and then deleting
-    handleOwnerNull(){
-        this.setState({
-            owner: null,
-            owner_id: null
-        })
-    }
-
-    //For autosuggest component to select owner
-    onBlur = (event, { highlightedSuggestion }) => {
-        if (highlightedSuggestion){
-            this.setState({
-                owner: highlightedSuggestion.first_name+' '+highlightedSuggestion.last_name,
-                owner_id: highlightedSuggestion.asset_id
-            })
-        }
     }
 
     handleIn(date){
@@ -170,6 +148,7 @@ export default class ManageAsset extends Component{
             serial_number: this.state.serial_number,
             warranty_provider: this.state.warranty_provider,
             owner: this.state.owner,
+            owner_id: this.state.owner_id,
             cost: this.state.cost,
             comment: this.state.comment,
             vendor: this.state.vendor,
@@ -244,20 +223,9 @@ export default class ManageAsset extends Component{
                             <Col componentClass={ControlLabel} sm={3}>
                                 Owner
                             </Col>
-                            <Col sm={6}>
-                                {/* <FormControl
-                                    readOnly={true}
-                                    type='text'
-                                    value={this.state.owner}
-                                    placeholder='Owner'
-                                /> */}
-                                <EditOwner handleOwnerNull={this.handleOwnerNull} handleOwner={this.handleOwner} onBlur={this.onBlur}/>
+                            <Col sm={7}>
+                                <EmployeeSelect onChange={this.handleOwner} />
                             </Col>
-                            {/* <Col>
-                                <LinkContainer to={`/assets/manage/${this.state.asset_id}/editOwner`}>
-                                    <Button>Change Owner</Button>
-                                </LinkContainer>
-                            </Col> */}
                         </FormGroup>
                         <FormGroup controlId='cost'>
                             <Col componentClass={ControlLabel} sm={3}>

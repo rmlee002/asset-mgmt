@@ -70,12 +70,12 @@ router.post('/getAsset', (req,res) => {
 })
 
 router.post('/updateAsset', (req,res) => {
-    const {model, serial_number, warranty_provider, owner, cost, comment, vendor, 
+    const {model, serial_number, warranty_provider, owner, owner_id, cost, comment, vendor, 
         order_num, warranty, inDate, outDate, department, asset_id} = req.body;
 
     connection.query('UPDATE hardware SET model=?, serial_number=?, warranty_provider=?,\
-        owner=?, cost=?, comment=?, vendor=?, order_num=?, warranty=?, inDate=?, outDate=?, department=?\
-        WHERE asset_id=?', [model, serial_number, warranty_provider, owner, cost, comment, 
+        owner=?, owner_id=?, cost=?, comment=?, vendor=?, order_num=?, warranty=?, inDate=?, outDate=?, department=?\
+        WHERE asset_id=?', [model, serial_number, warranty_provider, owner, owner_id, cost, comment, 
             vendor, order_num, warranty, inDate, outDate, department, asset_id], (err, results) =>{
             if(err){
                 console.log(err)
