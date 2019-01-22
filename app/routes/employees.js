@@ -59,7 +59,7 @@ router.post('/getEmployee', (req,res) => {
 
 router.post('/history', (req,res) => {
 	connection.query('SELECT * FROM (SELECT history.emp_id, hardware.serial_number, hardware.model, hardware.comment, \
-		history.start FROM history INNER JOIN hardware ON history.asset_id = hardware.asset_id) AS j WHERE emp_id=?', 
+		history.start, history.end FROM history INNER JOIN hardware ON history.asset_id = hardware.asset_id) AS j WHERE emp_id=? AND end IS NULL', 
 		req.body.emp_id,(err,results) => {
 			if (err){
 				console.log(err)
