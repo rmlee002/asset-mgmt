@@ -35,6 +35,7 @@ export default class EmployeeSelect extends Component{
         return(
             <Select
                 isClearable
+                menuPlacement='auto'
                 onChange={this.props.onChange}
                 options={this.state.options}
             >

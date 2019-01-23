@@ -7,6 +7,7 @@ import axios from 'axios';
 import Links from '../Nav';
 import Departments from '../Departments';
 import Select from 'react-select';
+import EmployeeSelect from '../EmployeeSelect';
 
 export default class AddEmployee extends Component{
     constructor(props){
@@ -19,6 +20,7 @@ export default class AddEmployee extends Component{
         this.handleDepartment = this.handleDepartment.bind(this);
         this.handleCreateDepartmentOption = this.handleCreateDepartmentOption.bind(this);
         this.handleAffiliation = this.handleAffiliation.bind(this)
+        this.handleEmployeeAssign = this.handleEmployeeAssign.bind(this)
 
         this.state = {
             success: false,
@@ -83,6 +85,12 @@ export default class AddEmployee extends Component{
         this.setState({
             value: [...this.state.value, {value: value, label: value}]
         })        
+    }
+
+    handleEmployeeAssign = id => value => {
+        this.setState({
+            [id]: value?value.value:null
+        })
     }
 
     handleSubmit(e){
@@ -192,12 +200,13 @@ export default class AddEmployee extends Component{
                                 Supervisor(s)
                             </Col>
                             <Col sm={7}>
-                                <FormControl 
+                                {/* <FormControl 
                                     type='text'
                                     value={this.state.supervisor}
                                     placeholder='Supervisor(s)'
                                     onChange={this.handleChange}
-                                />
+                                /> */}
+                                <EmployeeSelect onChange={this.handleEmployeeAssign('supervisor')}/>
                             </Col>
                         </FormGroup>
                         <FormGroup controlId='reviewer'>
@@ -205,12 +214,13 @@ export default class AddEmployee extends Component{
                                 Reviewer(s)
                             </Col>
                             <Col sm={7}>
-                                <FormControl 
+                                {/* <FormControl 
                                     type='text'
                                     value={this.state.reviewer}
                                     placeholder='Reviewer(s)'
                                     onChange={this.handleChange}
-                                />
+                                /> */}
+                                <EmployeeSelect onChange={this.handleEmployeeAssign('reviewer')}/>
                             </Col>
                         </FormGroup>
                         <FormGroup controlId='time_approver'>
@@ -218,12 +228,13 @@ export default class AddEmployee extends Component{
                                 Time Approver(s)
                             </Col>
                             <Col sm={7}>
-                                <FormControl 
+                                {/* <FormControl 
                                     type='text'
                                     value={this.state.time_approver}
                                     placeholder='Time approver(s)'
                                     onChange={this.handleChange}
-                                />
+                                /> */}
+                                <EmployeeSelect onChange={this.handleEmployeeAssign('time_approver')}/>
                             </Col>
                         </FormGroup>
                         <FormGroup controlId='start'>

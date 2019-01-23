@@ -7,6 +7,7 @@ import moment from 'moment';
 import "../../../node_modules/react-datepicker/dist/react-datepicker.css";
 import Departments from '../Departments';
 import Select from 'react-select';
+import EmployeeSelect from '../EmployeeSelect';
 
 export default class ManageEmployee extends Component{
     constructor(props){
@@ -20,7 +21,6 @@ export default class ManageEmployee extends Component{
         this.handleDepartment = this.handleDepartment.bind(this);
         this.handleCreateDepartmentOption = this.handleCreateDepartmentOption.bind(this);
         this.handleAffiliation = this.handleAffiliation.bind(this)
-        this.refresh = this.refresh.bind(this);
 
         this.state = {
             value: [],
@@ -39,10 +39,6 @@ export default class ManageEmployee extends Component{
     }
 
     componentDidMount(){
-        this.refresh()
-    }
-
-    refresh(){
         axios.post('/employees/getEmployee',{
             emp_id: this.props.match.params.emp_id
         })
@@ -72,29 +68,15 @@ export default class ManageEmployee extends Component{
     }
 
     handleStart(date){
-        if(date){
-            this.setState({
-                start: moment(date).format("YYYY-MM-DD")
-            });
-        }
-        else{
-            this.setState({
-                start: null
-            })
-        }
+        this.setState({
+            start: date
+        })
     }
 
     handleEnd(date){
-        if(date){
-            this.setState({
-                end: moment(date).format("YYYY-MM-DD")
-            });
-        }
-        else{
-            this.setState({
-                end: null
-            })
-        }
+        this.setState({
+            end: date
+        });    
     }
 
     handleChange(e){
@@ -119,6 +101,12 @@ export default class ManageEmployee extends Component{
         })        
     }
 
+    handleEmployeeAssign = id => value => {
+        this.setState({
+            [id]: value?value.value:null
+        })
+    }
+
     handleRetire(){
         axios.post('/employees/manage/retire', {
             emp_id: this.state.emp_id
@@ -137,7 +125,7 @@ export default class ManageEmployee extends Component{
         })
     }
 
-    handleUpdate(){
+    handleUpdate(e){
         axios.post('/employees/manage/update', {
             emp_id: this.state.emp_id,
             first_name: this.state.first_name,
@@ -148,15 +136,12 @@ export default class ManageEmployee extends Component{
             supervisor: this.state.supervisor,
             reviewer: this.state.reviewer,
             time_approver: this.state.time_approver,
-            start: this.state.start,
-            end: this.state.end,
+            start: this.state.start?moment(this.state.start).format('YYYY-MM-DD'):null,
+            end: this.state.end?moment(this.state.end).format('YYYY-MM-DD'):null,
             notes: this.state.notes
         })
         .then(res => {
-            if (res.status === 200){
-                this.refresh();
-            }
-            else{
+            if (res.status >= 400){
                 alert('Error updating employee. Please try again')
             }
         })
@@ -166,8 +151,7 @@ export default class ManageEmployee extends Component{
     }
 
     render(){
-        const isValid = this.state.first_name && this.state.last_name;
-        
+        const isValid = this.state.first_name && this.state.last_name;        
         return(
             <div>
                 <Links />
@@ -219,13 +203,6 @@ export default class ManageEmployee extends Component{
                         <FormGroup controlId='affiliation'>
                             <Col componentClass={ControlLabel} sm={3}>Affiliation</Col>
                             <Col sm={7}>
-                                {/* <FormControl componentClass='select' value={this.state.affiliation} onChange={this.handleChange}>
-                                    <option>Select...</option>
-                                    <option value='Contractor'>Contractor</option>
-                                    <option value='Employee'>Employee</option>
-                                    <option value='Part-time/Hourly'>Part-time/Hourly</option>
-                                    <option value='Intern'>Intern</option>
-                                </FormControl> */}
                                 <Select
                                     onChange={this.handleAffiliation}
                                     options={[
@@ -250,12 +227,7 @@ export default class ManageEmployee extends Component{
                                 Supervisor(s)
                             </Col>
                             <Col sm={7}>
-                                <FormControl 
-                                    type='text'
-                                    value={this.state.supervisor}
-                                    placeholder='Supervisor(s)'
-                                    onChange={this.handleChange}
-                                />
+                                <EmployeeSelect onChange={this.handleEmployeeAssign('supervisor')}/>    
                             </Col>
                         </FormGroup>
                         <FormGroup controlId='reviewer'>
@@ -263,12 +235,7 @@ export default class ManageEmployee extends Component{
                                 Reviewer(s)
                             </Col>
                             <Col sm={7}>
-                                <FormControl 
-                                    type='text'
-                                    value={this.state.reviewer}
-                                    placeholder='Reviewer(s)'
-                                    onChange={this.handleChange}
-                                />
+                                <EmployeeSelect onChange={this.handleEmployeeAssign('reviewer')}/>
                             </Col>
                         </FormGroup>
                         <FormGroup controlId='time_approver'>
@@ -276,12 +243,7 @@ export default class ManageEmployee extends Component{
                                 Time Approver(s)
                             </Col>
                             <Col sm={7}>
-                                <FormControl 
-                                    type='text'
-                                    value={this.state.time_approver}
-                                    placeholder='Time approver(s)'
-                                    onChange={this.handleChange}
-                                />
+                                <EmployeeSelect onChange={this.handleEmployeeAssign('time_approver')}/>
                             </Col>
                         </FormGroup>
                         <FormGroup controlId='start'>
