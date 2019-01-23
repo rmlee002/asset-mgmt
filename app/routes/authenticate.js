@@ -13,16 +13,14 @@ router.post('/login', function(req, res) {
 	adminConnection.query('SELECT password AS pass FROM admins WHERE user = ?', user, function(err, results, fields){
 		if (err){
 			console.log(err);
-			res.send({
-				"code": 400,
+			res.status(400).send({
 				"failed": 'error occurred'
 			})
 		}
 		else{
 			//Username doesn't exist
 			if (results.length == 0){
-				res.send({
-					"code": 401,
+				res.status(401).send({
 					"error": 'Invalid username'
 				});
 			}
