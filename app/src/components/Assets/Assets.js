@@ -89,6 +89,7 @@ export default class Assets extends Component{
                             <th>Out Date</th>
                             <th></th>
                             <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -113,6 +114,7 @@ export default class Assets extends Component{
                                 </td>
                                 <td><Link to={`/assets/history/${item.asset_id}`}>History</Link></td>
                                 <td><Link to={`/assets/manage/${item.asset_id}`}>Manage</Link></td>
+                                <td><Link to={`/assets/editOwner/${item.asset_id}`}>Assign owner</Link></td>
                             </tr>
                         )}
                     </tbody>

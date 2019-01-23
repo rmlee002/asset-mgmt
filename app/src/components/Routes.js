@@ -13,7 +13,8 @@ import ManageAsset from './Assets/ManageAsset';
 import EmployeeAssets from './Employees/EmployeeAssets';
 import AddAsset from './Employees/AddEmployeeAsset';
 import Users from './Software/Users';
-import AddEmployee from './Employees/AddEmployee'
+import AddEmployee from './Employees/AddEmployee';
+import EditOwner from './Assets/EditOwner';
 
 export default () => 
     <Switch>
@@ -29,6 +30,7 @@ export default () =>
         <Route path='/assets/add' component={protect(AddAssets)} />
         <Route path='/assets/history/:asset_id' component={History} />
         <Route exact path='/assets/manage/:asset_id' component={protect(ManageAsset)} />
-        <Route exact path='/software' component={Software} />       
+        <Route exact path='/assets/editOwner/:asset_id' component={protect(EditOwner)} />
+        <Route exact path='/software' component={Software} />
         <Route path='/software/:license_id/users' component={Users} />
     </Switch>

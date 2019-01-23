@@ -1,97 +1,146 @@
 import React, { Component } from 'react';
-import Autosuggest from 'react-autosuggest';
+import { Modal, Button, Table, FormGroup, ControlLabel, FormControl, Col } from 'react-bootstrap';
+import Links from '../Nav';
 import Axios from 'axios';
-
-
-const getSuggestionValue = suggestion => suggestion.first_name+' '+suggestion.last_name
-
-const renderSuggestion = suggestion => (
-    <div>
-      {suggestion.first_name+' '+suggestion.last_name}
-    </div>
-);
+import memoize from 'memoize-one';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
 
 export default class EditOwner extends Component{
-
     constructor(props){
         super(props)
 
-        this.getSuggestions = this.getSuggestions.bind(this)
-        this.onChange = this.onChange.bind(this)
-        this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(this)
-        this.onSuggestionsFetchRequested = this.onSuggestionsFetchRequested.bind(this)
+        this.handleStart = this.handleStart.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleChange = this.handleChange.bind(this)
 
-        this.state = {
-            value: '',
+        this.state={
+            emp_id: null,
+            start: new Date(),
             employees: [],
-            filtered: []
+            filtered: [],
+            show: false
         }
     }
 
     componentDidMount(){
-        Axios.get('/employees')
+        Axios.post('/history/asset/add', {
+            asset_id: this.props.match.params.asset_id
+        })
         .then(res => {
             if (res.status >= 400){
                 alert(res.data.error);
             }
+            this.setState({employees: res.data, filtered: res.data});
+        }).catch(err => {
+            console.log(err);
+            alert(err);
+        })
+    }
+
+    filter = memoize(
+        (list, filterText) => list.filter(item => (item.first_name+' '+item.last_name).toLowerCase().includes(filterText.toLowerCase()))
+    )
+
+    handleChange(e){
+        if (e.target.value !== ''){
             this.setState({
-                employees: res.data
+                filtered: this.filter(this.state.employees, e.target.value)
             })
+        }
+        else{
+            this.setState({
+                filtered: this.state.employees
+            })
+        }
+    }
+
+    handleSubmit(e){
+        e.preventDefault();
+        Axios.post('/history/add', {
+            asset_id: this.props.match.params.asset_id,
+            emp_id: this.state.emp_id,
+            start: this.state.start?moment(this.state.start).format('YYYY-MM-DD'):null
+        })
+        .then(res => {
+            if(res.status >= 400){
+                alert(res.data.error)
+            }
+            else{
+                this.props.history.push(`/assets/history/${this.props.match.params.asset_id}`)
+            }
         })
         .catch(err => {
-            console.log(err)
             alert(err)
+            console.log(err)
         })
     }
 
-    getSuggestions(value){
-        const input = value.trim().toLowerCase();
-        const length = input.length;
-        return length === 0 ? [] : this.state.employees.filter(employee => 
-            (employee.first_name+' '+employee.last_name).toLowerCase().slice(0, length) === input
-        );
-    }       
-   
-    onChange = (event, { newValue, method }) => {
+    handleStart(date){
         this.setState({
-          value: newValue
-        });
-
-        if(newValue === ''){
-            this.props.handleOwnerNull();
-        }
-    };
-
-    onSuggestionsFetchRequested = ({ value }) => {
-        this.setState({
-            filtered: this.getSuggestions(value)
+            start: date
         })
-    }
-
-    onSuggestionsClearRequested() {
-        this.setState({
-            filtered: []
-        });
     }
 
     render(){
-        const {value, employees, filtered} = this.state
-        const inputProps = {
-            placeholder: 'Type a name',
-            value,
-            onChange: this.onChange,
-            onBlur: this.props.onBlur
-        }
         return(
-            <Autosuggest
-                suggestions={filtered}
-                onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-                onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                onSuggestionSelected={this.props.handleOwner}
-                getSuggestionValue={getSuggestionValue}
-                renderSuggestion={renderSuggestion}
-                inputProps={inputProps}
-            />
-        );
+            <div>
+                <Links />
+                <FormGroup controlid="search">
+                    <ControlLabel>Search</ControlLabel>
+                    <FormControl
+                        type='text'
+                        placeholder='Enter name'
+                        onChange = {this.handleChange}
+                    />
+                    <FormControl.Feedback />
+                </FormGroup>
+                <Table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Affiliation</th>
+                            <th>Department</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.state.filtered.map(employee => 
+                            <tr>
+                                <td>{employee.first_name+" "+employee.last_name}</td>
+                                <td>{employee.email}</td>
+                                <td>{employee.affiliation}</td>
+                                <td>{employee.department}</td>
+                                <td><Button bsStyle='success' bsSize='small' onClick={() => this.setState({show:true, emp_id:employee.emp_id})}>Assign</Button></td>
+                            </tr>
+                            )}
+                    </tbody>
+                </Table>            
+                <Modal show={this.state.show} onHide={()=>{this.setState({show:false, start: null, emp_id: null})}}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Add asset</Modal.Title>                        
+                </Modal.Header>
+                <form onSubmit={this.handleSubmit}>
+                    <Modal.Body>
+                        <FormGroup controlId='start'>
+                            <Col componentClass={ControlLabel} sm={3}>
+                                Enter start date: 
+                            </Col> 
+                            <Col sm={4}>
+                                <DatePicker 
+                                    selected={this.state.start}
+                                    onChange={this.handleStart}
+                                />
+                            </Col>                                
+                        </FormGroup>                     
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button type='submit' bsStyle='success'>Assign</Button>
+                    </Modal.Footer>
+                </form>                    
+                </Modal>
+            </div>
+        ); 
     }
 }
