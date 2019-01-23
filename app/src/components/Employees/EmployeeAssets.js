@@ -10,6 +10,9 @@ export default class EmployeeAssets extends Component{
     constructor(props){
         super(props);
 
+        this.handleEnd = this.handleEnd.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
+
         this.state = {
             show: false,
             end: new Date(),
@@ -43,8 +46,19 @@ export default class EmployeeAssets extends Component{
     }
 
     handleSubmit(){
-        Axios.post('', {
-
+        Axios.post('/history/employee/retire', {
+            asset_id: this.state.asset_id,
+            emp_id: this.props.match.params.emp_id,
+            end: this.state.end?moment(this.state.end).format('YYYY-MM-DD'):null
+        })
+        .then(res => {
+            if (res.status >= 400){
+                alert(res.data.error)
+            }
+        })
+        .catch(err => {
+            console.log(err)
+            alert(err)
         })
     }
 
@@ -81,6 +95,7 @@ export default class EmployeeAssets extends Component{
                 </Table>
                 <Modal show={this.state.show} onHide={()=>{this.setState({show:false, end: null, asset_id: null})}}>
                     <Modal.Header closeButton>
+                    <Modal.Title>Retire asset</Modal.Title>
                     </Modal.Header>
                     <form onSubmit={this.handleSubmit}>
                         <Modal.Body>

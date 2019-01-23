@@ -8,7 +8,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 router.post('/employee', (req, res) => {
-    connection.query('SELECT * FROM (SELECT history.emp_id, hardware.serial_number, hardware.model, hardware.comment, \
+    connection.query('SELECT * FROM (SELECT hardware.asset_id, history.emp_id, hardware.serial_number, hardware.model, hardware.comment, \
 		history.start, history.end FROM history INNER JOIN hardware ON history.asset_id = hardware.asset_id) AS j WHERE emp_id=? AND end IS NULL', 
 		req.body.emp_id,(err,results) => {
 			if (err){
@@ -40,6 +40,22 @@ router.post('/employee/add', (req,res) => {
 		})
 })
 
+router.post('/employee/retire', (req,res) => {
+    const data = req.body
+    connection.query('UPDATE history SET end=? WHERE asset_id=? AND emp_id=?',
+        [data.end, data.asset_id, data.emp_id], (err, results) => {
+            if (err){
+                console.log(err)
+                res.status(500).send({
+                    error: "Database query error"
+                })
+            }
+            else{
+                res.status(200).send('Success')
+            }
+        })
+})
+
 router.post('/asset', (req,res) => {
     connection.query('SELECT * FROM (SELECT history.asset_id, employees.first_name, employees.last_name, history.start, history.end\
         FROM history INNER JOIN employees ON employees.emp_id=history.emp_id) AS j WHERE asset_id=?', req.body.asset_id, function(err, results){
@@ -53,7 +69,7 @@ router.post('/asset', (req,res) => {
     })
 })
 
-router.post('/asset/add', (req,res) => {
+router.post('/add', (req,res) => {
     const {asset_id, emp_id, start} = req.body
     connection.query('INSERT INTO history VALUES (?,?,?,NULL)', [asset_id,emp_id,start], (err,results) => {
         if(err){

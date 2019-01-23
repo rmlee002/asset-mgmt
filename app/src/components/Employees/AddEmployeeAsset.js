@@ -24,7 +24,7 @@ export default class AddAsset extends Component{
     }
 
     componentDidMount(){
-        Axios.post('/employees/addAsset', {
+        Axios.post('/history/employee/add', {
             emp_id: this.props.match.params.emp_id
         })
         .then(res => {
@@ -62,7 +62,7 @@ export default class AddAsset extends Component{
 
     handleSubmit(e){
         e.preventDefault();
-        Axios.post('/history/employee/add', {
+        Axios.post('/history/add', {
             asset_id: this.state.asset_id,
             emp_id: this.props.match.params.emp_id,
             start: this.state.start?moment(this.state.start).format('YYYY-MM-DD'):null
