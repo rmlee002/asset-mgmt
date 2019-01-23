@@ -19,19 +19,6 @@ router.get('/', (req, res) => {
     });
 });
 
-router.post('/history', (req, res) => {
-    connection.query('SELECT * FROM (SELECT history.asset_id, employees.first_name, employees.last_name, history.start, history.end\
-        FROM history INNER JOIN employees ON employees.emp_id=history.emp_id) AS j WHERE asset_id=?', req.body.asset_id, function(err, results){
-        if (err){
-            console.log(err);
-            res.status(500).send({
-                error: "Database query error"
-            })
-        }
-        res.send(JSON.stringify(results));
-    })
-})
-
 router.post('/add', (req,res)=>{
     let assets = JSON.parse(req.body.assets)
     values = assets.map(extract)
@@ -87,21 +74,6 @@ router.post('/updateAsset', (req,res) => {
                 res.status(200).send("Success")
             }
         })
-})
-
-router.post('/addHistory', (req,res) => {
-    const {asset_id, emp_id, start} = req.body
-    connection.query('INSERT INTO history VALUES (?,?,?,NULL)', [asset_id,emp_id,start], (err,results) => {
-        if(err){
-            console.log(err)
-            res.status(500).send({
-                error: "Database query error"
-            })
-        }
-        else{
-            res.status(200).send("Success")
-        }
-    })
 })
 
 router.post('/retire', (req, res) => {

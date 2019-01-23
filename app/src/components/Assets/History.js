@@ -14,7 +14,7 @@ export default class History extends Component{
     }
 
     componentDidMount(){
-        axios.post('/assets/history', {
+        axios.post('/history/asset', {
             asset_id: this.props.match.params.asset_id
         })
         .then(res =>{

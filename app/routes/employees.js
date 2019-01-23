@@ -57,23 +57,7 @@ router.post('/getEmployee', (req,res) => {
 	})
 })
 
-router.post('/history', (req,res) => {
-	connection.query('SELECT * FROM (SELECT history.emp_id, hardware.serial_number, hardware.model, hardware.comment, \
-		history.start, history.end FROM history INNER JOIN hardware ON history.asset_id = hardware.asset_id) AS j WHERE emp_id=? AND end IS NULL', 
-		req.body.emp_id,(err,results) => {
-			if (err){
-				console.log(err)
-				res.status(500).send({
-					error: "Database query error"
-				})
-			}
-			else{
-				res.send(JSON.stringify(results))
-			}
-		})
-})
-
-router.post('/manage/update', (req,res) => {
+router.post('/update', (req,res) => {
 	const {
 		emp_id, first_name, last_name, email, affiliation, department, supervisor, 
 		reviewer, time_approver, start, end, notes} = req.body
@@ -94,7 +78,7 @@ router.post('/manage/update', (req,res) => {
 		})
 })
 
-router.post('/manage/retire', (req,res) => {
+router.post('/retire', (req,res) => {
 	const id = req.body.emp_id;
 	connection.query('UPDATE employees SET archived=true WHERE emp_id=?', id, (err,results) => {
 		if (err){
@@ -108,22 +92,5 @@ router.post('/manage/retire', (req,res) => {
 		}
 	})
 });
-
-router.post('/addAsset', (req,res) => {
-	const id = req.body.emp_id;
-	connection.query('SELECT asset_id, model, serial_number, comment\
-		FROM hardware WHERE asset_id NOT IN (SELECT asset_id FROM history WHERE emp_id=?)',
-		id, (err, results) => {
-			if (err){
-				console.log(err)
-				res.status(500).send({
-					error: "Database query error"
-				})
-			}
-			else{
-				res.send(JSON.stringify(results))
-			}
-		})
-})
 
 module.exports = router;

@@ -5,6 +5,7 @@ const authenticateRouter = require('./routes/authenticate');
 const employeeRouter = require('./routes/employees');
 const assetRouter = require('./routes/assets.js');
 const departmentRouter = require('./routes/departments.js');
+const historyRouter = require('./routes/history');
 const path = require('path');
 const cors = require('cors');
 const authorized = require('./auth');
@@ -22,7 +23,8 @@ app.set('view engine', 'ejs');
 app.use('/authenticate', authenticateRouter);
 app.use('/employees', employeeRouter);
 app.use('/assets', assetRouter);
-app.use('/departments', departmentRouter)
+app.use('/departments', departmentRouter);
+app.use('/history', historyRouter);
 
 app.get('/checkToken', authorized, (req, res) => {
 	res.sendStatus(200);
