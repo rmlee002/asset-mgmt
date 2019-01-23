@@ -24,7 +24,7 @@ export default class AddAsset extends Component{
     }
 
     componentDidMount(){
-        Axios.post('/history/employee/add', {
+        Axios.get('/history/employee/add', {
             emp_id: this.props.match.params.emp_id
         })
         .then(res => {

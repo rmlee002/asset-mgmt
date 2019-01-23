@@ -4,7 +4,6 @@ import DatePicker from 'react-datepicker';
 import Links from '../Nav';
 import Axios from 'axios';
 import moment from 'moment';
-import EmployeeSelect from '../EmployeeSelect';
 import "../../../node_modules/react-datepicker/dist/react-datepicker.css";
 
 export default class ManageAsset extends Component{
@@ -15,9 +14,7 @@ export default class ManageAsset extends Component{
         this.handleIn = this.handleIn.bind(this)
         this.handleOut = this.handleOut.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
-        this.handleOwner = this.handleOwner.bind(this)
         this.handleRetire = this.handleRetire.bind(this)
-        this.refresh = this.refresh.bind(this)
 
         this.state={
             asset_id: null,
@@ -36,10 +33,6 @@ export default class ManageAsset extends Component{
     }
 
     componentDidMount(){
-        this.refresh()
-    }
-
-    refresh(){
         Axios.post('/assets/getAsset', {
             asset_id: this.props.match.params.asset_id
         })
@@ -75,13 +68,13 @@ export default class ManageAsset extends Component{
         })
     }
 
-    //For autosuggest component to select owner
-    handleOwner(id, value){
-        this.setState({ 
-            owner: value?value.label:null,
-            owner_id: value?value.value:null
-        })
-    }
+    // //For autosuggest component to select owner
+    // handleOwner(id, value){
+    //     this.setState({ 
+    //         owner: value?value.label:null,
+    //         owner_id: value?value.value:null
+    //     })
+    // }
 
     handleIn(date){
         if(date){
@@ -200,14 +193,14 @@ export default class ManageAsset extends Component{
                                 />
                             </Col>
                         </FormGroup>
-                        <FormGroup controlId='owner'>
+                        {/* <FormGroup controlId='owner'>
                             <Col componentClass={ControlLabel} sm={3}>
                                 Owner
                             </Col>
                             <Col sm={7}>
                                 <EmployeeSelect onChange={this.handleOwner} />
                             </Col>
-                        </FormGroup>
+                        </FormGroup> */}
                         <FormGroup controlId='cost'>
                             <Col componentClass={ControlLabel} sm={3}>
                                 Cost
