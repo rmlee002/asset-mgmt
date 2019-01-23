@@ -108,7 +108,7 @@ export default class ManageEmployee extends Component{
     }
 
     handleRetire(){
-        axios.post('/employees/manage/retire', {
+        axios.post('/employees/retire', {
             emp_id: this.state.emp_id
         })
         .then(res => {
@@ -126,7 +126,7 @@ export default class ManageEmployee extends Component{
     }
 
     handleUpdate(e){
-        axios.post('/employees/manage/update', {
+        axios.post('/employees/update', {
             emp_id: this.state.emp_id,
             first_name: this.state.first_name,
             last_name: this.state.last_name,
