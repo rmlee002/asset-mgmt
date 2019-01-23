@@ -5,15 +5,15 @@ import Login from './Login';
 import Employees from './Employees/Employees';
 import Software from './Software/Software';
 import protect from './protect';
-import ManageEmployee from './Employees/Manage';
+import ManageEmployee from './Employees/ManageEmployee';
 import Assets from './Assets/Assets';
-import AddAssets from './Assets/Add';
+import AddAssets from './Assets/AddAsset';
 import History from './Assets/History';
-import ManageAsset from './Assets/Manage';
+import ManageAsset from './Assets/ManageAsset';
 import EmployeeAssets from './Employees/EmployeeAssets';
-import AddAsset from './Employees/AddAsset';
+import AddAsset from './Employees/AddEmployeeAsset';
 import Users from './Software/Users';
-import AddEmployee from './Employees/Add'
+import AddEmployee from './Employees/AddEmployee'
 
 export default () => 
     <Switch>

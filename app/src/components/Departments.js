@@ -56,6 +56,7 @@ export default class Departments extends Component{
         })
         .catch(err => {
             alert(err)
+            console.log(err)
         })
     }
 
