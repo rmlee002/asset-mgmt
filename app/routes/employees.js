@@ -26,7 +26,7 @@ router.post('/add', (req,res) => {
 	} = req.body
 
 	connection.query('INSERT INTO employees (first_name, last_name,\
-		email, affiliation, department, supervisor, reviewer,time_approver, start, end, notes)\
+		email, affiliation, department, supervisor_id, reviewer_id,time_approver_id, start, end, notes)\
 		VALUES (?,?,?,?,?,?,?,?,?,?,?)', [first_name, last_name, email, affiliation, department,
 			supervisor, reviewer, time_approver, start, end, notes], (err, results) => {
 			if (err){
@@ -77,10 +77,9 @@ router.post('/manage/update', (req,res) => {
 	const {
 		emp_id, first_name, last_name, email, affiliation, department, supervisor, 
 		reviewer, time_approver, start, end, notes} = req.body
-	
-	console.log(start + " " + end)
+		
 	connection.query('UPDATE employees SET first_name=?, last_name=?, email=?, affiliation=?,\
-		department=?, supervisor=?, reviewer=?, time_approver=?, start=?, end=?, notes=? WHERE emp_id=?',
+		department=?, supervisor_id=?, reviewer_id=?, time_approver_id=?, start=?, end=?, notes=? WHERE emp_id=?',
 		[first_name, last_name, email, affiliation, department, supervisor, reviewer,
 		time_approver, start, end, notes, emp_id], (err) => {
 			if (err){

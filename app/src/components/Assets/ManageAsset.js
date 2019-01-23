@@ -76,7 +76,7 @@ export default class ManageAsset extends Component{
     }
 
     //For autosuggest component to select owner
-    handleOwner(value){
+    handleOwner(id, value){
         this.setState({ 
             owner: value?value.label:null,
             owner_id: value?value.value:null
@@ -128,7 +128,6 @@ export default class ManageAsset extends Component{
     }
 
     handleSubmit(e){
-        e.preventDefault();
         Axios.post('/assets/updateAsset', {
             model: this.state.model,
             serial_number: this.state.serial_number,
@@ -145,10 +144,7 @@ export default class ManageAsset extends Component{
             asset_id: this.state.asset_id
         })
         .then(res => {            
-            if (res.status === 200) {
-                
-            }
-            else{
+            if (res.status >= 400) {
                 alert(res.data.error)
             }
         })
