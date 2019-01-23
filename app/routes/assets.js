@@ -74,7 +74,7 @@ router.post('/updateAsset', (req,res) => {
         order_num, warranty, inDate, outDate, asset_id} = req.body;
 
     connection.query('UPDATE hardware SET model=?, serial_number=?, warranty_provider=?,\
-        owner=?, owner_id=?, cost=?, comment=?, vendor=?, order_num=?, warranty=?, inDate=?, outDate=?, department=?\
+        owner=?, owner_id=?, cost=?, comment=?, vendor=?, order_num=?, warranty=?, inDate=?, outDate=?\
         WHERE asset_id=?', [model, serial_number, warranty_provider, owner, owner_id, cost, comment, 
             vendor, order_num, warranty, inDate, outDate, asset_id], (err, results) =>{
             if(err){
