@@ -3,6 +3,9 @@ const app = express();
 const router = express.Router();
 const bodyParser = require('body-parser');
 const connection = require('../databases/assetDB.js');
+const request = require('request');
+const moment = require('moment')
+
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -17,7 +20,7 @@ router.get('/', (req, res) => {
         FROM employees\
         INNER JOIN history\
         ON history.emp_id =  employees.emp_id AND history.end IS NULL) as owner\
-        ON owner.asset_id = hardware.asset_id', function(err, results){
+        ON owner.asset_id = hardware.asset_id WHERE hardware.archived=FALSE', function(err, results){
         if (err){
             console.log(err);
             res.status(500).send({
@@ -95,6 +98,38 @@ router.post('/retire', (req, res) => {
             })
         }
         else{
+            connection.query('SELECT history_id FROM history WHERE asset_id=? AND end IS NULL', asset_id, (err,result) => {
+                if (err){
+                    console.log(err)
+                    res.status(500).send({
+                        error: "Database query error"
+                    })
+                }
+                else if (result.length > 0){
+                    const options = {
+                        url: 'http://localhost:8080/history/retire',
+                        body: JSON.stringify({
+                            end: moment(new Date()).format('YYYY-MM-DD'),
+                            history_id: result[0].history_id
+                        }),
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' }
+                    }
+                    request(options, (err, response) => {
+                        if (err){
+                            console.log(err)
+                            res.status(500).send({
+                                error: "Database query error"
+                            })
+                        }
+                        else if (response.status >= 400) {
+                            res.status(500).send({
+                                error: "Database query error"
+                            })
+                        }
+                    })
+                }
+            })            
             res.status(200).send("Success")
         }
     })
