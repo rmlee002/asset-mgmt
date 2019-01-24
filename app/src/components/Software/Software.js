@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Table, FormGroup, ControlLabel, FormControl, Button, ButtonToolbar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-
+import { LinkContainer } from 'react-router-bootstrap';
 import Links from '../Nav';
 
 export default class Employees extends Component {
@@ -19,7 +19,9 @@ export default class Employees extends Component {
                     <FormControl.Feedback />
                 </FormGroup>
                 <ButtonToolbar>
-                    <Button bsStyle='primary'>Add License</Button>
+                    <LinkContainer to='/software/add'>
+                        <Button bsStyle='primary'>Add License</Button>
+                    </LinkContainer>                    
                     <Button bsStyle='primary'>View all active licenses</Button>
                 </ButtonToolbar>
                 <Table>
