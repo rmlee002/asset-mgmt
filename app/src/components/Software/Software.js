@@ -2,9 +2,74 @@ import React, { Component } from 'react';
 import { Table, FormGroup, ControlLabel, FormControl, Button, ButtonToolbar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
+import memoize from 'memoize-one';
+import Axios from 'axios';
 import Links from '../Nav';
 
 export default class Employees extends Component {
+    constructor(props){
+        super(props)
+
+        this.handleChange = this.handleChange.bind(this)
+
+        this.state={
+            software: [],
+            filtered: [],
+        }
+    }
+
+    componentDidMount(){
+        Axios.get('/software')
+        .then(res => {
+            if (res.status >= 500){
+                alert(res.data.error)
+            }
+            else{
+                this.setState({
+                    software: res.data,
+                    filtered: res.data
+                })
+            }
+        })
+        .catch(err => {
+            alert(err)
+            console.log(err)
+        })
+    }
+
+    filter = memoize(
+        (list, filterText) => list.filter(item => (item.license).toLowerCase().includes(filterText.toLowerCase()))
+    )
+
+    handleChange(e){
+        if (e.target.value !== ''){
+            this.setState({
+                filtered: this.filter(this.state.software, e.target.value)
+            })
+        }
+        else{
+            this.setState({
+                filtered: this.state.software
+            })
+        }
+        
+    }
+
+    getData(id,cost){
+        Axios.post('/licenses/getData', {
+            id: id,
+            cost: cost
+        })
+        .then(res => {
+            if (res.status >= 500){
+                return 'Error'
+            }
+            else{
+                return res.data
+            }
+        })
+    }
+
     render(){
         return(
             <div>
@@ -28,20 +93,23 @@ export default class Employees extends Component {
                     <thead>
                         <tr>
                             <th>License</th>
-                            <th>Subscription Cost</th>                            
-                            <th>Total Monthly Cost</th>
-                            <th>Active Users</th>
-                            <th></th>
+                            <th>Monthly Cost</th> 
+                            <th>Active Users</th>                           
+                            <th>Current Total Cost</th> 
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Sample License</td>
-                            <td>$20/mo</td>                            
-                            <td>$2000</td>
-                            <td><Link to='/software/1/users'>100</Link></td>
-                            <td></td>
-                        </tr>
+                        {this.state.filtered.map((software) => {
+                            // const data = getData(software.software_id, software.cost)
+                            return(
+                                <tr>
+                                    <td>{software.name}</td>
+                                    <td>{software.cost?'$'+software.cost:''}</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            )
+                            })}
                     </tbody>
                 </Table>
             </div>
