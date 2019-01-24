@@ -4,6 +4,8 @@ const cookieParser = require('cookie-parser');
 const authenticateRouter = require('./routes/authenticate');
 const employeeRouter = require('./routes/employees');
 const assetRouter = require('./routes/assets.js');
+const softwareRouter = require('./routes/software');
+const licensesRouter = require('./routes/licenses');
 const departmentRouter = require('./routes/departments.js');
 const historyRouter = require('./routes/history');
 const path = require('path');
@@ -23,6 +25,7 @@ app.set('view engine', 'ejs');
 app.use('/authenticate', authenticateRouter);
 app.use('/employees', employeeRouter);
 app.use('/assets', assetRouter);
+app.use('/software', softwareRouter);
 app.use('/departments', departmentRouter);
 app.use('/history', historyRouter);
 
