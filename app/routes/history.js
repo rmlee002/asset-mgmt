@@ -57,7 +57,6 @@ router.post('/add', (req,res) => {
 })
 
 router.post('/retire', (req,res)=>{
-    console.log('reached2')
     connection.query('UPDATE history SET end=? WHERE history_id=?', [req.body.end, req.body.history_id], (err,results) => {
         if (err){
             console.log(err)
