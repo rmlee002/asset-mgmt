@@ -3,6 +3,8 @@ const app = express();
 const router = express.Router();
 const bodyParser = require('body-parser');
 const connection = require('../databases/assetDB.js');
+const request = require('request');
+const moment = require('moment');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -88,6 +90,41 @@ router.post('/retire', (req,res) => {
             })
 		}
 		else{
+			connection.query('SELECT history_id FROM history WHERE emp_id=? AND end IS NULL', id, (err,results) => {
+                if (err){
+                    console.log(err)
+                    res.status(500).send({
+                        error: "Database query error"
+                    })
+				}
+				else if (results.length > 0){
+					var options = undefined;
+					results.forEach((item) => {
+						options = {
+							url: 'http://localhost:8080/history/retire',
+							body: JSON.stringify({
+								end: moment(new Date()).format('YYYY-MM-DD'),
+								history_id: item.history_id
+							}),
+							method: 'POST',
+							headers: { 'Content-Type': 'application/json' }
+						}
+						request(options, (err, response) => {
+							if (err){
+								console.log(err)
+								res.status(500).send({
+									error: "Database query error"
+								})
+							}
+							else if (response.status >= 400){
+								res.status(500).send({
+									error: "Database query error"
+								})
+							}
+						})
+					})
+				}
+			})
 			res.status(200).send("Success")
 		}
 	})
