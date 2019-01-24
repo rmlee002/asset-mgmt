@@ -20,7 +20,7 @@ export default class Employees extends Component {
                 </FormGroup>
                 <ButtonToolbar>
                     <LinkContainer to='/software/add'>
-                        <Button bsStyle='primary'>Add License</Button>
+                        <Button bsStyle='primary'>Add Software</Button>
                     </LinkContainer>                    
                     <Button bsStyle='primary'>View all active licenses</Button>
                 </ButtonToolbar>
