@@ -31,7 +31,6 @@ export default class Employees extends Component {
                             <th>Subscription Cost</th>                            
                             <th>Total Monthly Cost</th>
                             <th>Active Users</th>
-                            <th>Expected Annual Cost</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -41,7 +40,6 @@ export default class Employees extends Component {
                             <td>$20/mo</td>                            
                             <td>$2000</td>
                             <td><Link to='/software/1/users'>100</Link></td>
-                            <td>$24,000</td>
                             <td></td>
                         </tr>
                     </tbody>
