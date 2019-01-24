@@ -15,14 +15,9 @@ export default class Assets extends Component{
             filtered: []
         }
         this.handleChange = this.handleChange.bind(this);
-        this.refresh = this.refresh.bind(this);
     }
 
     componentDidMount(){
-        this.refresh();
-    }
-
-    refresh(){
         let self = this;
         axios.get('/assets')
         .then(function(res) {
