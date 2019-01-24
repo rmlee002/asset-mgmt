@@ -11,7 +11,7 @@ export default class AddSoftware extends Component{
         this.handleChange = this.handleChange.bind(this)
 
         this.state={
-            license: null,
+            name: null,
             cost: null,
         }
     }
@@ -19,7 +19,7 @@ export default class AddSoftware extends Component{
     handleSubmit(e){
         e.preventDefault();
         Axios.post('/software/add', {
-            license: this.state.license,
+            name: this.state.name,
             cost: this.state.cost
         })
         .then(res=>{
@@ -48,14 +48,14 @@ export default class AddSoftware extends Component{
                 <Links />
                 <form onSubmit={this.handleSubmit}>
                     <Form horizontal onChange={this.handleChange}>
-                        <FormGroup controlId='license'>
+                        <FormGroup controlId='name'>
                             <Col componentClass={ControlLabel} sm={3}>
                                 License
                             </Col>
                             <Col sm={7}>
                                 <FormControl
                                     type='text'
-                                    value={this.state.license}
+                                    value={this.state.name}
                                     placeholder='License Name'
                                 />                        
                             </Col>
