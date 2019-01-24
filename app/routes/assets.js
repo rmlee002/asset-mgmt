@@ -8,7 +8,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 router.get('/', (req, res) => {
-    connection.query('SELECT * FROM hardware WHERE archived=0', function(err, results){
+    connection.query(
+        'SELECT hardware.asset_id,hardware.serial_number, hardware.model, hardware.cost,\
+        hardware.warranty_provider, owner.first_name, owner.last_name, hardware.comment, hardware.vendor,\
+        hardware.order_num, hardware.warranty, hardware.inDate, hardware.outDate\
+        FROM hardware \
+        LEFT JOIN (SELECT history.asset_id, employees.first_name, employees.last_name\
+        FROM employees\
+        INNER JOIN history\
+        ON history.emp_id =  employees.emp_id AND history.end IS NULL) as owner\
+        ON owner.asset_id = hardware.asset_id', function(err, results){
         if (err){
             console.log(err);
             res.status(500).send({

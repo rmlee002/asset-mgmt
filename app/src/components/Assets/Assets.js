@@ -98,7 +98,7 @@ export default class Assets extends Component{
                                 <td>{item.serial_number}</td>
                                 <td>{item.model}</td>                                
                                 <td>{item.warranty_provider}</td>
-                                <td>{item.owner}</td>
+                                <td>{item.first_name?item.first_name + " " + item.last_name:''}</td>
                                 <td>{item.cost?'$'+item.cost.toFixed(2):''}</td>
                                 <td>{item.comment}</td>
                                 <td>{item.vendor}</td>
