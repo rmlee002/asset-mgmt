@@ -7,8 +7,7 @@ export default class EmployeeSelect extends Component{
         super(props);
 
         this.state={
-            options: [],
-            value: '',            
+            options: [],  
         }
     }
 
@@ -37,6 +36,7 @@ export default class EmployeeSelect extends Component{
                 isClearable
                 menuPlacement='auto'
                 onChange={this.props.onChange}
+                value={this.props.value}
                 options={this.state.options}
             >
             </Select>

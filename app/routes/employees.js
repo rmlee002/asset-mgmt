@@ -10,7 +10,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 router.get('/', (req, res) => {
-    connection.query('SELECT * FROM employees WHERE archived=0', function(err, results){
+    connection.query(
+		'SELECT a.emp_id, a.first_name, a.last_name, a.email, a.affiliation, a.department,\
+		b.first_name AS super_first, b.last_name AS super_last, c.first_name AS reviewer_first,\
+		c.last_name AS reviewer_last, d.first_name AS time_first, d.last_name AS time_last, a.start, a.end, a.notes\
+ 		FROM employees a\
+		LEFT JOIN employees b\
+		ON a.supervisor_id = b.emp_id\
+		LEFT JOIN employees c\
+		ON a.reviewer_id = c.emp_id\
+		LEFT JOIN employees d\
+		ON a.time_approver_id = d. emp_id', 
+		function(err, results){
         if (err){
 			console.log(err)
 			res.status(500).send({
@@ -46,7 +57,20 @@ router.post('/add', (req,res) => {
 router.post('/getEmployee', (req,res) => {
 	const { emp_id } = req.body;
 
-	connection.query('SELECT * FROM employees WHERE emp_id=?', emp_id, (err, results) => {
+	connection.query(
+		'SELECT a.emp_id, a.first_name, a.last_name, a.email, a.affiliation, a.department,\
+		a.supervisor_id, b.first_name AS super_first, b.last_name AS super_last,\
+		a.reviewer_id, c.first_name AS reviewer_first, c.last_name AS reviewer_last, \
+		a.time_approver_id, d.first_name AS time_first, d.last_name AS time_last, a.start, a.end, a.notes\
+ 		FROM employees a\
+		LEFT JOIN employees b\
+		ON a.supervisor_id = b.emp_id\
+		LEFT JOIN employees c\
+		ON a.reviewer_id = c.emp_id\
+		LEFT JOIN employees d\
+		ON a.time_approver_id = d. emp_id\
+		WHERE a.emp_id=?', 
+		emp_id, (err, results) => {
 		if (err){
 			console.log(err)
 			res.status(500).send({

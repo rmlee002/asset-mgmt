@@ -21,6 +21,7 @@ export default class ManageEmployee extends Component{
         this.handleDepartment = this.handleDepartment.bind(this);
         this.handleCreateDepartmentOption = this.handleCreateDepartmentOption.bind(this);
         this.handleAffiliation = this.handleAffiliation.bind(this)
+        this.handleEmployeeAssign = this.handleEmployeeAssign.bind(this)
 
         this.state = {
             value: [],
@@ -53,9 +54,9 @@ export default class ManageEmployee extends Component{
                 email: employee.email,
                 affiliation: employee.affiliation,
                 value: employee.department.split(', ').map(department => ({value: department, label: department})),
-                supervisor: employee.supervisor,
-                reviewer: employee.reviewer,
-                time_approver: employee.time_approver,
+                supervisor: employee.super_first?{value: employee.supervisor_id, label:employee.super_first+' '+employee.super_last}:null,
+                reviewer: employee.reviewer_first?{value: employee.reviewer_id, label:employee.reviewer_first+' '+employee.reviewer_last}:null,
+                time_approver: employee.time_first?{value: employee.time_approver_id, label:employee.time_first+' '+employee.time_last}:null,
                 start: employee.start,
                 end: employee.end,
                 notes: employee.notes
@@ -101,9 +102,9 @@ export default class ManageEmployee extends Component{
         })        
     }
 
-    handleEmployeeAssign = id => value => {
-        this.setState({
-            [id]: value?value.value:null
+    handleEmployeeAssign = id => value =>{
+        this.setState({ 
+            [id]: value
         })
     }
 
@@ -133,9 +134,9 @@ export default class ManageEmployee extends Component{
             email: this.state.email,
             affiliation: this.state.affiliation,
             department: this.state.value.map(val => val.value).join(', '),
-            supervisor: this.state.supervisor,
-            reviewer: this.state.reviewer,
-            time_approver: this.state.time_approver,
+            supervisor: this.state.supervisor?this.state.supervisor.value:null,
+            reviewer: this.state.reviewer?this.state.reviewer.value:null,
+            time_approver: this.state.time_approver?this.state.time_approver.value:null,
             start: this.state.start?moment(this.state.start).format('YYYY-MM-DD'):null,
             end: this.state.end?moment(this.state.end).format('YYYY-MM-DD'):null,
             notes: this.state.notes
@@ -227,7 +228,7 @@ export default class ManageEmployee extends Component{
                                 Supervisor(s)
                             </Col>
                             <Col sm={7}>
-                                <EmployeeSelect onChange={this.handleEmployeeAssign('supervisor')}/>    
+                                <EmployeeSelect value={this.state.supervisor} onChange={this.handleEmployeeAssign('supervisor')}/>    
                             </Col>
                         </FormGroup>
                         <FormGroup controlId='reviewer'>
@@ -235,7 +236,7 @@ export default class ManageEmployee extends Component{
                                 Reviewer(s)
                             </Col>
                             <Col sm={7}>
-                                <EmployeeSelect onChange={this.handleEmployeeAssign('reviewer')}/>
+                                <EmployeeSelect value={this.state.reviewer} onChange={this.handleEmployeeAssign('reviewer')}/>
                             </Col>
                         </FormGroup>
                         <FormGroup controlId='time_approver'>
@@ -243,7 +244,7 @@ export default class ManageEmployee extends Component{
                                 Time Approver(s)
                             </Col>
                             <Col sm={7}>
-                                <EmployeeSelect onChange={this.handleEmployeeAssign('time_approver')}/>
+                                <EmployeeSelect value={this.state.time_approver} onChange={this.handleEmployeeAssign('time_approver')}/>
                             </Col>
                         </FormGroup>
                         <FormGroup controlId='start'>

@@ -90,9 +90,9 @@ export default class Employees extends Component {
                                 <td>{employee.email}</td>
                                 <td>{employee.affiliation}</td>
                                 <td>{employee.department}</td>
-                                <td>{employee.supervisor}</td>
-                                <td>{employee.reviewer}</td>
-                                <td>{employee.time_approver}</td>
+                                <td>{employee.super_first?employee.super_first + ' ' + employee.super_last:''}</td>
+                                <td>{employee.reviewer_first?employee.reviewer_first + ' ' + employee.reviewer_last:''}</td>
+                                <td>{employee.time_first?employee.time_first + ' ' + employee.time_last:''}</td>
                                 <td>
                                     {employee.start?
                                     moment(employee.start).utc().format('YYYY-MM-DD'):''}
