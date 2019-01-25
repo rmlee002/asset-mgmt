@@ -42,7 +42,7 @@ router.post('/add', (req,res)=>{
 
 router.post('/getUserData', (req,res)=>{
     connection.query('SELECT software.name, licenses.start FROM licenses JOIN software\
-        ON licenses.software_id = software.software_id WHERE emp_id=?', req.body.emp_id, (err,results)=>{
+        ON licenses.software_id = software.software_id WHERE emp_id=? AND end IS NULL', req.body.emp_id, (err,results)=>{
             if (err){
                 console.log(err)
                 res.status(500).send({

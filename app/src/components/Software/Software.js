@@ -95,6 +95,7 @@ export default class Employees extends Component {
                             <th>License</th>
                             <th>Monthly Cost</th> 
                             <th>Active Users</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -111,6 +112,7 @@ export default class Employees extends Component {
                                             </Button>
                                         </LinkContainer>                                        
                                     </td>
+                                    <td><Link to={`software/${software.software_id}/manage`}>Manage</Link></td>
                                 </tr>
                             )
                             })}
