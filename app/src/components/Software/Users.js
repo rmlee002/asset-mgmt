@@ -11,6 +11,7 @@ export default class Users extends Component{
         super(props)
 
         this.handleChange = this.handleChange.bind(this)
+        this.total=this.total.bind(this)
 
         this.state={
             users: [],
@@ -57,11 +58,21 @@ export default class Users extends Component{
         
     }
 
+    total(){
+        var total = 0;
+        this.state.users.forEach((user) => {
+            const month = moment(user.start).get('month')
+            const day = moment(user.start).date()
+            total += ((30-day + 1) / 30) * this.props.location.state.cost
+        })
+        return total.toFixed(2)
+    }
+
     render(){
         return(
             <div>
                 <Links />
-                <h3>Total cost: </h3>
+                <h3>Total monthly cost: ${this.total()}</h3>
                 <FormGroup controlId="search">
                     <ControlLabel>Search</ControlLabel>
                     <FormControl

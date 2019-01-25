@@ -106,7 +106,7 @@ export default class Employees extends Component {
                                     <td>{software.name}</td>
                                     <td>{software.cost?'$'+software.cost:''}</td>
                                     <td>
-                                        <LinkContainer to={`/software/${software.software_id}/users`}>
+                                        <LinkContainer to={{pathname: `/software/${software.software_id}/users`, state: {cost: software.cost}}}>
                                             <Button bsStyle='primary' bsSize='small'>
                                                 View
                                             </Button>
