@@ -26,6 +26,7 @@ app.use('/authenticate', authenticateRouter);
 app.use('/employees', employeeRouter);
 app.use('/assets', assetRouter);
 app.use('/software', softwareRouter);
+app.use('/licenses', licensesRouter);
 app.use('/departments', departmentRouter);
 app.use('/history', historyRouter);
 

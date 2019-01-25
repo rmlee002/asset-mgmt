@@ -106,7 +106,11 @@ export default class Employees extends Component {
                                         Assets
                                     </Link>
                                 </td>
-                                <td><a>Licenses</a></td>
+                                <td>
+                                    <Link to={`/employees/${employee.emp_id}/licenses`}>
+                                        Licenses
+                                    </Link>
+                                </td>
                                 <td>{employee.notes}</td>
                                 <td>
                                     <Link to={`/employees/manage/${employee.emp_id}`}>

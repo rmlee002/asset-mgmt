@@ -104,7 +104,13 @@ export default class Employees extends Component {
                                 <tr>
                                     <td>{software.name}</td>
                                     <td>{software.cost?'$'+software.cost:''}</td>
-                                    <td></td>
+                                    <td>
+                                        <LinkContainer to={`/software/${software.software_id}/users`}>
+                                            <Button bsStyle='primary' bsSize='small'>
+                                                View
+                                            </Button>
+                                        </LinkContainer>                                        
+                                    </td>
                                 </tr>
                             )
                             })}
