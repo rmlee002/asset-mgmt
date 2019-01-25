@@ -107,7 +107,7 @@ export default class Assets extends Component{
                                     {item.outDate?
                                         moment(item.outDate).utc().format('YYYY-MM-DD'):''}
                                 </td>
-                                <td><Link to={`/assets/history/${item.asset_id}`}>History</Link></td>
+                                <td><Link to={`/assets/${item.asset_id}/history`}>History</Link></td>
                                 <td><Link to={`/assets/manage/${item.asset_id}`}>Manage</Link></td>
                                 <td><Link to={`/assets/editOwner/${item.asset_id}`}>Assign owner</Link></td>
                             </tr>
