@@ -124,7 +124,7 @@ export default class AddAsset extends Component{
                         )}
                     </tbody>
                 </Table>
-                <Modal show={this.state.show} onHide={()=>{this.setState({show:false, start: null, asset_id: null})}}>
+                <Modal show={this.state.show} onHide={()=>{this.setState({show:false, start: new Date(), asset_id: null})}}>
                     <Modal.Header closeButton>
                         <Modal.Title>Add asset</Modal.Title>                        
                     </Modal.Header>

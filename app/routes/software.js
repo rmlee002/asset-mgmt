@@ -16,6 +16,14 @@ router.get('/', (req,res)=>{
                 error: 'Database query error'
             })
         }
+        // else{
+        //     var data = {
+        //         software: results,
+        //         licenses: null
+        //     }            
+        //     connection.query('SELECT software_id, emp_id FROM licenses WHERE end IS NULL')
+        // }
+
         res.send(JSON.stringify(results))
     })
 })

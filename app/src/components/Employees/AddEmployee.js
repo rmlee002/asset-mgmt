@@ -170,13 +170,6 @@ export default class AddEmployee extends Component{
                         <FormGroup controlId='affiliation'>
                             <Col componentClass={ControlLabel} sm={3}>Affiliation</Col>
                             <Col sm={7}>
-                                {/* <FormControl componentClass='select' onChange={this.handleChange}>
-                                    <option>Select...</option>
-                                    <option value='Contractor'>Contractor</option>
-                                    <option value='Employee'>Employee</option>
-                                    <option value='Part-time/Hourly'>Part-time/Hourly</option>
-                                    <option value='Intern'>Intern</option>
-                                </FormControl> */}
                                 <Select
                                     onChange={this.handleAffiliation}
                                     options={[
@@ -200,12 +193,6 @@ export default class AddEmployee extends Component{
                                 Supervisor(s)
                             </Col>
                             <Col sm={7}>
-                                {/* <FormControl 
-                                    type='text'
-                                    value={this.state.supervisor}
-                                    placeholder='Supervisor(s)'
-                                    onChange={this.handleChange}
-                                /> */}
                                 <EmployeeSelect onChange={this.handleEmployeeAssign('supervisor')}/>
                             </Col>
                         </FormGroup>
@@ -214,12 +201,6 @@ export default class AddEmployee extends Component{
                                 Reviewer(s)
                             </Col>
                             <Col sm={7}>
-                                {/* <FormControl 
-                                    type='text'
-                                    value={this.state.reviewer}
-                                    placeholder='Reviewer(s)'
-                                    onChange={this.handleChange}
-                                /> */}
                                 <EmployeeSelect onChange={this.handleEmployeeAssign('reviewer')}/>
                             </Col>
                         </FormGroup>
@@ -228,12 +209,6 @@ export default class AddEmployee extends Component{
                                 Time Approver(s)
                             </Col>
                             <Col sm={7}>
-                                {/* <FormControl 
-                                    type='text'
-                                    value={this.state.time_approver}
-                                    placeholder='Time approver(s)'
-                                    onChange={this.handleChange}
-                                /> */}
                                 <EmployeeSelect onChange={this.handleEmployeeAssign('time_approver')}/>
                             </Col>
                         </FormGroup>
