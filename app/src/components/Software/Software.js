@@ -38,7 +38,7 @@ export default class Employees extends Component {
     }
 
     filter = memoize(
-        (list, filterText) => list.filter(item => (item.license).toLowerCase().includes(filterText.toLowerCase()))
+        (list, filterText) => list.filter(item => (item.name).toLowerCase().includes(filterText.toLowerCase()))
     )
 
     handleChange(e){
@@ -94,8 +94,7 @@ export default class Employees extends Component {
                         <tr>
                             <th>License</th>
                             <th>Monthly Cost</th> 
-                            <th>Active Users</th>                           
-                            <th>Current Total Cost</th> 
+                            <th>Active Users</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -105,7 +104,6 @@ export default class Employees extends Component {
                                 <tr>
                                     <td>{software.name}</td>
                                     <td>{software.cost?'$'+software.cost:''}</td>
-                                    <td></td>
                                     <td></td>
                                 </tr>
                             )

@@ -7,11 +7,9 @@ export default class Departments extends Component{
         super(props)
 
         this.onCreateOption = this.onCreateOption.bind(this)
-        this.handleChange = this.handleChange.bind(this)
 
         this.state={
-            options: [],
-            value: [],
+            options: []
         }
     }
 
@@ -31,11 +29,6 @@ export default class Departments extends Component{
             alert(err)
         })
     }
-
-    handleChange(value){
-        this.setState({value})
-    }
-
 
     onCreateOption(option){
         const options = this.state.options
