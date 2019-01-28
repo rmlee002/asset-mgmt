@@ -61,7 +61,7 @@ export default class Departments extends Component{
                 options={this.state.options} 
                 onChange={this.props.handleChange}
                 onCreateOption={this.onCreateOption}
-                value={this.props.value}
+                value={this.props.depts}
             >
             </CreatableSelect>
         );

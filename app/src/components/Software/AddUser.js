@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Form, FormGroup, FormControl, ControlLabel, Col } from 'react-bootstrap';
+import { Button, Form, FormGroup, ControlLabel, Col } from 'react-bootstrap';
 import Links from '../Nav';
 import EmployeeSelect from '../EmployeeSelect';
 import DatePicker from 'react-datepicker';

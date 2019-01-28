@@ -24,7 +24,7 @@ export default class AddEmployee extends Component{
 
         this.state = {
             success: false,
-            value: [],
+            depts: [],
             show: false,
             first_name: null,
             last_name: null,
@@ -77,13 +77,13 @@ export default class AddEmployee extends Component{
         })
     }
 
-    handleDepartment(value){
-        this.setState({value})
+    handleDepartment(depts){
+        this.setState({depts})
     }
 
     handleCreateDepartmentOption(value){
         this.setState({
-            value: [...this.state.value, {value: value, label: value}]
+            depts: [...this.state.depts, {value: value, label: value}]
         })        
     }
 
@@ -100,7 +100,7 @@ export default class AddEmployee extends Component{
             last_name: this.state.last_name,
             email: this.state.email,
             affiliation: this.state.affiliation,
-            department: this.state.value.map(val => val.value).join(', '),
+            department: this.state.depts.map(val => val.value).join(', '),
             supervisor: this.state.supervisor,
             reviewer: this.state.reviewer,
             time_approver: this.state.time_approver,
@@ -185,7 +185,7 @@ export default class AddEmployee extends Component{
                         <FormGroup controlId='department'>
                             <Col componentClass={ControlLabel} sm={3}>Department</Col>
                             <Col sm={7}>
-                                <Departments createDept = {this.handleCreateDepartmentOption} handleChange={this.handleDepartment} value={this.state.value}/>
+                                <Departments createDept = {this.handleCreateDepartmentOption} handleChange={this.handleDepartment} value={this.state.depts}/>
                             </Col>
                         </FormGroup>
                         <FormGroup controlId='supervisor'>

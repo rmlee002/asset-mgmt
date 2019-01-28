@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Button, Table, Form, FormGroup, FormControl, ControlLabel, Col, Modal } from 'react-bootstrap';
 import Links from '../Nav';
-import EmployeeSelect from '../EmployeeSelect';
 import DatePicker from 'react-datepicker';
 import Axios from 'axios';
 import moment from 'moment';
