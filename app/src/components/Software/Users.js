@@ -5,6 +5,7 @@ import memoize from 'memoize-one';
 import Links from '../Nav';
 import Axios from 'axios';
 import moment from 'moment';
+import Filter from '../Filter';
 
 export default class Users extends Component{
     constructor(props){
@@ -12,6 +13,8 @@ export default class Users extends Component{
 
         this.handleChange = this.handleChange.bind(this)
         this.total=this.total.bind(this)
+        this.filterName = this.filterName.bind(this)
+        this.handleFilter = this.handleFilter.bind(this)
 
         this.state={
             users: [],
@@ -40,14 +43,26 @@ export default class Users extends Component{
         })
     }
 
-    filter = memoize(
+    filterName = memoize(
         (list, filterText) => list.filter(item => (item.first_name+' '+item.last_name).toLowerCase().includes(filterText.toLowerCase()))
     )
+        
+    handleFilter(options){
+        this.setState({
+            filtered: this.state.users.filter(item =>
+                moment(item.start).isSameOrAfter(options.start) 
+                && 
+                moment(item.start).isSameOrBefore(options.end)
+                &&
+                (options.depts.length > 0 ? options.depts.map(dept => dept.value).some(dept => item.department.split(', ').includes(dept)): true)
+            )
+        })
+    }
 
     handleChange(e){
         if (e.target.value !== ''){
             this.setState({
-                filtered: this.filter(this.state.users, e.target.value)
+                filtered: this.filterName(this.state.users, e.target.value)
             })
         }
         else{
@@ -60,10 +75,9 @@ export default class Users extends Component{
 
     total(){
         var total = 0;
-        this.state.users.forEach((user) => {
-            const month = moment(user.start).get('month')
+        this.state.filtered.forEach((user) => {
             const day = moment(user.start).date()
-            total += ((30-day + 1) / 30) * this.props.location.state.cost
+            total += ((30-day + 1) / 30) * parseInt(user.cost)
         })
         return total.toFixed(2)
     }
@@ -82,6 +96,7 @@ export default class Users extends Component{
                     />
                     <FormControl.Feedback />
                 </FormGroup>
+                <Filter handleFilter={this.handleFilter}/>
                 <LinkContainer to={`/software/${this.props.match.params.software_id}/users/add`}>
                     <Button bsStyle='primary'>Add User</Button>  
                 </LinkContainer>                                  
