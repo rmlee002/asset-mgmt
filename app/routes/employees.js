@@ -20,15 +20,16 @@ router.get('/', (req, res) => {
 		LEFT JOIN employees c\
 		ON a.reviewer_id = c.emp_id\
 		LEFT JOIN employees d\
-		ON a.time_approver_id = d. emp_id', 
+		ON a.time_approver_id = d.emp_id\
+		WHERE a.archived=FALSE', 
 		function(err, results){
-        if (err){
-			console.log(err)
-			res.status(500).send({
-                error: "Database query error"
-            })
-		}
-        res.send(JSON.stringify(results));
+			if (err){
+				console.log(err)
+				res.status(500).send({
+					error: "Database query error"
+				})
+			}
+			res.send(JSON.stringify(results));
     });
 });
 

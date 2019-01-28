@@ -16,14 +16,6 @@ router.get('/', (req,res)=>{
                 error: 'Database query error'
             })
         }
-        // else{
-        //     var data = {
-        //         software: results,
-        //         licenses: null
-        //     }            
-        //     connection.query('SELECT software_id, emp_id FROM licenses WHERE end IS NULL')
-        // }
-
         res.send(JSON.stringify(results))
     })
 })
@@ -36,15 +28,7 @@ router.post('/retire', (req,res)=>{
                 error: "Database query error"
             })
         }
-        connection.query('UPDATE licenses SET end=CURDATE() WHERE software_id=? and end IS NULL', req.body.software_id, (err,results) => {
-            if (err){
-                console.log(err)
-                res.status(500).send({
-                    error: "Database query error"
-                })
-            }
-            res.status(200).send('Success')
-        })        
+        res.status(200).send('Success')  
     })
 })
 

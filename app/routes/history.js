@@ -20,7 +20,6 @@ router.post('/add', (req,res) => {
         else{
             const assets = results.map((result) => result.asset_id)
             if (assets.includes(parseInt(asset_id))){
-                console.log('reached1')
                 const options = {
                     url: 'http://localhost:8080/history/retire',
                     body: JSON.stringify({end: start, history_id: results[assets.indexOf(parseInt(asset_id))].history_id}),
