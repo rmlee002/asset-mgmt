@@ -9,10 +9,13 @@ app.use(bodyParser.json());
 
 router.post('/', (req,res)=>{
     connection.query(
-        'SELECT employees.first_name, employees.last_name, employees.department, licenses.start\
+        'SELECT software.cost, employees.first_name, employees.last_name, employees.department, licenses.start\
         FROM licenses\
         JOIN employees\
-        ON licenses.emp_id = employees.emp_id WHERE licenses.software_id=?', req.body.software_id, (err,results)=>{
+        ON licenses.emp_id = employees.emp_id\
+        JOIN software\
+        ON licenses.software_id = software.software_id\
+        WHERE licenses.software_id=?', req.body.software_id, (err,results)=>{
         if(err){
             console.log(err)
             res.status(500).send({
