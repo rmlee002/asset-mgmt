@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Button, Table, FormGroup, ControlLabel, FormControl, Col } from 'react-bootstrap';
+import { Modal, Button, Table, Form, FormGroup, ControlLabel, FormControl, Col } from 'react-bootstrap';
 import Axios from 'axios';
 import memoize from 'memoize-one';
 import DatePicker from 'react-datepicker';
@@ -121,17 +121,19 @@ export default class EditOwner extends Component{
                 </Modal.Header>
                 <form onSubmit={this.handleSubmit}>
                     <Modal.Body>
-                        <FormGroup controlId='start'>
-                            <Col componentClass={ControlLabel} sm={3}>
-                                Enter start date: 
-                            </Col> 
-                            <Col sm={4}>
-                                <DatePicker 
-                                    selected={this.state.start}
-                                    onChange={this.handleStart}
-                                />
-                            </Col>                                
-                        </FormGroup>                     
+                        <Form horizontal>
+                            <FormGroup controlId='start'>
+                                <Col componentClass={ControlLabel} sm={3}>
+                                    Enter start date: 
+                                </Col> 
+                                <Col sm={4}>
+                                    <DatePicker 
+                                        selected={this.state.start}
+                                        onChange={this.handleStart}
+                                    />
+                                </Col>                                
+                            </FormGroup>
+                        </Form>                                      
                     </Modal.Body>
                     <Modal.Footer>
                         <Button type='submit' bsStyle='success'>Assign</Button>

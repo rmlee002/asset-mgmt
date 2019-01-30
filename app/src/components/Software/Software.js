@@ -85,7 +85,9 @@ export default class Employees extends Component {
                     <LinkContainer to='/software/add'>
                         <Button bsStyle='primary'>Add Software</Button>
                     </LinkContainer>                    
-                    <Button bsStyle='primary'>View all active licenses</Button>
+                    <LinkContainer to='/software/overview'>
+                        <Button>View all active licenses</Button>
+                    </LinkContainer>                    
                 </ButtonToolbar>
                 <Table>
                     <thead>

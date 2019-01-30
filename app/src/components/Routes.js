@@ -20,6 +20,7 @@ import AddUser from './Software/AddUser';
 import EmployeeLicenses from './Employees/EmployeeLicenses';
 import AddEmployeeLicense from './Employees/AddEmployeeLicense';
 import ManageSoftware from './Software/ManageSoftware';
+import SoftwareOverview from './Software/SoftwareOverview';
 
 export default () => 
     <Switch>
@@ -39,6 +40,7 @@ export default () =>
         <Route exact path='/assets/manage/:asset_id' component={protect(ManageAsset)} />
         <Route exact path='/assets/editOwner/:asset_id' component={protect(EditOwner)} />
         <Route exact path='/software' component={Software} />
+        <Route path='/software/overview' component={SoftwareOverview} />
         <Route path='/software/:software_id/manage' component={protect(ManageSoftware)} />
         <Route path='/software/add' component={protect(AddSoftware)} />
         <Route exact path='/software/:software_id/users' component={Users} />

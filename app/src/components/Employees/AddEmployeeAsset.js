@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Col, Table, FormGroup, FormControl, ControlLabel, Button, Modal } from 'react-bootstrap';
+import { Col, Table, Form, FormGroup, FormControl, ControlLabel, Button, Modal } from 'react-bootstrap';
 import Axios from 'axios';
 import memoize from 'memoize-one';
 import moment from 'moment';
@@ -127,17 +127,19 @@ export default class AddAsset extends Component{
                     </Modal.Header>
                     <form onSubmit={this.handleSubmit}>
                         <Modal.Body>
-                            <FormGroup controlId='start'>
-                                <Col componentClass={ControlLabel} sm={3}>
-                                    Enter start date: 
-                                </Col> 
-                                <Col sm={4}>
-                                    <DatePicker 
-                                        selected={this.state.start}
-                                        onChange={this.handleStart}
-                                    />
-                                </Col>                                
-                            </FormGroup>                     
+                            <Form horizontal>
+                                <FormGroup controlId='start'>
+                                    <Col componentClass={ControlLabel} sm={3}>
+                                        Enter start date: 
+                                    </Col> 
+                                    <Col sm={4}>
+                                        <DatePicker 
+                                            selected={this.state.start}
+                                            onChange={this.handleStart}
+                                        />
+                                    </Col>                                
+                                </FormGroup>  
+                            </Form>                   
                         </Modal.Body>
                         <Modal.Footer>
                             <Button type='submit' bsStyle='success'>Add</Button>

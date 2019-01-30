@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Links from './Nav';
 
 export default class Home extends Component{
 	render(){

@@ -92,7 +92,7 @@ export default class AddEmployeeLicense extends Component{
                     <ControlLabel>Search</ControlLabel>
                     <FormControl
                         type='text'
-                        placeholder='Enter employee name'
+                        placeholder='Enter software name'
                         onChange = {this.handleChange}
                     />
                     <FormControl.Feedback />
@@ -119,16 +119,18 @@ export default class AddEmployeeLicense extends Component{
                     <Modal.Header closeButton>
                         <Modal.Title>Add License</Modal.Title>
                     </Modal.Header>
-                    <form onSubmit={this.handleSubmit}>
+                    <form onSubmit={this.handleSubmit}>                        
                         <Modal.Body>
-                            <FormGroup controlId='start'>
-                                <Col componentClass={ControlLabel} sm={3}>
-                                    Start date
-                                </Col>
-                                <Col sm={7}>
-                                    <DatePicker selected={this.state.start} onChange={this.handleStart}/>
-                                </Col>
-                            </FormGroup>
+                            <Form horizontal>
+                                <FormGroup controlId='start'>
+                                    <Col componentClass={ControlLabel} sm={3}>
+                                        Start date
+                                    </Col>
+                                    <Col sm={7}>
+                                        <DatePicker selected={this.state.start} onChange={this.handleStart}/>
+                                    </Col>
+                                </FormGroup>
+                            </Form>                           
                         </Modal.Body>
                         <Modal.Footer>
                             <Button type='submit' bsStyle='success'>Add</Button>
