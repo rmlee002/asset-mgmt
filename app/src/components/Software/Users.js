@@ -18,7 +18,8 @@ export default class Users extends Component{
 
         this.state={
             users: [],
-            filtered: []
+            filtered: [],
+            name: undefined
         }
     }
 
@@ -33,7 +34,8 @@ export default class Users extends Component{
             else{
                 this.setState({
                     users: res.data,
-                    filtered: res.data
+                    filtered: res.data,
+                    name: res.data[0].name
                 })
             }
         })
@@ -86,7 +88,7 @@ export default class Users extends Component{
         return(
             <div>
                 <Links />
-                <h3>Total monthly cost: ${this.total()}</h3>
+                <h3>Total monthly cost for {this.state.name}: ${this.total()}</h3>
                 <FormGroup controlId="search">
                     <ControlLabel>Search</ControlLabel>
                     <FormControl

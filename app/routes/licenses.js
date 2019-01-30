@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 
 router.post('/', (req,res)=>{
     connection.query(
-        'SELECT software.cost, employees.first_name, employees.last_name, employees.department, licenses.start\
+        'SELECT software.name, software.cost, employees.first_name, employees.last_name, employees.department, licenses.start\
         FROM licenses\
         JOIN employees\
         ON licenses.emp_id = employees.emp_id\
