@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Button, Form, FormGroup, ControlLabel, Col } from 'react-bootstrap';
-import Links from '../Nav';
 import EmployeeSelect from '../EmployeeSelect';
 import DatePicker from 'react-datepicker';
 import Axios from 'axios';
@@ -65,7 +64,6 @@ export default class AddUser extends Component{
     render(){
         return(
             <div>
-                <Links />
                 <form onSubmit={this.handleSubmit}>
                     <Form horizontal>
                         <FormGroup controlId='user'>

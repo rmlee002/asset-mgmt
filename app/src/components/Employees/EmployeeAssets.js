@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Table, Button , Modal, FormGroup, Col, ControlLabel } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import Links from '../Nav';
 import Axios from 'axios';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
@@ -64,7 +63,6 @@ export default class EmployeeAssets extends Component{
     render(){
         return(
             <div>
-                <Links />
                 <LinkContainer to={`/employees/${this.props.match.params.emp_id}/addAsset`}>
                     <Button bsStyle='primary'>
                         Add asset

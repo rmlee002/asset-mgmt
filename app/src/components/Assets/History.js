@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Modal, Col, Table, FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
-import Links from '../Nav';
 import axios from 'axios';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
@@ -65,7 +64,6 @@ export default class History extends Component{
     render(){
         return(
             <div>
-                <Links />
                 <FormGroup controlid="search">
                     <ControlLabel>Search</ControlLabel>
                     <FormControl

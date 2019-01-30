@@ -36,7 +36,6 @@ export default function protect(Comp) {
 			const { loading, redirect } = this.state;
 			let view =
 					<div>
-						<Links />
 						<h1>Loading...</h1>
 					</div>
 					

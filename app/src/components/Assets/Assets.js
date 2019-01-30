@@ -3,7 +3,6 @@ import { FormGroup, ControlLabel, FormControl, Table, Button } from 'react-boots
 import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import moment from 'moment';
-import Links from '../Nav';
 import axios from 'axios';
 import memoize from 'memoize-one';
 
@@ -53,7 +52,6 @@ export default class Assets extends Component{
     render(){
         return(
             <div>
-                <Links />
                 <FormGroup controlid="search">
                     <ControlLabel>Search</ControlLabel>
                     <FormControl

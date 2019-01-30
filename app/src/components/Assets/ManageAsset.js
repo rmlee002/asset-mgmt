@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Form , FormGroup, Col, ControlLabel, FormControl } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
-import Links from '../Nav';
 import Axios from 'axios';
 import moment from 'moment';
 import "../../../node_modules/react-datepicker/dist/react-datepicker.css";
@@ -67,14 +66,6 @@ export default class ManageAsset extends Component{
             [e.target.id]: nullify(e.target.value)
         })
     }
-
-    // //For autosuggest component to select owner
-    // handleOwner(id, value){
-    //     this.setState({ 
-    //         owner: value?value.label:null,
-    //         owner_id: value?value.value:null
-    //     })
-    // }
 
     handleIn(date){
         if(date){
@@ -150,7 +141,6 @@ export default class ManageAsset extends Component{
     render(){
         return(
             <div>
-                <Links />
                 <Button bsStyle='danger' onClick={this.handleRetire}>Retire</Button>
                 <form onSubmit={this.handleSubmit}>
                     <Form horizontal>                        

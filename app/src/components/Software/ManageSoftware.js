@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, FormControl, ControlLabel, Col, Button } from 'react-bootstrap';
-import Links from '../Nav';
 import Axios from 'axios';
 
 export default class ManageSoftware extends Component{
@@ -74,7 +73,6 @@ export default class ManageSoftware extends Component{
     render(){
         return(
             <div>
-                <Links />
                 <Button bsStyle='danger' onClick={this.handleRetire}>Retire</Button>
                 <form onSubmit={this.handleUpdate}>
                     <Form horizontal onChange={this.handleChange}>

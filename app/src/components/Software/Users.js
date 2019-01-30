@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { FormGroup, ControlLabel, FormControl, Table, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import memoize from 'memoize-one';
-import Links from '../Nav';
 import Axios from 'axios';
 import moment from 'moment';
 import Filter from '../Filter';
@@ -33,9 +32,9 @@ export default class Users extends Component{
             }
             else{
                 this.setState({
-                    users: res.data,
-                    filtered: res.data,
-                    name: res.data[0].name
+                    users: res.data.info,
+                    filtered: res.data.info,
+                    name: res.data.name
                 })
             }
         })
@@ -87,8 +86,7 @@ export default class Users extends Component{
     render(){
         return(
             <div>
-                <Links />
-                <h3>Total monthly cost for {this.state.name}: ${this.total()}</h3>
+                <h3>Total monthly cost for {this.state.name} license: ${this.total()}</h3>
                 <FormGroup controlId="search">
                     <ControlLabel>Search</ControlLabel>
                     <FormControl

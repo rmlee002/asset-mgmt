@@ -54,9 +54,7 @@ class Links extends Component{
                         </Nav>
                         <Nav pullRight>
                             {this.state.loggedIn?
-                            // <LinkContainer to='/home'>
-                                <NavItem onClick={this.handleLogout} href='/home'>Logout</NavItem>
-                            // </LinkContainer>                            
+                            <NavItem onClick={this.handleLogout} href='/home'>Logout</NavItem>                        
                             :
                             <LinkContainer to='/login'>
                                 <NavItem>Login</NavItem>

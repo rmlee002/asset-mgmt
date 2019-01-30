@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Button, Table, Form, FormGroup, FormControl, ControlLabel, Col, Modal } from 'react-bootstrap';
-import Links from '../Nav';
 import DatePicker from 'react-datepicker';
 import Axios from 'axios';
 import moment from 'moment';
@@ -89,7 +88,6 @@ export default class AddEmployeeLicense extends Component{
     render(){
         return(
             <div>
-                <Links />
                 <FormGroup controlId="search">
                     <ControlLabel>Search</ControlLabel>
                     <FormControl

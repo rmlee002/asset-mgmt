@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Col, FormControl, HelpBlock, ControlLabel } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
-import Links from '../Nav';
 import axios from 'axios';
 import moment from 'moment';
 import "../../../node_modules/react-datepicker/dist/react-datepicker.css";
@@ -155,7 +154,6 @@ export default class ManageEmployee extends Component{
         const isValid = this.state.first_name && this.state.last_name;        
         return(
             <div>
-                <Links />
                 <Button bsStyle='danger' onClick={this.handleRetire}>Retire</Button>
                 <form onSubmit={this.handleUpdate}>
                     <Form horizontal>

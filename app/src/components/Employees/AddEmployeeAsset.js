@@ -4,8 +4,6 @@ import Axios from 'axios';
 import memoize from 'memoize-one';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
-import Links from '../Nav';
-
 export default class AddAsset extends Component{
     constructor(props){
         super(props);
@@ -90,7 +88,6 @@ export default class AddAsset extends Component{
     render(){
         return(
             <div>
-                <Links />
                 <FormGroup controlid="search">
                     <ControlLabel>Search</ControlLabel>
                     <FormControl

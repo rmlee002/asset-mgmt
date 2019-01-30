@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Modal, Button, Table, FormGroup, ControlLabel, FormControl, Col } from 'react-bootstrap';
-import Links from '../Nav';
 import Axios from 'axios';
 import memoize from 'memoize-one';
 import DatePicker from 'react-datepicker';
@@ -85,7 +84,6 @@ export default class EditOwner extends Component{
     render(){
         return(
             <div>
-                <Links />
                 <FormGroup controlid="search">
                     <ControlLabel>Search</ControlLabel>
                     <FormControl

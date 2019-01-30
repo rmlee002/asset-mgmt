@@ -4,7 +4,6 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import "../../../node_modules/react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
-import Links from '../Nav';
 import Departments from '../Departments';
 import Select from 'react-select';
 import EmployeeSelect from '../EmployeeSelect';
@@ -125,7 +124,6 @@ export default class AddEmployee extends Component{
     render(){
         return(
             <div>
-                <Links />  
                 <form onSubmit={this.handleSubmit}>
                     <Form horizontal>
                         <FormGroup controlId='first_name' validationState={this.validateFirst}>

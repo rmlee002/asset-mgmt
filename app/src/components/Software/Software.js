@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import memoize from 'memoize-one';
 import Axios from 'axios';
-import Links from '../Nav';
 
 export default class Employees extends Component {
     constructor(props){
@@ -73,7 +72,6 @@ export default class Employees extends Component {
     render(){
         return(
             <div>
-                <Links />
                 <FormGroup controlid="search">
                     <ControlLabel>Search</ControlLabel>
                     <FormControl

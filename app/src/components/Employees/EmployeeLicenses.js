@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Table, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import Links from '../Nav';
 import Axios from 'axios';
 import moment from 'moment';
 
@@ -33,7 +32,6 @@ export default class EmployeeLicenses extends Component{
     render(){
         return(
             <div>
-                <Links />
                 <LinkContainer to={`/employees/${this.props.match.params.emp_id}/licenses/add`}>
                     <Button bsStyle='primary'>Add license</Button>
                 </LinkContainer>

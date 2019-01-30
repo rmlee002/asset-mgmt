@@ -4,7 +4,6 @@ import { Table, FormGroup, FormControl, ControlLabel, Button} from 'react-bootst
 import { LinkContainer } from 'react-router-bootstrap';
 import moment from 'moment';
 import axios from 'axios';
-import Links from '../Nav';
 import memoize from 'memoize-one';
 
 export default class Employees extends Component {
@@ -50,7 +49,6 @@ export default class Employees extends Component {
     render(){
         return(
             <div>
-                <Links />
                 <FormGroup controlid="search">
                     <ControlLabel>Search</ControlLabel>
                     <FormControl

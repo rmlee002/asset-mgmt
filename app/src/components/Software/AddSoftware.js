@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, FormControl, ControlLabel, Col, Button } from 'react-bootstrap';
-import Links from '../Nav';
 import Axios from 'axios';
 
 export default class AddSoftware extends Component{
@@ -45,7 +44,6 @@ export default class AddSoftware extends Component{
     render(){
         return(
             <div>
-                <Links />
                 <form onSubmit={this.handleSubmit}>
                     <Form horizontal onChange={this.handleChange}>
                         <FormGroup controlId='name'>

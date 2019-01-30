@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Button, Form, FormGroup, FormControl, ControlLabel, Col, ButtonToolbar } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
-import Links from '../Nav';
 import axios from 'axios';
 
 export default class AddAssets extends Component{
@@ -94,7 +93,6 @@ export default class AddAssets extends Component{
     render(){
         return(
             <div>
-                <Links />
                 <form onSubmit={this.handleSubmit}>
                     <Form horizontal>
                         <FormGroup controlId='order_num'>
