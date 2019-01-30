@@ -39,7 +39,7 @@ class Links extends Component{
                         <Navbar.Brand>
                             <Link to="/home">Home</Link>
                         </Navbar.Brand>
-                    </Navbar.Header>
+                    </Navbar.Header>                    
                     <Navbar.Collapse>
                         <Nav>
                             <LinkContainer to='/employees'>
