@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 
 router.post('/', (req,res)=>{
     connection.query(
-        'SELECT software.name, software.cost, employees.first_name, employees.last_name, employees.department, licenses.start\
+        'SELECT software.cost, employees.first_name, employees.last_name, employees.department, licenses.start\
         FROM licenses\
         JOIN employees\
         ON licenses.emp_id = employees.emp_id\
@@ -24,7 +24,18 @@ router.post('/', (req,res)=>{
             })
         }
         else{
-            res.send(JSON.stringify(results))
+            connection.query('SELECT software.name FROM software WHERE software_id=?', req.body.software_id, (err,results2)=>{
+                if (err){
+                    console.log(err)
+                    res.status(500).send({
+                        error: "Database query error"
+                    })
+                }
+                res.send({
+                    name: results2[0].name,
+                    info: results
+                })
+            })
         }
     })
 })
