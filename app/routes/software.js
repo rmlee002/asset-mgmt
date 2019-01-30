@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 router.get('/', (req,res)=>{
-    connection.query('SELECT * FROM software WHERE archived=FALSE', (err, results) => {
+    connection.query('SELECT * FROM software', (err, results) => {
         if(err){
             console.log(err)
             res.status(500).send({

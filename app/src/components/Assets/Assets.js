@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FormGroup, ControlLabel, FormControl, Table, Button } from 'react-bootstrap';
+import { FormGroup, ControlLabel, FormControl, Table, Button, Checkbox } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import moment from 'moment';
@@ -11,9 +11,11 @@ export default class Assets extends Component{
         super(props);
         this.state = {
             assets: [],
-            filtered: []
+            filtered: [],
+            showArchived: false
         }
         this.handleChange = this.handleChange.bind(this);
+        this.handleCheck = this.handleCheck.bind(this)
     }
 
     componentDidMount(){
@@ -24,7 +26,10 @@ export default class Assets extends Component{
                 alert(res.data.error)
                 throw new Error("Bad response from server");
             }
-            self.setState({assets: res.data, filtered: res.data});
+            self.setState({
+                assets: res.data, 
+                filtered: res.data.filter((item)=>!item.archived)
+            });
         }).catch(err => {
             console.log(err);
             alert(err);
@@ -38,16 +43,22 @@ export default class Assets extends Component{
     handleChange(e){
         if (e.target.value !== ''){
             this.setState({
-                filtered: this.filter(this.state.assets, e.target.value)
+                filtered: this.filter(this.state.assets.filter((item) =>  !(item.archived) || this.state.showArchived), e.target.value)
             })
         }
         else{
             this.setState({
-                filtered: this.state.assets
+                filtered: this.state.assets.filter((item) =>  !(item.archived) || this.state.showArchived)
             })
         }
-        
     }    
+
+    handleCheck(e){
+        this.setState({
+            showArchived: e.target.checked,
+            filtered: this.state.assets.filter((item) =>  !(item.archived) || e.target.checked)
+        })
+    }
 
     render(){
         return(
@@ -61,11 +72,12 @@ export default class Assets extends Component{
                     />
                     <FormControl.Feedback />
                 </FormGroup>
-
                 <LinkContainer to='/assets/add'>
                     <Button bsStyle='primary'>Add assets</Button>
                 </LinkContainer>
-
+                <Checkbox checked={this.state.showArchived} onChange={this.handleCheck}>
+                    Show retired
+                </Checkbox>
                 <Table>
                     <thead>
                         <tr>

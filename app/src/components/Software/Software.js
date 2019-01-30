@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, FormGroup, ControlLabel, FormControl, Button, ButtonToolbar } from 'react-bootstrap';
+import { Table, FormGroup, ControlLabel, FormControl, Button, ButtonToolbar, Checkbox } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import memoize from 'memoize-one';
@@ -10,10 +10,12 @@ export default class Employees extends Component {
         super(props)
 
         this.handleChange = this.handleChange.bind(this)
+        this.handleCheck = this.handleCheck.bind(this)
 
         this.state={
+            showArchived: false,
             software: [],
-            filtered: [],
+            filtered: []
         }
     }
 
@@ -26,7 +28,7 @@ export default class Employees extends Component {
             else{
                 this.setState({
                     software: res.data,
-                    filtered: res.data
+                    filtered: res.data.filter((item)=> !item.archived)
                 })
             }
         })
@@ -43,15 +45,21 @@ export default class Employees extends Component {
     handleChange(e){
         if (e.target.value !== ''){
             this.setState({
-                filtered: this.filter(this.state.software, e.target.value)
+                filtered: this.filter(this.state.software.filter((software)=>!software.archived || this.state.showArchived), e.target.value)
             })
         }
         else{
             this.setState({
-                filtered: this.state.software
+                filtered: this.state.software.filter((software)=> !software.archived || this.state.showArchived)
             })
-        }
-        
+        }        
+    }
+
+    handleCheck(e){
+        this.setState({
+            showArchived: e.target.checked,
+            filtered: this.state.software.filter((software) => !software.archived || e.target.checked)
+        })
     }
 
     getData(id,cost){
@@ -89,6 +97,9 @@ export default class Employees extends Component {
                         <Button>View all active licenses</Button>
                     </LinkContainer>                    
                 </ButtonToolbar>
+                <Checkbox checked={this.state.showArchived} onChange={this.handleCheck}>
+                    Show retired
+                </Checkbox>
                 <Table>
                     <thead>
                         <tr>
@@ -99,23 +110,20 @@ export default class Employees extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.filtered.map((software) => {
-                            // const data = getData(software.software_id, software.cost)
-                            return(
-                                <tr>
-                                    <td>{software.name}</td>
-                                    <td>{software.cost?'$'+software.cost:''}</td>
-                                    <td>
-                                        <LinkContainer to={{pathname: `/software/${software.software_id}/users`, state: {cost: software.cost}}}>
-                                            <Button bsStyle='primary' bsSize='small'>
-                                                View
-                                            </Button>
-                                        </LinkContainer>                                        
-                                    </td>
-                                    <td><Link to={`software/${software.software_id}/manage`}>Manage</Link></td>
-                                </tr>
-                            )
-                            })}
+                        {this.state.filtered.map((software) =>
+                            <tr>
+                                <td>{software.name}</td>
+                                <td>{software.cost?'$'+software.cost:''}</td>
+                                <td>
+                                    <LinkContainer to={{pathname: `/software/${software.software_id}/users`, state: {cost: software.cost}}}>
+                                        <Button bsStyle='primary' bsSize='small'>
+                                            View
+                                        </Button>
+                                    </LinkContainer>                                        
+                                </td>
+                                <td><Link to={`software/${software.software_id}/manage`}>Manage</Link></td>
+                            </tr>                            
+                            )}
                     </tbody>
                 </Table>
             </div>

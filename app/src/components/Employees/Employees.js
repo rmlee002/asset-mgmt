@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from'react-router-dom';
-import { Table, FormGroup, FormControl, ControlLabel, Button} from 'react-bootstrap';
+import { Table, FormGroup, FormControl, ControlLabel, Button, Checkbox} from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import moment from 'moment';
 import axios from 'axios';
@@ -11,9 +11,11 @@ export default class Employees extends Component {
         super(props);
         this.state = {
             employees: [],
-            filtered: []
+            filtered: [],
+            showArchived: false
         };
         this.handleChange = this.handleChange.bind(this);
+        this.handleCheck = this.handleCheck.bind(this)
     }
 
     componentDidMount(){
@@ -22,7 +24,9 @@ export default class Employees extends Component {
             if (res.status >= 400){
                 alert(res.data.error);
             }
-            this.setState({employees: res.data, filtered: res.data});
+            this.setState({
+                employees: res.data,
+                filtered: res.data.filter((emp)=>!emp.archived)});
         }).catch(err => {
             console.log(err);
             alert(err);
@@ -36,14 +40,21 @@ export default class Employees extends Component {
     handleChange(e){
         if (e.target.value !== ''){
             this.setState({
-                filtered: this.filter(this.state.employees, e.target.value)
+                filtered: this.filter(this.state.employees.filter((emp) => !emp.archived || this.state.showArchived), e.target.value)
             })
         }
         else{
             this.setState({
-                filtered: this.state.employees
+                filtered: this.state.employees.filter((emp) => !emp.archived || this.state.showArchived)
             })
         }
+    }
+
+    handleCheck(e){
+        this.setState({
+            showArchived: e.target.checked,
+            filtered: this.state.employees.filter((emp)=>!emp.archived || e.target.checked)
+        })
     }
 
     render(){
@@ -61,7 +72,11 @@ export default class Employees extends Component {
                 
                 <LinkContainer to='/employees/add'>
                     <Button bsStyle='primary'>Add employee</Button>
-                </LinkContainer>                
+                </LinkContainer>     
+
+                <Checkbox checked={this.state.showArchived} onChange={this.handleCheck}>
+                    Show retired
+                </Checkbox>
 
                 <Table className="employees">
                     <thead>

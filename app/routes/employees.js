@@ -13,15 +13,14 @@ router.get('/', (req, res) => {
     connection.query(
 		'SELECT a.emp_id, a.first_name, a.last_name, a.email, a.affiliation, a.department,\
 		b.first_name AS super_first, b.last_name AS super_last, c.first_name AS reviewer_first,\
-		c.last_name AS reviewer_last, d.first_name AS time_first, d.last_name AS time_last, a.start, a.end, a.notes\
+		c.last_name AS reviewer_last, d.first_name AS time_first, d.last_name AS time_last, a.start, a.end, a.notes, a.archived\
  		FROM employees a\
 		LEFT JOIN employees b\
 		ON a.supervisor_id = b.emp_id\
 		LEFT JOIN employees c\
 		ON a.reviewer_id = c.emp_id\
 		LEFT JOIN employees d\
-		ON a.time_approver_id = d.emp_id\
-		WHERE a.archived=FALSE', 
+		ON a.time_approver_id = d.emp_id', 
 		function(err, results){
 			if (err){
 				console.log(err)
