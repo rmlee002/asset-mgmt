@@ -58,7 +58,7 @@ export default class Filter extends Component{
 
     render(){
         return(
-            <div>
+            <React.Fragment>
                 <Button bsStyle='link' onClick={()=>this.setState({open: !this.state.open})}>
                     Filter
                 </Button>
@@ -99,7 +99,7 @@ export default class Filter extends Component{
                         </form>    
                     </Well>
                 </Collapse>
-            </div>
+            </React.Fragment>
         );
     }
 }

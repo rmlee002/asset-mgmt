@@ -62,7 +62,7 @@ export default class EmployeeAssets extends Component{
 
     render(){
         return(
-            <div>
+            <React.Fragment>
                 <LinkContainer to={`/employees/${this.props.match.params.emp_id}/addAsset`}>
                     <Button bsStyle='primary'>
                         Add asset
@@ -99,7 +99,7 @@ export default class EmployeeAssets extends Component{
                         )}
                     </tbody>
                 </Table>
-            </div>
+            </React.Fragment>
         );
     }
 }

@@ -73,7 +73,7 @@ export default class ManageSoftware extends Component{
 
     render(){
         return(
-            <div>
+            <React.Fragment>
                 <Button bsStyle='danger' onClick={this.handleRetire}>Retire</Button>
 
                 <form onSubmit={this.handleUpdate}>
@@ -105,7 +105,7 @@ export default class ManageSoftware extends Component{
                         <Button type='submit' bsStyle='success'>Update</Button>          
                     </Form>
                 </form>
-            </div>            
+            </React.Fragment>            
         );
     }
 }

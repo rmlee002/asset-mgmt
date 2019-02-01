@@ -83,7 +83,7 @@ export default class EditOwner extends Component{
 
     render(){
         return(
-            <div>
+            <React.Fragment>
                 <FormGroup controlid="search">
                     <ControlLabel>Search</ControlLabel>
                     <FormControl
@@ -124,7 +124,7 @@ export default class EditOwner extends Component{
                             )}
                     </tbody>
                 </Table>
-            </div>
+            </React.Fragment>
         ); 
     }
 }

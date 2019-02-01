@@ -113,7 +113,7 @@ export default class Users extends Component{
 
     render(){
         return(
-            <div>
+            <React.Fragment>
                 <h3>Total monthly cost for {this.state.name} license: ${this.total()}</h3>
                 <FormGroup controlId="search">
                     <ControlLabel>Search</ControlLabel>
@@ -143,7 +143,6 @@ export default class Users extends Component{
                                 <td>{user.first_name+' '+user.last_name}</td>
                                 <td>{user.department}</td>
                                 <td>{user.start?moment(user.start).format('YYYY-MM-DD'):''}</td>
-                                {/* <td><Button bsStyle='danger' bsSize='small' onClick={() => this.setState({show: true, emp_id: user.emp_id})}>Retire</Button></td> */}
                                 <td>
                                     <ManageModal
                                         id='Retire'
@@ -158,32 +157,7 @@ export default class Users extends Component{
                             )}
                     </tbody>
                 </Table>
-                {/* <Modal show={this.state.show} onHide={()=>{this.setState({show:false, end: new Date(), emp_id: null})}}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Retire license</Modal.Title>                        
-                    </Modal.Header>
-                    <form onSubmit={this.handleSubmit}>
-                        <Modal.Body>
-                            <Form horizontal>
-                                <FormGroup>
-                                    <Col componentClass={ControlLabel} sm={3}>
-                                        Enter end date: 
-                                    </Col> 
-                                    <Col sm={4}>
-                                        <DatePicker 
-                                            selected={this.state.end}
-                                            onChange={date => this.setState({ end: date })}
-                                        />
-                                    </Col>                             
-                                </FormGroup>
-                            </Form>                                      
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button type='submit' bsStyle='danger'>Retire</Button>
-                        </Modal.Footer>
-                    </form>
-                </Modal> */}
-            </div>
+            </React.Fragment>
         );
     }
 }

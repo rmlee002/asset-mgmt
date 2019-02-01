@@ -58,7 +58,7 @@ export default class EmployeeLicenses extends Component{
 
     render(){
         return(
-            <div>
+            <React.Fragment>
                 <LinkContainer to={`/employees/${this.props.match.params.emp_id}/licenses/add`}>
                     <Button bsStyle='primary'>Add license</Button>
                 </LinkContainer>                
@@ -89,7 +89,7 @@ export default class EmployeeLicenses extends Component{
                         )}
                     </tbody>
                 </Table>
-            </div>
+            </React.Fragment>
         );
     }
 }

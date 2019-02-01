@@ -123,7 +123,7 @@ export default class AddEmployee extends Component{
 
     render(){
         return(
-            <div>
+            <React.Fragment>
                 <form onSubmit={this.handleSubmit}>
                     <Form horizontal>
                         <FormGroup controlId='first_name' validationState={this.validateFirst}>
@@ -248,7 +248,7 @@ export default class AddEmployee extends Component{
                         <Button type = 'submit' bsStyle='success'>Add Employee</Button>
                     </Form>    
                 </form>                               
-            </div>
+            </React.Fragment>
         );
     }
 }

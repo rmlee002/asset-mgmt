@@ -63,7 +63,7 @@ export default class AddUser extends Component{
 
     render(){
         return(
-            <div>
+            <React.Fragment>
                 <form onSubmit={this.handleSubmit}>
                     <Form horizontal>
                         <FormGroup controlId='user'>
@@ -93,7 +93,7 @@ export default class AddUser extends Component{
                         <Button type='submit' bsStyle='success'>Add user license</Button>
                     </Form>
                 </form>
-            </div>
+            </React.Fragment>
         );
     }
 }

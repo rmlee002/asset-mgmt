@@ -165,7 +165,7 @@ export default class ManageEmployee extends Component{
     render(){
         const isValid = this.state.first_name && this.state.last_name;        
         return(
-            <div>
+            <React.Fragment>
                 <ManageModal 
                     id='Retire'
                     title='Retire employee'
@@ -301,7 +301,7 @@ export default class ManageEmployee extends Component{
                         <Button type='submit' bsStyle='success' disabled={!isValid}>Update employee</Button>
                     </Form>    
                 </form>                   
-            </div>
+            </React.Fragment>
         );
     }
 }

@@ -4,9 +4,8 @@ export default class SoftwareOverview extends Component{
 
     render(){
         return(
-            <div>
-
-            </div>
+            <React.Fragment>
+            </React.Fragment>
         );
     }
 }

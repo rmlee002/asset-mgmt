@@ -87,7 +87,7 @@ export default class AddEmployeeLicense extends Component{
 
     render(){
         return(
-            <div>
+            <React.Fragment>
                 <FormGroup controlId="search">
                     <ControlLabel>Search</ControlLabel>
                     <FormControl
@@ -137,7 +137,7 @@ export default class AddEmployeeLicense extends Component{
                         </Modal.Footer>
                     </form>
                 </Modal>
-            </div>
+            </React.Fragment>
         );
     }
 }

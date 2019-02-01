@@ -33,7 +33,7 @@ class Links extends Component{
 
     render(){
         return (
-            <div className='Navbar'>
+            <React.Fragment>
                 <Navbar fluid collapseOnSelect>
                     <Navbar.Header>
                         <Navbar.Brand>
@@ -63,7 +63,7 @@ class Links extends Component{
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
-            </div>
+            </React.Fragment>
         );
     }
 }

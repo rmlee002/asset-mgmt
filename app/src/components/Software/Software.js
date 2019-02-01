@@ -79,7 +79,7 @@ export default class Employees extends Component {
 
     render(){
         return(
-            <div>
+            <React.Fragment>
                 <FormGroup controlid="search">
                     <ControlLabel>Search</ControlLabel>
                     <FormControl
@@ -126,7 +126,7 @@ export default class Employees extends Component {
                             )}
                     </tbody>
                 </Table>
-            </div>
+            </React.Fragment>
         );
     }
 }

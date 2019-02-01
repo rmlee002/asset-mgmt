@@ -92,7 +92,7 @@ export default class AddAssets extends Component{
     
     render(){
         return(
-            <div>
+            <React.Fragment>
                 <form onSubmit={this.handleSubmit}>
                     <Form horizontal>
                         <FormGroup controlId='order_num'>
@@ -224,7 +224,7 @@ export default class AddAssets extends Component{
                     </ButtonToolbar>
                     
                 </form>
-            </div>
+            </React.Fragment>
         );
     }
 }

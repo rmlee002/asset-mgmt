@@ -43,7 +43,7 @@ export default class AddSoftware extends Component{
 
     render(){
         return(
-            <div>
+            <React.Fragment>
                 <form onSubmit={this.handleSubmit}>
                     <Form horizontal onChange={this.handleChange}>
                         <FormGroup controlId='name'>
@@ -73,7 +73,7 @@ export default class AddSoftware extends Component{
                         <Button type='submit' bsStyle='success'>Add</Button>          
                     </Form>
                 </form>
-            </div>            
+            </React.Fragment>            
         );
     }
 }

@@ -140,7 +140,7 @@ export default class ManageAsset extends Component{
 
     render(){
         return(
-            <div>
+            <React.Fragment>
                 <Button bsStyle='danger' onClick={this.handleRetire}>Retire</Button>
 
                 <form onSubmit={this.handleSubmit}>
@@ -274,7 +274,7 @@ export default class ManageAsset extends Component{
                     </Form>
                     <Button type = 'submit' bsStyle='success'>Update Asset</Button>
                 </form>
-            </div>
+            </React.Fragment>
         );
     }
 }
