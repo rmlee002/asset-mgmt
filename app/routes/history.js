@@ -9,49 +9,68 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 router.post('/add', (req,res) => {
-    const {asset_id, emp_id, start} = req.body
-    connection.query('SELECT asset_id, history_id FROM history WHERE end IS NULL', (err, results) => {
+    // const {asset_id, emp_id, start} = req.body
+    // connection.query('SELECT asset_id, history_id FROM history WHERE end IS NULL', (err, results) => {
+    //     if (err){
+    //         console.log(err)
+    //         res.status(500).send({
+    //             error: "Database query error"
+    //         })
+    //     }
+    //     else{
+    //         const assets = results.map((result) => result.asset_id)
+    //         if (assets.includes(parseInt(asset_id))){
+    //             const options = {
+    //                 url: 'http://localhost:8080/history/retire',
+    //                 body: JSON.stringify({end: start, history_id: results[assets.indexOf(parseInt(asset_id))].history_id}),
+    //                 method: 'POST',
+    //                 headers: { 'Content-Type': 'application/json' }
+    //             }
+    //             request(options, (err,response) => {
+    //                 if(err){
+    //                     console.log(err)
+    //                     res.status(500).send({
+    //                         error: "Database query error"
+    //                     })
+    //                 }    
+    //                 else if (response.status >= 500){
+    //                     res.status(500).send({
+    //                         error: "Database query error"
+    //                     })
+    //                 }
+    //             })
+    //         }
+    //         connection.query('INSERT INTO history (asset_id, emp_id, start,end) VALUES (?,?,?,NULL)', [asset_id,emp_id,start], (err,results) => {
+    //             if(err){
+    //                 console.log(err)
+    //                 res.status(500).send({
+    //                     error: "Database query error"
+    //                 })
+    //             }
+    //             else{
+    //                 res.status(200).send("Success")
+    //             }
+    //         })
+    //     }
+    // })
+    connection.query('UPDATE history SET end=? WHERE asset_id=? AND end IS NULL', [req.body.start, req.body.asset_id], (err, results) => {
         if (err){
             console.log(err)
             res.status(500).send({
                 error: "Database query error"
             })
         }
-        else{
-            const assets = results.map((result) => result.asset_id)
-            if (assets.includes(parseInt(asset_id))){
-                const options = {
-                    url: 'http://localhost:8080/history/retire',
-                    body: JSON.stringify({end: start, history_id: results[assets.indexOf(parseInt(asset_id))].history_id}),
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' }
-                }
-                request(options, (err,response) => {
-                    if(err){
-                        console.log(err)
-                        res.status(500).send({
-                            error: "Database query error"
-                        })
-                    }    
-                    else if (response.status >= 500){
-                        res.status(500).send({
-                            error: "Database query error"
-                        })
-                    }
+        connection.query('INSERT INTO history (asset_id, emp_id, start,end) VALUES (?,?,?,NULL)', [req.body.asset_id, req.body.emp_id, req.body.start], (err,results) => {
+            if(err){
+                console.log(err)
+                res.status(500).send({
+                    error: "Database query error"
                 })
             }
-            connection.query('INSERT INTO history (asset_id, emp_id, start,end) VALUES (?,?,?,NULL)', [asset_id,emp_id,start], (err,results) => {
-                if(err){
-                    console.log(err)
-                    res.status(500).send({
-                        error: "Database query error"
-                    })
-                }
-                else{
-                    res.status(200).send("Success")
-                }
-            })
-        }
+            else{
+                res.status(200).send("Success")
+            }
+        })
     })
 })
 

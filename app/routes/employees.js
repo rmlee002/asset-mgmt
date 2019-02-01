@@ -122,7 +122,7 @@ router.post('/retire', (req,res) => {
 					})
 				}
 				else{
-					connection.query('UPDATE licenses SET end=? WHERE emp_id=? AND end IS NULL'), [req.body.end, id], (err, results) => {
+					connection.query('UPDATE licenses SET end=? WHERE emp_id=? AND end IS NULL', [req.body.end, id], (err, results) => {
 						if (err){
 							console.log(err)
 							res.status(500).send({
@@ -130,7 +130,7 @@ router.post('/retire', (req,res) => {
 							})
 						}
 						res.status(200).send('Success')
-					}
+					})
 				}
 			})
 			// connection.query('SELECT history_id FROM history WHERE emp_id=? AND end IS NULL', id, (err,results) => {
