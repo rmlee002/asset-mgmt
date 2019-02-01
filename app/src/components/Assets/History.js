@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Modal, Col, Table, FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
+import { Table, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import axios from 'axios';
 import moment from 'moment';
-import DatePicker from 'react-datepicker';
+import ManageModal from '../ManageModal';
 
 export default class History extends Component{
     constructor(props){
@@ -12,7 +12,6 @@ export default class History extends Component{
         this.handleSubmit = this.handleSubmit.bind(this)
 
         this.state = {
-            emp_id: null,
             show: false,
             end: new Date(),
             owners: []
@@ -92,42 +91,21 @@ export default class History extends Component{
                                 <td>
                                     {owner.end?
                                         moment(owner.end).utc().format('YYYY-MM-DD')
-                                        :<Button 
-                                            bsSize='small' 
-                                            bsStyle='danger' 
-                                            onClick={()=>this.setState({show: true, id: owner.history_id})}
-                                        >
-                                            Retire
-                                        </Button>
+                                        :
+                                        <ManageModal 
+                                            id='Retire'
+                                            title='Retire owner'
+                                            date={this.state.end}
+                                            handleClick={() => this.setState({ id: owner.history_id})}
+                                            handleSubmit={this.handleSubmit}
+                                            handleDate={this.handleEnd}
+                                        />
                                     }
                                 </td>
                             </tr>
                         )}
                     </tbody>
                 </Table>
-                <Modal show={this.state.show} onHide={()=>{this.setState({show:false, end: null, emp_id: null})}}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Retire owner</Modal.Title>                        
-                </Modal.Header>
-                <form onSubmit={this.handleSubmit}>
-                    <Modal.Body>
-                        <FormGroup controlId='start'>
-                            <Col componentClass={ControlLabel} sm={3}>
-                                Enter end date: 
-                            </Col> 
-                            <Col sm={4}>
-                                <DatePicker 
-                                    selected={this.state.end}
-                                    onChange={this.handleEnd}
-                                />
-                            </Col>                                
-                        </FormGroup>                     
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button type='submit' bsStyle='danger'>Retire</Button>
-                    </Modal.Footer>
-                </form>                    
-                </Modal>
             </div>
         );
     }

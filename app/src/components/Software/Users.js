@@ -5,6 +5,7 @@ import memoize from 'memoize-one';
 import Axios from 'axios';
 import moment from 'moment';
 import Filter from '../Filter';
+import ManageModal from '../ManageModal';
 
 export default class Users extends Component{
     constructor(props){
@@ -14,11 +15,16 @@ export default class Users extends Component{
         this.total=this.total.bind(this)
         this.filterName = this.filterName.bind(this)
         this.handleFilter = this.handleFilter.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleEnd = this.handleEnd.bind(this)
 
         this.state={
             users: [],
             filtered: [],
-            name: undefined
+            name: undefined,
+            show: false,
+            end: new Date(),
+            emp_id: null
         }
     }
 
@@ -70,8 +76,30 @@ export default class Users extends Component{
             this.setState({
                 filtered: this.state.users
             })
-        }
-        
+        }   
+    }
+
+    handleEnd(date){
+        this.setState({
+            end: date
+        })
+    }
+
+    handleSubmit(){
+        Axios.post('/licenses/retire', {
+            end: moment(this.state.end).format('YYYY-MM-DD'),
+            software_id: this.props.match.params.software_id,
+            emp_id: this.state.emp_id
+        })
+        .then(res => {
+            if (res.status  >= 400){
+                alert(res.data.error)
+            }
+        })
+        .catch(err => {
+            alert(err)
+            console.log(err)
+        })
     }
 
     total(){
@@ -106,6 +134,7 @@ export default class Users extends Component{
                             <th>Name</th>
                             <th>Primary Cost Center</th>
                             <th>Start</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -114,10 +143,46 @@ export default class Users extends Component{
                                 <td>{user.first_name+' '+user.last_name}</td>
                                 <td>{user.department}</td>
                                 <td>{user.start?moment(user.start).format('YYYY-MM-DD'):''}</td>
+                                {/* <td><Button bsStyle='danger' bsSize='small' onClick={() => this.setState({show: true, emp_id: user.emp_id})}>Retire</Button></td> */}
+                                <td>
+                                    <ManageModal
+                                        id='Retire'
+                                        title='Retire user'
+                                        date={this.state.end}
+                                        handleClick={()=> this.setState({emp_id: user.emp_id})}
+                                        handleSubmit={this.handleSubmit}
+                                        handleDate={this.handleEnd}
+                                    />
+                                </td>
                             </tr>
                             )}
                     </tbody>
                 </Table>
+                {/* <Modal show={this.state.show} onHide={()=>{this.setState({show:false, end: new Date(), emp_id: null})}}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Retire license</Modal.Title>                        
+                    </Modal.Header>
+                    <form onSubmit={this.handleSubmit}>
+                        <Modal.Body>
+                            <Form horizontal>
+                                <FormGroup>
+                                    <Col componentClass={ControlLabel} sm={3}>
+                                        Enter end date: 
+                                    </Col> 
+                                    <Col sm={4}>
+                                        <DatePicker 
+                                            selected={this.state.end}
+                                            onChange={date => this.setState({ end: date })}
+                                        />
+                                    </Col>                             
+                                </FormGroup>
+                            </Form>                                      
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button type='submit' bsStyle='danger'>Retire</Button>
+                        </Modal.Footer>
+                    </form>
+                </Modal> */}
             </div>
         );
     }

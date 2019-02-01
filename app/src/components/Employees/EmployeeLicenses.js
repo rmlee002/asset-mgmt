@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Table, Button, Modal, Form, FormGroup, Col, ControlLabel } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import Axios from 'axios';
-import DatePicker from 'react-datepicker';
+import ManageModal from '../ManageModal';
 import moment from 'moment';
 
 export default class EmployeeLicenses extends Component{
@@ -75,36 +75,20 @@ export default class EmployeeLicenses extends Component{
                             <tr>
                                 <td>{license.name}</td>
                                 <td>{license.start?moment(license.start).format('YYYY-MM-DD'):''}</td>
-                                <td><Button bsStyle='danger' bsSize='small' onClick={() => this.setState({show: true, software_id: license.software_id})}>Retire</Button></td>
+                                <td>
+                                    <ManageModal
+                                        id='Retire'
+                                        title='Retire license'
+                                        date={this.state.end}
+                                        handleClick={() => this.setState({ software_id: license.software_id })}
+                                        handleSubmit={this.handleSubmit}
+                                        handleDate={this.handleEnd}
+                                    />
+                                </td>
                             </tr>
                         )}
                     </tbody>
                 </Table>
-                <Modal show={this.state.show} onHide={()=>{this.setState({show:false, end: new Date(), software_id: null})}}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Retire license</Modal.Title>                        
-                    </Modal.Header>
-                    <form onSubmit={this.handleSubmit}>
-                        <Modal.Body>
-                            <Form horizontal>
-                                <FormGroup>
-                                    <Col componentClass={ControlLabel} sm={3}>
-                                        Enter end date: 
-                                    </Col> 
-                                    <Col sm={4}>
-                                        <DatePicker 
-                                            selected={this.state.end}
-                                            onChange={date => this.setState({ end: date })}
-                                        />
-                                    </Col>                             
-                                </FormGroup>
-                            </Form>                                      
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button type='submit' bsStyle='danger'>Retire</Button>
-                        </Modal.Footer>
-                    </form>
-                </Modal>
             </div>
         );
     }

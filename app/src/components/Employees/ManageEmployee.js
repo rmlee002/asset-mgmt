@@ -7,6 +7,7 @@ import "../../../node_modules/react-datepicker/dist/react-datepicker.css";
 import Departments from '../Departments';
 import Select from 'react-select';
 import EmployeeSelect from '../EmployeeSelect';
+import ManageModal from '../ManageModal';
 
 export default class ManageEmployee extends Component{
     constructor(props){
@@ -21,8 +22,10 @@ export default class ManageEmployee extends Component{
         this.handleCreateDepartmentOption = this.handleCreateDepartmentOption.bind(this);
         this.handleAffiliation = this.handleAffiliation.bind(this)
         this.handleEmployeeAssign = this.handleEmployeeAssign.bind(this)
+        this.handleDate = this.handleDate.bind(this)
 
         this.state = {
+            show: false,
             depts: [],
             emp_id: this.props.match.params.emp_id,
             first_name: null,
@@ -34,6 +37,7 @@ export default class ManageEmployee extends Component{
             time_approver:null,
             start: null,
             end: null,
+            date: new Date(),
             notes:null
         };
     }
@@ -107,9 +111,11 @@ export default class ManageEmployee extends Component{
         })
     }
 
-    handleRetire(){
+    handleRetire(e){
+        e.preventDefault();
         axios.post('/employees/retire', {
-            emp_id: this.state.emp_id
+            emp_id: this.state.emp_id,
+            end: moment(this.state.date).format('YYYY-MM-DD')
         })
         .then(res => {
             if (res.status === 200){
@@ -122,6 +128,12 @@ export default class ManageEmployee extends Component{
         .catch(err => {
             console.log(err)
             alert(err)
+        })
+    }
+
+    handleDate(date){
+        this.setState({
+            date: date
         })
     }
 
@@ -154,7 +166,13 @@ export default class ManageEmployee extends Component{
         const isValid = this.state.first_name && this.state.last_name;        
         return(
             <div>
-                <Button bsStyle='danger' onClick={this.handleRetire}>Retire</Button>
+                <ManageModal 
+                    id='Retire'
+                    title='Retire employee'
+                    date={this.state.date}
+                    handleSubmit={this.handleRetire}
+                    handleDate={this.handleDate}
+                />
                 <form onSubmit={this.handleUpdate}>
                     <Form horizontal>
                         <FormGroup controlId='first_name'>

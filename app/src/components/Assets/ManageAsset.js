@@ -3,7 +3,6 @@ import { Button, Form , FormGroup, Col, ControlLabel, FormControl } from 'react-
 import DatePicker from 'react-datepicker';
 import Axios from 'axios';
 import moment from 'moment';
-import "../../../node_modules/react-datepicker/dist/react-datepicker.css";
 
 export default class ManageAsset extends Component{
     constructor(props){
@@ -95,7 +94,8 @@ export default class ManageAsset extends Component{
 
     handleRetire(){
         Axios.post('/assets/retire', {
-            asset_id: this.state.asset_id
+            asset_id: this.state.asset_id,
+            end: moment(this.state.end).format('YYYY-MM-DD')
         })
         .then(res => {
             if (res.status === 200){
@@ -142,6 +142,7 @@ export default class ManageAsset extends Component{
         return(
             <div>
                 <Button bsStyle='danger' onClick={this.handleRetire}>Retire</Button>
+
                 <form onSubmit={this.handleSubmit}>
                     <Form horizontal>                        
                         <FormGroup controlId='serial_number'>
@@ -183,14 +184,6 @@ export default class ManageAsset extends Component{
                                 />
                             </Col>
                         </FormGroup>
-                        {/* <FormGroup controlId='owner'>
-                            <Col componentClass={ControlLabel} sm={3}>
-                                Owner
-                            </Col>
-                            <Col sm={7}>
-                                <EmployeeSelect onChange={this.handleOwner} />
-                            </Col>
-                        </FormGroup> */}
                         <FormGroup controlId='cost'>
                             <Col componentClass={ControlLabel} sm={3}>
                                 Cost

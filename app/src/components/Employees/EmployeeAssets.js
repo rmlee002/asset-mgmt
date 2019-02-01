@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Table, Button , Modal, FormGroup, Col, ControlLabel } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import Axios from 'axios';
 import moment from 'moment';
-import DatePicker from 'react-datepicker';
+import ManageModal from '../ManageModal';
 
 export default class EmployeeAssets extends Component{
     constructor(props){
@@ -85,34 +85,20 @@ export default class EmployeeAssets extends Component{
                                 <td>{item.model}</td>
                                 <td>{item.comment}</td>
                                 <td>{item.start?moment(item.start).format('YYYY-MM-DD'):''}</td>
-                                <td><Button bsStyle='danger' bsSize='small' onClick={() => {this.setState({show: true, id: item.history_id})}}>Retire</Button></td>
+                                <td>
+                                    <ManageModal
+                                        id='Retire'
+                                        title='Retire asset'
+                                        date={this.state.end}
+                                        handleClick={() => this.setState({id: item.history_id})}
+                                        handleSubmit={this.handleSubmit}
+                                        handleDate={this.handleEnd}
+                                    />
+                                </td>
                             </tr>
                         )}
                     </tbody>
                 </Table>
-                <Modal show={this.state.show} onHide={()=>{this.setState({show:false, end: null, asset_id: null})}}>
-                    <Modal.Header closeButton>
-                    <Modal.Title>Retire asset</Modal.Title>
-                    </Modal.Header>
-                    <form onSubmit={this.handleSubmit}>
-                        <Modal.Body>
-                            <FormGroup controlId='start'>
-                                <Col componentClass={ControlLabel} sm={3}>
-                                    Enter end date: 
-                                </Col> 
-                                <Col sm={4}>
-                                    <DatePicker 
-                                        selected={this.state.end}
-                                        onChange={this.handleEnd}
-                                    />
-                                </Col>                                
-                            </FormGroup>                     
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button type='submit' bsStyle='danger'>Retire</Button>
-                        </Modal.Footer>
-                    </form>                    
-                </Modal>
             </div>
         );
     }

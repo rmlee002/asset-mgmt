@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Modal, Button, Table, Form, FormGroup, ControlLabel, FormControl, Col } from 'react-bootstrap';
+import { Table, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 import Axios from 'axios';
 import memoize from 'memoize-one';
-import DatePicker from 'react-datepicker';
+import ManageModal from '../ManageModal';
 import moment from 'moment';
 
 export default class EditOwner extends Component{
@@ -66,7 +66,7 @@ export default class EditOwner extends Component{
                 alert(res.data.error)
             }
             else{
-                this.props.history.push(`/assets/history/${this.props.match.params.asset_id}`)
+                this.props.history.push(`/assets/${this.props.match.params.asset_id}/history`)
             }
         })
         .catch(err => {
@@ -110,36 +110,20 @@ export default class EditOwner extends Component{
                                 <td>{employee.email}</td>
                                 <td>{employee.affiliation}</td>
                                 <td>{employee.department}</td>
-                                <td><Button bsStyle='success' bsSize='small' onClick={() => this.setState({show:true, emp_id:employee.emp_id})}>Assign</Button></td>
+                                <td>
+                                    <ManageModal
+                                        id='Assign'
+                                        title='Add owner'
+                                        date={this.state.start}
+                                        handleClick={() => this.setState({emp_id: employee.emp_id})}
+                                        handleSubmit={this.handleSubmit}
+                                        handleDate={this.handleStart}
+                                    />
+                                </td>
                             </tr>
                             )}
                     </tbody>
-                </Table>            
-                <Modal show={this.state.show} onHide={()=>{this.setState({show:false, start: null, emp_id: null})}}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Add asset</Modal.Title>                        
-                </Modal.Header>
-                <form onSubmit={this.handleSubmit}>
-                    <Modal.Body>
-                        <Form horizontal>
-                            <FormGroup controlId='start'>
-                                <Col componentClass={ControlLabel} sm={3}>
-                                    Enter start date: 
-                                </Col> 
-                                <Col sm={4}>
-                                    <DatePicker 
-                                        selected={this.state.start}
-                                        onChange={this.handleStart}
-                                    />
-                                </Col>                                
-                            </FormGroup>
-                        </Form>                                      
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button type='submit' bsStyle='success'>Assign</Button>
-                    </Modal.Footer>
-                </form>                    
-                </Modal>
+                </Table>
             </div>
         ); 
     }

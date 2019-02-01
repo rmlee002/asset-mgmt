@@ -12,7 +12,8 @@ export default class ManageSoftware extends Component{
         
         this.state={
             name: null,
-            cost: null
+            cost: null,
+            end: new Date()
         }
     }
 
@@ -74,6 +75,7 @@ export default class ManageSoftware extends Component{
         return(
             <div>
                 <Button bsStyle='danger' onClick={this.handleRetire}>Retire</Button>
+
                 <form onSubmit={this.handleUpdate}>
                     <Form horizontal onChange={this.handleChange}>
                         <FormGroup controlId='name'>
