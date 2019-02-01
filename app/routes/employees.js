@@ -106,7 +106,7 @@ router.post('/update', (req,res) => {
 
 router.post('/retire', (req,res) => {
 	const id = req.body.emp_id;
-	connection.query('UPDATE employees SET archived=true WHERE emp_id=?', id, (err,results) => {
+	connection.query('UPDATE employees SET end=?, archived=true WHERE emp_id=?', [req.body.end, id], (err,results) => {
 		if (err){
 			console.log(err);
 			res.status(500).send({
@@ -114,42 +114,61 @@ router.post('/retire', (req,res) => {
             })
 		}
 		else{
-			connection.query('SELECT history_id FROM history WHERE emp_id=? AND end IS NULL', id, (err,results) => {
-                if (err){
-                    console.log(err)
-                    res.status(500).send({
-                        error: "Database query error"
-                    })
-				}
-				else if (results.length > 0){
-					var options = undefined;
-					results.forEach((item) => {
-						options = {
-							url: 'http://localhost:8080/history/retire',
-							body: JSON.stringify({
-								end: moment(new Date()).format('YYYY-MM-DD'),
-								history_id: item.history_id
-							}),
-							method: 'POST',
-							headers: { 'Content-Type': 'application/json' }
-						}
-						request(options, (err, response) => {
-							if (err){
-								console.log(err)
-								res.status(500).send({
-									error: "Database query error"
-								})
-							}
-							else if (response.status >= 400){
-								res.status(500).send({
-									error: "Database query error"
-								})
-							}
-						})
+			connection.query('UPDATE history SET end=? WHERE emp_id=? AND end IS NULL', [req.body.end, id], (err, results) =>{
+				if (err){
+					console.log(err)
+					res.status(500).send({
+						error: "Database query error"
 					})
 				}
+				else{
+					connection.query('UPDATE licenses SET end=? WHERE emp_id=? AND end IS NULL'), [req.body.end, id], (err, results) => {
+						if (err){
+							console.log(err)
+							res.status(500).send({
+								error: "Database query error"
+							})
+						}
+						res.status(200).send('Success')
+					}
+				}
 			})
-			res.status(200).send("Success")
+			// connection.query('SELECT history_id FROM history WHERE emp_id=? AND end IS NULL', id, (err,results) => {
+            //     if (err){
+            //         console.log(err)
+            //         res.status(500).send({
+            //             error: "Database query error"
+            //         })
+			// 	}
+			// 	else if (results.length > 0){
+			// 		var options = undefined;
+			// 		results.forEach((item) => {
+			// 			options = {
+			// 				url: 'http://localhost:8080/history/retire',
+			// 				body: JSON.stringify({
+			// 					end: moment(new Date()).format('YYYY-MM-DD'),
+			// 					history_id: item.history_id
+			// 				}),
+			// 				method: 'POST',
+			// 				headers: { 'Content-Type': 'application/json' }
+			// 			}
+			// 			request(options, (err, response) => {
+			// 				if (err){
+			// 					console.log(err)
+			// 					res.status(500).send({
+			// 						error: "Database query error"
+			// 					})
+			// 				}
+			// 				else if (response.status >= 400){
+			// 					res.status(500).send({
+			// 						error: "Database query error"
+			// 					})
+			// 				}
+			// 			})
+			// 		})
+			// 	}
+			// })
+			// res.status(200).send("Success")
 		}
 	})
 });

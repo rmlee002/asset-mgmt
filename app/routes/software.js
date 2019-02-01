@@ -28,7 +28,15 @@ router.post('/retire', (req,res)=>{
                 error: "Database query error"
             })
         }
-        res.status(200).send('Success')  
+        connection.query('UPDATE licenses SET end=? WHERE software_id=? AND end IS NULL', [req.body.end, req.body.software_id], (err,results) =>{
+            if (err){
+                console.log(err)
+                res.status(500).send({
+                    error: "Database query error"
+                })
+            }
+            res.status(200).send('Success')
+        }) 
     })
 })
 
