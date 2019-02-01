@@ -18,7 +18,7 @@ export default class ManageModal extends Component{
     componentDidMount(){
         if(this.props.id === 'Assign'){
             this.setState({
-                style: 'primary',
+                style: 'success',
                 value: 'start'
             })
         }

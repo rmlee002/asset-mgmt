@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Col, Table, Form, FormGroup, FormControl, ControlLabel, Button, Modal } from 'react-bootstrap';
+import { Table, Form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import Axios from 'axios';
 import memoize from 'memoize-one';
 import moment from 'moment';
-import DatePicker from 'react-datepicker';
+import ManageModal from '../ManageModal';
+
 export default class AddAsset extends Component{
     constructor(props){
         super(props);
@@ -113,39 +114,22 @@ export default class AddAsset extends Component{
                                 <td>{item.model}</td>                                
                                 <td>{item.comment}</td>                          
                                 <td>
-                                    <Button bsStyle='success' bsSize='small' onClick={() => {this.setState({show:true, asset_id: item.asset_id})}}>
+                                    {/* <Button bsStyle='success' bsSize='small' onClick={() => {this.setState({show:true, asset_id: item.asset_id})}}>
                                         Add
-                                    </Button>
+                                    </Button> */}
+                                    <ManageModal
+                                        id='Assign'
+                                        title='Add asset'
+                                        date={this.state.start}
+                                        handleClick={()=>this.setState({ asset_id: item.asset_id })}
+                                        handleSubmit={this.handleSubmit}
+                                        handleDate={this.handleStart}
+                                    />
                                 </td>
                             </tr>
                         )}
                     </tbody>
                 </Table>
-                <Modal show={this.state.show} onHide={()=>{this.setState({show:false, start: new Date(), asset_id: null})}}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Add asset</Modal.Title>                        
-                    </Modal.Header>
-                    <form onSubmit={this.handleSubmit}>
-                        <Modal.Body>
-                            <Form horizontal>
-                                <FormGroup controlId='start'>
-                                    <Col componentClass={ControlLabel} sm={3}>
-                                        Enter start date: 
-                                    </Col> 
-                                    <Col sm={4}>
-                                        <DatePicker 
-                                            selected={this.state.start}
-                                            onChange={this.handleStart}
-                                        />
-                                    </Col>                                
-                                </FormGroup>  
-                            </Form>                   
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button type='submit' bsStyle='success'>Add</Button>
-                        </Modal.Footer>
-                    </form>                    
-                </Modal>
             </div>
         );
     }
