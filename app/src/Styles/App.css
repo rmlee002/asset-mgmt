@@ -1,7 +1,20 @@
 .App {
-    padding: 30px;
+    margin: 30px;
 }
 
 .App .navbar-brand{
     font-weight: bold;
+}
+
+.data {
+    margin: auto;
+    padding: 0px 15px 0px 15px;
+    height: 440px;
+    overflow-y: auto;
+    overflow-x: hidden
+}
+
+.header {
+    margin: auto;
+    padding: 0px 15px 0px 15px;
 }

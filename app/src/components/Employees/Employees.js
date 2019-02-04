@@ -60,80 +60,82 @@ export default class Employees extends Component {
     render(){
         return(
             <React.Fragment>
-                <FormGroup controlid="search">
-                    <ControlLabel>Search</ControlLabel>
-                    <FormControl
-                        type='text'
-                        placeholder='Enter a name'
-                        onChange = {this.handleChange}
-                    />
-                    <FormControl.Feedback />
-                </FormGroup>
+                <div className='header'>
+                    <FormGroup controlid="search">
+                        <ControlLabel>Search</ControlLabel>
+                        <FormControl
+                            type='text'
+                            placeholder='Enter a name'
+                            onChange = {this.handleChange}
+                        />
+                        <FormControl.Feedback />
+                    </FormGroup>                    
+                    <LinkContainer to='/employees/add'>
+                        <Button bsStyle='primary'>Add employee</Button>
+                    </LinkContainer>     
+                    <Checkbox checked={this.state.showArchived} onChange={this.handleCheck}>
+                        Show retired
+                    </Checkbox>
+                </div>
                 
-                <LinkContainer to='/employees/add'>
-                    <Button bsStyle='primary'>Add employee</Button>
-                </LinkContainer>     
-
-                <Checkbox checked={this.state.showArchived} onChange={this.handleCheck}>
-                    Show retired
-                </Checkbox>
-
-                <Table className="employees">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Affiliation</th>
-                            <th>Department(s)</th>
-                            <th>Supervisor(s)</th>
-                            <th>Reviewer(s)</th>
-                            <th>Time approver(s)</th>
-                            <th>Start date</th>
-                            <th>End date</th>
-                            <th>Assets</th>
-                            <th>Licenses</th>
-                            <th>Notes</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.state.filtered.map(employee => 
+                <div className='data'>
+                    <Table>
+                        <thead>
                             <tr>
-                                <td>{employee.first_name+' '+employee.last_name}</td>
-                                <td>{employee.email}</td>
-                                <td>{employee.affiliation}</td>
-                                <td>{employee.department}</td>
-                                <td>{employee.super_first?employee.super_first + ' ' + employee.super_last:''}</td>
-                                <td>{employee.reviewer_first?employee.reviewer_first + ' ' + employee.reviewer_last:''}</td>
-                                <td>{employee.time_first?employee.time_first + ' ' + employee.time_last:''}</td>
-                                <td>
-                                    {employee.start?
-                                    moment(employee.start).utc().format('YYYY-MM-DD'):''}
-                                </td>
-                                <td>
-                                    {employee.end?
-                                    moment(employee.end).utc().format('YYYY-MM-DD'):''}
-                                </td>
-                                <td>
-                                    <Link to={`/employees/${employee.emp_id}/assets`}>
-                                        Assets
-                                    </Link>
-                                </td>
-                                <td>
-                                    <Link to={`/employees/${employee.emp_id}/licenses`}>
-                                        Licenses
-                                    </Link>
-                                </td>
-                                <td>{employee.notes}</td>
-                                <td>
-                                    <Link to={`/employees/manage/${employee.emp_id}`}>
-                                        Manage
-                                    </Link>
-                                </td>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Affiliation</th>
+                                <th>Department(s)</th>
+                                <th>Supervisor(s)</th>
+                                <th>Reviewer(s)</th>
+                                <th>Time approver(s)</th>
+                                <th>Start date</th>
+                                <th>End date</th>
+                                <th>Assets</th>
+                                <th>Licenses</th>
+                                <th>Notes</th>
+                                <th></th>
                             </tr>
-                        )}
-                    </tbody>
-                </Table>
+                        </thead>
+                        <tbody>
+                            {this.state.filtered.map(employee => 
+                                <tr>
+                                    <td>{employee.first_name+' '+employee.last_name}</td>
+                                    <td>{employee.email}</td>
+                                    <td>{employee.affiliation}</td>
+                                    <td>{employee.department}</td>
+                                    <td>{employee.super_first?employee.super_first + ' ' + employee.super_last:''}</td>
+                                    <td>{employee.reviewer_first?employee.reviewer_first + ' ' + employee.reviewer_last:''}</td>
+                                    <td>{employee.time_first?employee.time_first + ' ' + employee.time_last:''}</td>
+                                    <td>
+                                        {employee.start?
+                                        moment(employee.start).utc().format('YYYY-MM-DD'):''}
+                                    </td>
+                                    <td>
+                                        {employee.end?
+                                        moment(employee.end).utc().format('YYYY-MM-DD'):''}
+                                    </td>
+                                    <td>
+                                        <Link to={`/employees/${employee.emp_id}/assets`}>
+                                            Assets
+                                        </Link>
+                                    </td>
+                                    <td>
+                                        <Link to={`/employees/${employee.emp_id}/licenses`}>
+                                            Licenses
+                                        </Link>
+                                    </td>
+                                    <td>{employee.notes}</td>
+                                    <td>
+                                        <Link to={`/employees/manage/${employee.emp_id}`}>
+                                            Manage
+                                        </Link>
+                                    </td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </Table>
+                </div>
             </React.Fragment>
         );
     }
