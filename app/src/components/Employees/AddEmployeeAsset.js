@@ -114,9 +114,6 @@ export default class AddAsset extends Component{
                                 <td>{item.model}</td>                                
                                 <td>{item.comment}</td>                          
                                 <td>
-                                    {/* <Button bsStyle='success' bsSize='small' onClick={() => {this.setState({show:true, asset_id: item.asset_id})}}>
-                                        Add
-                                    </Button> */}
                                     <ManageModal
                                         id='Assign'
                                         title='Add asset'

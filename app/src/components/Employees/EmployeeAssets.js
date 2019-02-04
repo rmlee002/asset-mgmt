@@ -46,7 +46,8 @@ export default class EmployeeAssets extends Component{
 
     handleSubmit(){
         Axios.post('/history/retire', {
-            history_id: this.state.id,
+            asset_id: this.state.asset_id,
+            emp_id: this.props.match.params.emp_id,
             end: this.state.end?moment(this.state.end).format('YYYY-MM-DD'):null
         })
         .then(res => {
@@ -90,7 +91,7 @@ export default class EmployeeAssets extends Component{
                                         id='Retire'
                                         title='Retire asset'
                                         date={this.state.end}
-                                        handleClick={() => this.setState({id: item.history_id})}
+                                        handleClick={() => this.setState({asset_id: item.asset_id})}
                                         handleSubmit={this.handleSubmit}
                                         handleDate={this.handleEnd}
                                     />

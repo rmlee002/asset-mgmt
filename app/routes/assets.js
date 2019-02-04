@@ -96,42 +96,16 @@ router.post('/retire', (req, res) => {
             res.status(500).send({
                 error: "Database query error"
             })
-        }
-        else{
-            connection.query('SELECT history_id FROM history WHERE asset_id=? AND end IS NULL', asset_id, (err,result) => {
-                if (err){
-                    console.log(err)
-                    res.status(500).send({
-                        error: "Database query error"
-                    })
-                }
-                else if (result.length > 0){
-                    const options = {
-                        url: 'http://localhost:8080/history/retire',
-                        body: JSON.stringify({
-                            end: moment(new Date()).format('YYYY-MM-DD'),
-                            history_id: result[0].history_id
-                        }),
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' }
-                    }
-                    request(options, (err, response) => {
-                        if (err){
-                            console.log(err)
-                            res.status(500).send({
-                                error: "Database query error"
-                            })
-                        }
-                        else if (response.status >= 400) {
-                            res.status(500).send({
-                                error: "Database query error"
-                            })
-                        }
-                    })
-                }
-            })            
+        }        
+        connection.query('UPDATE history SET end=CURDATE() WHERE asset_id=? AND end IS NULL', asset_id, (err,results)=>{
+            if (err){
+                console.log(err)
+                res.status(500).send({
+                    error: "Database query error"
+                })
+            }
             res.status(200).send("Success")
-        }
+        })        
     })
 })
 

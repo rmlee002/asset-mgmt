@@ -41,7 +41,8 @@ export default class History extends Component{
     handleSubmit(e){
         axios.post('/history/retire', {
             end: moment(this.state.end).format('YYYY-MM-DD'),
-            history_id: this.state.id
+            asset_id: this.props.match.params.asset_id,
+            emp_id: this.state.emp_id
         })
         .then(res => {
             if (res.status >= 400) {
@@ -96,7 +97,7 @@ export default class History extends Component{
                                             id='Retire'
                                             title='Retire owner'
                                             date={this.state.end}
-                                            handleClick={() => this.setState({ id: owner.history_id})}
+                                            handleClick={() => this.setState({ emp_id: owner.emp_id})}
                                             handleSubmit={this.handleSubmit}
                                             handleDate={this.handleEnd}
                                         />
