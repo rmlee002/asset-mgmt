@@ -8,6 +8,7 @@ import Departments from '../Departments';
 import Select from 'react-select';
 import EmployeeSelect from '../EmployeeSelect';
 import ManageModal from '../ManageModal';
+import { timingSafeEqual } from 'crypto';
 
 export default class ManageEmployee extends Component{
     constructor(props){
@@ -56,7 +57,7 @@ export default class ManageEmployee extends Component{
                 last_name: employee.last_name,
                 email: employee.email,
                 affiliation: employee.affiliation,
-                value: employee.department.split(', ').map(department => ({value: department, label: department})),
+                depts: employee.department.split(', ').map(department => ({value: department, label: department})),
                 supervisor: employee.super_first?{value: employee.supervisor_id, label:employee.super_first+' '+employee.super_last}:null,
                 reviewer: employee.reviewer_first?{value: employee.reviewer_id, label:employee.reviewer_first+' '+employee.reviewer_last}:null,
                 time_approver: employee.time_first?{value: employee.time_approver_id, label:employee.time_first+' '+employee.time_last}:null,
@@ -236,7 +237,12 @@ export default class ManageEmployee extends Component{
                         <FormGroup controlId='department'>
                             <Col componentClass={ControlLabel} sm={3}>Department</Col>
                             <Col sm={7}>
-                                <Departments createDept = {this.handleCreateDepartmentOption} handleChange={this.handleDepartment} value={this.state.depts}/> 
+                                <Departments
+                                    defaultvalue={this.state.depts}
+                                    createDept = {this.handleCreateDepartmentOption} 
+                                    handleChange={this.handleDepartment} 
+                                    depts={this.state.depts}
+                                /> 
                             </Col>
                         </FormGroup>
                         <FormGroup controlId='supervisor'>
@@ -244,7 +250,10 @@ export default class ManageEmployee extends Component{
                                 Supervisor(s)
                             </Col>
                             <Col sm={7}>
-                                <EmployeeSelect value={this.state.supervisor} onChange={this.handleEmployeeAssign('supervisor')}/>    
+                                <EmployeeSelect 
+                                    value={this.state.supervisor} 
+                                    onChange={this.handleEmployeeAssign('supervisor')}
+                                />    
                             </Col>
                         </FormGroup>
                         <FormGroup controlId='reviewer'>
@@ -252,7 +261,10 @@ export default class ManageEmployee extends Component{
                                 Reviewer(s)
                             </Col>
                             <Col sm={7}>
-                                <EmployeeSelect value={this.state.reviewer} onChange={this.handleEmployeeAssign('reviewer')}/>
+                                <EmployeeSelect 
+                                    value={this.state.reviewer} 
+                                    onChange={this.handleEmployeeAssign('reviewer')}
+                                />
                             </Col>
                         </FormGroup>
                         <FormGroup controlId='time_approver'>
@@ -260,7 +272,10 @@ export default class ManageEmployee extends Component{
                                 Time Approver(s)
                             </Col>
                             <Col sm={7}>
-                                <EmployeeSelect value={this.state.time_approver} onChange={this.handleEmployeeAssign('time_approver')}/>
+                                <EmployeeSelect 
+                                    value={this.state.time_approver} 
+                                    onChange={this.handleEmployeeAssign('time_approver')}
+                                />
                             </Col>
                         </FormGroup>
                         <FormGroup controlId='start'>
