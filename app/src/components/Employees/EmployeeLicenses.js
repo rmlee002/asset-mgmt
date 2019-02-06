@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Table, Button } from 'react-bootstrap';
+import { Table, Button, Checkbox } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import Axios from 'axios';
 import ManageModal from '../ManageModal';
@@ -11,10 +11,12 @@ export default class EmployeeLicenses extends Component{
 
         this.handleSubmit = this.handleSubmit.bind(this)
         this.handleEnd = this.handleEnd.bind(this)
+        this.handleCheck = this.handleCheck.bind(this)
 
         this.state={
             licenses: [],
-            show: false,
+            filtered: [],
+            showHistory: false,
             end: new Date(),
             software_id: null
         }
@@ -30,7 +32,8 @@ export default class EmployeeLicenses extends Component{
             }
             else{
                 this.setState({
-                    licenses: res.data
+                    licenses: res.data,
+                    filtered: res.data.filter((license)=>license.end == null)
                 })
             }
         })
@@ -43,6 +46,13 @@ export default class EmployeeLicenses extends Component{
     handleEnd(date){
         this.setState({
             end: date
+        })
+    }
+
+    handleCheck(e){
+        this.setState({
+            showHistory: e.target.checked,
+            filtered: this.state.licenses.filter((license)=>license.end == null || e.target.checked)
         })
     }
 
@@ -69,29 +79,35 @@ export default class EmployeeLicenses extends Component{
                 <LinkContainer to={`/employees/${this.props.match.params.emp_id}/licenses/add`}>
                     <Button bsStyle='primary'>Add license</Button>
                 </LinkContainer>   
+                <Checkbox checked={this.state.showHistory} onChange={this.handleCheck}>
+                    Show previous licenses
+                </Checkbox>
                 <div className='data'>             
                     <Table>
                         <thead>
                             <tr>
                                 <th>License</th>
                                 <th>Start</th>
+                                <th>End</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.licenses.map((license) => 
+                            {this.state.filtered.map((license) => 
                                 <tr>
                                     <td>{license.name}</td>
                                     <td>{license.start?moment(license.start).format('YYYY-MM-DD'):''}</td>
                                     <td>
-                                        <ManageModal
-                                            id='Retire'
-                                            title='Retire license'
-                                            date={this.state.end}
-                                            handleClick={() => this.setState({ software_id: license.software_id })}
-                                            handleSubmit={this.handleSubmit}
-                                            handleDate={this.handleEnd}
-                                        />
+                                        {license.end?moment(license.end).format('YYYY-MM-DD'):
+                                            <ManageModal
+                                                id='Retire'
+                                                title='Retire license'
+                                                date={this.state.end}
+                                                handleClick={() => this.setState({ software_id: license.software_id })}
+                                                handleSubmit={this.handleSubmit}
+                                                handleDate={this.handleEnd}
+                                            />
+                                        }                                        
                                     </td>
                                 </tr>
                             )}
