@@ -22,7 +22,9 @@ export default class AddEmployeeLicense extends Component{
     }
 
     componentDidMount(){
-        Axios.get('/software')
+        Axios.post('/licenses/getSoftware', {
+            emp_id: this.props.match.params.emp_id
+        })
         .then(res => {
             if (res.status >= 400){
                 alert(res.data.error)
@@ -76,7 +78,7 @@ export default class AddEmployeeLicense extends Component{
                 alert(res.data.error)
             }
             else{
-                this.props.history.push(`employees/${this.props.match.params.emp_id}/licenses`)
+                this.props.history.push(`/employees/${this.props.match.params.emp_id}/licenses`)
             }
         })
         .catch(err => {
@@ -97,46 +99,48 @@ export default class AddEmployeeLicense extends Component{
                     />
                     <FormControl.Feedback />
                 </FormGroup>
-                <Table>
-                    <thead>
-                        <tr>
-                            <th>License</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.state.filtered.map((software) => 
+                <div className='data'>
+                    <Table>
+                        <thead>
                             <tr>
-                                <td>{software.name}</td>
-                                <td>
-                                    <Button bsSize='small' bsStyle='success' onClick={()=>this.setState({show:true, software_id: software.software_id})}>Add</Button>
-                                </td>
+                                <th>License</th>
+                                <th></th>
                             </tr>
-                            )}
-                    </tbody>
-                </Table>
-                <Modal show={this.state.show} onHide={()=>this.setState({show:false, start: new Date(), software_id: null})}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Add License</Modal.Title>
-                    </Modal.Header>
-                    <form onSubmit={this.handleSubmit}>                        
-                        <Modal.Body>
-                            <Form horizontal>
-                                <FormGroup controlId='start'>
-                                    <Col componentClass={ControlLabel} sm={3}>
-                                        Start date
-                                    </Col>
-                                    <Col sm={7}>
-                                        <DatePicker selected={this.state.start} onChange={this.handleStart}/>
-                                    </Col>
-                                </FormGroup>
-                            </Form>                           
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button type='submit' bsStyle='success'>Add</Button>
-                        </Modal.Footer>
-                    </form>
-                </Modal>
+                        </thead>
+                        <tbody>
+                            {this.state.filtered.map((software) => 
+                                <tr>
+                                    <td>{software.name}</td>
+                                    <td>
+                                        <Button bsSize='small' bsStyle='success' onClick={()=>this.setState({show:true, software_id: software.software_id})}>Add</Button>
+                                    </td>
+                                </tr>
+                                )}
+                        </tbody>
+                    </Table>
+                    <Modal show={this.state.show} onHide={()=>this.setState({show:false, start: new Date(), software_id: null})}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Add License</Modal.Title>
+                        </Modal.Header>
+                        <form onSubmit={this.handleSubmit}>                        
+                            <Modal.Body>
+                                <Form horizontal>
+                                    <FormGroup controlId='start'>
+                                        <Col componentClass={ControlLabel} sm={3}>
+                                            Start date
+                                        </Col>
+                                        <Col sm={7}>
+                                            <DatePicker selected={this.state.start} onChange={this.handleStart}/>
+                                        </Col>
+                                    </FormGroup>
+                                </Form>                           
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button type='submit' bsStyle='success'>Add</Button>
+                            </Modal.Footer>
+                        </form>
+                    </Modal>
+                </div>
             </React.Fragment>
         );
     }

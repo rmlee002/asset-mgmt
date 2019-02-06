@@ -56,7 +56,7 @@ router.post('/add', (req,res)=>{
 })
 
 router.post('/retire', (req,res) => {
-    connection.query('UPDATE licenses SET end=? WHERE software_id=? AND emp_id=?', [req.body.end, req.body.software_id, req.body.emp_id], (err,results)=>{
+    connection.query('UPDATE licenses SET end=? WHERE software_id=? AND emp_id=? AND end IS NULL', [req.body.end, req.body.software_id, req.body.emp_id], (err,results)=>{
         if (err){
             console.log(err)
             res.status(500).send({
@@ -71,6 +71,33 @@ router.post('/getUserData', (req,res)=>{
     connection.query('SELECT software.software_id, software.name, licenses.start FROM licenses JOIN software\
         ON licenses.software_id = software.software_id AND software.archived=FALSE WHERE emp_id=? AND end IS NULL', req.body.emp_id, (err,results)=>{
             if (err){
+                console.log(err)
+                res.status(500).send({
+                    error: "Database query error"
+                })
+            }
+            res.send(JSON.stringify(results))
+        })
+})
+
+router.post('/getEmployees', (req,res)=>{
+    connection.query('SELECT emp_id, first_name, last_name, email, affiliation, department\
+        FROM employees WHERE archived=FALSE AND emp_id NOT IN\
+        (SELECT emp_id FROM licenses WHERE software_id=? AND end IS NULL)', req.body.software_id, (err,results)=>{
+            if (err){
+                console.log(err)
+                res.status(500).send({
+                    error: "Database query error"
+                })
+            }
+            res.send(JSON.stringify(results))
+        })
+})
+
+router.post('/getSoftware', (req,res)=>{
+    connection.query('SELECT software_id, name FROM software WHERE software_id NOT IN \
+        (SELECT software_id FROM licenses WHERE emp_id=? AND end IS NULL)', req.body.emp_id, (err, results) => {
+            if (err) {
                 console.log(err)
                 res.status(500).send({
                     error: "Database query error"
