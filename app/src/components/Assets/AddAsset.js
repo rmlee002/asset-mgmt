@@ -224,12 +224,11 @@ export default class AddAssets extends Component{
                             </div>
                         )}         
                         <FormGroup>
-                            <Col smOffset={3} sm={10}>
+                            <Col smOffset={3} sm={2}>
                                 <ButtonToolbar>
                                     <Button onClick={this.handleAdd}>Add asset</Button>
                                     <Button type='submit' bsStyle='success'>Submit</Button>   
-                                </ButtonToolbar>
-                                
+                                </ButtonToolbar>                                
                             </Col>
                         </FormGroup>          
                     </Form>                    

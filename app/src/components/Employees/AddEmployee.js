@@ -246,7 +246,7 @@ export default class AddEmployee extends Component{
                             </Col>
                         </FormGroup>
                         <FormGroup>
-                            <Col smOffset={3} sm={10}>
+                            <Col smOffset={3} sm={1}>
                                 <Button type = 'submit' bsStyle='success'>Add Employee</Button>
                             </Col>
                         </FormGroup>

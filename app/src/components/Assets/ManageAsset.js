@@ -270,7 +270,7 @@ export default class ManageAsset extends Component{
                             </Col>
                         </FormGroup>
                         <FormGroup>
-                            <Col smOffset={3} sm={10}>
+                            <Col smOffset={3} sm={2}>
                                 <ButtonToolbar>
                                     <Button type = 'submit' bsStyle='success'>Update Asset</Button>
                                     <Button bsStyle='danger' onClick={this.handleRetire}>Retire</Button>

@@ -306,16 +306,16 @@ export default class ManageEmployee extends Component{
                             </Col>
                         </FormGroup>
                         <FormGroup>
-                            <Col smOffset={3} sm={10}>
+                            <Col smOffset={3} sm={2}>
                                 <ButtonToolbar>
                                     <Button type='submit' bsStyle='success' disabled={!isValid}>Update employee</Button>
-                                        <ManageModal 
-                                            id='Retire'
-                                            title='Retire employee'
-                                            date={this.state.date}
-                                            handleSubmit={this.handleRetire}
-                                            handleDate={this.handleDate}
-                                        />
+                                    <ManageModal 
+                                        id='Retire'
+                                        title='Retire employee'
+                                        date={this.state.date}
+                                        handleSubmit={this.handleRetire}
+                                        handleDate={this.handleDate}
+                                    />
                                 </ButtonToolbar>                                   
                             </Col>
                         </FormGroup>

@@ -71,7 +71,7 @@ export default class AddSoftware extends Component{
                             </Col>
                         </FormGroup>           
                         <FormGroup>
-                            <Col smOffset={3} sm={10}>
+                            <Col smOffset={3} sm={1}>
                                 <Button type='submit' bsStyle='success'>Add</Button>    
                             </Col>    
                         </FormGroup>
