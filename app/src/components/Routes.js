@@ -31,7 +31,7 @@ export default () =>
         <Route path='/employees/add' component={protect(AddEmployee)} />
         <Route path='/employees/manage/:emp_id' component={protect(ManageEmployee)} />
         <Route exact path='/employees/:emp_id/assets' component={protect(EmployeeAssets)} />
-        <Route path ='/employees/:emp_id/addAsset' component={protect(AddAsset)} />
+        <Route path ='/employees/:emp_id/assets/add' component={protect(AddAsset)} />
         <Route exact path ='/employees/:emp_id/licenses' component={protect(EmployeeLicenses)} />
         <Route path='/employees/:emp_id/licenses/add' component={protect(AddEmployeeLicense)} />
         <Route exact path='/assets' component={Assets} />
