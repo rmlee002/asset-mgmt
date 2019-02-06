@@ -105,8 +105,13 @@ export default class Users extends Component{
     total(){
         var total = 0;
         this.state.filtered.forEach((user) => {
-            const day = moment(user.start).date()
-            total += ((30-day + 1) / 30) * parseInt(user.cost)
+            if (moment(user.start).isBefore(moment(),'month')){
+                total += user.cost
+            }
+            else{
+                const day = moment(user.start).date()
+                total += ((30-day + 1) / 30) * parseInt(user.cost)
+            }            
         })
         return total.toFixed(2)
     }
