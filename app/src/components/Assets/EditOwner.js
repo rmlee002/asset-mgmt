@@ -84,46 +84,50 @@ export default class EditOwner extends Component{
     render(){
         return(
             <React.Fragment>
-                <FormGroup controlid="search">
-                    <ControlLabel>Search</ControlLabel>
-                    <FormControl
-                        type='text'
-                        placeholder='Enter name'
-                        onChange = {this.handleChange}
-                    />
-                    <FormControl.Feedback />
-                </FormGroup>
-                <Table>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Affiliation</th>
-                            <th>Department</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.state.filtered.map(employee => 
+                <div className='header'>
+                    <FormGroup controlid="search">
+                        <ControlLabel>Search</ControlLabel>
+                        <FormControl
+                            type='text'
+                            placeholder='Enter name'
+                            onChange = {this.handleChange}
+                        />
+                        <FormControl.Feedback />
+                    </FormGroup>
+                </div>
+                <div className='data'>
+                    <Table>
+                        <thead>
                             <tr>
-                                <td>{employee.first_name+" "+employee.last_name}</td>
-                                <td>{employee.email}</td>
-                                <td>{employee.affiliation}</td>
-                                <td>{employee.department}</td>
-                                <td>
-                                    <ManageModal
-                                        id='Assign'
-                                        title='Add owner'
-                                        date={this.state.start}
-                                        handleClick={() => this.setState({emp_id: employee.emp_id})}
-                                        handleSubmit={this.handleSubmit}
-                                        handleDate={this.handleStart}
-                                    />
-                                </td>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Affiliation</th>
+                                <th>Department</th>
+                                <th></th>
                             </tr>
-                            )}
-                    </tbody>
-                </Table>
+                        </thead>
+                        <tbody>
+                            {this.state.filtered.map(employee => 
+                                <tr>
+                                    <td>{employee.first_name+" "+employee.last_name}</td>
+                                    <td>{employee.email}</td>
+                                    <td>{employee.affiliation}</td>
+                                    <td>{employee.department}</td>
+                                    <td>
+                                        <ManageModal
+                                            id='Assign'
+                                            title='Add owner'
+                                            date={this.state.start}
+                                            handleClick={() => this.setState({emp_id: employee.emp_id})}
+                                            handleSubmit={this.handleSubmit}
+                                            handleDate={this.handleStart}
+                                        />
+                                    </td>
+                                </tr>
+                                )}
+                        </tbody>
+                    </Table>
+                </div>                
             </React.Fragment>
         ); 
     }

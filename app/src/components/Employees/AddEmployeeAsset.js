@@ -97,36 +97,38 @@ export default class AddAsset extends Component{
                         onChange = {this.handleChange}
                     />
                     <FormControl.Feedback />
-                </FormGroup>                
-                <Table>
-                    <thead>
-                        <tr>
-                            <th>Serial Number</th>
-                            <th>Model</th>                            
-                            <th>Comment</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.state.filtered.map(item =>                             
+                </FormGroup>
+                <div className='data'>                
+                    <Table>
+                        <thead>
                             <tr>
-                                <td>{item.serial_number}</td>
-                                <td>{item.model}</td>                                
-                                <td>{item.comment}</td>                          
-                                <td>
-                                    <ManageModal
-                                        id='Assign'
-                                        title='Add asset'
-                                        date={this.state.start}
-                                        handleClick={()=>this.setState({ asset_id: item.asset_id })}
-                                        handleSubmit={this.handleSubmit}
-                                        handleDate={this.handleStart}
-                                    />
-                                </td>
+                                <th>Serial Number</th>
+                                <th>Model</th>                            
+                                <th>Comment</th>
+                                <th></th>
                             </tr>
-                        )}
-                    </tbody>
-                </Table>
+                        </thead>
+                        <tbody>
+                            {this.state.filtered.map(item =>                             
+                                <tr>
+                                    <td>{item.serial_number}</td>
+                                    <td>{item.model}</td>                                
+                                    <td>{item.comment}</td>                          
+                                    <td>
+                                        <ManageModal
+                                            id='Assign'
+                                            title='Add asset'
+                                            date={this.state.start}
+                                            handleClick={()=>this.setState({ asset_id: item.asset_id })}
+                                            handleSubmit={this.handleSubmit}
+                                            handleDate={this.handleStart}
+                                        />
+                                    </td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </Table>
+                </div>
             </React.Fragment>
         );
     }

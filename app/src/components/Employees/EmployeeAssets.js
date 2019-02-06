@@ -64,42 +64,44 @@ export default class EmployeeAssets extends Component{
     render(){
         return(
             <React.Fragment>
-                <LinkContainer to={`/employees/${this.props.match.params.emp_id}/addAsset`}>
+                <LinkContainer to={`/employees/${this.props.match.params.emp_id}/assets/add`}>
                     <Button bsStyle='primary'>
                         Add asset
                     </Button>
                 </LinkContainer>
-                <Table>
-                    <thead>
-                        <tr>
-                            <th>Serial Number</th>
-                            <th>Model</th>                            
-                            <th>Comment</th>
-                            <th>Start Date</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.state.assets.map(item => 
+                <div className='data'>
+                    <Table>
+                        <thead>
                             <tr>
-                                <td>{item.serial_number}</td>
-                                <td>{item.model}</td>
-                                <td>{item.comment}</td>
-                                <td>{item.start?moment(item.start).format('YYYY-MM-DD'):''}</td>
-                                <td>
-                                    <ManageModal
-                                        id='Retire'
-                                        title='Retire asset'
-                                        date={this.state.end}
-                                        handleClick={() => this.setState({asset_id: item.asset_id})}
-                                        handleSubmit={this.handleSubmit}
-                                        handleDate={this.handleEnd}
-                                    />
-                                </td>
+                                <th>Serial Number</th>
+                                <th>Model</th>                            
+                                <th>Comment</th>
+                                <th>Start Date</th>
+                                <th></th>
                             </tr>
-                        )}
-                    </tbody>
-                </Table>
+                        </thead>
+                        <tbody>
+                            {this.state.assets.map(item => 
+                                <tr>
+                                    <td>{item.serial_number}</td>
+                                    <td>{item.model}</td>
+                                    <td>{item.comment}</td>
+                                    <td>{item.start?moment(item.start).format('YYYY-MM-DD'):''}</td>
+                                    <td>
+                                        <ManageModal
+                                            id='Retire'
+                                            title='Retire asset'
+                                            date={this.state.end}
+                                            handleClick={() => this.setState({asset_id: item.asset_id})}
+                                            handleSubmit={this.handleSubmit}
+                                            handleDate={this.handleEnd}
+                                        />
+                                    </td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </Table>
+                </div>
             </React.Fragment>
         );
     }

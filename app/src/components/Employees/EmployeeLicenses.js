@@ -10,6 +10,7 @@ export default class EmployeeLicenses extends Component{
         super(props)
 
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleEnd = this.handleEnd.bind(this)
 
         this.state={
             licenses: [],
@@ -39,6 +40,12 @@ export default class EmployeeLicenses extends Component{
         })
     }
 
+    handleEnd(date){
+        this.setState({
+            end: date
+        })
+    }
+
     handleSubmit(){
         Axios.post('/licenses/retire', {
             end: moment(this.state.end).format('YYYY-MM-DD'),
@@ -61,34 +68,36 @@ export default class EmployeeLicenses extends Component{
             <React.Fragment>
                 <LinkContainer to={`/employees/${this.props.match.params.emp_id}/licenses/add`}>
                     <Button bsStyle='primary'>Add license</Button>
-                </LinkContainer>                
-                <Table>
-                    <thead>
-                        <tr>
-                            <th>License</th>
-                            <th>Start</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.state.licenses.map((license) => 
+                </LinkContainer>   
+                <div className='data'>             
+                    <Table>
+                        <thead>
                             <tr>
-                                <td>{license.name}</td>
-                                <td>{license.start?moment(license.start).format('YYYY-MM-DD'):''}</td>
-                                <td>
-                                    <ManageModal
-                                        id='Retire'
-                                        title='Retire license'
-                                        date={this.state.end}
-                                        handleClick={() => this.setState({ software_id: license.software_id })}
-                                        handleSubmit={this.handleSubmit}
-                                        handleDate={this.handleEnd}
-                                    />
-                                </td>
+                                <th>License</th>
+                                <th>Start</th>
+                                <th></th>
                             </tr>
-                        )}
-                    </tbody>
-                </Table>
+                        </thead>
+                        <tbody>
+                            {this.state.licenses.map((license) => 
+                                <tr>
+                                    <td>{license.name}</td>
+                                    <td>{license.start?moment(license.start).format('YYYY-MM-DD'):''}</td>
+                                    <td>
+                                        <ManageModal
+                                            id='Retire'
+                                            title='Retire license'
+                                            date={this.state.end}
+                                            handleClick={() => this.setState({ software_id: license.software_id })}
+                                            handleSubmit={this.handleSubmit}
+                                            handleDate={this.handleEnd}
+                                        />
+                                    </td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </Table>
+                </div>
             </React.Fragment>
         );
     }

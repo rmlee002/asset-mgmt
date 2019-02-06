@@ -69,13 +69,13 @@ export default class Employees extends Component {
                             onChange = {this.handleChange}
                         />
                         <FormControl.Feedback />
-                    </FormGroup>                    
-                    <LinkContainer to='/employees/add'>
-                        <Button bsStyle='primary'>Add employee</Button>
-                    </LinkContainer>     
+                    </FormGroup>
                     <Checkbox checked={this.state.showArchived} onChange={this.handleCheck}>
                         Show retired
-                    </Checkbox>
+                    </Checkbox>                
+                    <LinkContainer to='/employees/add'>
+                        <Button bsStyle='primary'>Add employee</Button>
+                    </LinkContainer>                    
                 </div>
                 
                 <div className='data'>

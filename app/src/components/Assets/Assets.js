@@ -63,67 +63,71 @@ export default class Assets extends Component{
     render(){
         return(
             <React.Fragment>
-                <FormGroup controlid="search">
-                    <ControlLabel>Search</ControlLabel>
-                    <FormControl
-                        type='text'
-                        placeholder='Enter serial number'
-                        onChange = {this.handleChange}
-                    />
-                    <FormControl.Feedback />
-                </FormGroup>
-                <LinkContainer to='/assets/add'>
-                    <Button bsStyle='primary'>Add assets</Button>
-                </LinkContainer>
-                <Checkbox checked={this.state.showArchived} onChange={this.handleCheck}>
-                    Show retired
-                </Checkbox>
-                <Table>
-                    <thead>
-                        <tr>
-                            <th>Serial Number</th>
-                            <th>Model</th>                            
-                            <th>Warranty Provider</th>
-                            <th>Owner</th>
-                            <th>Cost</th>
-                            <th>Comment</th>
-                            <th>Vendor</th>
-                            <th>Order Number</th>
-                            <th>Warranty</th>
-                            <th>In Date</th>
-                            <th>Out Date</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.state.filtered.map(item =>
-                            <tr key={item.asset_id}>
-                                <td>{item.serial_number}</td>
-                                <td>{item.model}</td>                                
-                                <td>{item.warranty_provider}</td>
-                                <td>{item.first_name?item.first_name + " " + item.last_name:''}</td>
-                                <td>{item.cost?'$'+item.cost.toFixed(2):''}</td>
-                                <td>{item.comment}</td>
-                                <td>{item.vendor}</td>
-                                <td>{item.order_num}</td>
-                                <td>{item.warranty}</td>
-                                <td>
-                                    {item.inDate?
-                                        moment(item.inDate).utc().format('YYYY-MM-DD'):''}
-                                </td>
-                                <td>
-                                    {item.outDate?
-                                        moment(item.outDate).utc().format('YYYY-MM-DD'):''}
-                                </td>
-                                <td><Link to={`/assets/${item.asset_id}/history`}>History</Link></td>
-                                <td><Link to={`/assets/manage/${item.asset_id}`}>Manage</Link></td>
-                                <td><Link to={`/assets/editOwner/${item.asset_id}`}>Assign owner</Link></td>
+            <div className='header'>
+                    <FormGroup controlid="search">
+                        <ControlLabel>Search</ControlLabel>
+                        <FormControl
+                            type='text'
+                            placeholder='Enter serial number'
+                            onChange = {this.handleChange}
+                        />
+                        <FormControl.Feedback />
+                    </FormGroup>
+                    <Checkbox checked={this.state.showArchived} onChange={this.handleCheck}>
+                        Show retired
+                    </Checkbox>
+                    <LinkContainer to='/assets/add'>
+                        <Button bsStyle='primary'>Add assets</Button>
+                    </LinkContainer>
+                </div>
+                <div className='data'>
+                    <Table>
+                        <thead>
+                            <tr>
+                                <th>Serial Number</th>
+                                <th>Model</th>                            
+                                <th>Warranty Provider</th>
+                                <th>Owner</th>
+                                <th>Cost</th>
+                                <th>Vendor</th>
+                                <th>Order Number</th>
+                                <th>Warranty</th>
+                                <th>In Date</th>
+                                <th>Out Date</th>
+                                <th>Comment</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
                             </tr>
-                        )}
-                    </tbody>
-                </Table>
+                        </thead>
+                        <tbody>
+                            {this.state.filtered.map(item =>
+                                <tr key={item.asset_id}>
+                                    <td>{item.serial_number}</td>
+                                    <td>{item.model}</td>                                
+                                    <td>{item.warranty_provider}</td>
+                                    <td>{item.first_name?item.first_name + " " + item.last_name:''}</td>
+                                    <td>{item.cost?'$'+item.cost.toFixed(2):''}</td>                                    
+                                    <td>{item.vendor}</td>
+                                    <td>{item.order_num}</td>
+                                    <td>{item.warranty}</td>
+                                    <td>
+                                        {item.inDate?
+                                            moment(item.inDate).utc().format('YYYY-MM-DD'):''}
+                                    </td>
+                                    <td>
+                                        {item.outDate?
+                                            moment(item.outDate).utc().format('YYYY-MM-DD'):''}
+                                    </td>
+                                    <td>{item.comment}</td>
+                                    <td><Link to={`/assets/editOwner/${item.asset_id}`}>Assign owner</Link></td>
+                                    <td><Link to={`/assets/${item.asset_id}/history`}>History</Link></td>
+                                    <td><Link to={`/assets/manage/${item.asset_id}`}>Manage</Link></td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </Table>
+                </div>                
             </React.Fragment>
         );
     }

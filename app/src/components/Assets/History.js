@@ -73,40 +73,42 @@ export default class History extends Component{
                     />
                     <FormControl.Feedback />
                 </FormGroup>
-                <Table>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Start</th>
-                            <th>End</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.state.owners.map(owner => 
+                <div className="data">
+                    <Table>
+                        <thead>
                             <tr>
-                                <td>{owner.first_name+' '+owner.last_name}</td>
-                                <td>
-                                    {owner.start?
-                                        moment(owner.start).utc().format('YYYY-MM-DD'):''}
-                                </td>
-                                <td>
-                                    {owner.end?
-                                        moment(owner.end).utc().format('YYYY-MM-DD')
-                                        :
-                                        <ManageModal 
-                                            id='Retire'
-                                            title='Retire owner'
-                                            date={this.state.end}
-                                            handleClick={() => this.setState({ emp_id: owner.emp_id})}
-                                            handleSubmit={this.handleSubmit}
-                                            handleDate={this.handleEnd}
-                                        />
-                                    }
-                                </td>
+                                <th>Name</th>
+                                <th>Start</th>
+                                <th>End</th>
                             </tr>
-                        )}
-                    </tbody>
-                </Table>
+                        </thead>
+                        <tbody>
+                            {this.state.owners.map(owner => 
+                                <tr>
+                                    <td>{owner.first_name+' '+owner.last_name}</td>
+                                    <td>
+                                        {owner.start?
+                                            moment(owner.start).utc().format('YYYY-MM-DD'):''}
+                                    </td>
+                                    <td>
+                                        {owner.end?
+                                            moment(owner.end).utc().format('YYYY-MM-DD')
+                                            :
+                                            <ManageModal 
+                                                id='Retire'
+                                                title='Retire owner'
+                                                date={this.state.end}
+                                                handleClick={() => this.setState({ emp_id: owner.emp_id})}
+                                                handleSubmit={this.handleSubmit}
+                                                handleDate={this.handleEnd}
+                                            />
+                                        }
+                                    </td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </Table>
+                </div>
             </React.Fragment>
         );
     }
