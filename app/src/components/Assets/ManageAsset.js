@@ -3,6 +3,7 @@ import { Button, Form , FormGroup, Col, ControlLabel, FormControl, ButtonToolbar
 import DatePicker from 'react-datepicker';
 import Axios from 'axios';
 import moment from 'moment';
+import ManageModal from '../ManageModal';
 
 export default class ManageAsset extends Component{
     constructor(props){
@@ -13,6 +14,7 @@ export default class ManageAsset extends Component{
         this.handleOut = this.handleOut.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.handleRetire = this.handleRetire.bind(this)
+        this.handleUnretire=this.handleUnretire.bind(this)
 
         this.state={
             asset_id: null,
@@ -26,7 +28,8 @@ export default class ManageAsset extends Component{
             order_num: null,
             warranty: null,
             inDate: null,
-            outDate: null
+            outDate: null,
+            archived: null
         }
     }
 
@@ -51,7 +54,8 @@ export default class ManageAsset extends Component{
                 order_num: asset.order_num,
                 warranty: asset.warranty,
                 inDate: asset.inDate,
-                outDate: asset.outDate
+                outDate: asset.outDate,
+                archived: asset.archived
             })
         })
         .catch(err => {
@@ -80,19 +84,13 @@ export default class ManageAsset extends Component{
     }
 
     handleOut(date){
-        if(date){
-            this.setState({
-                outDate: moment(date).format("YYYY-MM-DD")
-            });
-        }
-        else{
-            this.setState({
-                outDate: null
-            })
-        }
+        this.setState({
+            outDate: date
+        });
     }
 
-    handleRetire(){
+    handleRetire(e){
+        e.preventDefault();
         Axios.post('/assets/retire', {
             asset_id: this.state.asset_id,
             end: moment(this.state.end).format('YYYY-MM-DD')
@@ -103,6 +101,24 @@ export default class ManageAsset extends Component{
             }
             else{
                 alert(res.data.error)
+            }
+        })
+        .catch(err => {
+            console.log(err)
+            alert(err)
+        })
+    }
+
+    handleUnretire(){
+        Axios.post('/assets/unretire', {
+            asset_id: this.state.asset_id
+        })
+        .then(res=>{
+            if(res.status>=400){
+                alert(res.data.error)
+            }
+            else{
+                this.props.history.push('/assets')
             }
         })
         .catch(err => {
@@ -124,7 +140,7 @@ export default class ManageAsset extends Component{
             order_num: this.state.order_num,
             warranty: this.state.warranty,
             inDate: this.state.inDate,
-            outDate: this.state.outDate,
+            outDate: this.state.outDate?moment(this.state.outDate).format('YYYY-MM-DD'):null,
             asset_id: this.state.asset_id
         })
         .then(res => {            
@@ -273,7 +289,15 @@ export default class ManageAsset extends Component{
                             <Col smOffset={3} sm={2}>
                                 <ButtonToolbar>
                                     <Button type = 'submit' bsStyle='success'>Update Asset</Button>
-                                    <Button bsStyle='danger' onClick={this.handleRetire}>Retire</Button>
+                                    {!this.state.archived?
+                                        <ManageModal 
+                                        id='Retire'
+                                        title='Retire asset'
+                                        date={this.state.outDate?this.state.outDate:new Date()}
+                                        handleSubmit={this.handleRetire}
+                                        handleDate={this.handleOut}
+                                    />:
+                                        <Button bsStyle='primary'  onClick={this.handleUnretire}>Unarchive</Button>}
                                 </ButtonToolbar>                                   
                             </Col>
                         </FormGroup>
