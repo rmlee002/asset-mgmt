@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Col, FormControl, HelpBlock, ControlLabel } from 'react-bootstrap';
+import { Button, Form, FormGroup, Col, FormControl, HelpBlock, ControlLabel, ButtonToolbar } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import axios from 'axios';
 import moment from 'moment';
@@ -8,7 +8,6 @@ import Departments from '../Departments';
 import Select from 'react-select';
 import EmployeeSelect from '../EmployeeSelect';
 import ManageModal from '../ManageModal';
-import { timingSafeEqual } from 'crypto';
 
 export default class ManageEmployee extends Component{
     constructor(props){
@@ -167,13 +166,6 @@ export default class ManageEmployee extends Component{
         const isValid = this.state.first_name && this.state.last_name;        
         return(
             <React.Fragment>
-                <ManageModal 
-                    id='Retire'
-                    title='Retire employee'
-                    date={this.state.date}
-                    handleSubmit={this.handleRetire}
-                    handleDate={this.handleDate}
-                />
                 <form onSubmit={this.handleUpdate}>
                     <Form horizontal>
                         <FormGroup controlId='first_name'>
@@ -313,7 +305,20 @@ export default class ManageEmployee extends Component{
                                 />
                             </Col>
                         </FormGroup>
-                        <Button type='submit' bsStyle='success' disabled={!isValid}>Update employee</Button>
+                        <FormGroup>
+                            <Col smOffset={3} sm={10}>
+                                <ButtonToolbar>
+                                    <Button type='submit' bsStyle='success' disabled={!isValid}>Update employee</Button>
+                                        <ManageModal 
+                                            id='Retire'
+                                            title='Retire employee'
+                                            date={this.state.date}
+                                            handleSubmit={this.handleRetire}
+                                            handleDate={this.handleDate}
+                                        />
+                                </ButtonToolbar>                                   
+                            </Col>
+                        </FormGroup>
                     </Form>    
                 </form>                   
             </React.Fragment>

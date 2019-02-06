@@ -130,7 +130,7 @@ export default class AddEmployee extends Component{
                             <Col componentClass={ControlLabel} sm={3}>
                                 First Name
                             </Col>
-                            <Col sm={7}>
+                            <Col sm={6}>
                                 <FormControl
                                     type='text'
                                     value={this.state.first_name}
@@ -156,7 +156,7 @@ export default class AddEmployee extends Component{
                             <Col componentClass={ControlLabel} sm={3}>
                                 Email
                             </Col>
-                            <Col sm={7}>
+                            <Col sm={6}>
                                 <FormControl
                                     type='email'
                                     value={this.state.email}
@@ -167,7 +167,7 @@ export default class AddEmployee extends Component{
                         </FormGroup>
                         <FormGroup controlId='affiliation'>
                             <Col componentClass={ControlLabel} sm={3}>Affiliation</Col>
-                            <Col sm={7}>
+                            <Col sm={6}>
                                 <Select
                                     onChange={this.handleAffiliation}
                                     options={[
@@ -182,7 +182,7 @@ export default class AddEmployee extends Component{
                         </FormGroup>
                         <FormGroup controlId='department'>
                             <Col componentClass={ControlLabel} sm={3}>Department</Col>
-                            <Col sm={7}>
+                            <Col sm={6}>
                                 <Departments createDept = {this.handleCreateDepartmentOption} handleChange={this.handleDepartment} value={this.state.depts}/>
                             </Col>
                         </FormGroup>
@@ -190,7 +190,7 @@ export default class AddEmployee extends Component{
                             <Col componentClass={ControlLabel} sm={3}>
                                 Supervisor(s)
                             </Col>
-                            <Col sm={7}>
+                            <Col sm={6}>
                                 <EmployeeSelect onChange={this.handleEmployeeAssign('supervisor')}/>
                             </Col>
                         </FormGroup>
@@ -198,7 +198,7 @@ export default class AddEmployee extends Component{
                             <Col componentClass={ControlLabel} sm={3}>
                                 Reviewer(s)
                             </Col>
-                            <Col sm={7}>
+                            <Col sm={6}>
                                 <EmployeeSelect onChange={this.handleEmployeeAssign('reviewer')}/>
                             </Col>
                         </FormGroup>
@@ -206,7 +206,7 @@ export default class AddEmployee extends Component{
                             <Col componentClass={ControlLabel} sm={3}>
                                 Time Approver(s)
                             </Col>
-                            <Col sm={7}>
+                            <Col sm={6}>
                                 <EmployeeSelect onChange={this.handleEmployeeAssign('time_approver')}/>
                             </Col>
                         </FormGroup>
@@ -214,7 +214,7 @@ export default class AddEmployee extends Component{
                             <Col componentClass={ControlLabel} sm={3}>
                                 Start date
                             </Col>
-                            <Col sm={7}>
+                            <Col sm={6}>
                                 <DatePicker
                                     selected={this.state.start}
                                     onChange={this.handleStart}
@@ -225,7 +225,7 @@ export default class AddEmployee extends Component{
                             <Col componentClass={ControlLabel} sm={3}>
                                 End date
                             </Col>
-                            <Col sm={7}>
+                            <Col sm={6}>
                                 <DatePicker
                                     selected={this.state.end}
                                     onChange={this.handleEnd}
@@ -236,7 +236,7 @@ export default class AddEmployee extends Component{
                             <Col componentClass={ControlLabel} sm={3}>
                                 Notes
                             </Col>
-                            <Col sm={7}>
+                            <Col sm={6}>
                                 <FormControl 
                                     type='text'
                                     value={this.state.notes}
@@ -245,7 +245,11 @@ export default class AddEmployee extends Component{
                                 />
                             </Col>
                         </FormGroup>
-                        <Button type = 'submit' bsStyle='success'>Add Employee</Button>
+                        <FormGroup>
+                            <Col smOffset={3} sm={10}>
+                                <Button type = 'submit' bsStyle='success'>Add Employee</Button>
+                            </Col>
+                        </FormGroup>
                     </Form>    
                 </form>                               
             </React.Fragment>

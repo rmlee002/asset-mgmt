@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form , FormGroup, Col, ControlLabel, FormControl } from 'react-bootstrap';
+import { Button, Form , FormGroup, Col, ControlLabel, FormControl, ButtonToolbar } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import Axios from 'axios';
 import moment from 'moment';
@@ -140,16 +140,14 @@ export default class ManageAsset extends Component{
 
     render(){
         return(
-            <React.Fragment>
-                <Button bsStyle='danger' onClick={this.handleRetire}>Retire</Button>
-
+            <React.Fragment>          
                 <form onSubmit={this.handleSubmit}>
-                    <Form horizontal>                        
+                    <Form horizontal>                                
                         <FormGroup controlId='serial_number'>
                             <Col componentClass={ControlLabel} sm={3}>
                                 Serial Number
                             </Col>
-                            <Col sm={7}>
+                            <Col sm={6}>
                                 <FormControl
                                     type='text'
                                     value={this.state.serial_number}
@@ -162,7 +160,7 @@ export default class ManageAsset extends Component{
                             <Col componentClass={ControlLabel} sm={3}>
                                 Model
                             </Col>
-                            <Col sm={7}>
+                            <Col sm={6}>
                                 <FormControl
                                     type='text'
                                     value={this.state.model}
@@ -175,7 +173,7 @@ export default class ManageAsset extends Component{
                             <Col componentClass={ControlLabel} sm={3}>
                                 Warranty Provider
                             </Col>
-                            <Col sm={7}>
+                            <Col sm={6}>
                                 <FormControl
                                     type='text'
                                     value={this.state.warranty_provider}
@@ -188,7 +186,7 @@ export default class ManageAsset extends Component{
                             <Col componentClass={ControlLabel} sm={3}>
                                 Cost
                             </Col>
-                            <Col sm={7}>
+                            <Col sm={6}>
                                 <FormControl
                                     type='number'
                                     value={this.state.cost}
@@ -201,7 +199,7 @@ export default class ManageAsset extends Component{
                             <Col componentClass={ControlLabel} sm={3}>
                                 Comment
                             </Col>
-                            <Col sm={7}>
+                            <Col sm={6}>
                                 <FormControl
                                     type='text'
                                     value={this.state.comment}
@@ -214,7 +212,7 @@ export default class ManageAsset extends Component{
                             <Col componentClass={ControlLabel} sm={3}>
                                 Vendor
                             </Col>
-                            <Col sm={7}>
+                            <Col sm={6}>
                                 <FormControl
                                     type='text'
                                     value={this.state.vendor}
@@ -227,7 +225,7 @@ export default class ManageAsset extends Component{
                             <Col componentClass={ControlLabel} sm={3}>
                                 Order Number
                             </Col>
-                            <Col sm={7}>
+                            <Col sm={6}>
                                 <FormControl
                                     type='text'
                                     value={this.state.order_num}
@@ -240,7 +238,7 @@ export default class ManageAsset extends Component{
                             <Col componentClass={ControlLabel} sm={3}>
                                 Warranty
                             </Col>
-                            <Col sm={7}>
+                            <Col sm={6}>
                                 <FormControl
                                     type='text'
                                     value={this.state.warranty}
@@ -264,15 +262,22 @@ export default class ManageAsset extends Component{
                             <Col componentClass={ControlLabel} sm={3}>
                                 Out Date
                             </Col>
-                            <Col sm={7}>
+                            <Col sm={6}>
                                 <DatePicker
                                     selected={this.state.outDate}
                                     onChange={this.handleOut}
                                 />
                             </Col>
                         </FormGroup>
-                    </Form>
-                    <Button type = 'submit' bsStyle='success'>Update Asset</Button>
+                        <FormGroup>
+                            <Col smOffset={3} sm={10}>
+                                <ButtonToolbar>
+                                    <Button type = 'submit' bsStyle='success'>Update Asset</Button>
+                                    <Button bsStyle='danger' onClick={this.handleRetire}>Retire</Button>
+                                </ButtonToolbar>                                   
+                            </Col>
+                        </FormGroup>
+                    </Form>                                        
                 </form>
             </React.Fragment>
         );

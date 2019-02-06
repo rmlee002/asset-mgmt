@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, FormControl, ControlLabel, Col, Button } from 'react-bootstrap';
+import { Form, FormGroup, FormControl, ControlLabel, Col, Button, ButtonToolbar } from 'react-bootstrap';
 import Axios from 'axios';
 
 export default class ManageSoftware extends Component{
@@ -74,15 +74,13 @@ export default class ManageSoftware extends Component{
     render(){
         return(
             <React.Fragment>
-                <Button bsStyle='danger' onClick={this.handleRetire}>Retire</Button>
-
                 <form onSubmit={this.handleUpdate}>
                     <Form horizontal onChange={this.handleChange}>
                         <FormGroup controlId='name'>
                             <Col componentClass={ControlLabel} sm={3}>
                                 License
                             </Col>
-                            <Col sm={7}>
+                            <Col sm={6}>
                                 <FormControl
                                     type='text'
                                     value={this.state.name}
@@ -94,15 +92,22 @@ export default class ManageSoftware extends Component{
                             <Col componentClass={ControlLabel} sm={3}>
                                 Monthly subscription cost
                             </Col>
-                            <Col sm={7}>
+                            <Col sm={6}>
                                 <FormControl
                                     type='number'
                                     value={this.state.cost}
                                     placeholder='Monthly cost'
                                 />                        
                             </Col>
-                        </FormGroup>                        
-                        <Button type='submit' bsStyle='success'>Update</Button>          
+                        </FormGroup>
+                        <FormGroup>
+                            <Col smOffset={3} sm={10}>
+                                <ButtonToolbar>
+                                    <Button type='submit' bsStyle='success'>Update</Button>
+                                    <Button bsStyle='danger' onClick={this.handleRetire}>Retire</Button>
+                                </ButtonToolbar> 
+                            </Col>
+                        </FormGroup>                             
                     </Form>
                 </form>
             </React.Fragment>            

@@ -67,23 +67,11 @@ export default class AddUser extends Component{
         })
     }
 
-    // handleEmployee(value){
-    //     this.setState({
-    //         emp_id: value?value.value:null
-    //     })
-    // }
-
     handleStart(date){
         this.setState({
             start: date
         })
     }
-
-    // handleEnd(date){
-    //     this.setState({
-    //         end: date
-    //     })
-    // }
 
     filter = memoize(
         (list, filterText) => list.filter(item => (item.first_name+' '+item.last_name).toLowerCase().includes(filterText.toLowerCase()))
@@ -105,35 +93,6 @@ export default class AddUser extends Component{
     render(){
         return(
             <React.Fragment>
-                {/* <form onSubmit={this.handleSubmit}>
-                    <Form horizontal>
-                        <FormGroup controlId='user'>
-                            <Col componentClass={ControlLabel} sm={3}>
-                                Employee
-                            </Col>
-                            <Col sm={7}>
-                                <EmployeeSelect onChange={this.handleEmployee}/>
-                            </Col>
-                        </FormGroup>
-                        <FormGroup controlId='start'>
-                            <Col componentClass={ControlLabel} sm={3}>
-                                License start date
-                            </Col>
-                            <Col sm={7}>
-                                <DatePicker selected={this.state.start} onChange={this.handleStart}/>
-                            </Col>
-                        </FormGroup>
-                        <FormGroup controlId='end'>
-                            <Col componentClass={ControlLabel} sm={3}>
-                                License end date
-                            </Col>
-                            <Col sm={7}>
-                                <DatePicker selected={this.state.end} onChange={this.handleEnd}/>
-                            </Col>
-                        </FormGroup>
-                        <Button type='submit' bsStyle='success'>Add user license</Button>
-                    </Form>
-                </form> */}
                 <div className='header'>
                     <FormGroup controlid="search">
                         <ControlLabel>Search</ControlLabel>

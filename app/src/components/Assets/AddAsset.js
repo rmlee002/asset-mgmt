@@ -99,7 +99,7 @@ export default class AddAssets extends Component{
                             <Col componentClass={ControlLabel} sm={3}>
                                 Order Number
                             </Col>
-                            <Col sm={7}>
+                            <Col sm={6}>
                                 <FormControl
                                     type='text'
                                     value={this.state.order_num}
@@ -112,7 +112,7 @@ export default class AddAssets extends Component{
                             <Col componentClass={ControlLabel} sm={3}>
                                 Vendor
                             </Col>
-                            <Col sm={7}>
+                            <Col sm={6}>
                                 <FormControl
                                     type='text'
                                     value={this.state.vendor}
@@ -125,7 +125,7 @@ export default class AddAssets extends Component{
                             <Col componentClass={ControlLabel} sm={3}>
                                 In Date
                             </Col>
-                            <Col sm={7}>
+                            <Col sm={6}>
                                 <DatePicker
                                     selected={this.state.inDate}
                                     onChange={this.handleIn}
@@ -136,7 +136,7 @@ export default class AddAssets extends Component{
                             <Col componentClass={ControlLabel} sm={3}>
                                 Warranty Provider
                             </Col>
-                            <Col sm={7}>
+                            <Col sm={6}>
                                 <FormControl
                                     type='text'
                                     value={this.state.warranty_provider}
@@ -149,7 +149,7 @@ export default class AddAssets extends Component{
                             <Col componentClass={ControlLabel} sm={3}>
                                 Warranty
                             </Col>
-                            <Col sm={7}>
+                            <Col sm={6}>
                                 <FormControl
                                     type='text'
                                     value={this.state.warranty}
@@ -160,12 +160,20 @@ export default class AddAssets extends Component{
                         </FormGroup>                       
                         {this.state.assets.map((item, index) => 
                             <div>
-                                <Button bsStyle='danger' onClick={() => this.handleRemove(index)}>Remove</Button>                              
-                                <FormGroup controlId='serial_number'>
+                                <br />
+                                <FormGroup>
+                                    <Col componentClass={ControlLabel} sm={3}>
+                                        Item #{index+1}
+                                    </Col>
+                                    <Col sm={6}>
+                                        <Button bsStyle='danger' onClick={() => this.handleRemove(index)}>Remove</Button> 
+                                    </Col>
+                                </FormGroup>
+                                <FormGroup controlId='serial_number'>                                        
                                     <Col componentClass={ControlLabel} sm={3}>
                                         Serial Number
                                     </Col>
-                                    <Col sm={7}>
+                                    <Col sm={6}>
                                         <FormControl
                                             type='text'
                                             value={this.state.serial_number}
@@ -178,7 +186,7 @@ export default class AddAssets extends Component{
                                     <Col componentClass={ControlLabel} sm={3}>
                                         Model
                                     </Col>
-                                    <Col sm={7}>
+                                    <Col sm={6}>
                                         <FormControl
                                             type='text'
                                             value={this.state.model}
@@ -191,7 +199,7 @@ export default class AddAssets extends Component{
                                     <Col componentClass={ControlLabel} sm={3}>
                                         Cost
                                     </Col>
-                                    <Col sm={7}>
+                                    <Col sm={6}>
                                         <FormControl
                                             type='number'
                                             value={this.state.cost}
@@ -204,7 +212,7 @@ export default class AddAssets extends Component{
                                     <Col componentClass={ControlLabel} sm={3}>
                                         Comment
                                     </Col>
-                                    <Col sm={7}>
+                                    <Col sm={6}>
                                         <FormControl
                                             type='text'
                                             value={this.state.comment}
@@ -214,15 +222,17 @@ export default class AddAssets extends Component{
                                     </Col>
                                 </FormGroup>
                             </div>
-                        )}                        
-                    </Form>
-                    <ButtonToolbar>
-                        <Button onClick={this.handleAdd} block>Add asset</Button>
-                    </ButtonToolbar>
-                    <ButtonToolbar>
-                        <Button type='submit' bsStyle='success' block>Submit</Button>
-                    </ButtonToolbar>
-                    
+                        )}         
+                        <FormGroup>
+                            <Col smOffset={3} sm={10}>
+                                <ButtonToolbar>
+                                    <Button onClick={this.handleAdd}>Add asset</Button>
+                                    <Button type='submit' bsStyle='success'>Submit</Button>   
+                                </ButtonToolbar>
+                                
+                            </Col>
+                        </FormGroup>          
+                    </Form>                    
                 </form>
             </React.Fragment>
         );

@@ -44,7 +44,6 @@ export default class ManageModal extends Component{
             <React.Fragment>
                 <Button 
                     bsStyle={this.state.style}
-                    bsSize='small'
                     onClick={this.handleClick}
                 >
                     {this.props.id}

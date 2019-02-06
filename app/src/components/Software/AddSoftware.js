@@ -50,7 +50,7 @@ export default class AddSoftware extends Component{
                             <Col componentClass={ControlLabel} sm={3}>
                                 License
                             </Col>
-                            <Col sm={7}>
+                            <Col sm={6}>
                                 <FormControl
                                     type='text'
                                     value={this.state.name}
@@ -62,15 +62,19 @@ export default class AddSoftware extends Component{
                             <Col componentClass={ControlLabel} sm={3}>
                                 Monthly subscription cost
                             </Col>
-                            <Col sm={7}>
+                            <Col sm={6}>
                                 <FormControl
                                     type='number'
                                     value={this.state.cost}
                                     placeholder='Monthly cost'
                                 />                        
                             </Col>
-                        </FormGroup>                        
-                        <Button type='submit' bsStyle='success'>Add</Button>          
+                        </FormGroup>           
+                        <FormGroup>
+                            <Col smOffset={3} sm={10}>
+                                <Button type='submit' bsStyle='success'>Add</Button>    
+                            </Col>    
+                        </FormGroup>
                     </Form>
                 </form>
             </React.Fragment>            

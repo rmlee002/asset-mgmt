@@ -90,12 +90,16 @@ export default class Filter extends Component{
                                         <Departments createDept={this.handleCreateDepartmentOption} handleChange={this.handleDepartment} value={this.state.depts}/>
                                     </Col>
                                 </FormGroup>
-                            </Form>
-                            <Col sm={1}></Col>
-                            <ButtonToolbar>                                
-                                <Button type='submit' bsSize='small' bsStyle='success'>Apply</Button> 
-                                <Button bsSize='small' onClick={this.handleClear}>Clear</Button>                               
-                            </ButtonToolbar>                            
+                                <FormGroup>
+                                    <Col smOffset={1} sm={2}>
+                                        <ButtonToolbar>                                
+                                            <Button type='submit' bsSize='small' bsStyle='success'>Apply</Button> 
+                                            <Button bsSize='small' onClick={this.handleClear}>Clear</Button>                               
+                                        </ButtonToolbar>
+                                    </Col>  
+                                </FormGroup>
+                                
+                            </Form>                                                 
                         </form>    
                     </Well>
                 </Collapse>
