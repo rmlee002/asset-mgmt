@@ -9,10 +9,12 @@ export default class ManageSoftware extends Component{
         this.handleChange = this.handleChange.bind(this)
         this.handleRetire = this.handleRetire.bind(this)
         this.handleUpdate = this.handleUpdate.bind(this)
+        this.handleUnretire = this.handleUnretire.bind(this)
         
         this.state={
             name: null,
             cost: null,
+            archived: false,
             end: new Date()
         }
     }
@@ -24,7 +26,8 @@ export default class ManageSoftware extends Component{
         .then(res => {
             this.setState({
                 name: res.data[0].name,
-                cost: res.data[0].cost
+                cost: res.data[0].cost,
+                archived: res.data[0].archived
             })
         })
         .catch(err => {
@@ -51,7 +54,7 @@ export default class ManageSoftware extends Component{
         })
     }
 
-    handleRetire(e){
+    handleRetire(){
         Axios.post('/software/retire', {
             software_id: this.props.match.params.software_id
         })
@@ -61,6 +64,19 @@ export default class ManageSoftware extends Component{
         .catch(err => {
             console.log(err)
             alert(err.response.data)
+        })
+    }
+
+    handleUnretire(){
+        Axios.post('/software/unretire',{
+            software_id: this.props.match.params.software_id
+        })
+        .then(res => {
+            this.props.history.push('/software')
+        })
+        .catch(err => {
+            alert(err.response.data)
+            console.log(err)
         })
     }
 
@@ -97,7 +113,9 @@ export default class ManageSoftware extends Component{
                             <Col smOffset={3} sm={2}>
                                 <ButtonToolbar>
                                     <Button type='submit' bsStyle='success'>Update</Button>
-                                    <Button bsStyle='danger' onClick={this.handleRetire}>Retire</Button>
+                                    {!this.state.archived?
+                                        <Button bsStyle='danger' onClick={this.handleRetire}>Retire</Button>
+                                        :<Button bsStyle='primary' onClick={this.handleUnretire}>Unarchive</Button>}
                                 </ButtonToolbar> 
                             </Col>
                         </FormGroup>                             

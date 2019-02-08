@@ -66,4 +66,14 @@ router.post('/update', (req,res)=>{
     })
 })
 
+router.post('/unretire', (req,res)=>{
+    connection.query('UPDATE software SET archived=FALSE WHERE software_id=?', req.body.software_id, (err,results)=>{
+        if (err){
+            console.log(err)
+            res.status(500).send('Database query error')
+        }
+        res.status(200).send('Success')
+    })
+})
+
 module.exports = router;
