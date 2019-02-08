@@ -12,9 +12,7 @@ router.get('/', (req,res)=>{
     connection.query('SELECT * FROM software', (err, results) => {
         if(err){
             console.log(err)
-            res.status(500).send({
-                error: 'Database query error'
-            })
+            res.status(500).send('Database query error')
         }
         res.send(JSON.stringify(results))
     })
@@ -24,16 +22,12 @@ router.post('/retire', (req,res)=>{
     connection.query('UPDATE software SET archived=TRUE WHERE software_id=?', req.body.software_id, (err,results)=>{
         if (err){
             console.log(err)
-            res.status(500).send({
-                error: "Database query error"
-            })
+            res.status(500).send("Database query error")
         }
         connection.query('UPDATE licenses SET end=? WHERE software_id=? AND end IS NULL', [req.body.end, req.body.software_id], (err,results) =>{
             if (err){
                 console.log(err)
-                res.status(500).send({
-                    error: "Database query error"
-                })
+                res.status(500).send("Database query error")
             }
             res.status(200).send('Success')
         }) 
@@ -44,9 +38,7 @@ router.post('/add', (req,res)=>{
     connection.query('INSERT INTO software (name,cost) VALUES (?,?)', [req.body.license, req.body.cost], (err,results)=>{
         if (err){
             console.log(err)
-            res.status(500).send({
-                error: "Database query error"
-            })
+            res.status(500).send("Database query error")
         }
         else{
             res.status(200).send('Success')
@@ -58,9 +50,7 @@ router.post('/getSoftware', (req,res) =>{
     connection.query('SELECT * FROM software WHERE software_id=?', req.body.software_id, (err,results)=>{
         if (err){
             console.log(err)
-            res.status(500).send({
-                error: "Database query error"
-            })
+            res.status(500).send("Database query error")
         }
         res.send(JSON.stringify(results))
     })
@@ -70,9 +60,7 @@ router.post('/update', (req,res)=>{
     connection.query('UPDATE software SET name=?, cost=? WHERE software_id=?', [req.body.name, req.body.cost, req.body.software_id], (err,results)=>{
         if (err){
             console.log(err)
-            res.status(500).send({
-                error: "Database query error"
-            })
+            res.status(500).send("Database query error")
         }
         res.status(200).send('Success')
     })

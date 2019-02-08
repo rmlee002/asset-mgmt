@@ -41,7 +41,7 @@ export default class Users extends Component{
         })
         .catch(err => {
             console.log(err)
-            alert(err.response.data.error)
+            alert(err.response.data)
         })
     }
 
@@ -87,7 +87,7 @@ export default class Users extends Component{
             emp_id: this.state.emp_id
         })
         .catch(err => {
-            alert(err.response.data.error)
+            alert(err.response.data)
             console.log(err)
         })
     }

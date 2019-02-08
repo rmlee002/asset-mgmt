@@ -23,6 +23,7 @@ export default class ManageEmployee extends Component{
         this.handleAffiliation = this.handleAffiliation.bind(this)
         this.handleEmployeeAssign = this.handleEmployeeAssign.bind(this)
         this.handleDate = this.handleDate.bind(this)
+        this.handleUnretire = this.handleUnretire.bind(this)
 
         this.state = {
             show: false,
@@ -38,7 +39,8 @@ export default class ManageEmployee extends Component{
             start: null,
             end: null,
             date: new Date(),
-            notes:null
+            notes:null,
+            archived: false
         };
     }
 
@@ -59,11 +61,12 @@ export default class ManageEmployee extends Component{
                 time_approver: employee.time_first?{value: employee.time_approver_id, label:employee.time_first+' '+employee.time_last}:null,
                 start: employee.start,
                 end: employee.end,
-                notes: employee.notes
+                notes: employee.notes,
+                archived: employee.archived
             })
         })
         .catch(err => {
-            alert(err.response.data.error)
+            alert(err.response.data)
             console.log(err);
         })
     }
@@ -119,7 +122,20 @@ export default class ManageEmployee extends Component{
         })
         .catch(err => {
             console.log(err)
-            alert(err.response.data.error)
+            alert(err.response.data)
+        })
+    }
+
+    handleUnretire(){
+        axios.post('/employees/unretire', {
+            emp_id: this.state.emp_id
+        })
+        .then(() => {
+            this.props.history.push('/employees')
+        })
+        .catch(err=>{
+            console.log(err)
+            alert(err.response.data)
         })
     }
 
@@ -146,7 +162,7 @@ export default class ManageEmployee extends Component{
         })
         .catch(err => {
             console.log(err)
-            alert(err.response.data.error)
+            alert(err.response.data)
         });
     }
 
@@ -294,16 +310,18 @@ export default class ManageEmployee extends Component{
                             </Col>
                         </FormGroup>
                         <FormGroup>
-                            <Col smOffset={3} sm={2}>
+                            <Col smOffset={3} sm={3}>
                                 <ButtonToolbar>
                                     <Button type='submit' bsStyle='success' disabled={!isValid}>Update employee</Button>
-                                    <ManageModal 
-                                        id='Retire'
-                                        title='Retire employee'
-                                        date={this.state.date}
-                                        handleSubmit={this.handleRetire}
-                                        handleDate={this.handleDate}
-                                    />
+                                    {!this.state.archived?
+                                        <ManageModal 
+                                            id='Retire'
+                                            title='Retire employee'
+                                            date={this.state.date}
+                                            handleSubmit={this.handleRetire}
+                                            handleDate={this.handleDate}
+                                        />
+                                    : <Button bsStyle='primary' onClick={()=> this.handleUnretire()}>Unarchive</Button>}
                                 </ButtonToolbar>                                   
                             </Col>
                         </FormGroup>

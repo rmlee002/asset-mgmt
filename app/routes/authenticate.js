@@ -13,16 +13,12 @@ router.post('/login', function(req, res) {
 	adminConnection.query('SELECT password AS pass FROM admins WHERE user = ?', user, function(err, results, fields){
 		if (err){
 			console.log(err);
-			res.status(500).send({
-				"error": 'error occurred'
-			})
+			res.status(500).send('Database query error')
 		}
 		else{
 			//Username doesn't exist
 			if (results.length == 0){
-				res.status(401).send({
-					"error": 'Invalid username'
-				});
+				res.status(401).send('Invalid username');
 			}
 			//Username exists, check password
 			else{
@@ -37,8 +33,7 @@ router.post('/login', function(req, res) {
 				}
 				//Incorrect password
 				else{
-					res.status(401).send({
-						"error": 'Invalid password'});
+					res.status(401).send('Invalid password');
 				}
 			}
 		}	

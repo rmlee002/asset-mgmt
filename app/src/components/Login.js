@@ -30,7 +30,7 @@ export default class Login extends Component {
 			this.props.history.goBack();
 		}).catch(err => {
 			console.log(err);
-			alert(err.response.data.error);
+			alert(err.response.data);
 		});
 	};
 

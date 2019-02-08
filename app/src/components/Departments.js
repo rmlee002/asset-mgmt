@@ -21,7 +21,7 @@ export default class Departments extends Component{
             })
         })
         .catch(err => {
-            alert(err.response.data.error)
+            alert(err.response.data)
         })
     }
 
@@ -38,7 +38,7 @@ export default class Departments extends Component{
             this.props.createDept(option)
         })
         .catch(err => {
-            alert(err.response.data.error)
+            alert(err.response.data)
             console.log(err)
         })
     }

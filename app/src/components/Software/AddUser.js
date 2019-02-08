@@ -36,7 +36,7 @@ export default class AddUser extends Component{
         })
         .catch(err => {
             console.log(err)
-            alert(err.response.data.error)
+            alert(err.response.data)
         })
     }
 
@@ -45,15 +45,14 @@ export default class AddUser extends Component{
         Axios.post('/licenses/add', {
             emp_id: this.state.emp_id,
             software_id: this.props.match.params.software_id,
-            start: moment(this.state.start).format('YYYY-MM-DD'),
-            // end: this.state.end?moment(this.state.end).format('YYYY-MM-DD'):null
+            start: moment(this.state.start).format('YYYY-MM-DD')
         })
         .then(res => {
             this.props.history.push(`/software/${this.props.match.params.software_id}/users`)
         })
         .catch(err => {
             console.log(err)
-            alert(err.response.data.error)
+            alert(err.response.data)
         })
     }
 

@@ -28,7 +28,7 @@ export default class Assets extends Component{
             });
         }).catch(err => {
             console.log(err);
-            alert(err.response.data.error);
+            alert(err.response.data);
         })
     }
 

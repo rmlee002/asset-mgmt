@@ -30,7 +30,7 @@ export default class EditOwner extends Component{
             this.setState({employees: res.data, filtered: res.data});
         }).catch(err => {
             console.log(err);
-            alert(err.response.data.error);
+            alert(err.response.data);
         })
     }
 
@@ -62,7 +62,7 @@ export default class EditOwner extends Component{
             this.props.history.push(`/assets/${this.props.match.params.asset_id}/history`)
         })
         .catch(err => {
-            alert(err.response.data.error)
+            alert(err.response.data)
             console.log(err)
         })
     }

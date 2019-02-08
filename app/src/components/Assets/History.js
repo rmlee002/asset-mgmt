@@ -28,7 +28,7 @@ export default class History extends Component{
             })    
         })
         .catch(err => {
-            alert(err.response.data.error)
+            alert(err.response.data)
             console.log(err);
         })
     }
@@ -40,7 +40,7 @@ export default class History extends Component{
             emp_id: this.state.emp_id
         })
         .catch(err => {
-            alert(err.response.data.error)
+            alert(err.response.data)
             console.log(err)
         })
     }

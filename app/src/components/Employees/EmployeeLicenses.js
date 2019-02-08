@@ -34,7 +34,7 @@ export default class EmployeeLicenses extends Component{
         })
         .catch(err => {
             console.log(err)
-            alert(err.response.data.error)
+            alert(err.response.data)
         })
     }
 
@@ -58,7 +58,7 @@ export default class EmployeeLicenses extends Component{
             emp_id: this.props.match.params.emp_id
         })
         .catch(err => {
-            alert(err.response.data.error)
+            alert(err.response.data)
             console.log(err)
         })
     }

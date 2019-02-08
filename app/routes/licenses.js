@@ -45,9 +45,7 @@ router.post('/add', (req,res)=>{
     [req.body.emp_id, req.body.software_id,req.body.start], (err,results)=>{
         if (err){
             console.log(err)
-            res.status(500).send({
-                error: "Database query error"
-            })
+            res.status(500).send("Database query error")
         }
         else{
             res.status(200).send('Success')
@@ -59,9 +57,7 @@ router.post('/retire', (req,res) => {
     connection.query('UPDATE licenses SET end=? WHERE software_id=? AND emp_id=? AND end IS NULL', [req.body.end, req.body.software_id, req.body.emp_id], (err,results)=>{
         if (err){
             console.log(err)
-            res.status(500).send({
-                error: "Database query error"
-            })
+            res.status(500).send("Database query error")
         }
         res.status(200).send('Success')
     })
@@ -72,9 +68,7 @@ router.post('/getUserData', (req,res)=>{
         ON licenses.software_id = software.software_id AND software.archived=FALSE WHERE emp_id=?', req.body.emp_id, (err,results)=>{
             if (err){
                 console.log(err)
-                res.status(500).send({
-                    error: "Database query error"
-                })
+                res.status(500).send("Database query error")
             }
             res.send(JSON.stringify(results))
         })
@@ -86,9 +80,7 @@ router.post('/getEmployees', (req,res)=>{
         (SELECT emp_id FROM licenses WHERE software_id=? AND end IS NULL)', req.body.software_id, (err,results)=>{
             if (err){
                 console.log(err)
-                res.status(500).send({
-                    error: "Database query error"
-                })
+                res.status(500).send("Database query error")
             }
             res.send(JSON.stringify(results))
         })
@@ -99,9 +91,7 @@ router.post('/getSoftware', (req,res)=>{
         (SELECT software_id FROM licenses WHERE emp_id=? AND end IS NULL)', req.body.emp_id, (err, results) => {
             if (err) {
                 console.log(err)
-                res.status(500).send({
-                    error: "Database query error"
-                })
+                res.status(500).send("Database query error")
             }
             res.send(JSON.stringify(results))
         })

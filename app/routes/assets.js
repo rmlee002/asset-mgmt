@@ -23,9 +23,7 @@ router.get('/', (req, res) => {
         ON owner.asset_id = hardware.asset_id', function(err, results){
         if (err){
             console.log(err);
-            res.status(500).send({
-                error: "Database query error"
-            })
+            res.status(500).send("Database query error")
         }
         res.send(JSON.stringify(results));
     });
@@ -46,9 +44,7 @@ router.post('/add', (req,res)=>{
         [values], (err, results) => {
         if (err){
             console.log(err)
-            res.status(500).send({
-                error: "Database query error"
-            })
+            res.status(500).send("Database query error")
         }
         res.status(200).send("Success")
     })
@@ -58,9 +54,7 @@ router.post('/getAsset', (req,res) => {
     connection.query('SELECT * FROM hardware WHERE asset_id=?', req.body.asset_id, (err, results) => {
         if (err) {
             console.log(err);
-            res.status(500).send({
-                error: "Database query error"
-            })
+            res.status(500).send("Database query error")
         }
         res.send(JSON.stringify(results));
     })
@@ -76,9 +70,7 @@ router.post('/updateAsset', (req,res) => {
             vendor, order_num, warranty, inDate, outDate, asset_id], (err, results) =>{
             if(err){
                 console.log(err)
-                res.status(500).send({
-                    error: "Database query error"
-                })
+                res.status(500).send("Database query error")
             }
             else{
                 res.status(200).send("Success")
@@ -97,9 +89,7 @@ router.post('/retire', (req, res) => {
         connection.query('UPDATE history SET end=CURDATE() WHERE asset_id=? AND end IS NULL', req.body.asset_id, (err,results)=>{
             if (err){
                 console.log(err)
-                res.status(500).send({
-                    error: "Database query error"
-                })
+                res.status(500).send("Database query error")
             }
             res.status(200).send("Success")
         })        
@@ -110,9 +100,7 @@ router.post('/unretire', (req,res) => {
     connection.query('UPDATE hardware SET archived=FALSE, outDate=NULL WHERE asset_id=?', req.body.asset_id, (err,results)=>{
         if (err){
             console.log(err)
-            res.status(500).send({
-                error:"Database query error"
-            })
+            res.status(500).send("Database query error")
         }
         res.status(200).send("Success")
     })

@@ -20,7 +20,7 @@ export default class EmployeeSelect extends Component{
             })
         })
         .catch(err => {
-            alert(err.response.data.error)
+            alert(err.response.data)
             console.log(err)
         })
     }

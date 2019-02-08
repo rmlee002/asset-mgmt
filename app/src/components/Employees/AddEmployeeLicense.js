@@ -32,7 +32,7 @@ export default class AddEmployeeLicense extends Component{
             })
         })
         .catch(err => {
-            alert(err.response.data.error)
+            alert(err.response.data)
             console.log(err)
         })
     }
@@ -73,7 +73,7 @@ export default class AddEmployeeLicense extends Component{
         })
         .catch(err => {
             console.log(err)
-            alert(err.response.data.error)
+            alert(err.response.data)
         })
     }
 
