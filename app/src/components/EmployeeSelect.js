@@ -14,18 +14,13 @@ export default class EmployeeSelect extends Component{
     componentDidMount(){
         Axios.get('/employees')
         .then(res => {
-            if (res.status === 200){
-                this.setState({
-                    options: res.data.map(emp => 
-                        ({value: emp.emp_id, label: emp.first_name+' '+emp.last_name}))
-                })
-            }
-            else{
-                alert(res.data.error)
-            }
+            this.setState({
+                options: res.data.map(emp => 
+                    ({value: emp.emp_id, label: emp.first_name+' '+emp.last_name}))
+            })
         })
         .catch(err => {
-            alert(err)
+            alert(err.response.data.error)
             console.log(err)
         })
     }

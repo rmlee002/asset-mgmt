@@ -33,20 +33,15 @@ export default class Users extends Component{
             software_id: this.props.match.params.software_id
         })
         .then(res => {
-            if(res.status >= 400){
-                alert(res.data.error)
-            }
-            else{
-                this.setState({
-                    users: res.data.info,
-                    filtered: res.data.info,
-                    name: res.data.name
-                })
-            }
+            this.setState({
+                users: res.data.info,
+                filtered: res.data.info,
+                name: res.data.name
+            })
         })
         .catch(err => {
             console.log(err)
-            alert(err)
+            alert(err.response.data.error)
         })
     }
 
@@ -91,13 +86,8 @@ export default class Users extends Component{
             software_id: this.props.match.params.software_id,
             emp_id: this.state.emp_id
         })
-        .then(res => {
-            if (res.status  >= 400){
-                alert(res.data.error)
-            }
-        })
         .catch(err => {
-            alert(err)
+            alert(err.response.data.error)
             console.log(err)
         })
     }

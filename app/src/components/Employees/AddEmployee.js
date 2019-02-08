@@ -32,36 +32,22 @@ export default class AddEmployee extends Component{
             supervisor: null,
             reviewer: null,
             time_approver:null,
-            start: null,
+            start: new Date(),
             end: null,
             notes:null
         };
     }
 
     handleStart(date){
-        if(date){
-            this.setState({
-                start: moment(date).format("YYYY-MM-DD")
-            });
-        }
-        else{
-            this.setState({
-                start: null
-            })
-        }
+        this.setState({
+            start: date
+        });
     }
 
     handleEnd(date){
-        if(date){
-            this.setState({
-                end: moment(date).format("YYYY-MM-DD")
-            });
-        }
-        else{
-            this.setState({
-                end: null
-            })
-        }
+        this.setState({
+            end: date
+        });
     }
 
     handleChange(e){
@@ -103,21 +89,16 @@ export default class AddEmployee extends Component{
             supervisor: this.state.supervisor,
             reviewer: this.state.reviewer,
             time_approver: this.state.time_approver,
-            start: this.state.start,
-            end: this.state.end,
+            start: this.state.start?moment(this.state.start).format('YYYY-MM-DD'):null,
+            end: this.state.end?moment(this.state.end).format('YYYY-MM-DD'):null,
             notes: this.state.notes
         })
         .then(res => {
-            if (res.status >= 400){
-                alert(res.data.error);
-            }
-            else{
-                this.props.history.push('/employees')
-            }
+            this.props.history.push('/employees')
         })
         .catch(err => {
             console.log(err);
-            alert(err);
+            alert(err.response.data);
         });
     }
 

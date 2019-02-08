@@ -21,15 +21,13 @@ export default class Employees extends Component {
     componentDidMount(){
         axios.get('/employees')
         .then(res => {
-            if (res.status >= 400){
-                alert(res.data.error);
-            }
             this.setState({
                 employees: res.data,
-                filtered: res.data.filter((emp)=>!emp.archived)});
+                filtered: res.data.filter((emp)=>!emp.archived)
+            });
         }).catch(err => {
             console.log(err);
-            alert(err);
+            alert(err.response.data.error);
         })
     }
 

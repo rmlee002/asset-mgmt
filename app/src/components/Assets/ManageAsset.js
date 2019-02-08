@@ -38,9 +38,6 @@ export default class ManageAsset extends Component{
             asset_id: this.props.match.params.asset_id
         })
         .then(res => {
-            if (res.status >= 400){
-                alert(res.data.error);
-            }
             const asset = res.data[0]
             this.setState({
                 asset_id: asset.asset_id,
@@ -59,7 +56,7 @@ export default class ManageAsset extends Component{
             })
         })
         .catch(err => {
-            alert(err)
+            alert(err.response.data.error)
             console.log(err)
         })
     }
@@ -96,16 +93,11 @@ export default class ManageAsset extends Component{
             end: moment(this.state.end).format('YYYY-MM-DD')
         })
         .then(res => {
-            if (res.status === 200){
-                this.props.history.push('/assets')
-            }
-            else{
-                alert(res.data.error)
-            }
+            this.props.history.push('/assets')            
         })
         .catch(err => {
             console.log(err)
-            alert(err)
+            alert(err.response.data.error)
         })
     }
 
@@ -114,16 +106,11 @@ export default class ManageAsset extends Component{
             asset_id: this.state.asset_id
         })
         .then(res=>{
-            if(res.status>=400){
-                alert(res.data.error)
-            }
-            else{
-                this.props.history.push('/assets')
-            }
+            this.props.history.push('/assets')
         })
         .catch(err => {
             console.log(err)
-            alert(err)
+            alert(err.response.data.error)
         })
     }
 
@@ -142,14 +129,8 @@ export default class ManageAsset extends Component{
             inDate: this.state.inDate,
             outDate: this.state.outDate?moment(this.state.outDate).format('YYYY-MM-DD'):null,
             asset_id: this.state.asset_id
-        })
-        .then(res => {            
-            if (res.status >= 400) {
-                alert(res.data.error)
-            }
-        })
-        .catch(err => {
-            alert(err)
+        }).catch(err => {
+            alert(err.response.data.error)
             console.log(err)
         })        
     }

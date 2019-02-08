@@ -23,34 +23,24 @@ export default class History extends Component{
             asset_id: this.props.match.params.asset_id
         })
         .then(res =>{
-            if (res.status >= 400){
-                alert(res.data.error);
-            }
-            else{
-                this.setState({
-                    owners: res.data
-                })
-            }            
+            this.setState({
+                owners: res.data
+            })    
         })
         .catch(err => {
-            alert(err)
+            alert(err.response.data.error)
             console.log(err);
         })
     }
 
-    handleSubmit(e){
+    handleSubmit(){
         axios.post('/history/retire', {
             end: moment(this.state.end).format('YYYY-MM-DD'),
             asset_id: this.props.match.params.asset_id,
             emp_id: this.state.emp_id
         })
-        .then(res => {
-            if (res.status >= 400) {
-                alert(res.data.error)
-            }
-        })
         .catch(err => {
-            alert(err)
+            alert(err.response.data.error)
             console.log(err)
         })
     }

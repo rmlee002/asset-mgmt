@@ -22,16 +22,11 @@ export default class AddSoftware extends Component{
             cost: this.state.cost
         })
         .then(res=>{
-            if (res.status >= 400){
-                alert(res.data.error)
-            }
-            else{
-                this.props.history.push('/software')
-            }
+            this.props.history.push('/software')
         })
         .catch(err => {
             console.log(err)
-            alert(err)
+            alert(err.response.data.error)
         })
     }
 

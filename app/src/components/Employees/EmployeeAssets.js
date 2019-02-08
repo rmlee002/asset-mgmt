@@ -25,15 +25,12 @@ export default class EmployeeAssets extends Component{
             emp_id: this.props.match.params.emp_id
         })
         .then(res => {
-            if (res.status >= 400){
-                alert(res.data.error);
-            }
             this.setState({
                 assets: res.data
             })
         })
         .catch(err =>{
-            alert(err)
+            alert(err.response.data.error)
             console.log(err)
         })
     }
@@ -50,14 +47,9 @@ export default class EmployeeAssets extends Component{
             emp_id: this.props.match.params.emp_id,
             end: this.state.end?moment(this.state.end).format('YYYY-MM-DD'):null
         })
-        .then(res => {
-            if (res.status >= 400){
-                alert(res.data.error)
-            }
-        })
         .catch(err => {
             console.log(err)
-            alert(err)
+            alert(err.response.data.error)
         })
     }
 

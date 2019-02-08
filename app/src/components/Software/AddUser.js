@@ -29,19 +29,14 @@ export default class AddUser extends Component{
             software_id: this.props.match.params.software_id
         })
         .then(res => {
-            if (res.status >= 400){
-                alert(res.data.error)
-            }
-            else{
-                this.setState({
-                    employees: res.data,
-                    filtered: res.data
-                })
-            }
+            this.setState({
+                employees: res.data,
+                filtered: res.data
+            })
         })
         .catch(err => {
             console.log(err)
-            alert(err)
+            alert(err.response.data.error)
         })
     }
 
@@ -54,16 +49,11 @@ export default class AddUser extends Component{
             // end: this.state.end?moment(this.state.end).format('YYYY-MM-DD'):null
         })
         .then(res => {
-            if (res.status >= 400){
-                alert(res.data.error)
-            }
-            else{
-                this.props.history.push(`/software/${this.props.match.params.software_id}/users`)
-            }
+            this.props.history.push(`/software/${this.props.match.params.software_id}/users`)
         })
         .catch(err => {
             console.log(err)
-            alert(err)
+            alert(err.response.data.error)
         })
     }
 

@@ -16,17 +16,12 @@ export default class Departments extends Component{
     componentDidMount(){
         Axios.get('/departments')
         .then(res => {
-            if (res.status===200){  
-                this.setState({
-                    options: res.data
-                })        
-            }
-            else{
-                alert(res.data.error)
-            }
+            this.setState({
+                options: res.data
+            })
         })
         .catch(err => {
-            alert(err)
+            alert(err.response.data.error)
         })
     }
 
@@ -37,18 +32,13 @@ export default class Departments extends Component{
             label: option
         })
         .then(res => {
-            if (res.status >= 400){
-                alert(res.data.error)
-            }
-            else{
-                this.setState({
-                    options: [...options, {value: option, label: option}]
-                });
-                this.props.createDept(option)
-            }
+            this.setState({
+                options: [...options, {value: option, label: option}]
+            });
+            this.props.createDept(option)
         })
         .catch(err => {
-            alert(err)
+            alert(err.response.data.error)
             console.log(err)
         })
     }

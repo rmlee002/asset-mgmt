@@ -27,17 +27,13 @@ export default class AddAsset extends Component{
             emp_id: this.props.match.params.emp_id
         })
         .then(res => {
-            if (res.status >= 400){
-                alert(res.data.error)
-                throw new Error("Bad response from server")
-            }
             this.setState({
                 assets: res.data,
                 filtered: res.data
             })
         })
         .catch(err => {
-            alert(err)
+            alert(err.response.data.error)
             console.log(err)
         })
     }
@@ -67,16 +63,11 @@ export default class AddAsset extends Component{
             start: this.state.start?moment(this.state.start).format('YYYY-MM-DD'):null
         })
         .then(res => {
-            if (res.status >= 400){
-                alert(res.data.error)
-            }
-            else{
-                this.props.history.push(`/employees/${this.props.match.params.emp_id}/assets`)
-            }
+            this.props.history.push(`/employees/${this.props.match.params.emp_id}/assets`)
         })
         .catch(err => {
             console.log(err)
-            alert(err)
+            alert(err.response.data.error)
         })
     }
 

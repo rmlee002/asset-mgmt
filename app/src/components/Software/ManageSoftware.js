@@ -22,15 +22,14 @@ export default class ManageSoftware extends Component{
             software_id: this.props.match.params.software_id
         })
         .then(res => {
-            if (res.status >= 400){
-                alert(res.data.error)
-            }
-            else{
-                this.setState({
-                    name: res.data[0].name,
-                    cost: res.data[0].cost
-                })
-            }
+            this.setState({
+                name: res.data[0].name,
+                cost: res.data[0].cost
+            })
+        })
+        .catch(err => {
+            alert(err.response.data.error)
+            console.log(err)
         })
     }
 
@@ -46,14 +45,9 @@ export default class ManageSoftware extends Component{
             cost: this.state.cost,
             software_id: this.props.match.params.software_id
         })
-        .then(res=>{
-            if (res.status >= 400){
-                alert(res.data.err)
-            }
-        })
         .catch(err=>{
             console.log(err)
-            alert(err)
+            alert(err.response.data.error)
         })
     }
 
@@ -62,12 +56,11 @@ export default class ManageSoftware extends Component{
             software_id: this.props.match.params.software_id
         })
         .then(res => {
-            if (res.status >= 400){
-                alert(res.data.error)
-            }
-            else{
-                this.props.history.push('/software')
-            }
+            this.props.history.push('/software')
+        })
+        .catch(err => {
+            console.log(err)
+            alert(err.response.data.error)
         })
     }
 

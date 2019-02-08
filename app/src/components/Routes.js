@@ -4,7 +4,7 @@ import Home from './Home';
 import Login from './Login';
 import Employees from './Employees/Employees';
 import Software from './Software/Software';
-import protect from './protect';
+import protect from './protect'
 import ManageEmployee from './Employees/ManageEmployee';
 import Assets from './Assets/Assets';
 import AddAssets from './Assets/AddAsset';

@@ -19,7 +19,7 @@ export default class AddAssets extends Component{
             vendor: null,
             order_num: null,
             warranty: null,
-            inDate: null,
+            inDate: new Date(),
             assets: [{
                 model: null,
                 serial_number: null,               
@@ -54,16 +54,9 @@ export default class AddAssets extends Component{
     }
 
     handleIn(date){
-        if(date){
-            this.setState({
-                inDate: moment(date).format("YYYY-MM-DD")
-            });
-        }
-        else{
-            this.setState({
-                inDate: null
-            })
-        }
+        this.setState({
+            inDate: date
+        });
     }
 
     handleSubmit(e){
@@ -71,21 +64,16 @@ export default class AddAssets extends Component{
         axios.post('/assets/add', {
             order_num: this.state.order_num,
             vendor: this.state.vendor,
-            inDate: this.state.inDate,
+            inDate: this.state.inDate?moment(this.state.inDate).format('YYYY-MM-DD'):null,
             warranty: this.state.warranty,            
             warranty_provider: this.state.warranty_provider,
             assets: JSON.stringify(this.state.assets)
         })
         .then(res => {
-            if (res.status === 200) {
-                this.props.history.push('/assets')
-            }
-            else{
-                alert(res.data.error)
-            }
+            this.props.history.push('/assets')
         })
         .catch(err => {
-            alert(err)
+            alert(err.response.data.error)
             console.log(err)
         })
     }

@@ -14,21 +14,15 @@ export default function protect(Comp) {
 
 		componentDidMount(){
 			axios.get('/checkToken')
-				.then(res => {
-					if (res.status === 200){
-						this.setState({loading: false});
-					}
-					else{
-						const error = new Error(res.error);
-						throw error;
-					}
-				}).catch(err => {
-					console.error(err);
-					this.setState({
-						loading: false,
-						redirect: true
-					});
+			.then(res => {
+				this.setState({loading: false});
+			}).catch(err => {
+				console.log(err);
+				this.setState({
+					loading: false,
+					redirect: true
 				});
+			});
 		}
 
 		render() {			

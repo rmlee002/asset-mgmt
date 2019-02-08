@@ -13,8 +13,8 @@ router.post('/login', function(req, res) {
 	adminConnection.query('SELECT password AS pass FROM admins WHERE user = ?', user, function(err, results, fields){
 		if (err){
 			console.log(err);
-			res.status(400).send({
-				"failed": 'error occurred'
+			res.status(500).send({
+				"error": 'error occurred'
 			})
 		}
 		else{
@@ -37,7 +37,7 @@ router.post('/login', function(req, res) {
 				}
 				//Incorrect password
 				else{
-					res.status(400).send({
+					res.status(401).send({
 						"error": 'Invalid password'});
 				}
 			}

@@ -27,15 +27,10 @@ export default class Login extends Component {
 			password: this.state.password
 		})
 		.then(res => {
-			if (res.status >= 400){
-				alert(res.data.error);
-			}
-			else{
-				this.props.history.goBack();
-			}
+			this.props.history.goBack();
 		}).catch(err => {
 			console.log(err);
-			alert('Error logging in. Please try again');
+			alert(err.response.data.error);
 		});
 	};
 

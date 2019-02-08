@@ -78,29 +78,4 @@ router.post('/update', (req,res)=>{
     })
 })
 
-router.post('/total', (req,res)=>{
-    const days = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-    connection.query('SELECT software.cost, licenses.start, licenses.end FROM licenses \
-        JOIN software ON licenses.software_id=software.software_id WHERE licenses.software_id=?',
-        software_id, (err,results) => {
-            if (err){
-                console.log(err)
-                res.status(500).send({
-                    error: "Database query error"
-                })              
-            }
-            else{
-                if(results.length === 0){
-                    res.send(0)
-                }
-                else{
-                    var total=0;
-                    results.forEach((license) => {
-                        total += days[moment(license.start).get('month')]
-                    })
-                }
-            }
-        })
-})
-
 module.exports = router;

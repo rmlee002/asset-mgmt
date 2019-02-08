@@ -22,17 +22,13 @@ export default class Assets extends Component{
         let self = this;
         axios.get('/assets')
         .then(function(res) {
-            if (res.status >= 400){
-                alert(res.data.error)
-                throw new Error("Bad response from server");
-            }
             self.setState({
-                assets: res.data, 
+                assets: res.data,
                 filtered: res.data.filter((item)=>!item.archived)
             });
         }).catch(err => {
             console.log(err);
-            alert(err);
+            alert(err.response.data.error);
         })
     }
 
@@ -51,7 +47,7 @@ export default class Assets extends Component{
                 filtered: this.state.assets.filter((item) =>  !(item.archived) || this.state.showArchived)
             })
         }
-    }    
+    }
 
     handleCheck(e){
         this.setState({
@@ -85,7 +81,7 @@ export default class Assets extends Component{
                         <thead>
                             <tr>
                                 <th>Serial Number</th>
-                                <th>Model</th>                            
+                                <th>Model</th>
                                 <th>Warranty Provider</th>
                                 <th>Owner</th>
                                 <th>Cost</th>
@@ -104,10 +100,10 @@ export default class Assets extends Component{
                             {this.state.filtered.map(item =>
                                 <tr key={item.asset_id}>
                                     <td>{item.serial_number}</td>
-                                    <td>{item.model}</td>                                
+                                    <td>{item.model}</td>
                                     <td>{item.warranty_provider}</td>
                                     <td>{item.first_name?item.first_name + " " + item.last_name:''}</td>
-                                    <td>{item.cost?'$'+item.cost.toFixed(2):''}</td>                                    
+                                    <td>{item.cost?'$'+item.cost.toFixed(2):''}</td>
                                     <td>{item.vendor}</td>
                                     <td>{item.order_num}</td>
                                     <td>{item.warranty}</td>
@@ -127,7 +123,7 @@ export default class Assets extends Component{
                             )}
                         </tbody>
                     </Table>
-                </div>                
+                </div>
             </React.Fragment>
         );
     }

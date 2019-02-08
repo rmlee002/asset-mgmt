@@ -50,9 +50,7 @@ router.post('/add', (req,res)=>{
                 error: "Database query error"
             })
         }
-        else{
-            res.status(200).send("Success")
-        }
+        res.status(200).send("Success")
     })
 })
 

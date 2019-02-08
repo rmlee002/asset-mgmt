@@ -22,18 +22,13 @@ export default class Employees extends Component {
     componentDidMount(){
         Axios.get('/software')
         .then(res => {
-            if (res.status >= 500){
-                alert(res.data.error)
-            }
-            else{
-                this.setState({
-                    software: res.data,
-                    filtered: res.data.filter((item)=> !item.archived)
-                })
-            }
+            this.setState({
+                software: res.data,
+                filtered: res.data.filter((item)=> !item.archived)
+            })
         })
         .catch(err => {
-            alert(err)
+            alert(err.response.data.error)
             console.log(err)
         })
     }
@@ -59,21 +54,6 @@ export default class Employees extends Component {
         this.setState({
             showArchived: e.target.checked,
             filtered: this.state.software.filter((software) => !software.archived || e.target.checked)
-        })
-    }
-
-    getData(id,cost){
-        Axios.post('/licenses/getData', {
-            id: id,
-            cost: cost
-        })
-        .then(res => {
-            if (res.status >= 500){
-                return 'Error'
-            }
-            else{
-                return res.data
-            }
         })
     }
 

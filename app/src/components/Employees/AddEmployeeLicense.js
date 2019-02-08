@@ -26,18 +26,13 @@ export default class AddEmployeeLicense extends Component{
             emp_id: this.props.match.params.emp_id
         })
         .then(res => {
-            if (res.status >= 400){
-                alert(res.data.error)
-            }
-            else{
-                this.setState({
-                    software: res.data,
-                    filtered: res.data
-                })
-            }
+            this.setState({
+                software: res.data,
+                filtered: res.data
+            })
         })
         .catch(err => {
-            alert(err)
+            alert(err.response.data.error)
             console.log(err)
         })
     }
@@ -74,16 +69,11 @@ export default class AddEmployeeLicense extends Component{
             start: this.state.start?moment(this.state.start).format('YYYY-MM-DD'):null
         })
         .then(res => {
-            if (res.status >= 400){
-                alert(res.data.error)
-            }
-            else{
-                this.props.history.push(`/employees/${this.props.match.params.emp_id}/licenses`)
-            }
+            this.props.history.push(`/employees/${this.props.match.params.emp_id}/licenses`)
         })
         .catch(err => {
             console.log(err)
-            alert(err)
+            alert(err.response.data.error)
         })
     }
 

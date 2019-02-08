@@ -47,9 +47,6 @@ export default class ManageEmployee extends Component{
             emp_id: this.props.match.params.emp_id
         })
         .then(res => {
-            if (res.status > 400){
-                alert(res.data.error);
-            }
             const employee = res.data[0];
             this.setState({
                 first_name: employee.first_name,
@@ -66,7 +63,7 @@ export default class ManageEmployee extends Component{
             })
         })
         .catch(err => {
-            alert(err)
+            alert(err.response.data.error)
             console.log(err);
         })
     }
@@ -118,16 +115,11 @@ export default class ManageEmployee extends Component{
             end: moment(this.state.date).format('YYYY-MM-DD')
         })
         .then(res => {
-            if (res.status === 200){
-                this.props.history.push('/employees')
-            }
-            else{
-                alert('Error retiring employee. Please try again')
-            }
+            this.props.history.push('/employees')
         })
         .catch(err => {
             console.log(err)
-            alert(err)
+            alert(err.response.data.error)
         })
     }
 
@@ -152,13 +144,9 @@ export default class ManageEmployee extends Component{
             end: this.state.end?moment(this.state.end).format('YYYY-MM-DD'):null,
             notes: this.state.notes
         })
-        .then(res => {
-            if (res.status >= 400){
-                alert('Error updating employee. Please try again')
-            }
-        })
         .catch(err => {
-            alert(err)
+            console.log(err)
+            alert(err.response.data.error)
         });
     }
 
