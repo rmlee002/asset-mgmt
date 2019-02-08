@@ -55,7 +55,6 @@ export default class ManageModal extends Component{
                     <Modal.Header closeButton>
                         <Modal.Title>{this.props.title}</Modal.Title>
                     </Modal.Header>
-                    <form onSubmit={this.props.handleSubmit}>
                         <Modal.Body>
                             <Form horizontal>
                                 <FormGroup>
@@ -72,9 +71,14 @@ export default class ManageModal extends Component{
                             </Form>
                         </Modal.Body>
                         <Modal.Footer>
-                            <Button disabled={this.props.date === null} type='submit' bsStyle={this.state.style}>{this.props.id}</Button>
+                            <Button 
+                                disabled={this.props.date === null} 
+                                bsStyle={this.state.style}
+                                onClick={this.props.handleSubmit}
+                            >
+                                {this.props.id}
+                            </Button>
                         </Modal.Footer>
-                    </form>
                 </Modal>
             </React.Fragment>
         );

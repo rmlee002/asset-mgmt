@@ -68,16 +68,9 @@ export default class ManageAsset extends Component{
     }
 
     handleIn(date){
-        if(date){
-            this.setState({
-                inDate: moment(date).format("YYYY-MM-DD")
-            });
-        }
-        else{
-            this.setState({
-                inDate: null
-            })
-        }
+        this.setState({
+            inDate: date
+        });
     }
 
     handleOut(date){
@@ -126,7 +119,7 @@ export default class ManageAsset extends Component{
             vendor: this.state.vendor,
             order_num: this.state.order_num,
             warranty: this.state.warranty,
-            inDate: this.state.inDate,
+            inDate: this.state.inDate?moment(this.state.inDate).format('YYYY-MM-DD'):null,
             outDate: this.state.outDate?moment(this.state.outDate).format('YYYY-MM-DD'):null,
             asset_id: this.state.asset_id
         }).catch(err => {

@@ -321,7 +321,7 @@ export default class ManageEmployee extends Component{
                                             handleSubmit={this.handleRetire}
                                             handleDate={this.handleDate}
                                         />
-                                    : <Button bsStyle='primary' onClick={()=> this.handleUnretire()}>Unarchive</Button>}
+                                    : <Button bsStyle='primary' onClick={this.handleUnretire}>Unarchive</Button>}
                                 </ButtonToolbar>                                   
                             </Col>
                         </FormGroup>

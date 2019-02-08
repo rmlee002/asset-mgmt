@@ -97,7 +97,7 @@ router.post('/update', (req,res) => {
 })
 
 router.post('/retire', (req,res) => {
-	console.log(req.body.end)
+	console.log(typeof req.body.end)
 	connection.query('UPDATE employees SET end=?, archived=TRUE WHERE emp_id=?', [req.body.end, req.body.emp_id], (err,results) => {
 		if (err){
 			console.log(err);
