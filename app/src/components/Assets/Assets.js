@@ -116,7 +116,10 @@ export default class Assets extends Component{
                                             moment(item.outDate).utc().format('YYYY-MM-DD'):''}
                                     </td>
                                     <td>{item.comment}</td>
-                                    <td><Link to={`/assets/editOwner/${item.asset_id}`}>Assign owner</Link></td>
+                                    <td>
+                                        {item.archived?'':
+                                        <Link to={`/assets/editOwner/${item.asset_id}`}>Assign owner</Link>}
+                                    </td>
                                     <td><Link to={`/assets/${item.asset_id}/history`}>History</Link></td>
                                     <td><Link to={`/assets/manage/${item.asset_id}`}>Manage</Link></td>
                                 </tr>
