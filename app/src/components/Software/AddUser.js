@@ -4,6 +4,7 @@ import Axios from 'axios';
 import moment from 'moment';
 import memoize from 'memoize-one';
 import ManageModal from '../ManageModal';
+import ReactTable from 'react-table';
 
 export default class AddUser extends Component{
     constructor(props){
@@ -80,6 +81,25 @@ export default class AddUser extends Component{
     }
 
     render(){
+        const columns=[
+            {
+                Header: "Name",
+                accessor: 'name'
+            },
+            {
+                Header: 'Email',
+                accessor: 'email'
+            },
+            {
+                Header: 'Affiliation',
+                accessor: 'affiliation'
+            },
+            {
+                Header: 'Department',
+                accessor: 'department'
+            }
+        ];
+
         return(
             <React.Fragment>
                 <div className='header'>
@@ -93,7 +113,11 @@ export default class AddUser extends Component{
                         <FormControl.Feedback />
                     </FormGroup>
                 </div>
-                <div className='data'>
+                <ReactTable
+                    data={this.state.filtered}
+                    columns={columns}
+                />
+                {/* <div className='data'>
                     <Table>
                         <thead>
                             <tr>
@@ -125,7 +149,7 @@ export default class AddUser extends Component{
                                 )}
                         </tbody>
                     </Table>
-                </div>                
+                </div>                 */}
             </React.Fragment>
         );
     }

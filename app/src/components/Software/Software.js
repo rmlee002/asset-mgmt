@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import memoize from 'memoize-one';
 import Axios from 'axios';
+import ReactTable from 'react-table';
 
 export default class Employees extends Component {
     constructor(props){
@@ -58,6 +59,26 @@ export default class Employees extends Component {
     }
 
     render(){
+        const columns = [
+            {
+                Header: 'License',
+                accessor: 'name'
+            },
+            {
+                Header: 'Monthly cost',
+                accessor: 'cost'
+            },
+            {
+                Header: 'Active users',
+                accessor: 'software_id',
+                Cell: id => <Link to={`/software/${id.value}/users`}>View</Link>
+            },
+            {
+                accessor: 'software_id',
+                Cell: id => <Link to={`software/${id.value}/manage`}>Manage</Link>
+            }
+        ];
+
         return(
             <React.Fragment>
                 <FormGroup controlid="search">
@@ -80,7 +101,11 @@ export default class Employees extends Component {
                 <Checkbox checked={this.state.showArchived} onChange={this.handleCheck}>
                     Show retired
                 </Checkbox>
-                <Table>
+                <ReactTable
+                    data={this.state.filtered}
+                    columns={columns}
+                />
+                {/* <Table>
                     <thead>
                         <tr>
                             <th>License</th>
@@ -105,7 +130,7 @@ export default class Employees extends Component {
                             </tr>                            
                             )}
                     </tbody>
-                </Table>
+                </Table> */}
             </React.Fragment>
         );
     }

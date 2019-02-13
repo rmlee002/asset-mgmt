@@ -5,6 +5,8 @@ import { LinkContainer } from 'react-router-bootstrap';
 import moment from 'moment';
 import axios from 'axios';
 import memoize from 'memoize-one';
+import 'react-table/react-table.css';
+import ReactTable from 'react-table';
 
 export default class Assets extends Component{
     constructor(props){
@@ -57,6 +59,60 @@ export default class Assets extends Component{
     }
 
     render(){
+        const columns = [
+            {
+                Header: 'Serial Number',
+                accessor: 'serial_number'
+            },
+            {
+                Header: 'Model',
+                accessor: 'model'
+            },
+            {
+                Header: 'Warranty Provider',
+                accessor: 'warranty_provider'
+            },
+            {
+                Header: 'Owner',
+                accessor: 'owner'
+            },
+            {
+                Header: 'Cost',
+                accessor: 'cost',
+                Cell: cost => cost.value?'$'+cost.value.toFixed(2):''
+            },
+            {
+                Header: 'Vendor',
+                accessor: 'vendor'
+            },
+            {
+                Header: 'Order number',
+                accessor: 'order_num'
+            },
+            {
+                Header: 'Warranty',
+                accessor: 'warranty'
+            },
+            {
+                Header: 'In date',
+                accessor: 'inDate',
+                Cell: date => date.value?moment(date.value).format('YYYY-MM-DD'):''
+            },
+            {
+                Header: 'Out date',
+                accessor: 'outDate',
+                Cell: date => date.value?moment(date.value).format('YYYY-MM-DD'):''
+            },
+            {
+                Header: 'Department',
+                accessor: 'department'
+            },
+            {
+                Header: 'Comment',
+                accessor: 'comment'
+            }
+        ];
+        
         return(
             <React.Fragment>
             <div className='header'>
@@ -76,7 +132,15 @@ export default class Assets extends Component{
                         <Button bsStyle='primary'>Add assets</Button>
                     </LinkContainer>
                 </div>
-                <div className='data'>
+                <ReactTable 
+                    data={this.state.filtered}
+                    columns={columns}
+                    // style={{
+                    //     height: "450px",
+                    //     marginTop: "10px"
+                    //   }}
+                />
+                {/*<div className='data'>
                     <Table>
                         <thead>
                             <tr>
@@ -126,7 +190,7 @@ export default class Assets extends Component{
                             )}
                         </tbody>
                     </Table>
-                </div>
+                </div>*/}
             </React.Fragment>
         );
     }

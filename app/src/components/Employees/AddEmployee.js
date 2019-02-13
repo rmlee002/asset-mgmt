@@ -124,7 +124,7 @@ export default class AddEmployee extends Component{
                             <Col componentClass={ControlLabel} sm={3}>
                                 Last Name
                             </Col>
-                            <Col sm={7}>
+                            <Col sm={6}>
                                 <FormControl
                                     type='text'
                                     value={this.state.last_name}

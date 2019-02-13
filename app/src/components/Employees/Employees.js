@@ -5,6 +5,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import moment from 'moment';
 import axios from 'axios';
 import memoize from 'memoize-one';
+import ReactTable from 'react-table';
 
 export default class Employees extends Component {
     constructor(props){
@@ -32,7 +33,7 @@ export default class Employees extends Component {
     }
 
     filter = memoize(
-        (list, filterText) => list.filter(item => (item.first_name+' '+item.last_name).toLowerCase().includes(filterText.toLowerCase()))
+        (list, filterText) => list.filter(item => (item.name).toLowerCase().includes(filterText.toLowerCase()))
     )
 
     handleChange(e){
@@ -56,6 +57,51 @@ export default class Employees extends Component {
     }
 
     render(){
+        const columns=[
+            {
+                Header: 'Name',
+                accessor: 'name'
+            },
+            {
+                Header: 'Email',
+                accessor: 'email'
+            },
+            {
+                Header: 'Affiliation',
+                accessor: 'affiliation'
+            },
+            {
+                Header: 'Deparment',
+                accessor: 'department'
+            },
+            {
+                Header: 'Supervisor',
+                accessor: 'supervisor'
+            },
+            {
+                Header: 'Reviewer',
+                accessor: 'reviewer'
+            },
+            {
+                Header: 'Time approver',
+                accessor: 'time_approver'
+            },
+            {
+                Header: 'Start date',
+                accessor: 'start',
+                Cell: date => date.value?moment(date.value).format('YYYY-MM-DD'):''
+            },
+            {
+                Header: 'End date',
+                accessor: 'end',
+                Cell: date => date.value?moment(date.value).format('YYYY-MM-DD'):''
+            },
+            {
+                Header: 'Notes',
+                accessor: 'notes'
+            },
+        ];
+        
         return(
             <React.Fragment>
                 <div className='header'>
@@ -76,7 +122,11 @@ export default class Employees extends Component {
                     </LinkContainer>                    
                 </div>
                 
-                <div className='data'>
+                <ReactTable
+                    data={this.state.filtered}
+                    columns={columns}
+                />
+                {/* <div className='data'>
                     <Table>
                         <thead>
                             <tr>
@@ -133,7 +183,7 @@ export default class Employees extends Component {
                             )}
                         </tbody>
                     </Table>
-                </div>
+                </div> */}
             </React.Fragment>
         );
     }

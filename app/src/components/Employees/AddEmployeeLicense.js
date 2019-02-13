@@ -4,6 +4,7 @@ import DatePicker from 'react-datepicker';
 import Axios from 'axios';
 import moment from 'moment';
 import memoize from 'memoize-one';
+import ReactTable from 'react-table';
 
 export default class AddEmployeeLicense extends Component{
     constructor(props){
@@ -78,6 +79,13 @@ export default class AddEmployeeLicense extends Component{
     }
 
     render(){
+        const columns=[
+            {
+                Header: 'License',
+                accessor: 'name'
+            }
+        ];
+
         return(
             <React.Fragment>
                 <FormGroup controlId="search">
@@ -89,7 +97,11 @@ export default class AddEmployeeLicense extends Component{
                     />
                     <FormControl.Feedback />
                 </FormGroup>
-                <div className='data'>
+                <ReactTable
+                    data={this.state.filtered}
+                    columns={columns}
+                />
+                {/* <div className='data'>
                     <Table>
                         <thead>
                             <tr>
@@ -130,7 +142,7 @@ export default class AddEmployeeLicense extends Component{
                             </Modal.Footer>
                         </form>
                     </Modal>
-                </div>
+                </div> */}
             </React.Fragment>
         );
     }

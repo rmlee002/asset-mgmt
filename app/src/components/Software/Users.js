@@ -6,6 +6,7 @@ import Axios from 'axios';
 import moment from 'moment';
 import Filter from '../Filter';
 import ManageModal from '../ManageModal';
+import ReactTable from 'react-table';
 
 export default class Users extends Component{
     constructor(props){
@@ -22,7 +23,6 @@ export default class Users extends Component{
             users: [],
             filtered: [],
             name: undefined,
-            show: false,
             end: new Date(),
             emp_id: null
         }
@@ -107,6 +107,22 @@ export default class Users extends Component{
     }
 
     render(){
+        const columns=[
+            {
+                Header: 'Name',
+                accessor: 'name'
+            },
+            {
+                Header: 'Primary Cost Center',
+                accessor: 'department'
+            },
+            {
+                Header: 'Start',
+                accessor: 'start',
+                Cell: date => date.value?moment(date.value).format('YYYY-MM-DD'):''
+            }
+        ];
+
         return(
             <React.Fragment>
                 <h3>Total monthly cost for {this.state.name} license: ${this.total()}</h3>
@@ -122,8 +138,12 @@ export default class Users extends Component{
                 <Filter handleFilter={this.handleFilter}/>
                 <LinkContainer to={`/software/${this.props.match.params.software_id}/users/add`}>
                     <Button bsStyle='primary'>Add User</Button>  
-                </LinkContainer>                                  
-                <Table>
+                </LinkContainer>   
+                <ReactTable
+                    data={this.state.filtered}
+                    columns={columns}
+                />                               
+                {/* <Table>
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -151,7 +171,7 @@ export default class Users extends Component{
                             </tr>
                             )}
                     </tbody>
-                </Table>
+                </Table> */}
             </React.Fragment>
         );
     }

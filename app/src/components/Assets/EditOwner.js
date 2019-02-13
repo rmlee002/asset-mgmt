@@ -4,6 +4,7 @@ import Axios from 'axios';
 import memoize from 'memoize-one';
 import ManageModal from '../ManageModal';
 import moment from 'moment';
+import ReactTable from 'react-table';
 
 export default class EditOwner extends Component{
     constructor(props){
@@ -17,8 +18,7 @@ export default class EditOwner extends Component{
             emp_id: null,
             start: new Date(),
             employees: [],
-            filtered: [],
-            show: false
+            filtered: []
         }
     }
 
@@ -35,7 +35,7 @@ export default class EditOwner extends Component{
     }
 
     filter = memoize(
-        (list, filterText) => list.filter(item => (item.first_name+' '+item.last_name).toLowerCase().includes(filterText.toLowerCase()))
+        (list, filterText) => list.filter(item => (item.name).toLowerCase().includes(filterText.toLowerCase()))
     )
 
     handleChange(e){
@@ -74,6 +74,41 @@ export default class EditOwner extends Component{
     }
 
     render(){
+        const columns=[
+            {
+                Header: 'Name',
+                accessor: 'name'
+            },
+            {
+                Header: 'Email',
+                accessor: 'email'
+            },
+            {
+                Header: 'Affiliation',
+                accessor: 'affiliation'
+            },
+            {
+                Header: 'Department',
+                accessor: 'department'
+            },
+            {
+                Header: 'Notes',
+                accessor: 'notes'
+            },
+            {
+                accessor: 'emp_id',
+                Cell: val =>
+                <ManageModal
+                    id='Assign'
+                    title='Add owner'
+                    date={this.state.start}
+                    handleClick={() => this.setState({emp_id: 0})}
+                    handleSubmit={this.handleSubmit}
+                    handleDate={this.handleStart}
+                />
+            }
+        ];
+
         return(
             <React.Fragment>
                 <div className='header'>
@@ -87,7 +122,11 @@ export default class EditOwner extends Component{
                         <FormControl.Feedback />
                     </FormGroup>
                 </div>
-                <div className='data'>
+                <ReactTable
+                    data={this.state.filtered}
+                    columns={columns}
+                />
+                {/* <div className='data'>
                     <Table>
                         <thead>
                             <tr>
@@ -119,7 +158,7 @@ export default class EditOwner extends Component{
                                 )}
                         </tbody>
                     </Table>
-                </div>                
+                </div>                 */}
             </React.Fragment>
         ); 
     }

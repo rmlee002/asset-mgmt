@@ -4,6 +4,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import Axios from 'axios';
 import ManageModal from '../ManageModal';
 import moment from 'moment';
+import ReactTable from 'react-table';
 
 export default class EmployeeLicenses extends Component{
     constructor(props){
@@ -64,6 +65,23 @@ export default class EmployeeLicenses extends Component{
     }
 
     render(){
+        const columns=[
+            {
+                Header: 'License',
+                accessor: 'name'
+            },
+            {
+                Header: 'Start',
+                accessor: 'start',
+                Cell: date => date.value?moment(date.value).format('YYYY-MM-DD'):''
+            },
+            {
+                Header: 'End',
+                accessor: 'end',
+                Cell: date => date.value?moment(date.value).format('YYYY-MM-DD'):''
+            }
+        ];
+
         return(
             <React.Fragment>
                 <LinkContainer to={`/employees/${this.props.match.params.emp_id}/licenses/add`}>
@@ -72,7 +90,11 @@ export default class EmployeeLicenses extends Component{
                 <Checkbox checked={this.state.showHistory} onChange={this.handleCheck}>
                     Show previous licenses
                 </Checkbox>
-                <div className='data'>             
+                <ReactTable
+                    data={this.state.filtered}
+                    columns={columns}
+                />
+                {/* <div className='data'>             
                     <Table>
                         <thead>
                             <tr>
@@ -103,7 +125,7 @@ export default class EmployeeLicenses extends Component{
                             )}
                         </tbody>
                     </Table>
-                </div>
+                </div> */}
             </React.Fragment>
         );
     }

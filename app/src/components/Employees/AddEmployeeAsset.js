@@ -4,6 +4,7 @@ import Axios from 'axios';
 import memoize from 'memoize-one';
 import moment from 'moment';
 import ManageModal from '../ManageModal';
+import ReactTable from 'react-table';
 
 export default class AddAsset extends Component{
     constructor(props){
@@ -78,6 +79,21 @@ export default class AddAsset extends Component{
     }
 
     render(){
+        const columns= [
+            {
+                Header: 'Serial Number',
+                accessor: 'serial_number'
+            },
+            {
+                Header: 'Model',
+                accessor: 'model'
+            },
+            {
+                Header: 'Comment',
+                accessor: 'comment'
+            }
+        ];
+        
         return(
             <React.Fragment>
                 <FormGroup controlid="search">
@@ -89,7 +105,11 @@ export default class AddAsset extends Component{
                     />
                     <FormControl.Feedback />
                 </FormGroup>
-                <div className='data'>                
+                <ReactTable
+                    data={this.state.filtered}
+                    columns={columns}
+                />
+                {/* <div className='data'>                
                     <Table>
                         <thead>
                             <tr>
@@ -119,7 +139,7 @@ export default class AddAsset extends Component{
                             )}
                         </tbody>
                     </Table>
-                </div>
+                </div> */}
             </React.Fragment>
         );
     }

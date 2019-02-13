@@ -67,7 +67,7 @@ router.get('/employee/add', (req,res) => {
 })
 
 router.post('/asset', (req,res) => {
-    connection.query('SELECT * FROM (SELECT history.asset_id, employees.emp_id, employees.first_name, employees.last_name, history.start, history.end\
+    connection.query('SELECT * FROM (SELECT history.asset_id, employees.emp_id, CONCAT(employees.first_name, \' \', employees.last_name) AS name, history.start, history.end\
         FROM history INNER JOIN employees ON employees.emp_id=history.emp_id) AS j WHERE asset_id=?', req.body.asset_id, function(err, results){
         if (err){
             console.log(err);
@@ -78,7 +78,8 @@ router.post('/asset', (req,res) => {
 })
 
 router.post('/asset/add', (req,res)=>{
-    connection.query('SELECT * FROM employees WHERE archived=FALSE AND emp_id NOT IN \
+    connection.query('SELECT CONCAT(first_name, \' \', last_name) AS name, email, affiliation, department \
+    notes, emp_id FROM employees WHERE archived=FALSE AND emp_id NOT IN \
         (SELECT emp_id FROM history WHERE end IS NULL AND asset_id=?)',
         req.body.asset_id, (err, results) => {
             if (err) {

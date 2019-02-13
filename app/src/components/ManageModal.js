@@ -33,10 +33,12 @@ export default class ManageModal extends Component{
     handleClick(){
         this.setState({
             show: true
+        }, 
+        () => { 
+            if (this.props.handleClick){
+                this.props.handleClick()
+            }
         })
-        if (this.props.handleClick){
-            this.props.handleClick()
-        }
     }
 
     render(){
@@ -44,6 +46,7 @@ export default class ManageModal extends Component{
             <React.Fragment>
                 <Button 
                     bsStyle={this.state.style}
+                    bsSize='small'
                     onClick={this.handleClick}
                 >
                     {this.props.id}

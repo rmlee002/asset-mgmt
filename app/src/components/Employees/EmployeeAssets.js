@@ -4,6 +4,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import Axios from 'axios';
 import moment from 'moment';
 import ManageModal from '../ManageModal';
+import ReactTable from 'react-table';
 
 export default class EmployeeAssets extends Component{
     constructor(props){
@@ -54,6 +55,26 @@ export default class EmployeeAssets extends Component{
     }
 
     render(){
+        const columns = [
+            {
+                Header: 'Serial Number',
+                accessor: 'serial_number'
+            },
+            {
+                Header: 'Model',
+                accessor: 'model'
+            },
+            {
+                Header: 'Comment',
+                accessor: 'comment'
+            },
+            {
+                Header: 'Start date',
+                accessor: 'start',
+                Cell: date => date.value?moment(date.value).format('YYYY-MM-DD'):''
+            }
+        ];
+        
         return(
             <React.Fragment>
                 <LinkContainer to={`/employees/${this.props.match.params.emp_id}/assets/add`}>
@@ -61,7 +82,11 @@ export default class EmployeeAssets extends Component{
                         Add asset
                     </Button>
                 </LinkContainer>
-                <div className='data'>
+                <ReactTable 
+                    data={this.state.assets}
+                    columns={columns}
+                />
+                {/* <div className='data'>
                     <Table>
                         <thead>
                             <tr>
@@ -93,7 +118,7 @@ export default class EmployeeAssets extends Component{
                             )}
                         </tbody>
                     </Table>
-                </div>
+                </div> */}
             </React.Fragment>
         );
     }

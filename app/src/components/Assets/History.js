@@ -3,6 +3,7 @@ import { Table, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import axios from 'axios';
 import moment from 'moment';
 import ManageModal from '../ManageModal';
+import ReactTable from 'react-table';
 
 export default class History extends Component{
     constructor(props){
@@ -52,6 +53,23 @@ export default class History extends Component{
     }
 
     render(){
+        const columns = [
+            {
+                Header: 'Name',
+                accessor: 'name'
+            },
+            {
+                Header: 'Start',
+                accessor: 'start',
+                Cell: date => date.value?moment(date.value).format('YYYY-MM-DD'):''
+            },
+            {
+                Header: 'End',
+                accessor: 'end',
+                Cell: date => date.value?moment(date.value).format('YYYY-MM-DD'):''
+            }
+        ];
+        
         return(
             <React.Fragment>
                 <FormGroup controlid="search">
@@ -63,7 +81,11 @@ export default class History extends Component{
                     />
                     <FormControl.Feedback />
                 </FormGroup>
-                <div className="data">
+                <ReactTable
+                    data={this.state.owners}
+                    columns={columns}
+                />
+                {/* <div className="data">
                     <Table>
                         <thead>
                             <tr>
@@ -98,7 +120,7 @@ export default class History extends Component{
                             )}
                         </tbody>
                     </Table>
-                </div>
+                </div> */}
             </React.Fragment>
         );
     }

@@ -123,7 +123,7 @@ export default class ManageAsset extends Component{
             outDate: this.state.outDate?moment(this.state.outDate).format('YYYY-MM-DD'):null,
             asset_id: this.state.asset_id
         }).catch(err => {
-            alert(err.response.data.error)
+            alert(err.response.data)
             console.log(err)
         })        
     }
