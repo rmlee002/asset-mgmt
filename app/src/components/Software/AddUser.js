@@ -4,7 +4,6 @@ import Axios from 'axios';
 import moment from 'moment';
 import memoize from 'memoize-one';
 import ManageModal from '../ManageModal';
-import ReactTable from 'react-table';
 
 export default class AddUser extends Component{
     constructor(props){
@@ -20,8 +19,7 @@ export default class AddUser extends Component{
             employees: [],
             filtered: [],
             emp_id: null,
-            start: new Date(),
-            // end: null
+            start: new Date()
         }
     }
 
@@ -81,25 +79,6 @@ export default class AddUser extends Component{
     }
 
     render(){
-        const columns=[
-            {
-                Header: "Name",
-                accessor: 'name'
-            },
-            {
-                Header: 'Email',
-                accessor: 'email'
-            },
-            {
-                Header: 'Affiliation',
-                accessor: 'affiliation'
-            },
-            {
-                Header: 'Department',
-                accessor: 'department'
-            }
-        ];
-
         return(
             <React.Fragment>
                 <div className='header'>
@@ -113,11 +92,7 @@ export default class AddUser extends Component{
                         <FormControl.Feedback />
                     </FormGroup>
                 </div>
-                <ReactTable
-                    data={this.state.filtered}
-                    columns={columns}
-                />
-                {/* <div className='data'>
+                <div className='data addUser'>
                     <Table>
                         <thead>
                             <tr>
@@ -137,7 +112,7 @@ export default class AddUser extends Component{
                                     <td>{employee.department}</td>
                                     <td>
                                         <ManageModal
-                                            id='Assign'
+                                            type='Assign'
                                             title='Add license'
                                             date={this.state.start}
                                             handleClick={() => this.setState({emp_id: employee.emp_id})}
@@ -149,7 +124,7 @@ export default class AddUser extends Component{
                                 )}
                         </tbody>
                     </Table>
-                </div>                 */}
+                </div>                
             </React.Fragment>
         );
     }

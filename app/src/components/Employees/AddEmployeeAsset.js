@@ -77,23 +77,8 @@ export default class AddAsset extends Component{
             start: date
         })
     }
-
+    
     render(){
-        const columns= [
-            {
-                Header: 'Serial Number',
-                accessor: 'serial_number'
-            },
-            {
-                Header: 'Model',
-                accessor: 'model'
-            },
-            {
-                Header: 'Comment',
-                accessor: 'comment'
-            }
-        ];
-        
         return(
             <React.Fragment>
                 <FormGroup controlid="search">
@@ -105,11 +90,7 @@ export default class AddAsset extends Component{
                     />
                     <FormControl.Feedback />
                 </FormGroup>
-                <ReactTable
-                    data={this.state.filtered}
-                    columns={columns}
-                />
-                {/* <div className='data'>                
+                <div className='data addAsset'>                
                     <Table>
                         <thead>
                             <tr>
@@ -127,7 +108,7 @@ export default class AddAsset extends Component{
                                     <td>{item.comment}</td>                          
                                     <td>
                                         <ManageModal
-                                            id='Assign'
+                                            type='Assign'
                                             title='Add asset'
                                             date={this.state.start}
                                             handleClick={()=>this.setState({ asset_id: item.asset_id })}
@@ -139,7 +120,7 @@ export default class AddAsset extends Component{
                             )}
                         </tbody>
                     </Table>
-                </div> */}
+                </div>
             </React.Fragment>
         );
     }

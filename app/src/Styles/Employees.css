@@ -32,6 +32,16 @@
 .data.employees td:nth-child(10), .data.employees th:nth-child(10){
     width: 100px;
 }
+.data.employees td:nth-child(11), .data.employees th:nth-child(11){
+    width: 60px;
+}
+.data.employees td:nth-child(12), .data.employees th:nth-child(12){
+    width: 60px;
+}
+.data.employees td:nth-child(13), .data.employees th:nth-child(13){
+    width: 60px;
+    text-align: right;
+}
 
 .data.empAssets tbody{
     height: 480px;

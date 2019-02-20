@@ -7,6 +7,7 @@ import axios from 'axios';
 import Departments from '../Departments';
 import Select from 'react-select';
 import EmployeeSelect from '../EmployeeSelect';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default class AddEmployee extends Component{
     constructor(props){
@@ -228,7 +229,7 @@ export default class AddEmployee extends Component{
                         </FormGroup>
                         <FormGroup>
                             <Col smOffset={3} sm={1}>
-                                <Button type = 'submit' bsStyle='success'>Add Employee</Button>
+                                <Button type = 'submit' bsStyle='success'><FontAwesomeIcon icon='check'/> Add Employee</Button>
                             </Col>
                         </FormGroup>
                     </Form>    

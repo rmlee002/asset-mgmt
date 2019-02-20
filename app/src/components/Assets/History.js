@@ -34,11 +34,14 @@ export default class History extends Component{
         })
     }
 
-    handleSubmit(){
+    handleSubmit(id){
         axios.post('/history/retire', {
             end: moment(this.state.end).format('YYYY-MM-DD'),
             asset_id: this.props.match.params.asset_id,
-            emp_id: this.state.emp_id
+            emp_id: id
+        })
+        .then(res => {
+            this.props.history.push(`/assets/${this.props.match.params.asset_id}/history`)
         })
         .catch(err => {
             alert(err.response.data)
@@ -52,24 +55,7 @@ export default class History extends Component{
         })
     }
 
-    render(){
-        const columns = [
-            {
-                Header: 'Name',
-                accessor: 'name'
-            },
-            {
-                Header: 'Start',
-                accessor: 'start',
-                Cell: date => date.value?moment(date.value).format('YYYY-MM-DD'):''
-            },
-            {
-                Header: 'End',
-                accessor: 'end',
-                Cell: date => date.value?moment(date.value).format('YYYY-MM-DD'):''
-            }
-        ];
-        
+    render(){        
         return(
             <React.Fragment>
                 <FormGroup controlid="search">
@@ -81,11 +67,7 @@ export default class History extends Component{
                     />
                     <FormControl.Feedback />
                 </FormGroup>
-                <ReactTable
-                    data={this.state.owners}
-                    columns={columns}
-                />
-                {/* <div className="data">
+                <div className="data history">
                     <Table>
                         <thead>
                             <tr>
@@ -107,7 +89,7 @@ export default class History extends Component{
                                             moment(owner.end).utc().format('YYYY-MM-DD')
                                             :
                                             <ManageModal 
-                                                id='Retire'
+                                                type='Retire'
                                                 title='Retire owner'
                                                 date={this.state.end}
                                                 handleClick={() => this.setState({ emp_id: owner.emp_id})}
@@ -120,7 +102,7 @@ export default class History extends Component{
                             )}
                         </tbody>
                     </Table>
-                </div> */}
+                </div>
             </React.Fragment>
         );
     }

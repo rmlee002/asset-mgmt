@@ -79,13 +79,6 @@ export default class AddEmployeeLicense extends Component{
     }
 
     render(){
-        const columns=[
-            {
-                Header: 'License',
-                accessor: 'name'
-            }
-        ];
-
         return(
             <React.Fragment>
                 <FormGroup controlId="search">
@@ -97,11 +90,7 @@ export default class AddEmployeeLicense extends Component{
                     />
                     <FormControl.Feedback />
                 </FormGroup>
-                <ReactTable
-                    data={this.state.filtered}
-                    columns={columns}
-                />
-                {/* <div className='data'>
+                <div className='data addLicense'>
                     <Table>
                         <thead>
                             <tr>
@@ -142,7 +131,7 @@ export default class AddEmployeeLicense extends Component{
                             </Modal.Footer>
                         </form>
                     </Modal>
-                </div> */}
+                </div>
             </React.Fragment>
         );
     }

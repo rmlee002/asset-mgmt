@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, FormControl, ControlLabel, Col, Button } from 'react-bootstrap';
 import Axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default class AddSoftware extends Component{
     constructor(props){
@@ -67,7 +68,7 @@ export default class AddSoftware extends Component{
                         </FormGroup>           
                         <FormGroup>
                             <Col smOffset={3} sm={1}>
-                                <Button type='submit' bsStyle='success'>Add</Button>    
+                                <Button type='submit' bsStyle='success'>Add <FontAwesomeIcon icon='check'/></Button>    
                             </Col>    
                         </FormGroup>
                     </Form>

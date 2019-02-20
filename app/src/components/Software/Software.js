@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import memoize from 'memoize-one';
 import Axios from 'axios';
-import ReactTable from 'react-table';
+import '../../Styles/Software.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default class Employees extends Component {
     constructor(props){
@@ -59,26 +60,6 @@ export default class Employees extends Component {
     }
 
     render(){
-        const columns = [
-            {
-                Header: 'License',
-                accessor: 'name'
-            },
-            {
-                Header: 'Monthly cost',
-                accessor: 'cost'
-            },
-            {
-                Header: 'Active users',
-                accessor: 'software_id',
-                Cell: id => <Link to={`/software/${id.value}/users`}>View</Link>
-            },
-            {
-                accessor: 'software_id',
-                Cell: id => <Link to={`software/${id.value}/manage`}>Manage</Link>
-            }
-        ];
-
         return(
             <React.Fragment>
                 <FormGroup controlid="search">
@@ -92,7 +73,7 @@ export default class Employees extends Component {
                 </FormGroup>
                 <ButtonToolbar>
                     <LinkContainer to='/software/add'>
-                        <Button bsStyle='primary'>Add Software</Button>
+                        <Button bsStyle='primary'> <FontAwesomeIcon icon='desktop'/> Add Software</Button>
                     </LinkContainer>                    
                     <LinkContainer to='/software/overview'>
                         <Button>View all active licenses</Button>
@@ -101,36 +82,36 @@ export default class Employees extends Component {
                 <Checkbox checked={this.state.showArchived} onChange={this.handleCheck}>
                     Show retired
                 </Checkbox>
-                <ReactTable
-                    data={this.state.filtered}
-                    columns={columns}
-                />
-                {/* <Table>
-                    <thead>
-                        <tr>
-                            <th>License</th>
-                            <th>Monthly Cost</th> 
-                            <th>Active Users</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.state.filtered.map((software) =>
+                <div className='data software'>
+                    <Table>
+                        <thead>
                             <tr>
-                                <td>{software.name}</td>
-                                <td>{software.cost?'$'+software.cost:''}</td>
-                                <td>
-                                    <LinkContainer to={{pathname: `/software/${software.software_id}/users`, state: {cost: software.cost}}}>
-                                        <Button bsStyle='primary' bsSize='small'>
-                                            View
-                                        </Button>
-                                    </LinkContainer>                                        
-                                </td>
-                                <td><Link to={`software/${software.software_id}/manage`}>Manage</Link></td>
-                            </tr>                            
-                            )}
-                    </tbody>
-                </Table> */}
+                                <th>License</th>
+                                <th>Monthly Cost</th> 
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.state.filtered.map((software) =>
+                                <tr>
+                                    <td>{software.name}</td>
+                                    <td>{software.cost?'$'+software.cost:''}</td>
+                                    <td>
+                                        <Link to={`/software/${software.software_id}/users`}>
+                                            <FontAwesomeIcon icon='users'/> Users
+                                        </Link>
+                                    </td>
+                                    <td>
+                                        <Link to={`software/${software.software_id}/manage`}>
+                                            <FontAwesomeIcon icon='edit'/> Manage
+                                        </Link>
+                                    </td>
+                                </tr>                            
+                                )}
+                        </tbody>
+                    </Table>
+                </div>
             </React.Fragment>
         );
     }

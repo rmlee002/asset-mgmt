@@ -37,12 +37,15 @@
 }
 .data.assets td:nth-child(12), .data.assets th:nth-child(12){
     min-width: 50px;
+    text-align: right;
 }
 .data.assets td:nth-child(13), .data.assets th:nth-child(13){
     min-width: 50px;
+    text-align: right;
 }
 .data.assets td:nth-child(14), .data.assets th:nth-child(14){
-    min-width: 50px;
+    min-width: 70px;
+    text-align: right;
 }
 
 .data.edit tbody{

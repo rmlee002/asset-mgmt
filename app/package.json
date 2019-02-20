@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.15",
+    "@fortawesome/free-solid-svg-icons": "^5.7.2",
+    "@fortawesome/react-fontawesome": "^0.1.4",
     "axios": "^0.18.0",
     "bootstrap": "^4.2.1",
     "cookie-parser": "^1.4.3",
@@ -14,7 +17,7 @@
     "memoize-one": "^5.0.0",
     "moment": "^2.23.0",
     "mysql2": "^1.6.4",
-    "nodemon": "^1.18.9",
+    "nodemon": "^1.18.10",
     "path": "^0.12.7",
     "react": "^16.7.0",
     "react-bootstrap": "^0.32.4",
@@ -22,9 +25,8 @@
     "react-dom": "^16.7.0",
     "react-router-bootstrap": "^0.24.4",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "^2.1.3",
-    "react-select": "^2.3.0",
-    "react-table": "^6.9.2"
+    "react-scripts": "^2.1.5",
+    "react-select": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",

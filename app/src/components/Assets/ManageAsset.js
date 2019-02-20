@@ -4,6 +4,7 @@ import DatePicker from 'react-datepicker';
 import Axios from 'axios';
 import moment from 'moment';
 import ManageModal from '../ManageModal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default class ManageAsset extends Component{
     constructor(props){
@@ -262,15 +263,16 @@ export default class ManageAsset extends Component{
                         <FormGroup>
                             <Col smOffset={3} sm={2}>
                                 <ButtonToolbar>
-                                    <Button type = 'submit' bsStyle='success'>Update Asset</Button>
+                                    <Button type = 'submit' bsStyle='success'> <FontAwesomeIcon icon='check'/> Update Asset</Button>
                                     {!this.state.archived?
                                         <ManageModal 
-                                        id='Retire'
-                                        title='Retire asset'
-                                        date={this.state.outDate?this.state.outDate:new Date()}
-                                        handleSubmit={this.handleRetire}
-                                        handleDate={this.handleOut}
-                                    />:
+                                            type='Retire'
+                                            title='Retire asset'
+                                            size='medium'
+                                            date={this.state.outDate?this.state.outDate:new Date()}
+                                            handleSubmit={this.handleRetire}
+                                            handleDate={this.handleOut}
+                                        />:
                                         <Button bsStyle='primary'  onClick={this.handleUnretire}>Unarchive</Button>}
                                 </ButtonToolbar>                                   
                             </Col>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, FormControl, ControlLabel, Col, Button, ButtonToolbar } from 'react-bootstrap';
 import Axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default class ManageSoftware extends Component{
     constructor(props){
@@ -112,9 +113,9 @@ export default class ManageSoftware extends Component{
                         <FormGroup>
                             <Col smOffset={3} sm={2}>
                                 <ButtonToolbar>
-                                    <Button type='submit' bsStyle='success'>Update</Button>
+                                    <Button type='submit' bsStyle='success'>Update <FontAwesomeIcon icon='check'/></Button>
                                     {!this.state.archived?
-                                        <Button bsStyle='danger' onClick={this.handleRetire}>Retire</Button>
+                                        <Button bsStyle='danger' onClick={this.handleRetire}>Retire <FontAwesomeIcon icon='archive'/></Button>
                                         :<Button bsStyle='primary' onClick={this.handleUnretire}>Unarchive</Button>}
                                 </ButtonToolbar> 
                             </Col>

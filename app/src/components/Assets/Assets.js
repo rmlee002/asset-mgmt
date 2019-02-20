@@ -5,8 +5,8 @@ import { LinkContainer } from 'react-router-bootstrap';
 import moment from 'moment';
 import axios from 'axios';
 import memoize from 'memoize-one';
-import 'react-table/react-table.css';
-import ReactTable from 'react-table';
+import '../../Styles/Assets.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default class Assets extends Component{
     constructor(props){
@@ -58,64 +58,10 @@ export default class Assets extends Component{
         })
     }
 
-    render(){
-        const columns = [
-            {
-                Header: 'Serial Number',
-                accessor: 'serial_number'
-            },
-            {
-                Header: 'Model',
-                accessor: 'model'
-            },
-            {
-                Header: 'Warranty Provider',
-                accessor: 'warranty_provider'
-            },
-            {
-                Header: 'Owner',
-                accessor: 'owner'
-            },
-            {
-                Header: 'Cost',
-                accessor: 'cost',
-                Cell: cost => cost.value?'$'+cost.value.toFixed(2):''
-            },
-            {
-                Header: 'Vendor',
-                accessor: 'vendor'
-            },
-            {
-                Header: 'Order number',
-                accessor: 'order_num'
-            },
-            {
-                Header: 'Warranty',
-                accessor: 'warranty'
-            },
-            {
-                Header: 'In date',
-                accessor: 'inDate',
-                Cell: date => date.value?moment(date.value).format('YYYY-MM-DD'):''
-            },
-            {
-                Header: 'Out date',
-                accessor: 'outDate',
-                Cell: date => date.value?moment(date.value).format('YYYY-MM-DD'):''
-            },
-            {
-                Header: 'Department',
-                accessor: 'department'
-            },
-            {
-                Header: 'Comment',
-                accessor: 'comment'
-            }
-        ];
-        
+    render(){        
         return(
             <React.Fragment>
-            <div className='header'>
+                <div className='header'>
                     <FormGroup controlid="search">
                         <ControlLabel>Search</ControlLabel>
                         <FormControl
@@ -124,23 +70,15 @@ export default class Assets extends Component{
                             onChange = {this.handleChange}
                         />
                         <FormControl.Feedback />
-                    </FormGroup>
                     <Checkbox checked={this.state.showArchived} onChange={this.handleCheck}>
                         Show retired
-                    </Checkbox>
+                    </Checkbox>                    
+                    </FormGroup>
                     <LinkContainer to='/assets/add'>
-                        <Button bsStyle='primary'>Add assets</Button>
+                        <Button bsStyle='primary'><FontAwesomeIcon icon="laptop-medical"/> Add assets</Button>
                     </LinkContainer>
                 </div>
-                <ReactTable 
-                    data={this.state.filtered}
-                    columns={columns}
-                    // style={{
-                    //     height: "450px",
-                    //     marginTop: "10px"
-                    //   }}
-                />
-                {/*<div className='data'>
+                <div className='data assets'>
                     <Table>
                         <thead>
                             <tr>
@@ -184,13 +122,13 @@ export default class Assets extends Component{
                                         {item.archived?'':
                                         <Link to={`/assets/editOwner/${item.asset_id}`}>Assign owner</Link>}
                                     </td>
-                                    <td><Link to={`/assets/${item.asset_id}/history`}>History</Link></td>
-                                    <td><Link to={`/assets/manage/${item.asset_id}`}>Manage</Link></td>
+                                    <td><Link to={`/assets/${item.asset_id}/history`}><FontAwesomeIcon icon='history'/></Link></td>
+                                    <td><Link to={`/assets/manage/${item.asset_id}`}><FontAwesomeIcon icon='edit'/></Link></td>
                                 </tr>
                             )}
                         </tbody>
                     </Table>
-                </div>*/}
+                </div>
             </React.Fragment>
         );
     }

@@ -6,7 +6,7 @@ import Axios from 'axios';
 import moment from 'moment';
 import Filter from '../Filter';
 import ManageModal from '../ManageModal';
-import ReactTable from 'react-table';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default class Users extends Component{
     constructor(props){
@@ -107,22 +107,6 @@ export default class Users extends Component{
     }
 
     render(){
-        const columns=[
-            {
-                Header: 'Name',
-                accessor: 'name'
-            },
-            {
-                Header: 'Primary Cost Center',
-                accessor: 'department'
-            },
-            {
-                Header: 'Start',
-                accessor: 'start',
-                Cell: date => date.value?moment(date.value).format('YYYY-MM-DD'):''
-            }
-        ];
-
         return(
             <React.Fragment>
                 <h3>Total monthly cost for {this.state.name} license: ${this.total()}</h3>
@@ -137,41 +121,39 @@ export default class Users extends Component{
                 </FormGroup>
                 <Filter handleFilter={this.handleFilter}/>
                 <LinkContainer to={`/software/${this.props.match.params.software_id}/users/add`}>
-                    <Button bsStyle='primary'>Add User</Button>  
-                </LinkContainer>   
-                <ReactTable
-                    data={this.state.filtered}
-                    columns={columns}
-                />                               
-                {/* <Table>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Primary Cost Center</th>
-                            <th>Start</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.state.filtered.map((user) => 
+                    <Button bsStyle='primary'> <FontAwesomeIcon icon='user-plus'/> Add User</Button>  
+                </LinkContainer>  
+                <div className='data users'>
+                    <Table>
+                        <thead>
                             <tr>
-                                <td>{user.first_name+' '+user.last_name}</td>
-                                <td>{user.department}</td>
-                                <td>{user.start?moment(user.start).format('YYYY-MM-DD'):''}</td>
-                                <td>
-                                    <ManageModal
-                                        id='Retire'
-                                        title='Retire user'
-                                        date={this.state.end}
-                                        handleClick={()=> this.setState({emp_id: user.emp_id})}
-                                        handleSubmit={this.handleSubmit}
-                                        handleDate={this.handleEnd}
-                                    />
-                                </td>
+                                <th>Name</th>
+                                <th>Primary Cost Center</th>
+                                <th>Start</th>
+                                <th></th>
                             </tr>
-                            )}
-                    </tbody>
-                </Table> */}
+                        </thead>
+                        <tbody>
+                            {this.state.filtered.map((user) => 
+                                <tr>
+                                    <td>{user.first_name+' '+user.last_name}</td>
+                                    <td>{user.department}</td>
+                                    <td>{user.start?moment(user.start).format('YYYY-MM-DD'):''}</td>
+                                    <td>
+                                        <ManageModal
+                                            type='Retire'
+                                            title='Retire user'
+                                            date={this.state.end}
+                                            handleClick={()=> this.setState({emp_id: user.emp_id})}
+                                            handleSubmit={this.handleSubmit}
+                                            handleDate={this.handleEnd}
+                                        />
+                                    </td>
+                                </tr>
+                                )}
+                        </tbody>
+                    </Table>
+                </div>                                              
             </React.Fragment>
         );
     }

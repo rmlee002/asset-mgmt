@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Modal, Form, FormGroup, ControlLabel, Col, Button } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default class ManageModal extends Component{
     constructor(props){
@@ -16,7 +17,7 @@ export default class ManageModal extends Component{
     }
 
     componentDidMount(){
-        if(this.props.id === 'Assign'){
+        if(this.props.type === 'Assign'){
             this.setState({
                 style: 'success',
                 value: 'start'
@@ -46,10 +47,10 @@ export default class ManageModal extends Component{
             <React.Fragment>
                 <Button 
                     bsStyle={this.state.style}
-                    bsSize='small'
+                    bsSize={this.props.size?this.props.size:'small'}
                     onClick={this.handleClick}
                 >
-                    {this.props.id}
+                    {this.props.type} <FontAwesomeIcon icon={this.props.type==='Retire'?'archive':'check'}/>
                 </Button>
                 <Modal 
                     show={this.state.show}
@@ -79,7 +80,7 @@ export default class ManageModal extends Component{
                                 bsStyle={this.state.style}
                                 onClick={this.props.handleSubmit}
                             >
-                                {this.props.id}
+                                {this.props.type} <FontAwesomeIcon icon={this.props.type==='Retire'?'archive':'check'}/>
                             </Button>
                         </Modal.Footer>
                 </Modal>

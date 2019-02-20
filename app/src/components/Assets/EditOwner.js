@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Table, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import { Table, FormGroup, ControlLabel, FormControl, Form, Col, Button } from 'react-bootstrap';
 import Axios from 'axios';
 import memoize from 'memoize-one';
 import ManageModal from '../ManageModal';
 import moment from 'moment';
-import ReactTable from 'react-table';
+import '../../Styles/Assets.css';
+
 
 export default class EditOwner extends Component{
     constructor(props){
@@ -35,7 +36,7 @@ export default class EditOwner extends Component{
     }
 
     filter = memoize(
-        (list, filterText) => list.filter(item => (item.name).toLowerCase().includes(filterText.toLowerCase()))
+        (list, filterText) => list.filter(item => (item.first_name + ' ' + item.last_name).toLowerCase().includes(filterText.toLowerCase()))
     )
 
     handleChange(e){
@@ -51,8 +52,7 @@ export default class EditOwner extends Component{
         }
     }
 
-    handleSubmit(e){
-        e.preventDefault();
+    handleSubmit(){
         Axios.post('/history/add', {
             asset_id: this.props.match.params.asset_id,
             emp_id: this.state.emp_id,
@@ -74,41 +74,6 @@ export default class EditOwner extends Component{
     }
 
     render(){
-        const columns=[
-            {
-                Header: 'Name',
-                accessor: 'name'
-            },
-            {
-                Header: 'Email',
-                accessor: 'email'
-            },
-            {
-                Header: 'Affiliation',
-                accessor: 'affiliation'
-            },
-            {
-                Header: 'Department',
-                accessor: 'department'
-            },
-            {
-                Header: 'Notes',
-                accessor: 'notes'
-            },
-            {
-                accessor: 'emp_id',
-                Cell: val =>
-                <ManageModal
-                    id='Assign'
-                    title='Add owner'
-                    date={this.state.start}
-                    handleClick={() => this.setState({emp_id: 0})}
-                    handleSubmit={this.handleSubmit}
-                    handleDate={this.handleStart}
-                />
-            }
-        ];
-
         return(
             <React.Fragment>
                 <div className='header'>
@@ -122,11 +87,7 @@ export default class EditOwner extends Component{
                         <FormControl.Feedback />
                     </FormGroup>
                 </div>
-                <ReactTable
-                    data={this.state.filtered}
-                    columns={columns}
-                />
-                {/* <div className='data'>
+                <div className='data edit'>
                     <Table>
                         <thead>
                             <tr>
@@ -146,7 +107,7 @@ export default class EditOwner extends Component{
                                     <td>{employee.department}</td>
                                     <td>
                                         <ManageModal
-                                            id='Assign'
+                                            type='Assign'
                                             title='Add owner'
                                             date={this.state.start}
                                             handleClick={() => this.setState({emp_id: employee.emp_id})}
@@ -158,7 +119,7 @@ export default class EditOwner extends Component{
                                 )}
                         </tbody>
                     </Table>
-                </div>                 */}
+                </div>                
             </React.Fragment>
         ); 
     }

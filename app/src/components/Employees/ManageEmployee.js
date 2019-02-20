@@ -8,6 +8,7 @@ import Departments from '../Departments';
 import Select from 'react-select';
 import EmployeeSelect from '../EmployeeSelect';
 import ManageModal from '../ManageModal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default class ManageEmployee extends Component{
     constructor(props){
@@ -312,11 +313,12 @@ export default class ManageEmployee extends Component{
                         <FormGroup>
                             <Col smOffset={3} sm={3}>
                                 <ButtonToolbar>
-                                    <Button type='submit' bsStyle='success' disabled={!isValid}>Update employee</Button>
+                                    <Button type='submit' bsStyle='success' disabled={!isValid}>Update employee <FontAwesomeIcon icon='check'/></Button>
                                     {!this.state.archived?
                                         <ManageModal 
-                                            id='Retire'
+                                            type='Retire'
                                             title='Retire employee'
+                                            size='medium'
                                             date={this.state.date}
                                             handleSubmit={this.handleRetire}
                                             handleDate={this.handleDate}

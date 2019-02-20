@@ -1,26 +1,36 @@
 .App {
-    margin: 25px;
+    margin: 20px;
 }
 
 .App .navbar-brand{
     font-weight: bold;
 }
 
+.Container {
+    margin: auto;
+    width: 100%;
+    padding: 0px 10px 0px 10px;
+}
+
 .data {
-    height: 435px;
     margin-top: 15px;
+    width: 100%;
     overflow-y: auto;
     overflow-x: hidden
 }
 
-tr:nth-child(even) {background-color: #f2f2f2;}
-
-.Container {
-    margin: auto;
-    padding: 0px 10px 0px 10px;
+.data tbody{
+    display: block;
+    overflow: auto; 
 }
 
-.ReactTable {
+.data thead tr{
+    display: block;
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}
+
+/* .ReactTable {
     height: 450px;
     margin-top: 10px;
 }
@@ -28,3 +38,7 @@ tr:nth-child(even) {background-color: #f2f2f2;}
 .ReactTable .rt-thead {
     overflow-y: scroll;
   }
+
+.ReactTable .rt-tr:hover .rt-td{
+    background-color: #f2f2f2;
+} */

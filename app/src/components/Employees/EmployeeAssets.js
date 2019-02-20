@@ -4,7 +4,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import Axios from 'axios';
 import moment from 'moment';
 import ManageModal from '../ManageModal';
-import ReactTable from 'react-table';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default class EmployeeAssets extends Component{
     constructor(props){
@@ -55,38 +55,14 @@ export default class EmployeeAssets extends Component{
     }
 
     render(){
-        const columns = [
-            {
-                Header: 'Serial Number',
-                accessor: 'serial_number'
-            },
-            {
-                Header: 'Model',
-                accessor: 'model'
-            },
-            {
-                Header: 'Comment',
-                accessor: 'comment'
-            },
-            {
-                Header: 'Start date',
-                accessor: 'start',
-                Cell: date => date.value?moment(date.value).format('YYYY-MM-DD'):''
-            }
-        ];
-        
         return(
             <React.Fragment>
                 <LinkContainer to={`/employees/${this.props.match.params.emp_id}/assets/add`}>
                     <Button bsStyle='primary'>
-                        Add asset
+                        <FontAwesomeIcon icon='laptop-medical'/> Add asset
                     </Button>
                 </LinkContainer>
-                <ReactTable 
-                    data={this.state.assets}
-                    columns={columns}
-                />
-                {/* <div className='data'>
+                <div className='data empAssets'>
                     <Table>
                         <thead>
                             <tr>
@@ -106,7 +82,7 @@ export default class EmployeeAssets extends Component{
                                     <td>{item.start?moment(item.start).format('YYYY-MM-DD'):''}</td>
                                     <td>
                                         <ManageModal
-                                            id='Retire'
+                                            type='Retire'
                                             title='Retire asset'
                                             date={this.state.end}
                                             handleClick={() => this.setState({asset_id: item.asset_id})}
@@ -118,7 +94,7 @@ export default class EmployeeAssets extends Component{
                             )}
                         </tbody>
                     </Table>
-                </div> */}
+                </div>
             </React.Fragment>
         );
     }

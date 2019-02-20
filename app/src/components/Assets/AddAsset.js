@@ -3,6 +3,7 @@ import { Button, Form, FormGroup, FormControl, ControlLabel, Col, ButtonToolbar 
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default class AddAssets extends Component{
     constructor(props){
@@ -154,7 +155,7 @@ export default class AddAssets extends Component{
                                         Item #{index+1}
                                     </Col>
                                     <Col sm={6}>
-                                        <Button bsStyle='danger' onClick={() => this.handleRemove(index)}>Remove</Button> 
+                                        <Button bsStyle='danger' onClick={() => this.handleRemove(index)}><FontAwesomeIcon icon='trash'/> Remove</Button> 
                                     </Col>
                                 </FormGroup>
                                 <FormGroup controlId='serial_number'>                                        
@@ -214,8 +215,8 @@ export default class AddAssets extends Component{
                         <FormGroup>
                             <Col smOffset={3} sm={2}>
                                 <ButtonToolbar>
-                                    <Button onClick={this.handleAdd}>Add asset</Button>
-                                    <Button type='submit' bsStyle='success'>Submit</Button>   
+                                    <Button onClick={this.handleAdd}><FontAwesomeIcon icon='laptop-medical'/> Add asset</Button>
+                                    <Button type='submit' bsStyle='success'> <FontAwesomeIcon icon='check'/> Submit</Button>   
                                 </ButtonToolbar>                                
                             </Col>
                         </FormGroup>          

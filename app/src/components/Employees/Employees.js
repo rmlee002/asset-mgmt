@@ -5,7 +5,8 @@ import { LinkContainer } from 'react-router-bootstrap';
 import moment from 'moment';
 import axios from 'axios';
 import memoize from 'memoize-one';
-import ReactTable from 'react-table';
+import "../../Styles/Employees.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default class Employees extends Component {
     constructor(props){
@@ -33,7 +34,7 @@ export default class Employees extends Component {
     }
 
     filter = memoize(
-        (list, filterText) => list.filter(item => (item.name).toLowerCase().includes(filterText.toLowerCase()))
+        (list, filterText) => list.filter(item => (item.first_name + ' ' + item.last_name).toLowerCase().includes(filterText.toLowerCase()))
     )
 
     handleChange(e){
@@ -57,51 +58,6 @@ export default class Employees extends Component {
     }
 
     render(){
-        const columns=[
-            {
-                Header: 'Name',
-                accessor: 'name'
-            },
-            {
-                Header: 'Email',
-                accessor: 'email'
-            },
-            {
-                Header: 'Affiliation',
-                accessor: 'affiliation'
-            },
-            {
-                Header: 'Deparment',
-                accessor: 'department'
-            },
-            {
-                Header: 'Supervisor',
-                accessor: 'supervisor'
-            },
-            {
-                Header: 'Reviewer',
-                accessor: 'reviewer'
-            },
-            {
-                Header: 'Time approver',
-                accessor: 'time_approver'
-            },
-            {
-                Header: 'Start date',
-                accessor: 'start',
-                Cell: date => date.value?moment(date.value).format('YYYY-MM-DD'):''
-            },
-            {
-                Header: 'End date',
-                accessor: 'end',
-                Cell: date => date.value?moment(date.value).format('YYYY-MM-DD'):''
-            },
-            {
-                Header: 'Notes',
-                accessor: 'notes'
-            },
-        ];
-        
         return(
             <React.Fragment>
                 <div className='header'>
@@ -116,17 +72,12 @@ export default class Employees extends Component {
                     </FormGroup>
                     <Checkbox checked={this.state.showArchived} onChange={this.handleCheck}>
                         Show retired
-                    </Checkbox>                
+                    </Checkbox>
                     <LinkContainer to='/employees/add'>
-                        <Button bsStyle='primary'>Add employee</Button>
-                    </LinkContainer>                    
+                        <Button bsStyle='primary'><FontAwesomeIcon icon='user-plus'/> Add employee</Button>
+                    </LinkContainer>
                 </div>
-                
-                <ReactTable
-                    data={this.state.filtered}
-                    columns={columns}
-                />
-                {/* <div className='data'>
+                <div className='data employees'>
                     <Table>
                         <thead>
                             <tr>
@@ -139,14 +90,14 @@ export default class Employees extends Component {
                                 <th>Time approver(s)</th>
                                 <th>Start date</th>
                                 <th>End date</th>
+                                <th>Notes</th>
                                 <th>Assets</th>
                                 <th>Licenses</th>
-                                <th>Notes</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.filtered.map(employee => 
+                            {this.state.filtered.map(employee =>
                                 <tr>
                                     <td>{employee.first_name+' '+employee.last_name}</td>
                                     <td>{employee.email}</td>
@@ -163,6 +114,7 @@ export default class Employees extends Component {
                                         {employee.end?
                                         moment(employee.end).utc().format('YYYY-MM-DD'):''}
                                     </td>
+                                    <td>{employee.notes}</td>
                                     <td>
                                         <Link to={`/employees/${employee.emp_id}/assets`}>
                                             Assets
@@ -173,17 +125,16 @@ export default class Employees extends Component {
                                             Licenses
                                         </Link>
                                     </td>
-                                    <td>{employee.notes}</td>
                                     <td>
                                         <Link to={`/employees/manage/${employee.emp_id}`}>
-                                            Manage
+                                            <FontAwesomeIcon icon='edit'/>
                                         </Link>
                                     </td>
                                 </tr>
                             )}
                         </tbody>
                     </Table>
-                </div> */}
+                </div>
             </React.Fragment>
         );
     }
