@@ -1,0 +1,49 @@
+.data.software{
+    height: 400px;
+}
+
+.data.software td:nth-child(1), .data.software th:nth-child(1){
+    width: 400px;
+}
+.data.software td:nth-child(2), .data.software th:nth-child(2){
+    width: 400px;
+}
+.data.software td:nth-child(3), .data.software th:nth-child(3){
+    width: 400px;
+}
+.data.software td:nth-child(4), .data.software th:nth-child(4){
+    width: 260px;
+}
+
+.data.addUser tbody{
+    height: 470px;
+}
+
+.data.addUser td:nth-child(1), .data.addUser th:nth-child(1){
+    width: 325px;
+}
+.data.addUser td:nth-child(2), .data.addUser th:nth-child(2){
+    width: 325px;
+}
+.data.addUser td:nth-child(3), .data.addUser th:nth-child(3){
+    width: 325px;
+}
+.data.addUser td:nth-child(4), .data.addUser th:nth-child(4){
+    width: 325px;
+}
+.data.addUser td:nth-child(5), .data.addUser th:nth-child(5){
+    width: 160px;
+}
+
+.data.users td:nth-child(1), .data.users th:nth-child(1){
+    width: 400px;
+}
+.data.users td:nth-child(2), .data.users th:nth-child(2){
+    width: 400px;
+}
+.data.users td:nth-child(3), .data.users th:nth-child(3){
+    width: 400px;
+}
+.data.users td:nth-child(4), .data.users th:nth-child(4){
+    width: 260px;
+}
