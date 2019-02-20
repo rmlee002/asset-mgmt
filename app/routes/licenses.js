@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 
 router.post('/', (req,res)=>{
     connection.query(
-        'SELECT software.cost, employees.emp_id, CONCAT(employees.first_name, \' \', employees.last_name) AS name, employees.department, licenses.start\
+        'SELECT software.cost, employees.emp_id, employees.first_name, employees.last_name, employees.department, licenses.start\
         FROM licenses\
         JOIN employees\
         ON licenses.emp_id = employees.emp_id\
@@ -75,7 +75,7 @@ router.post('/getUserData', (req,res)=>{
 })
 
 router.post('/getEmployees', (req,res)=>{
-    connection.query('SELECT emp_id, CONCAT(first_name, \' \', last_name) AS name, email, affiliation, department\
+    connection.query('SELECT emp_id, first_name, last_name, email, affiliation, department\
         FROM employees WHERE archived=FALSE AND emp_id NOT IN\
         (SELECT emp_id FROM licenses WHERE software_id=? AND end IS NULL)', req.body.software_id, (err,results)=>{
             if (err){
