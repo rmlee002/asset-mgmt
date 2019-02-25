@@ -3,7 +3,6 @@ import { Table, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import axios from 'axios';
 import moment from 'moment';
 import ManageModal from '../ManageModal';
-import ReactTable from 'react-table';
 
 export default class History extends Component{
     constructor(props){

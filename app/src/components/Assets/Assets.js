@@ -69,13 +69,13 @@ export default class Assets extends Component{
                             placeholder='Enter serial number'
                             onChange = {this.handleChange}
                         />
-                        <FormControl.Feedback />
-                    <Checkbox checked={this.state.showArchived} onChange={this.handleCheck}>
-                        Show retired
-                    </Checkbox>                    
+                        <FormControl.Feedback />                                     
                     </FormGroup>
+                    <Checkbox inline checked={this.state.showArchived} onChange={this.handleCheck}>
+                        Show retired
+                    </Checkbox>   
                     <LinkContainer to='/assets/add'>
-                        <Button bsStyle='primary'><FontAwesomeIcon icon="laptop-medical"/> Add assets</Button>
+                        <Button className='pull-right' bsStyle='primary'><FontAwesomeIcon icon="laptop-medical"/> Add assets</Button>
                     </LinkContainer>
                 </div>
                 <div className='data assets'>

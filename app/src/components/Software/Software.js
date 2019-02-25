@@ -71,7 +71,10 @@ export default class Employees extends Component {
                     />
                     <FormControl.Feedback />
                 </FormGroup>
-                <ButtonToolbar>
+                <Checkbox inline checked={this.state.showArchived} onChange={this.handleCheck}>
+                    Show retired
+                </Checkbox>
+                <ButtonToolbar className='pull-right'>
                     <LinkContainer to='/software/add'>
                         <Button bsStyle='primary'> <FontAwesomeIcon icon='desktop'/> Add Software</Button>
                     </LinkContainer>                    
@@ -79,9 +82,6 @@ export default class Employees extends Component {
                         <Button>View all active licenses</Button>
                     </LinkContainer>                    
                 </ButtonToolbar>
-                <Checkbox checked={this.state.showArchived} onChange={this.handleCheck}>
-                    Show retired
-                </Checkbox>
                 <div className='data software'>
                     <Table>
                         <thead>

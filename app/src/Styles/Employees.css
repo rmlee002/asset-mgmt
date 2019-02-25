@@ -1,45 +1,45 @@
 .data.employees tbody{
-    height: 400px;
+    height: 440px;
 }
 
 .data.employees td:nth-child(1), .data.employees th:nth-child(1){
-    width: 120px;
+    min-width: 120px;
 }
 .data.employees td:nth-child(2), .data.employees th:nth-child(2){
-    width: 240px;
+    min-width: 240px;
 }
 .data.employees td:nth-child(3), .data.employees th:nth-child(3){
-    width: 100px;
+    min-width: 100px;
 }
 .data.employees td:nth-child(4), .data.employees th:nth-child(4){
-    width: 120px;
+    min-width: 120px;
 }
 .data.employees td:nth-child(5), .data.employees th:nth-child(5){
-    width: 120px;
+    min-width: 120px;
 }
 .data.employees td:nth-child(6), .data.employees th:nth-child(6){
-    width: 120px;
+    min-width: 120px;
 }
 .data.employees td:nth-child(7), .data.employees th:nth-child(7){
-    width: 150px;
+    min-width: 150px;
 }
 .data.employees td:nth-child(8), .data.employees th:nth-child(8){
-    width: 100px;
+    min-width: 100px;
 }
 .data.employees td:nth-child(9), .data.employees th:nth-child(9){
-    width: 100px;
+    min-width: 100px;
 }
 .data.employees td:nth-child(10), .data.employees th:nth-child(10){
-    width: 100px;
+    min-width: 100px;
 }
 .data.employees td:nth-child(11), .data.employees th:nth-child(11){
-    width: 60px;
+    min-width: 60px;
 }
 .data.employees td:nth-child(12), .data.employees th:nth-child(12){
-    width: 60px;
+    min-width: 60px;
 }
 .data.employees td:nth-child(13), .data.employees th:nth-child(13){
-    width: 60px;
+    min-width: 60px;
     text-align: right;
 }
 
@@ -48,19 +48,19 @@
 }
 
 .data.empAssets td:nth-child(1), .data.empAssets th:nth-child(1){
-    width: 325px;
+    min-width: 325px;
 }
 .data.empAssets td:nth-child(2), .data.empAssets th:nth-child(2){
-    width: 325px;
+    min-width: 325px;
 }
 .data.empAssets td:nth-child(3), .data.empAssets th:nth-child(3){
-    width: 325px;
+    min-width: 325px;
 }
 .data.empAssets td:nth-child(4), .data.empAssets th:nth-child(4){
-    width: 325px;
+    min-width: 325px;
 }
 .data.empAssets td:nth-child(5), .data.empAssets th:nth-child(5){
-    width: 160px;
+    min-width: 160px;
 }
 
 .data.addAsset tbody{
@@ -68,16 +68,16 @@
 }
 
 .data.addAsset td:nth-child(1), .data.addAsset th:nth-child(1){
-    width: 400px;
+    min-width: 400px;
 }
 .data.addAsset td:nth-child(2), .data.addAsset th:nth-child(2){
-    width: 400px;
+    min-width: 400px;
 }
 .data.addAsset td:nth-child(3), .data.addAsset th:nth-child(3){
-    width: 400px;
+    min-width: 400px;
 }
 .data.addAsset td:nth-child(4), .data.addAsset th:nth-child(4){
-    width: 260px;
+    min-width: 260px;
 }
 
 .data.empLicenses tbody{
@@ -85,22 +85,22 @@
 }
 
 .data.empLicenses td:nth-child(1), .data.empLicenses th:nth-child(1){
-    width: 487px;
+    min-width: 487px;
 }
 .data.empLicenses td:nth-child(2), .data.empLicenses th:nth-child(2){
-    width: 487px;
+    min-width: 487px;
 }
 .data.empLicenses td:nth-child(3), .data.empLicenses th:nth-child(3){
-    width: 487px;
+    min-width: 487px;
 }
 
 .data.addLicense tbody{
-    height: 470px;
+    min-height: 470px;
 }
 
 .data.addLicense td:nth-child(1), .data.addLicense th:nth-child(1){
-    width: 730px;
+    min-width: 730px;
 }
 .data.addLicense td:nth-child(2), .data.addLicense th:nth-child(2){
-    width: 730px;
+    min-width: 730px;
 }

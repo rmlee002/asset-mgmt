@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Col, FormControl, HelpBlock, ControlLabel, ButtonToolbar } from 'react-bootstrap';
+import { Button, Form, FormGroup, Col, FormControl, ControlLabel, ButtonToolbar } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import axios from 'axios';
 import moment from 'moment';
@@ -184,7 +184,6 @@ export default class ManageEmployee extends Component{
                                     placeholder='First name'
                                     onChange={this.handleChange}
                                 />
-                                <HelpBlock bsClass='small'>Required</HelpBlock>
                             </Col>
                         </FormGroup>
                         <FormGroup controlId='last_name'>
@@ -199,7 +198,6 @@ export default class ManageEmployee extends Component{
                                     help = 'Required'
                                     onChange={this.handleChange}
                                 />
-                                <HelpBlock bsClass='small'>Required</HelpBlock>
                             </Col>
                         </FormGroup>
                         <FormGroup controlId='email'>

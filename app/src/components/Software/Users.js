@@ -118,11 +118,11 @@ export default class Users extends Component{
                         onChange = {this.handleChange}
                     />
                     <FormControl.Feedback />
-                </FormGroup>
-                <Filter handleFilter={this.handleFilter}/>
+                </FormGroup>                
                 <LinkContainer to={`/software/${this.props.match.params.software_id}/users/add`}>
                     <Button bsStyle='primary'> <FontAwesomeIcon icon='user-plus'/> Add User</Button>  
                 </LinkContainer>  
+                <Filter handleFilter={this.handleFilter}/>
                 <div className='data users'>
                     <Table>
                         <thead>

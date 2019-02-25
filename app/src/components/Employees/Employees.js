@@ -60,23 +60,20 @@ export default class Employees extends Component {
     render(){
         return(
             <React.Fragment>
-                <div className='header'>
-                    <FormGroup controlid="search">
-                        <ControlLabel>Search</ControlLabel>
-                        <FormControl
-                            type='text'
-                            placeholder='Enter a name'
-                            onChange = {this.handleChange}
-                        />
-                        <FormControl.Feedback />
-                    </FormGroup>
-                    <Checkbox checked={this.state.showArchived} onChange={this.handleCheck}>
-                        Show retired
-                    </Checkbox>
-                    <LinkContainer to='/employees/add'>
-                        <Button bsStyle='primary'><FontAwesomeIcon icon='user-plus'/> Add employee</Button>
-                    </LinkContainer>
-                </div>
+                <FormGroup>
+                    <ControlLabel>Search</ControlLabel>
+                    <FormControl
+                        type='text'
+                        placeholder='Enter a name'
+                        onChange = {this.handleChange}
+                    />
+                </FormGroup>          
+                <Checkbox checked={this.state.showArchived} onChange={this.handleCheck} inline>
+                    Show retired
+                </Checkbox>          
+                <LinkContainer to='/employees/add'>
+                    <Button className='pull-right' bsStyle='primary'><FontAwesomeIcon icon='user-plus'/> Add employee</Button>
+                </LinkContainer>                
                 <div className='data employees'>
                     <Table>
                         <thead>
@@ -84,10 +81,10 @@ export default class Employees extends Component {
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Affiliation</th>
-                                <th>Department(s)</th>
-                                <th>Supervisor(s)</th>
-                                <th>Reviewer(s)</th>
-                                <th>Time approver(s)</th>
+                                <th>Department</th>
+                                <th>Supervisor</th>
+                                <th>Reviewer</th>
+                                <th>Time approver</th>
                                 <th>Start date</th>
                                 <th>End date</th>
                                 <th>Notes</th>

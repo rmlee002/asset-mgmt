@@ -4,7 +4,6 @@ import DatePicker from 'react-datepicker';
 import Axios from 'axios';
 import moment from 'moment';
 import memoize from 'memoize-one';
-import ReactTable from 'react-table';
 
 export default class AddEmployeeLicense extends Component{
     constructor(props){

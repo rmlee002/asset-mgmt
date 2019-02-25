@@ -4,7 +4,6 @@ import Axios from 'axios';
 import memoize from 'memoize-one';
 import moment from 'moment';
 import ManageModal from '../ManageModal';
-import ReactTable from 'react-table';
 
 export default class AddAsset extends Component{
     constructor(props){

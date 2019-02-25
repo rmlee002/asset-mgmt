@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Nav, NavItem, Navbar } from 'react-bootstrap';
+import { Nav, NavItem, Navbar, Image } from 'react-bootstrap';
 import { Link, withRouter } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import Axios from 'axios';
@@ -36,7 +36,9 @@ class Links extends Component{
                 <Navbar fluid collapseOnSelect>
                     <Navbar.Header>
                         <Navbar.Brand>
-                            <Link to="/home">Home</Link>
+                            <Link to="/home">
+                                Home
+                            </Link>
                         </Navbar.Brand>
                     </Navbar.Header>                    
                     <Navbar.Collapse>

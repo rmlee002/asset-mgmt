@@ -8,7 +8,7 @@
 
 .Container {
     margin: auto;
-    width: 100%;
+    /* width: 100%; */
     padding: 0px 10px 0px 10px;
 }
 
@@ -29,16 +29,3 @@
 }
 
 tr:nth-child(even) {background-color: #f2f2f2;}
-
-/* .ReactTable {
-    height: 450px;
-    margin-top: 10px;
-}
-
-.ReactTable .rt-thead {
-    overflow-y: scroll;
-  }
-
-.ReactTable .rt-tr:hover .rt-td{
-    background-color: #f2f2f2;
-} */
