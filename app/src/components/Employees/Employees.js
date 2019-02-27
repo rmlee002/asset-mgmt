@@ -17,7 +17,7 @@ export default class Employees extends Component {
             showArchived: false
         };
         this.handleChange = this.handleChange.bind(this);
-        this.handleCheck = this.handleCheck.bind(this)
+        this.handleCheck = this.handleCheck.bind(this);
     }
 
     componentDidMount(){
@@ -73,9 +73,9 @@ export default class Employees extends Component {
                 </Checkbox>          
                 <LinkContainer to='/employees/add'>
                     <Button className='pull-right' bsStyle='primary'><FontAwesomeIcon icon='user-plus'/> Add employee</Button>
-                </LinkContainer>                
+                </LinkContainer>
                 <div className='data employees'>
-                    <Table>
+                    <Table striped hover>
                         <thead>
                             <tr>
                                 <th>Name</th>

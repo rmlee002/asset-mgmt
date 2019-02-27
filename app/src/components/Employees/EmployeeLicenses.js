@@ -74,7 +74,7 @@ export default class EmployeeLicenses extends Component{
                     Show previous licenses
                 </Checkbox>
                 <div className='data empLicenses'>             
-                    <Table>
+                    <Table striped hover>
                         <thead>
                             <tr>
                                 <th>License</th>

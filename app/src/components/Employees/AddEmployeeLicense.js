@@ -90,7 +90,7 @@ export default class AddEmployeeLicense extends Component{
                     <FormControl.Feedback />
                 </FormGroup>
                 <div className='data addLicense'>
-                    <Table>
+                    <Table striped hover>
                         <thead>
                             <tr>
                                 <th>License</th>

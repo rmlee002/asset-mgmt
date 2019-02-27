@@ -67,7 +67,7 @@ export default class History extends Component{
                     <FormControl.Feedback />
                 </FormGroup>
                 <div className="data history">
-                    <Table>
+                    <Table striped hover>
                         <thead>
                             <tr>
                                 <th>Name</th>

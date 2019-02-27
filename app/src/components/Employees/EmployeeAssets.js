@@ -63,7 +63,7 @@ export default class EmployeeAssets extends Component{
                     </Button>
                 </LinkContainer>
                 <div className='data empAssets'>
-                    <Table>
+                    <Table striped hover>
                         <thead>
                             <tr>
                                 <th>Serial Number</th>

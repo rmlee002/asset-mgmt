@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
+import { Table, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import Axios from 'axios';
 import memoize from 'memoize-one';
 import moment from 'moment';
@@ -90,7 +90,7 @@ export default class AddAsset extends Component{
                     <FormControl.Feedback />
                 </FormGroup>
                 <div className='data addAsset'>                
-                    <Table>
+                    <Table striped hover>
                         <thead>
                             <tr>
                                 <th>Serial Number</th>

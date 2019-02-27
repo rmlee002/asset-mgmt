@@ -79,7 +79,7 @@ export default class Assets extends Component{
                     </LinkContainer>
                 </div>
                 <div className='data assets'>
-                    <Table>
+                    <Table striped hover>
                         <thead>
                             <tr>
                                 <th>Serial Number</th>

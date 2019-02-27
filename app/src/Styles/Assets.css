@@ -3,49 +3,48 @@
 }
 
 .data.assets td:nth-child(1), .data.assets th:nth-child(1){
-    min-width: 145px;
+    width: 145px;
 }
 .data.assets td:nth-child(2), .data.assets th:nth-child(2){
-    min-width: 200px;
+    width: 200px;
 }
 .data.assets td:nth-child(3), .data.assets th:nth-child(3){
-    min-width: 150px;
+    width: 140px;
 }
 .data.assets td:nth-child(4), .data.assets th:nth-child(4){
-    min-width: 110px;
+    width: 110px;
 }
 .data.assets td:nth-child(5), .data.assets th:nth-child(5){
-    min-width: 80px;
+    width: 80px;
 }
 .data.assets td:nth-child(6), .data.assets th:nth-child(6){
-    min-width: 90px;
+    width: 90px;
 }
 .data.assets td:nth-child(7), .data.assets th:nth-child(7){
-    min-width: 150px;
+    width: 153px;
 }
 .data.assets td:nth-child(8), .data.assets th:nth-child(8){
-    min-width: 80px;
+    width: 80px;
 }
 .data.assets td:nth-child(9), .data.assets th:nth-child(9){
-    min-width: 75px;
+    width: 75px;
 }
 .data.assets td:nth-child(10), .data.assets th:nth-child(10){
-    min-width: 75px;
+    width: 77px;
 }
 .data.assets td:nth-child(11), .data.assets th:nth-child(11){
-    min-width: 90px;
+    width: 143px;
 }
 .data.assets td:nth-child(12), .data.assets th:nth-child(12){
-    min-width: 50px;
-    text-align: right;
+    width: 70px;
 }
 .data.assets td:nth-child(13), .data.assets th:nth-child(13){
-    min-width: 40px;
-    text-align: right;
+    width: 40px;
+    text-align: center;
 }
 .data.assets td:nth-child(14), .data.assets th:nth-child(14){
-    min-width: 50px;
-    text-align: right;
+    width: 50px;
+    text-align: center;
 }
 
 .data.edit tbody{
@@ -53,19 +52,20 @@
 }
 
 .data.edit td:nth-child(1), .data.edit th:nth-child(1){
-    width:325px;
+    width:330px;
 }
 .data.edit td:nth-child(2), .data.edit th:nth-child(2){
-    width:325px;
+    width:330px;
 }
 .data.edit td:nth-child(3), .data.edit th:nth-child(3){
-    width:325px;
+    width:330px;
 }
 .data.edit td:nth-child(4), .data.edit th:nth-child(4){
-    width:325px;
+    width:330px;
 }
 .data.edit td:nth-child(5), .data.edit th:nth-child(5){
-    width:160px;
+    width:135px;
+    text-align: center;
 }
 
 .data.history tbody{

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, FormGroup, ControlLabel, FormControl, Form, Col, Button } from 'react-bootstrap';
+import { Table, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 import Axios from 'axios';
 import memoize from 'memoize-one';
 import ManageModal from '../ManageModal';
@@ -88,7 +88,7 @@ export default class EditOwner extends Component{
                     </FormGroup>
                 </div>
                 <div className='data edit'>
-                    <Table>
+                    <Table striped hover>
                         <thead>
                             <tr>
                                 <th>Name</th>

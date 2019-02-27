@@ -83,7 +83,7 @@ export default class Employees extends Component {
                     </LinkContainer>                    
                 </ButtonToolbar>
                 <div className='data software'>
-                    <Table>
+                    <Table striped hover>
                         <thead>
                             <tr>
                                 <th>License</th>

@@ -3,16 +3,16 @@
 }
 
 .data.software td:nth-child(1), .data.software th:nth-child(1){
-    width: 400px;
+    width: 630px;
 }
 .data.software td:nth-child(2), .data.software th:nth-child(2){
-    width: 400px;
+    width: 630px;
 }
 .data.software td:nth-child(3), .data.software th:nth-child(3){
-    width: 400px;
+    width: 100px;
 }
 .data.software td:nth-child(4), .data.software th:nth-child(4){
-    width: 260px;
+    width: 100px;
 }
 
 .data.addUser tbody{
@@ -20,19 +20,20 @@
 }
 
 .data.addUser td:nth-child(1), .data.addUser th:nth-child(1){
-    width: 325px;
+    width: 330px;
 }
 .data.addUser td:nth-child(2), .data.addUser th:nth-child(2){
-    width: 325px;
+    width: 330px;
 }
 .data.addUser td:nth-child(3), .data.addUser th:nth-child(3){
-    width: 325px;
+    width: 330px;
 }
 .data.addUser td:nth-child(4), .data.addUser th:nth-child(4){
-    width: 325px;
+    width: 330px;
 }
 .data.addUser td:nth-child(5), .data.addUser th:nth-child(5){
-    width: 160px;
+    width: 135px;
+    text-align: center;
 }
 
 .data.users td:nth-child(1), .data.users th:nth-child(1){
@@ -46,4 +47,5 @@
 }
 .data.users td:nth-child(4), .data.users th:nth-child(4){
     width: 260px;
+    text-align: center;
 }

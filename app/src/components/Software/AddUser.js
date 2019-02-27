@@ -93,7 +93,7 @@ export default class AddUser extends Component{
                     </FormGroup>
                 </div>
                 <div className='data addUser'>
-                    <Table>
+                    <Table striped hover>
                         <thead>
                             <tr>
                                 <th>Name</th>
