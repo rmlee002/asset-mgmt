@@ -81,7 +81,7 @@ export default class AddEmployee extends Component{
 
     handleSubmit(e){
         e.preventDefault()
-        axios.post('/employees/add', {
+        axios.post('/employee/add', {
             first_name: this.state.first_name,
             last_name: this.state.last_name,
             email: this.state.email,

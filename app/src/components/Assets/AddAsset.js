@@ -62,7 +62,7 @@ export default class AddAssets extends Component{
 
     handleSubmit(e){
         e.preventDefault();
-        axios.post('/assets/add', {
+        axios.post('/asset/add', {
             order_num: this.state.order_num,
             vendor: this.state.vendor,
             inDate: this.state.inDate?moment(this.state.inDate).format('YYYY-MM-DD'):null,

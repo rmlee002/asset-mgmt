@@ -23,9 +23,9 @@ app.use(cors());
 app.set('view engine', 'ejs');
 
 app.use('/authenticate', authenticateRouter);
-app.use('/employees', employeeRouter);
-app.use('/assets', assetRouter);
-app.use('/software', softwareRouter);
+app.use('/employee', employeeRouter);
+app.use('/asset', assetRouter);
+app.use('/softwares', softwareRouter);
 app.use('/licenses', licensesRouter);
 app.use('/departments', departmentRouter);
 app.use('/history', historyRouter);

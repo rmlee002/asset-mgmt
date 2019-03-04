@@ -35,7 +35,7 @@ export default class ManageAsset extends Component{
     }
 
     componentDidMount(){
-        Axios.post('/assets/getAsset', {
+        Axios.post('/asset/getAsset', {
             asset_id: this.props.match.params.asset_id
         })
         .then(res => {
@@ -82,7 +82,7 @@ export default class ManageAsset extends Component{
 
     handleRetire(e){
         e.preventDefault();
-        Axios.post('/assets/retire', {
+        Axios.post('/asset/retire', {
             asset_id: this.state.asset_id,
             end: moment(this.state.end).format('YYYY-MM-DD')
         })
@@ -96,7 +96,7 @@ export default class ManageAsset extends Component{
     }
 
     handleUnretire(){
-        Axios.post('/assets/unretire', {
+        Axios.post('/asset/unretire', {
             asset_id: this.state.asset_id
         })
         .then(res=>{
@@ -109,7 +109,7 @@ export default class ManageAsset extends Component{
     }
 
     handleSubmit(e){
-        Axios.post('/assets/updateAsset', {
+        Axios.post('/asset/updateAsset', {
             model: this.state.model,
             serial_number: this.state.serial_number,
             warranty_provider: this.state.warranty_provider,

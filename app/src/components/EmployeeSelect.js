@@ -12,7 +12,7 @@ export default class EmployeeSelect extends Component{
     }
 
     componentDidMount(){
-        Axios.get('/employees')
+        Axios.get('/employee')
         .then(res => {
             this.setState({
                 options: res.data.map(emp => 

@@ -23,7 +23,7 @@ export default class Assets extends Component{
 
     componentDidMount(){
         let self = this;
-        axios.get('/assets')
+        axios.get('/asset')
         .then(function(res) {
             self.setState({
                 assets: res.data,

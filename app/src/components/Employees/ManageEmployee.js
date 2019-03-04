@@ -46,7 +46,7 @@ export default class ManageEmployee extends Component{
     }
 
     componentDidMount(){
-        axios.post('/employees/getEmployee',{
+        axios.post('/employee/getEmployee',{
             emp_id: this.props.match.params.emp_id
         })
         .then(res => {
@@ -114,7 +114,7 @@ export default class ManageEmployee extends Component{
 
     handleRetire(e){
         e.preventDefault();
-        axios.post('/employees/retire', {
+        axios.post('/employee/retire', {
             emp_id: this.state.emp_id,
             end: moment(this.state.date).format('YYYY-MM-DD')
         })
@@ -128,7 +128,7 @@ export default class ManageEmployee extends Component{
     }
 
     handleUnretire(){
-        axios.post('/employees/unretire', {
+        axios.post('/employee/unretire', {
             emp_id: this.state.emp_id
         })
         .then(() => {
@@ -147,7 +147,7 @@ export default class ManageEmployee extends Component{
     }
 
     handleUpdate(e){
-        axios.post('/employees/update', {
+        axios.post('/employee/update', {
             emp_id: this.state.emp_id,
             first_name: this.state.first_name,
             last_name: this.state.last_name,
