@@ -7,6 +7,7 @@ import axios from 'axios';
 import memoize from 'memoize-one';
 import "../../Styles/Employees.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Filter from '../Filter';
 
 export default class Employees extends Component {
     constructor(props){
@@ -19,6 +20,7 @@ export default class Employees extends Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleCheck = this.handleCheck.bind(this);
+        this.handleFilter = this.handleFilter.bind(this);
     }
 
     componentDidMount(){
@@ -68,6 +70,19 @@ export default class Employees extends Component {
         })
     }
 
+    handleFilter(options){
+        this.setState({
+            filtered: this.state.employees.filter((emp)=>!emp.archived || options.showArchived).filter(item => 
+                moment(item.start).isSameOrAfter(options.start)
+                &&
+                moment(item.start).isSameOrBefore(options.end)
+                &&
+                (options.depts.length > 0 ? options.depts.map(dept => dept.value).some(dept => item.department.split(', ').includes(dept)): true)
+            ),
+            showArchived: options.showArchived
+        })
+    }
+
     render(){
         const loggedIn = this.state.loggedIn
 
@@ -81,15 +96,17 @@ export default class Employees extends Component {
                         onChange = {this.handleChange}
                     />
                 </FormGroup>          
-                <Checkbox checked={this.state.showArchived} onChange={this.handleCheck} inline>
+                {/* <Checkbox checked={this.state.showArchived} onChange={this.handleCheck} inline>
                     Show retired
-                </Checkbox>
+                </Checkbox> */}
 
                 {loggedIn &&
                     <LinkContainer to='/employees/add'>
                         <Button className='pull-right' bsStyle='primary'><FontAwesomeIcon icon='user-plus'/> Add employee</Button>
                     </LinkContainer>
                 }
+
+                <Filter handleFilter={this.handleFilter}/>
 
                 <div className='data employees'>
                     <Table striped hover>

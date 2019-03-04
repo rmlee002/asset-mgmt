@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, ButtonToolbar, FormGroup, ControlLabel, Col, Well, Collapse } from 'react-bootstrap';
+import { Button, Form, ButtonToolbar, FormGroup, ControlLabel, Col, Well, Collapse, Checkbox } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import Departments from './Departments';
 
@@ -11,11 +11,13 @@ export default class Filter extends Component{
         this.handleDepartment = this.handleDepartment.bind(this)
         this.handleCreateDepartmentOption = this.handleCreateDepartmentOption.bind(this)
         this.handleClear = this.handleClear.bind(this)
+        this.handleCheck = this.handleCheck.bind(this)
 
         this.state={
             open: false,
             start: null,
             end: null,
+            showArchived: false,
             depts: []
         }
     }
@@ -35,6 +37,7 @@ export default class Filter extends Component{
         this.props.handleFilter({
             start: this.state.start?this.state.start:new Date(1970,0,1),
             end: this.state.end?this.state.end:new Date(),
+            showArchived: this.state.showArchived,
             depts: this.state.depts
         })
         this.setState({
@@ -46,13 +49,21 @@ export default class Filter extends Component{
         this.props.handleFilter({
             start: new Date(1970, 0, 1),
             end: new Date(),
+            showArchived: false,
             depts: []
         })
         this.setState({
             open: false,
             start: null,
             end: null,
+            showArchived: false,
             depts: []
+        })
+    }
+
+    handleCheck(e){
+        this.setState({
+            showArchived: e.target.checked
         })
     }
 
@@ -92,13 +103,17 @@ export default class Filter extends Component{
                                 </FormGroup>
                                 <FormGroup>
                                     <Col smOffset={1} sm={2}>
+                                        <Checkbox checked={this.state.showArchived} onChange={this.handleCheck}>Show retired</Checkbox>
+                                    </Col>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Col smOffset={1} sm={2}>
                                         <ButtonToolbar>                                
                                             <Button type='submit' bsSize='small' bsStyle='success'>Apply</Button> 
                                             <Button bsSize='small' onClick={this.handleClear}>Clear</Button>                               
                                         </ButtonToolbar>
                                     </Col>  
-                                </FormGroup>
-                                
+                                </FormGroup>                                
                             </Form>                                                 
                         </form>    
                     </Well>
