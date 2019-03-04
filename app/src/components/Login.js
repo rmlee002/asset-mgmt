@@ -11,7 +11,7 @@ export default class Login extends Component {
 			password : ""
 		};
 		this.handleChange = this.handleChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleLogin = this.handleLogin.bind(this);
 	}
 
 	handleChange = (event) => {
@@ -20,15 +20,23 @@ export default class Login extends Component {
 		});
 	};
 
-	handleSubmit = (event) => {
-		event.preventDefault()
+	handleLogin(e){
+		e.preventDefault()
 		axios.post("/authenticate/login", {
 			user: this.state.user,
 			password: this.state.password
 		})
 		.then(res => {
-			this.props.history.goBack();
-		}).catch(err => {
+			if (this.props.location.state){
+				// this.props.history.push(this.props.location.state.path)
+				window.location.assign(this.props.location.state.path)
+			}
+			else{
+				window.location.assign('/home')
+			}
+			// this.props.history.goBack();	
+		})
+		.catch(err => {
 			console.log(err);
 			alert(err.response.data);
 		});
@@ -38,12 +46,12 @@ export default class Login extends Component {
 		return (
 		<div className="Main">
 			<div className="Head">
-				<header className="App-header">
+				<header className="App-header">		
 					<img src="logolarge.png" className="Vid-logo" alt="logo" />
 				</header>
 			</div>
 			<div className="Login">
-				<form onSubmit = {this.handleSubmit}>
+				<form onSubmit = {this.handleLogin}>
 					<FormGroup controlId="user" bsSize="large">
 						<ControlLabel>Username</ControlLabel>
 						<FormControl
@@ -66,7 +74,9 @@ export default class Login extends Component {
 					<Button
 						block
 						bsSize="large"
-						type="submit"
+						type='submit'
+						// onClick={this.handleLogin}
+						// href={this.props.location.state?this.props.location.state.path:'/home'}
 					>
 						Login
 					</Button>

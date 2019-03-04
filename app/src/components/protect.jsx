@@ -26,6 +26,7 @@ export default function protect(Comp) {
 		}
 
 		render() {			
+			const location = this.props.location.pathname
 			const { loading, redirect } = this.state;
 			let view =
 					<div>
@@ -34,7 +35,15 @@ export default function protect(Comp) {
 					
 			if (!loading){
 				if (redirect) {
-					view = <Redirect push to="/login" />
+					view =
+						<Redirect
+							push 
+							to={{
+								pathname: "/login",
+								state: { path: location }
+							}}
+							// to='/login'
+						/>
 				}
 				else{
 					view = <Comp {...this.props} />
