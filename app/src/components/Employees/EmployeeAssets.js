@@ -17,7 +17,8 @@ export default class EmployeeAssets extends Component{
             show: false,
             end: new Date(),
             asset_id: null,
-            assets: []
+            assets: [],
+            loggedIn: false
         }
     }
 
@@ -32,6 +33,16 @@ export default class EmployeeAssets extends Component{
         })
         .catch(err =>{
             alert(err.response.data)
+            console.log(err)
+        })
+
+        Axios.get('/checkToken')
+        .then(res => {
+            this.setState({
+                loggedIn: true
+            })
+        })
+        .catch(err => {
             console.log(err)
         })
     }
@@ -55,13 +66,18 @@ export default class EmployeeAssets extends Component{
     }
 
     render(){
+        const loggedIn = this.state.loggedIn
+
         return(
             <React.Fragment>
-                <LinkContainer to={`/employees/${this.props.match.params.emp_id}/assets/add`}>
-                    <Button bsStyle='primary'>
-                        <FontAwesomeIcon icon='laptop-medical'/> Add asset
-                    </Button>
-                </LinkContainer>
+                {loggedIn && 
+                    <LinkContainer to={`/employees/${this.props.match.params.emp_id}/assets/add`}>
+                        <Button bsStyle='primary'>
+                            <FontAwesomeIcon icon='laptop-medical'/> Add asset
+                        </Button>
+                    </LinkContainer>
+                }
+                
                 <div className='data empAssets'>
                     <Table striped hover>
                         <thead>
@@ -70,7 +86,7 @@ export default class EmployeeAssets extends Component{
                                 <th>Model</th>                            
                                 <th>Comment</th>
                                 <th>Start Date</th>
-                                <th></th>
+                                {loggedIn && <th></th>}
                             </tr>
                         </thead>
                         <tbody>
@@ -81,14 +97,16 @@ export default class EmployeeAssets extends Component{
                                     <td>{item.comment}</td>
                                     <td>{item.start?moment(item.start).format('YYYY-MM-DD'):''}</td>
                                     <td>
-                                        <ManageModal
-                                            type='Retire'
-                                            title='Retire asset'
-                                            date={this.state.end}
-                                            handleClick={() => this.setState({asset_id: item.asset_id})}
-                                            handleSubmit={this.handleSubmit}
-                                            handleDate={this.handleEnd}
-                                        />
+                                        {loggedIn && 
+                                            <ManageModal
+                                                type='Retire'
+                                                title='Retire asset'
+                                                date={this.state.end}
+                                                handleClick={() => this.setState({asset_id: item.asset_id})}
+                                                handleSubmit={this.handleSubmit}
+                                                handleDate={this.handleEnd}
+                                            />
+                                        }                                        
                                     </td>
                                 </tr>
                             )}

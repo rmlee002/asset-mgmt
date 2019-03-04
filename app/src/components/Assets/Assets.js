@@ -14,7 +14,8 @@ export default class Assets extends Component{
         this.state = {
             assets: [],
             filtered: [],
-            showArchived: false
+            showArchived: false,
+            loggedIn: false
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleCheck = this.handleCheck.bind(this)
@@ -31,6 +32,16 @@ export default class Assets extends Component{
         }).catch(err => {
             console.log(err);
             alert(err.response.data);
+        })
+
+        axios.get('/checkToken')
+        .then(res => {
+            self.setState({
+                loggedIn: true
+            })
+        })
+        .catch(err => {
+            console.log(err)
         })
     }
 
@@ -58,7 +69,9 @@ export default class Assets extends Component{
         })
     }
 
-    render(){        
+    render(){     
+        const loggedIn = this.state.loggedIn
+
         return(
             <React.Fragment>
                 <div className='header'>
@@ -74,9 +87,12 @@ export default class Assets extends Component{
                     <Checkbox inline checked={this.state.showArchived} onChange={this.handleCheck}>
                         Show retired
                     </Checkbox>   
-                    <LinkContainer to='/assets/add'>
-                        <Button className='pull-right' bsStyle='primary'><FontAwesomeIcon icon="laptop-medical"/> Add assets</Button>
-                    </LinkContainer>
+                    {loggedIn && 
+                        <LinkContainer to='/assets/add'>
+                            <Button className='pull-right' bsStyle='primary'><FontAwesomeIcon icon="laptop-medical"/> Add assets</Button>
+                        </LinkContainer>
+                    }
+                    
                 </div>
                 <div className='data assets'>
                     <Table striped hover>
@@ -93,9 +109,9 @@ export default class Assets extends Component{
                                 <th>In Date</th>
                                 <th>Out Date</th>
                                 <th>Comment</th>
+                                {loggedIn && <th></th>}
                                 <th></th>
-                                <th></th>
-                                <th></th>
+                                {loggedIn && <th></th>}
                             </tr>
                         </thead>
                         <tbody>
@@ -118,12 +134,20 @@ export default class Assets extends Component{
                                             moment(item.outDate).utc().format('YYYY-MM-DD'):''}
                                     </td>
                                     <td>{item.comment}</td>
-                                    <td>
-                                        {item.archived?'':
-                                        <Link to={`/assets/editOwner/${item.asset_id}`}>Assign owner</Link>}
-                                    </td>
+                                    {loggedIn &&
+                                        <td>
+                                            {!item.archived &&
+                                                <Link to={`/assets/editOwner/${item.asset_id}`}>Assign owner</Link>
+                                            }
+                                        </td>
+                                    }
+                                    
                                     <td><Link to={`/assets/${item.asset_id}/history`}><FontAwesomeIcon icon='history'/></Link></td>
-                                    <td><Link to={`/assets/manage/${item.asset_id}`}><FontAwesomeIcon icon='edit'/></Link></td>
+                                    {loggedIn &&
+                                        <td>
+                                            <Link to={`/assets/manage/${item.asset_id}`}><FontAwesomeIcon icon='edit'/></Link>
+                                        </td>
+                                    }  
                                 </tr>
                             )}
                         </tbody>

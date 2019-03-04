@@ -17,7 +17,8 @@ export default class Employees extends Component {
         this.state={
             showArchived: false,
             software: [],
-            filtered: []
+            filtered: [],
+            loggedIn: false
         }
     }
 
@@ -31,6 +32,16 @@ export default class Employees extends Component {
         })
         .catch(err => {
             alert(err.response.data)
+            console.log(err)
+        })
+
+        Axios.get('/checkToken')
+        .then(res => {
+            this.setState({
+                loggedIn: true
+            })
+        })
+        .catch(err => {
             console.log(err)
         })
     }
@@ -60,6 +71,8 @@ export default class Employees extends Component {
     }
 
     render(){
+        const loggedIn = this.state.loggedIn
+
         return(
             <React.Fragment>
                 <FormGroup controlid="search">
@@ -75,9 +88,11 @@ export default class Employees extends Component {
                     Show retired
                 </Checkbox>
                 <ButtonToolbar className='pull-right'>
-                    <LinkContainer to='/software/add'>
-                        <Button bsStyle='primary'> <FontAwesomeIcon icon='desktop'/> Add Software</Button>
-                    </LinkContainer>                    
+                    {loggedIn &&
+                        <LinkContainer to='/software/add'>
+                            <Button bsStyle='primary'> <FontAwesomeIcon icon='desktop'/> Add Software</Button>
+                        </LinkContainer>   
+                    }                                     
                     <LinkContainer to='/software/overview'>
                         <Button>View all active licenses</Button>
                     </LinkContainer>                    
@@ -89,7 +104,7 @@ export default class Employees extends Component {
                                 <th>License</th>
                                 <th>Monthly Cost</th> 
                                 <th></th>
-                                <th></th>
+                                {loggedIn && <th></th>}
                             </tr>
                         </thead>
                         <tbody>
@@ -102,11 +117,13 @@ export default class Employees extends Component {
                                             <FontAwesomeIcon icon='users'/> Users
                                         </Link>
                                     </td>
-                                    <td>
-                                        <Link to={`software/${software.software_id}/manage`}>
-                                            <FontAwesomeIcon icon='edit'/> Manage
-                                        </Link>
-                                    </td>
+                                    {loggedIn &&
+                                        <td>
+                                            <Link to={`software/${software.software_id}/manage`}>
+                                                <FontAwesomeIcon icon='edit'/> Manage
+                                            </Link>
+                                        </td>
+                                    }                                    
                                 </tr>                            
                                 )}
                         </tbody>

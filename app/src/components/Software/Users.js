@@ -24,7 +24,8 @@ export default class Users extends Component{
             filtered: [],
             name: undefined,
             end: new Date(),
-            emp_id: null
+            emp_id: null,
+            loggedIn: false
         }
     }
 
@@ -42,6 +43,16 @@ export default class Users extends Component{
         .catch(err => {
             console.log(err)
             alert(err.response.data)
+        })
+
+        Axios.get('/checkToken')
+        .then(res => {
+            this.setState({
+                loggedIn: true
+            })
+        })
+        .catch(err => {
+            console.log(err)
         })
     }
 
@@ -107,6 +118,8 @@ export default class Users extends Component{
     }
 
     render(){
+        const loggedIn = this.state.loggedIn
+
         return(
             <React.Fragment>
                 <h3>Total monthly cost for {this.state.name} license: ${this.total()}</h3>
@@ -118,10 +131,13 @@ export default class Users extends Component{
                         onChange = {this.handleChange}
                     />
                     <FormControl.Feedback />
-                </FormGroup>                
-                <LinkContainer to={`/software/${this.props.match.params.software_id}/users/add`}>
-                    <Button bsStyle='primary'> <FontAwesomeIcon icon='user-plus'/> Add User</Button>  
-                </LinkContainer>  
+                </FormGroup>
+                {loggedIn && 
+                    <LinkContainer to={`/software/${this.props.match.params.software_id}/users/add`}>
+                        <Button bsStyle='primary'> <FontAwesomeIcon icon='user-plus'/> Add User</Button>  
+                    </LinkContainer>  
+                }       
+                
                 <Filter handleFilter={this.handleFilter}/>
                 <div className='data users'>
                     <Table striped hover>
@@ -130,7 +146,7 @@ export default class Users extends Component{
                                 <th>Name</th>
                                 <th>Primary Cost Center</th>
                                 <th>Start</th>
-                                <th></th>
+                                {loggedIn && <th></th>}
                             </tr>
                         </thead>
                         <tbody>
@@ -139,16 +155,18 @@ export default class Users extends Component{
                                     <td>{user.first_name+' '+user.last_name}</td>
                                     <td>{user.department}</td>
                                     <td>{user.start?moment(user.start).format('YYYY-MM-DD'):''}</td>
-                                    <td>
-                                        <ManageModal
-                                            type='Retire'
-                                            title='Retire user'
-                                            date={this.state.end}
-                                            handleClick={()=> this.setState({emp_id: user.emp_id})}
-                                            handleSubmit={this.handleSubmit}
-                                            handleDate={this.handleEnd}
-                                        />
-                                    </td>
+                                    {loggedIn && 
+                                        <td>
+                                            <ManageModal
+                                                type='Retire'
+                                                title='Retire user'
+                                                date={this.state.end}
+                                                handleClick={()=> this.setState({emp_id: user.emp_id})}
+                                                handleSubmit={this.handleSubmit}
+                                                handleDate={this.handleEnd}
+                                            />
+                                        </td>
+                                    }                                    
                                 </tr>
                                 )}
                         </tbody>

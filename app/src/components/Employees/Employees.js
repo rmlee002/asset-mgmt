@@ -14,7 +14,8 @@ export default class Employees extends Component {
         this.state = {
             employees: [],
             filtered: [],
-            showArchived: false
+            showArchived: false,
+            loggedIn: false
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleCheck = this.handleCheck.bind(this);
@@ -30,6 +31,16 @@ export default class Employees extends Component {
         }).catch(err => {
             console.log(err);
             alert(err.response.data)
+        })
+
+        axios.get('/checkToken')
+        .then(res => {
+            this.setState({
+                loggedIn: true
+            })
+        })
+        .catch(err => {
+            console.log(err)
         })
     }
 
@@ -58,6 +69,8 @@ export default class Employees extends Component {
     }
 
     render(){
+        const loggedIn = this.state.loggedIn
+
         return(
             <React.Fragment>
                 <FormGroup>
@@ -70,10 +83,14 @@ export default class Employees extends Component {
                 </FormGroup>          
                 <Checkbox checked={this.state.showArchived} onChange={this.handleCheck} inline>
                     Show retired
-                </Checkbox>          
-                <LinkContainer to='/employees/add'>
-                    <Button className='pull-right' bsStyle='primary'><FontAwesomeIcon icon='user-plus'/> Add employee</Button>
-                </LinkContainer>
+                </Checkbox>
+
+                {loggedIn &&
+                    <LinkContainer to='/employees/add'>
+                        <Button className='pull-right' bsStyle='primary'><FontAwesomeIcon icon='user-plus'/> Add employee</Button>
+                    </LinkContainer>
+                }
+
                 <div className='data employees'>
                     <Table striped hover>
                         <thead>
@@ -90,7 +107,7 @@ export default class Employees extends Component {
                                 <th>Notes</th>
                                 <th>Assets</th>
                                 <th>Licenses</th>
-                                <th></th>
+                                {loggedIn && <th></th>}
                             </tr>
                         </thead>
                         <tbody>
@@ -122,11 +139,13 @@ export default class Employees extends Component {
                                             Licenses
                                         </Link>
                                     </td>
-                                    <td>
-                                        <Link to={`/employees/manage/${employee.emp_id}`}>
-                                            <FontAwesomeIcon icon='edit'/>
-                                        </Link>
-                                    </td>
+                                    {loggedIn && 
+                                        <td>
+                                            <Link to={`/employees/manage/${employee.emp_id}`}>
+                                                <FontAwesomeIcon icon='edit'/>
+                                            </Link>
+                                        </td>
+                                    }                                    
                                 </tr>
                             )}
                         </tbody>

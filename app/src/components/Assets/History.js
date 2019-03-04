@@ -14,7 +14,8 @@ export default class History extends Component{
         this.state = {
             show: false,
             end: new Date(),
-            owners: []
+            owners: [],
+            loggedIn: false
         }
     }
 
@@ -30,6 +31,16 @@ export default class History extends Component{
         .catch(err => {
             alert(err.response.data)
             console.log(err);
+        })
+
+        axios.get('/checkToken')
+        .then(res => {
+            this.setState({
+                loggedIn: true
+            })
+        })
+        .catch(err => {
+            console.log(err)
         })
     }
 
@@ -54,7 +65,9 @@ export default class History extends Component{
         })
     }
 
-    render(){        
+    render(){       
+        const loggedIn = this.state.loggedIn
+
         return(
             <React.Fragment>
                 <FormGroup controlid="search">
@@ -87,6 +100,7 @@ export default class History extends Component{
                                         {owner.end?
                                             moment(owner.end).utc().format('YYYY-MM-DD')
                                             :
+                                            loggedIn &&
                                             <ManageModal 
                                                 type='Retire'
                                                 title='Retire owner'

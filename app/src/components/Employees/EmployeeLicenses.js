@@ -19,7 +19,8 @@ export default class EmployeeLicenses extends Component{
             filtered: [],
             showHistory: false,
             end: new Date(),
-            software_id: null
+            software_id: null,
+            loggedIn: false
         }
     }
 
@@ -36,6 +37,16 @@ export default class EmployeeLicenses extends Component{
         .catch(err => {
             console.log(err)
             alert(err.response.data)
+        })
+
+        Axios.get('/checkToken')
+        .then(res => {
+            this.setState({
+                loggedIn: true
+            })
+        })
+        .catch(err => {
+            console.log(err)
         })
     }
 
@@ -65,11 +76,16 @@ export default class EmployeeLicenses extends Component{
     }
 
     render(){
+        const loggedIn = this.state.loggedIn
+        
         return(
             <React.Fragment>
-                <LinkContainer to={`/employees/${this.props.match.params.emp_id}/licenses/add`}>
-                    <Button bsStyle='primary'> <FontAwesomeIcon icon='desktop'/> Add license</Button>
-                </LinkContainer>   
+                {loggedIn && 
+                    <LinkContainer to={`/employees/${this.props.match.params.emp_id}/licenses/add`}>
+                        <Button className='pull-right' bsStyle='primary'> <FontAwesomeIcon icon='desktop'/> Add license</Button>
+                    </LinkContainer>   
+                }
+                
                 <Checkbox checked={this.state.showHistory} onChange={this.handleCheck}>
                     Show previous licenses
                 </Checkbox>
@@ -80,7 +96,7 @@ export default class EmployeeLicenses extends Component{
                                 <th>License</th>
                                 <th>Start</th>
                                 <th>End</th>
-                                <th></th>
+                                {loggedIn && <th></th>}
                             </tr>
                         </thead>
                         <tbody>
@@ -90,6 +106,7 @@ export default class EmployeeLicenses extends Component{
                                     <td>{license.start?moment(license.start).format('YYYY-MM-DD'):''}</td>
                                     <td>
                                         {license.end?moment(license.end).format('YYYY-MM-DD'):
+                                            loggedIn &&
                                             <ManageModal
                                                 type='Retire'
                                                 title='Retire license'
