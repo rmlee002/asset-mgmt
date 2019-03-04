@@ -14,15 +14,15 @@
 
 .data {
     margin-top: 15px;
-    overflow-y: auto;
-    overflow-x: hidden;
+    /* overflow-y: auto;
+    overflow-x: hidden; */
 }
 
-.data tbody{
+/* .data tbody{
     display: block;
     overflow: auto; 
 }
 
 .data thead tr{
     display: block;
-}
+} */
