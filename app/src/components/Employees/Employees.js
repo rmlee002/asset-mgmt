@@ -141,7 +141,7 @@ export default class Employees extends Component {
                                     </td>
                                     {loggedIn && 
                                         <td>
-                                            <Link to={`/employees/manage/${employee.emp_id}`}>
+                                            <Link to={`/employees/${employee.emp_id}/manage`}>
                                                 <FontAwesomeIcon icon='edit'/>
                                             </Link>
                                         </td>

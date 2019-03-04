@@ -137,7 +137,7 @@ export default class Assets extends Component{
                                     {loggedIn &&
                                         <td>
                                             {!item.archived &&
-                                                <Link to={`/assets/editOwner/${item.asset_id}`}>Assign owner</Link>
+                                                <Link to={`/assets/${item.asset_id}/editOwner`}>Assign owner</Link>
                                             }
                                         </td>
                                     }
@@ -145,7 +145,7 @@ export default class Assets extends Component{
                                     <td><Link to={`/assets/${item.asset_id}/history`}><FontAwesomeIcon icon='history'/></Link></td>
                                     {loggedIn &&
                                         <td>
-                                            <Link to={`/assets/manage/${item.asset_id}`}><FontAwesomeIcon icon='edit'/></Link>
+                                            <Link to={`/assets/${item.asset_id}/manage`}><FontAwesomeIcon icon='edit'/></Link>
                                         </td>
                                     }  
                                 </tr>
