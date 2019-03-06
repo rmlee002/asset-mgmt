@@ -7,22 +7,66 @@
 }
 
 .Container {
-    margin: auto;
+    margin-top: 70px;
+    /* margin: auto; */
     /* width: 100%; */
     padding: 0px 10px 0px 10px;
 }
 
 .data {
-    margin-top: 15px;
-    /* overflow-y: auto;
-    overflow-x: hidden; */
+    margin-top: 5px;
+    /* overflow-y: auto; */
+    /* overflow-x: hidden; */
 }
+
+/* .data table {
+    min-width: 1200px;
+    border-bottom: 2px solid #c9c9c9;
+} */
+
+.data thead, tbody, tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.data td{
+    border-right: 2px solid #e8e8e8;
+}
+
+.data tbody{
+    display: block;
+    /* max-height: 440px; */
+    overflow-x: hidden;
+    overflow-y: scroll;
+    /* border-left: 2px solid #c9c9c9; */
+}
+
+.data tr:last-child{
+    border-bottom: 1px solid #e6e6e6; 
+}
+
+.data td{
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* .data th{
+    position: sticky;
+    top: 0;
+    background: #eee;
+    border-bottom: 1px solid black;
+} */
+
+/* .data thead{
+    border: 1px solid black;
+} */
 
 /* .data tbody{
     display: block;
     overflow: auto; 
-}
+} */
 
-.data thead tr{
+/* .data thead tr{
     display: block;
 } */

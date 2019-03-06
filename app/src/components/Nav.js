@@ -50,7 +50,7 @@ class Links extends Component{
                 </LinkContainer> 
         }
         return (
-            <Navbar fluid collapseOnSelect>
+            <Navbar fixedTop fluid collapseOnSelect>
                 <Navbar.Header>
                     <Navbar.Brand>
                         <Link to="/home">
@@ -71,13 +71,6 @@ class Links extends Component{
                         </LinkContainer>
                     </Nav>
                     <Nav pullRight>
-                        {/* {this.state.loggedIn?
-                            <NavItem onClick={this.handleLogout} href='/home'>Logout</NavItem>                        
-                            :
-                            <LinkContainer to='/login'>
-                                <NavItem>Login</NavItem>
-                            </LinkContainer> 
-                        } */}
                         {link}
                     </Nav>
                 </Navbar.Collapse>

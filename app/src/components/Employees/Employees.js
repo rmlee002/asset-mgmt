@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from'react-router-dom';
-import { Table, FormGroup, FormControl, ControlLabel, Button, Checkbox} from 'react-bootstrap';
+import { Table, FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import moment from 'moment';
 import axios from 'axios';
@@ -110,7 +110,7 @@ export default class Employees extends Component {
 
                 <div className='data employees'>
                     <Table striped hover>
-                        <thead>
+                        <thead>                            
                             <tr>
                                 <th>Name</th>
                                 <th>Email</th>
@@ -125,7 +125,7 @@ export default class Employees extends Component {
                                 <th>Assets</th>
                                 <th>Licenses</th>
                                 {loggedIn && <th></th>}
-                            </tr>
+                            </tr>                            
                         </thead>
                         <tbody>
                             {this.state.filtered.map(employee =>
