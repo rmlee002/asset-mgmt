@@ -72,7 +72,9 @@ export default class Employees extends Component {
 
     render(){
         const loggedIn = this.state.loggedIn
-
+        const userHead ={
+            width: loggedIn?'150px':'166.5px'
+        }
         return(
             <React.Fragment>
                 <FormGroup controlid="search">
@@ -97,13 +99,13 @@ export default class Employees extends Component {
                         <Button>View all active licenses</Button>
                     </LinkContainer>                    
                 </ButtonToolbar>
-                <div className='data software'>
+                <div className='data' id='software'>
                     <Table striped hover>
                         <thead>
                             <tr>
                                 <th>License</th>
                                 <th>Monthly Cost</th> 
-                                <th></th>
+                                <th style={userHead}></th>
                                 {loggedIn && <th></th>}
                             </tr>
                         </thead>

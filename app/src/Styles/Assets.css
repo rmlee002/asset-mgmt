@@ -1,87 +1,53 @@
-.data.assets tbody{
+#assets tbody{
     height: 470px;
 }
 
-.data.assets td:nth-child(1), .data.assets th:nth-child(1){
+#assets tr > :nth-child(1){
     width: 145px;
-}/*
-.data.assets td:nth-child(2), .data.assets th:nth-child(2){
-    width: 200px;
 }
-.data.assets td:nth-child(3), .data.assets th:nth-child(3){
-    width: 140px;
-}
-.data.assets td:nth-child(4), .data.assets th:nth-child(4){
-    width: 110px;
-}*/
-
-.data.assets td:nth-child(5), .data.assets th:nth-child(5){
+#assets tr > :nth-child(5){
     width: 80px;
 }
-.data.assets td:nth-child(6), .data.assets th:nth-child(6){
+#assets tr > :nth-child(6){
     width: 90px;
-}/*
-.data.assets td:nth-child(7), .data.assets th:nth-child(7){
-    width: 150px;
-}*/
-.data.assets td:nth-child(8), .data.assets th:nth-child(8){
+}
+#assets tr > :nth-child(8){
     width: 80px;
 }
-.data.assets td:nth-child(9), .data.assets th:nth-child(9){
+#assets tr > :nth-child(9){
     width: 90px;
 }
-.data.assets td:nth-child(10), .data.assets th:nth-child(10){
+#assets tr > :nth-child(10){
     width: 90px;
-}/*
-.data.assets td:nth-child(11), .data.assets th:nth-child(11){
-    width: 143px;
-} */
-.data.assets td:nth-child(12), .data.assets th:nth-child(12){
-    width: 70px;
 }
-.data.assets td:nth-child(13), .data.assets th:nth-child(13){
-    width: 40px;
-    text-align: center;
-}
-.data.assets td:nth-child(14){
+#assets tr > :nth-child(12){
     width: 50px;
     text-align: center;
 }
-.data.assets th:nth-child(14){
+#assets tr > :nth-child(13){
+    width: 60px;
+    text-align: center;
+}
+#assets td:nth-child(14){
+    width: 50px;
+    text-align: center;
+}
+#assets th:nth-child(14){
     width: 66.5px;
 }
 
-.data.edit tbody{
+#edit tbody{
     height: 500px;
 }
 
-/* .data.edit td:nth-child(1), .data.edit th:nth-child(1){
-    width:330px;
-}
-.data.edit td:nth-child(2), .data.edit th:nth-child(2){
-    width:330px;
-}
-.data.edit td:nth-child(3), .data.edit th:nth-child(3){
-    width:330px;
-}
-.data.edit td:nth-child(4), .data.edit th:nth-child(4){
-    width:330px;
-} */
-.data.edit td:nth-child(5), .data.edit th:nth-child(5){
+#edit td:nth-child(5){
     width:135px;
     text-align: center;
 }
+#edit th:nth-child(5){
+    width: 151.5px;
+}
 
-.data.history tbody{
+#history tbody{
     height: 470px;
 }
-
-/* .data.history td:nth-child(1), .data.history th:nth-child(1) {
-    width: 487px;
-}
-.data.history td:nth-child(2), .data.history th:nth-child(2) {
-    width: 487px;
-} 
-.data.history td:nth-child(3), .data.history th:nth-child(3) {
-    width: 487px;
-}*/

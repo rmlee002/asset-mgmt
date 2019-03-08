@@ -138,7 +138,7 @@ export default class Users extends Component{
                     </LinkContainer>  
                 }                
                 <Filter handleFilter={this.handleFilter}/>
-                <div className='data users'>
+                <div id='users'>
                     <Table striped hover>
                         <thead>
                             <tr>

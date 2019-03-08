@@ -67,7 +67,9 @@ export default class EmployeeAssets extends Component{
 
     render(){
         const loggedIn = this.state.loggedIn
-
+        const startHead={
+            width: loggedIn?null:'336.5px'
+        }
         return(
             <React.Fragment>
                 {loggedIn && 
@@ -78,14 +80,14 @@ export default class EmployeeAssets extends Component{
                     </LinkContainer>
                 }
                 
-                <div className='data empAssets'>
+                <div id='empAssets'>
                     <Table striped hover>
                         <thead>
                             <tr>
                                 <th>Serial Number</th>
                                 <th>Model</th>                            
                                 <th>Comment</th>
-                                <th>Start Date</th>
+                                <th style={startHead}>Start Date</th>
                                 {loggedIn && <th></th>}
                             </tr>
                         </thead>
@@ -96,8 +98,8 @@ export default class EmployeeAssets extends Component{
                                     <td>{item.model}</td>
                                     <td>{item.comment}</td>
                                     <td>{item.start?moment(item.start).format('YYYY-MM-DD'):''}</td>
-                                    <td>
-                                        {loggedIn && 
+                                    {loggedIn &&
+                                        <td>
                                             <ManageModal
                                                 type='Retire'
                                                 title='Retire asset'
@@ -106,8 +108,8 @@ export default class EmployeeAssets extends Component{
                                                 handleSubmit={this.handleSubmit}
                                                 handleDate={this.handleEnd}
                                             />
-                                        }                                        
-                                    </td>
+                                        </td>
+                                    }
                                 </tr>
                             )}
                         </tbody>

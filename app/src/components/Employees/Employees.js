@@ -85,7 +85,9 @@ export default class Employees extends Component {
 
     render(){
         const loggedIn = this.state.loggedIn
-
+        const licensesHead = {
+            width: loggedIn?'70px':'86.5px'
+        }
         return(
             <React.Fragment>
                 <FormGroup>
@@ -96,19 +98,13 @@ export default class Employees extends Component {
                         onChange = {this.handleChange}
                     />
                 </FormGroup>          
-                {/* <Checkbox checked={this.state.showArchived} onChange={this.handleCheck} inline>
-                    Show retired
-                </Checkbox> */}
-
                 {loggedIn &&
                     <LinkContainer to='/employees/add'>
                         <Button className='pull-right' bsStyle='primary'><FontAwesomeIcon icon='user-plus'/> Add employee</Button>
                     </LinkContainer>
                 }
-
                 <Filter handleFilter={this.handleFilter}/>
-
-                <div className='data employees'>
+                <div className='data' id='employees'>
                     <Table striped hover>
                         <thead>                            
                             <tr>
@@ -123,7 +119,7 @@ export default class Employees extends Component {
                                 <th>End date</th>
                                 <th>Notes</th>
                                 <th>Assets</th>
-                                <th>Licenses</th>
+                                <th style={licensesHead}>Licenses</th>
                                 {loggedIn && <th></th>}
                             </tr>                            
                         </thead>

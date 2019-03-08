@@ -87,7 +87,7 @@ export default class EditOwner extends Component{
                         <FormControl.Feedback />
                     </FormGroup>
                 </div>
-                <div className='data edit'>
+                <div className='data' id='edit'>
                     <Table striped hover>
                         <thead>
                             <tr>

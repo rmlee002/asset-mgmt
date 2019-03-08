@@ -71,6 +71,9 @@ export default class Assets extends Component{
 
     render(){     
         const loggedIn = this.state.loggedIn
+        const historyHead = {
+            width: loggedIn?'50px':'67px'
+        }
 
         return(
             <React.Fragment>
@@ -94,7 +97,7 @@ export default class Assets extends Component{
                     }
                     
                 </div>
-                <div className='data assets'>
+                <div className='data' id='assets'>
                     <Table striped hover>
                         <thead>
                             <tr>
@@ -109,8 +112,8 @@ export default class Assets extends Component{
                                 <th>In Date</th>
                                 <th>Out Date</th>
                                 <th>Comment</th>
+                                <th style={historyHead}></th>
                                 {loggedIn && <th></th>}
-                                <th></th>
                                 {loggedIn && <th></th>}
                             </tr>
                         </thead>
@@ -134,15 +137,14 @@ export default class Assets extends Component{
                                             moment(item.outDate).utc().format('YYYY-MM-DD'):''}
                                     </td>
                                     <td>{item.comment}</td>
+                                    <td><Link to={`/assets/${item.asset_id}/history`}><FontAwesomeIcon icon='history'/></Link></td>
                                     {loggedIn &&
                                         <td>
                                             {!item.archived &&
                                                 <Link to={`/assets/${item.asset_id}/editOwner`}>Assign owner</Link>
                                             }
                                         </td>
-                                    }
-                                    
-                                    <td><Link to={`/assets/${item.asset_id}/history`}><FontAwesomeIcon icon='history'/></Link></td>
+                                    }                                    
                                     {loggedIn &&
                                         <td>
                                             <Link to={`/assets/${item.asset_id}/manage`}><FontAwesomeIcon icon='edit'/></Link>

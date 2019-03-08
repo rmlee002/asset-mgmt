@@ -92,7 +92,7 @@ export default class AddUser extends Component{
                         <FormControl.Feedback />
                     </FormGroup>
                 </div>
-                <div className='data addUser'>
+                <div className='data' id='addUser'>
                     <Table striped hover>
                         <thead>
                             <tr>
