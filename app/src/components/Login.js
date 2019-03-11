@@ -75,8 +75,6 @@ export default class Login extends Component {
 						block
 						bsSize="large"
 						type='submit'
-						// onClick={this.handleLogin}
-						// href={this.props.location.state?this.props.location.state.path:'/home'}
 					>
 						Login
 					</Button>

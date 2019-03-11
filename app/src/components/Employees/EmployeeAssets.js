@@ -72,7 +72,7 @@ export default class EmployeeAssets extends Component{
         }
         return(
             <React.Fragment>
-                {loggedIn && 
+                {loggedIn &&
                     <LinkContainer to={`/employees/${this.props.match.params.emp_id}/assets/add`}>
                         <Button bsStyle='primary'>
                             <FontAwesomeIcon icon='laptop-medical'/> Add asset
