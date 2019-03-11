@@ -44,7 +44,11 @@
     width: 151.5px;
 }
 
-#users tr > :nth-child(4){
+#users td:nth-child(4){
     width: 200px;
     text-align: center;
+}
+
+#users th:nth-child(4){
+    width: 217px;
 }
