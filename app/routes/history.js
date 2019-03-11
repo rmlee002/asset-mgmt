@@ -38,10 +38,24 @@ router.post('/retire', (req,res)=>{
     })
 })
 
+// router.post('/employee', (req, res) => {
+//     connection.query('SELECT * FROM (SELECT hardware.asset_id, history.emp_id, hardware.serial_number, hardware.model, hardware.comment, \
+// 		history.start, history.end FROM history INNER JOIN hardware ON history.asset_id = hardware.asset_id) AS j WHERE emp_id=? AND end IS NULL', 
+// 		req.body.emp_id,(err,results) => {
+// 			if (err){
+// 				console.log(err)
+// 				res.status(500).send("Database query error")
+// 			}
+// 			else{
+// 				res.send(JSON.stringify(results))
+// 			}
+// 		})
+// })
+
 router.post('/employee', (req, res) => {
-    connection.query('SELECT * FROM (SELECT hardware.asset_id, history.emp_id, hardware.serial_number, hardware.model, hardware.comment, \
-		history.start, history.end FROM history INNER JOIN hardware ON history.asset_id = hardware.asset_id) AS j WHERE emp_id=? AND end IS NULL', 
-		req.body.emp_id,(err,results) => {
+    connection.query('SELECT hardware.asset_id, history.emp_id, hardware.serial_number, \
+    hardware.model, hardware.comment, history.start, history.end FROM history INNER JOIN hardware\
+    ON history.asset_id = hardware.asset_id AND history.emp_id=? AND history.end IS NULL', req.body.emp_id,(err,results) => {
 			if (err){
 				console.log(err)
 				res.status(500).send("Database query error")
