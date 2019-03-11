@@ -59,30 +59,33 @@ export default class ManageModal extends Component{
                     <Modal.Header closeButton>
                         <Modal.Title>{this.props.title}</Modal.Title>
                     </Modal.Header>
-                        <Modal.Body>
-                            <Form horizontal>
-                                <FormGroup>
-                                    <Col componentClass={ControlLabel} sm={3}>
-                                        Enter {this.state.value} date: 
-                                    </Col>
-                                    <Col sm={4}>
-                                        <DatePicker
-                                            selected={this.props.date}
-                                            onChange={this.props.handleDate}
-                                        />
-                                    </Col>
-                                </FormGroup>
-                            </Form>
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button 
-                                disabled={this.props.date === null} 
-                                bsStyle={this.state.style}
-                                onClick={this.props.handleSubmit}
-                            >
-                                {this.props.type} <FontAwesomeIcon icon={this.props.type==='Retire'?'archive':'check'}/>
-                            </Button>
-                        </Modal.Footer>
+                        <form onSubmit={this.props.handleSubmit}>
+                            <Modal.Body>
+                                <Form horizontal>
+                                    <FormGroup>
+                                        <Col componentClass={ControlLabel} sm={3}>
+                                            Enter {this.state.value} date: 
+                                        </Col>
+                                        <Col sm={4}>
+                                            <DatePicker
+                                                selected={this.props.date}
+                                                onChange={this.props.handleDate}
+                                            />
+                                        </Col>
+                                    </FormGroup>
+                                </Form>
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button 
+                                    disabled={this.props.date === null} 
+                                    bsStyle={this.state.style}
+                                    // onClick={this.props.handleSubmit}
+                                    type='submit'
+                                >
+                                    {this.props.type} <FontAwesomeIcon icon={this.props.type==='Retire'?'archive':'check'}/>
+                                </Button>
+                            </Modal.Footer>
+                        </form>
                 </Modal>
             </React.Fragment>
         );
