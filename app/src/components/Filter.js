@@ -101,11 +101,13 @@ export default class Filter extends Component{
                                         <Departments createDept={this.handleCreateDepartmentOption} handleChange={this.handleDepartment} value={this.state.depts}/>
                                     </Col>
                                 </FormGroup>
-                                <FormGroup>
-                                    <Col smOffset={1} sm={2}>
-                                        <Checkbox checked={this.state.showArchived} onChange={this.handleCheck}>Show retired</Checkbox>
-                                    </Col>
-                                </FormGroup>
+                                {this.props.checkbox &&
+                                    <FormGroup>
+                                        <Col smOffset={1} sm={2}>
+                                            <Checkbox checked={this.state.showArchived} onChange={this.handleCheck}>Show retired</Checkbox>
+                                        </Col>
+                                    </FormGroup>
+                                }                                
                                 <FormGroup>
                                     <Col smOffset={1} sm={2}>
                                         <ButtonToolbar>                                

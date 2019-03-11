@@ -103,7 +103,7 @@ export default class Employees extends Component {
                         <Button className='pull-right' bsStyle='primary'><FontAwesomeIcon icon='user-plus'/> Add employee</Button>
                     </LinkContainer>
                 }
-                <Filter handleFilter={this.handleFilter}/>
+                <Filter handleFilter={this.handleFilter} checkbox/>
                 <div className='data' id='employees'>
                     <Table striped hover>
                         <thead>                            
