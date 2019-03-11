@@ -79,7 +79,6 @@ export default class ManageModal extends Component{
                                 <Button 
                                     disabled={this.props.date === null} 
                                     bsStyle={this.state.style}
-                                    // onClick={this.props.handleSubmit}
                                     type='submit'
                                 >
                                     {this.props.type} <FontAwesomeIcon icon={this.props.type==='Retire'?'archive':'check'}/>
