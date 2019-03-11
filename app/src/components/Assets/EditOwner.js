@@ -52,7 +52,8 @@ export default class EditOwner extends Component{
         }
     }
 
-    handleSubmit(){
+    handleSubmit(e){
+        e.preventDefault()
         Axios.post('/history/add', {
             asset_id: this.props.match.params.asset_id,
             emp_id: this.state.emp_id,
