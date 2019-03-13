@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import axios from 'axios';
 import '../Styles/Login.css';
+import logo from '../Images/logolarge.png'
 
 export default class Login extends Component {
 	constructor(props) {
@@ -47,7 +48,7 @@ export default class Login extends Component {
 		<div className="Main">
 			<div className="Head">
 				<header className="App-header">		
-					<img src="logolarge.png" className="Vid-logo" alt="logo" />
+					<img src={logo} className="Vid-logo" alt="logo" />
 				</header>
 			</div>
 			<div className="Login">

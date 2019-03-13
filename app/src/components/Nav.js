@@ -3,6 +3,7 @@ import { Nav, NavItem, Navbar } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import Axios from 'axios';
+import image from '../Images/icon.ico'
 
 class Links extends Component{
     constructor(props){
@@ -56,7 +57,7 @@ class Links extends Component{
                         {/* <Link to="/home">
                             Home
                         </Link> */}
-                        <img src="icon.ico" alt='logo' width={50}/>
+                        <img src={image} alt='logo'/>
                     </Navbar.Brand>
                 </Navbar.Header>                    
                 <Navbar.Collapse>
