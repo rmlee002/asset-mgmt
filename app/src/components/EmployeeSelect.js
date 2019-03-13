@@ -15,7 +15,7 @@ export default class EmployeeSelect extends Component{
         Axios.get('/employee')
         .then(res => {
             this.setState({
-                options: res.data.map(emp => 
+                options: res.data.filter(emp => !emp.archived).map(emp => 
                     ({value: emp.emp_id, label: emp.first_name+' '+emp.last_name}))
             })
         })
