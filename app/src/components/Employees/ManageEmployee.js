@@ -279,6 +279,7 @@ export default class ManageEmployee extends Component{
                             </Col>
                             <Col sm={7}>
                                 <DatePicker
+                                    className='form-control'
                                     selected={this.state.start}
                                     onChange={this.handleStart}
                                 />
@@ -290,6 +291,8 @@ export default class ManageEmployee extends Component{
                             </Col>
                             <Col sm={7}>
                                 <DatePicker
+                                    isClearable
+                                    className='form-control'
                                     selected={this.state.end}
                                     onChange={this.handleEnd}
                                 />

@@ -13,11 +13,10 @@
 }
 
 .data {
-    margin-top: 5px;
+    margin: auto;
 }
 
 .data table{
-    height: 100%;    
     min-width: 1200px;
 }
 
@@ -33,7 +32,7 @@
 
 .data tbody{
     display: block;
-    overflow-x: hidden;
+    overflow-x: auto;
     overflow-y: scroll;
 }
 
@@ -44,4 +43,24 @@
 .data td{
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.react-datepicker {
+    font-size: 1.3rem !important;
+}
+  
+.react-datepicker__current-month {
+    font-size: 1.5rem !important;
+}
+  
+.react-datepicker__header {
+    padding-top: 6px !important;
+}
+  
+.react-datepicker__navigation {
+    top: 13px !important;
+}
+  
+.react-datepicker__day-name, .react-datepicker__day {
+    margin: 0.5rem !important;
 }

@@ -68,6 +68,7 @@ export default class ManageModal extends Component{
                                         </Col>
                                         <Col sm={4}>
                                             <DatePicker
+                                                className='form-control'
                                                 selected={this.props.date}
                                                 onChange={this.props.handleDate}
                                             />

@@ -244,6 +244,7 @@ export default class ManageAsset extends Component{
                             </Col>
                             <Col sm={7}>
                                 <DatePicker
+                                    className='form-control'
                                     selected={this.state.inDate}
                                     onChange={this.handleIn}
                                 />
@@ -255,6 +256,8 @@ export default class ManageAsset extends Component{
                             </Col>
                             <Col sm={6}>
                                 <DatePicker
+                                    isClearable
+                                    className='form-control'
                                     selected={this.state.outDate}
                                     onChange={this.handleOut}
                                 />

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Button, Form, ButtonToolbar, FormGroup, ControlLabel, Col, Well, Collapse, Checkbox } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import Departments from './Departments';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default class Filter extends Component{
     constructor(props){
@@ -82,13 +84,24 @@ export default class Filter extends Component{
                                         From: 
                                     </Col>
                                     <Col sm = {2}>
-                                        <DatePicker isClearable selected={this.state.start} onChange={date => this.setState({start: date})}/>
+                                        <DatePicker 
+                                            className='form-control'
+                                            fixedHeight
+                                            isClearable 
+                                            selected={this.state.start} 
+                                            onChange={date => this.setState({start: date})}
+                                        />
                                     </Col>
                                     <Col componentClass={ControlLabel} sm={1}>
                                         To: 
                                     </Col>    
-                                    <Col sm={1}>
-                                        <DatePicker isClearable selected={this.state.end} onChange={date => this.setState({end: date})}/>
+                                    <Col sm={2}>
+                                        <DatePicker 
+                                            isClearable 
+                                            className='form-control'
+                                            selected={this.state.end} 
+                                            onChange={date => this.setState({end: date})}
+                                        />
                                     </Col>
                                 </FormGroup>              
                             </Form>      
@@ -97,7 +110,7 @@ export default class Filter extends Component{
                                     <Col componentClass={ControlLabel} sm={1}>
                                         Department(s):
                                     </Col>
-                                    <Col sm={4}>
+                                    <Col sm={5}>
                                         <Departments createDept={this.handleCreateDepartmentOption} handleChange={this.handleDepartment} value={this.state.depts}/>
                                     </Col>
                                 </FormGroup>
@@ -111,8 +124,12 @@ export default class Filter extends Component{
                                 <FormGroup>
                                     <Col smOffset={1} sm={2}>
                                         <ButtonToolbar>                                
-                                            <Button type='submit' bsSize='small' bsStyle='success'>Apply</Button> 
-                                            <Button bsSize='small' onClick={this.handleClear}>Clear</Button>                               
+                                            <Button type='submit' bsSize='small' bsStyle='success'>
+                                                Apply <FontAwesomeIcon icon="check"/>
+                                            </Button> 
+                                            <Button bsSize='small' onClick={this.handleClear}>
+                                                Clear <FontAwesomeIcon icon="undo"/>
+                                            </Button>                               
                                         </ButtonToolbar>
                                     </Col>  
                                 </FormGroup>                                

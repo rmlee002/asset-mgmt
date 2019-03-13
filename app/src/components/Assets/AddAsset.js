@@ -116,6 +116,7 @@ export default class AddAssets extends Component{
                             </Col>
                             <Col sm={6}>
                                 <DatePicker
+                                    className='form-control'
                                     selected={this.state.inDate}
                                     onChange={this.handleIn}
                                 />
