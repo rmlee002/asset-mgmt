@@ -16,11 +16,13 @@ export default class Employees extends Component {
             employees: [],
             filtered: [],
             showArchived: false,
-            loggedIn: false
+            loggedIn: false,
+            theight: document.documentElement.clientHeight - 255
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleCheck = this.handleCheck.bind(this);
         this.handleFilter = this.handleFilter.bind(this);
+        this.handleResize = this.handleResize.bind(this);
     }
 
     componentDidMount(){
@@ -44,6 +46,8 @@ export default class Employees extends Component {
         .catch(err => {
             console.log(err)
         })
+
+        window.addEventListener('resize', this.handleResize)
     }
 
     filter = memoize(
@@ -80,6 +84,13 @@ export default class Employees extends Component {
                 (options.depts.length > 0 ? options.depts.map(dept => dept.value).some(dept => item.department.split(', ').includes(dept)): true)
             ),
             showArchived: options.showArchived
+        })
+    }
+
+    handleResize(){
+        const h = document.documentElement.clientHeight - 255
+        this.setState({
+            theight: h
         })
     }
 
@@ -123,7 +134,7 @@ export default class Employees extends Component {
                                 {loggedIn && <th></th>}
                             </tr>                            
                         </thead>
-                        <tbody>
+                        <tbody style={{height: this.state.theight}}>
                             {this.state.filtered.map(employee =>
                                 <tr key={employee.emp_id}>
                                     <td>{employee.first_name+' '+employee.last_name}</td>

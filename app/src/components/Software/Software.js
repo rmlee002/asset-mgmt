@@ -13,12 +13,14 @@ export default class Employees extends Component {
 
         this.handleChange = this.handleChange.bind(this)
         this.handleCheck = this.handleCheck.bind(this)
+        this.handleResize = this.handleResize.bind(this)
 
         this.state={
             showArchived: false,
             software: [],
             filtered: [],
-            loggedIn: false
+            loggedIn: false,
+            theight: document.documentElement.clientHeight - 250
         }
     }
 
@@ -44,6 +46,8 @@ export default class Employees extends Component {
         .catch(err => {
             console.log(err)
         })
+
+        window.addEventListener('resize', this.handleResize)
     }
 
     filter = memoize(
@@ -61,6 +65,13 @@ export default class Employees extends Component {
                 filtered: this.state.software.filter((software)=> !software.archived || this.state.showArchived)
             })
         }        
+    }
+
+    handleResize(){
+        const h = document.documentElement.clientHeight - 250
+        this.setState({
+            theight: h
+        })
     }
 
     handleCheck(e){
@@ -109,7 +120,7 @@ export default class Employees extends Component {
                                 {loggedIn && <th></th>}
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody style={{height: this.state.theight, overflow: 'auto'}}>
                             {this.state.filtered.map((software) =>
                                 <tr>
                                     <td>{software.name}</td>

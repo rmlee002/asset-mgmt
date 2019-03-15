@@ -12,13 +12,15 @@ export default class AddAsset extends Component{
         this.handleChange = this.handleChange.bind(this)
         this.handleStart = this.handleStart.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleResize = this.handleResize.bind(this);
 
         this.state = {
             show: false,
             asset: null,
             assets: [],
             filtered: [],
-            start: new Date()
+            start: new Date(),
+            theight: document.documentElement.clientHeight - 230
         }
     }
 
@@ -36,6 +38,8 @@ export default class AddAsset extends Component{
             alert(err.response.data)
             console.log(err)
         })
+
+        window.addEventListener('resize', this.handleResize)
     }
 
     filter = memoize(
@@ -54,6 +58,13 @@ export default class AddAsset extends Component{
             })
         }        
     }   
+
+    handleResize(){
+        const h = document.documentElement.clientHeight - 230
+        this.setState({
+            theight: h
+        })
+    }
 
     handleSubmit(e){
         e.preventDefault();
@@ -89,7 +100,7 @@ export default class AddAsset extends Component{
                     />
                     <FormControl.Feedback />
                 </FormGroup>
-                <div className='data addAsset'>                
+                <div className='data' id='addAsset'>                
                     <Table striped hover>
                         <thead>
                             <tr>
@@ -99,7 +110,7 @@ export default class AddAsset extends Component{
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody style={{height: this.state.theight}}>
                             {this.state.filtered.map(item =>                             
                                 <tr>
                                     <td>{item.serial_number}</td>

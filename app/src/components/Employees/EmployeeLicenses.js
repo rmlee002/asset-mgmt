@@ -20,7 +20,7 @@ export default class EmployeeLicenses extends Component{
             showHistory: false,
             end: new Date(),
             software_id: null,
-            loggedIn: false
+            loggedIn: false,
         }
     }
 
@@ -82,21 +82,20 @@ export default class EmployeeLicenses extends Component{
             <React.Fragment>
                 {loggedIn && 
                     <LinkContainer to={`/employees/${this.props.match.params.emp_id}/licenses/add`}>
-                        <Button className='pull-right' bsStyle='primary'> <FontAwesomeIcon icon='desktop'/> Add license</Button>
+                        <Button bsStyle='primary'> <FontAwesomeIcon icon='desktop'/> Add license</Button>
                     </LinkContainer>   
                 }
                 
                 <Checkbox checked={this.state.showHistory} onChange={this.handleCheck}>
                     Show previous licenses
                 </Checkbox>
-                <div className='data empLicenses'>             
+                <div id='empLicenses'>             
                     <Table striped hover>
                         <thead>
                             <tr>
                                 <th>License</th>
                                 <th>Start</th>
                                 <th>End</th>
-                                {loggedIn && <th></th>}
                             </tr>
                         </thead>
                         <tbody>

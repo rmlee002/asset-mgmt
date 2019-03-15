@@ -15,10 +15,12 @@ export default class Assets extends Component{
             assets: [],
             filtered: [],
             showArchived: false,
-            loggedIn: false
+            loggedIn: false,
+            theight: document.documentElement.clientHeight - 245
         }
         this.handleChange = this.handleChange.bind(this);
-        this.handleCheck = this.handleCheck.bind(this)
+        this.handleCheck = this.handleCheck.bind(this);
+        this.handleResize = this.handleResize.bind(this);
     }
 
     componentDidMount(){
@@ -43,6 +45,8 @@ export default class Assets extends Component{
         .catch(err => {
             console.log(err)
         })
+
+        window.addEventListener('resize', this.handleResize)
     }
 
     filter = memoize(
@@ -60,6 +64,13 @@ export default class Assets extends Component{
                 filtered: this.state.assets.filter((item) =>  !(item.archived) || this.state.showArchived)
             })
         }
+    }
+
+    handleResize(){
+        const h = document.documentElement.clientHeight - 245
+        this.setState({
+            theight: h
+        })
     }
 
     handleCheck(e){
@@ -117,7 +128,7 @@ export default class Assets extends Component{
                                 {loggedIn && <th></th>}
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody style={{height: this.state.theight}}>
                             {this.state.filtered.map(item =>
                                 <tr key={item.asset_id}>
                                     <td>{item.serial_number}</td>

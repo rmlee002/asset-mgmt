@@ -6,14 +6,25 @@
     font-weight: bold;
 }
 
+.Header {
+    height: 45px;
+    /* border: 1px solid black; */
+}
+
 .Container {
     height: 100%;
-    margin-top: 70px;
+    /* height: 100vh - 20px; */
+    /* display: block; */
     padding: 0px 10px 0px 10px;
+    margin: auto;
+    /* border: 1px solid black; */
 }
 
 .data {
+    height: 100%;
     margin: auto;
+    /* border: 1px solid black;  */
+    /* overflow:auto; */
 }
 
 .data table{

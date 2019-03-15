@@ -18,6 +18,7 @@ export default class Users extends Component{
         this.handleFilter = this.handleFilter.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.handleEnd = this.handleEnd.bind(this)
+        this.handleResize = this.handleResize.bind(this)
 
         this.state={
             users: [],
@@ -25,7 +26,8 @@ export default class Users extends Component{
             name: undefined,
             end: new Date(),
             emp_id: null,
-            loggedIn: false
+            loggedIn: false,
+            theight: document.documentElement.clientHeight - 310
         }
     }
 
@@ -54,6 +56,8 @@ export default class Users extends Component{
         .catch(err => {
             console.log(err)
         })
+
+        window.addEventListener('resize', this.handleResize)
     }
 
     filterName = memoize(
@@ -103,6 +107,13 @@ export default class Users extends Component{
         })
     }
 
+    handleResize(){
+        const h = document.documentElement.clientHeight - 310
+        this.setState({
+            theight: h
+        })
+    }
+
     total(){
         var total = 0;
         this.state.filtered.forEach((user) => {
@@ -148,7 +159,7 @@ export default class Users extends Component{
                                 {loggedIn && <th></th>}
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody style={{height: this.state.theight}}>
                             {this.state.filtered.map((user) => 
                                 <tr>
                                     <td>{user.first_name+' '+user.last_name}</td>

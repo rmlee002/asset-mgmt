@@ -12,12 +12,14 @@ export default class AddEmployeeLicense extends Component{
         this.handleSubmit = this.handleSubmit.bind(this)
         this.handleStart = this.handleStart.bind(this)
         this.handleChange = this.handleChange.bind(this)
+        this.handleResize = this.handleResize.bind(this);
 
         this.state={
             software: [],
             filtered: [],
             show: false,
-            start: new Date()
+            start: new Date(),
+            theight: document.documentElement.clientHeight - 240
         }
     }
 
@@ -35,6 +37,8 @@ export default class AddEmployeeLicense extends Component{
             alert(err.response.data)
             console.log(err)
         })
+
+        window.addEventListener('resize', this.handleResize)
     }
 
     filter = memoize(
@@ -53,6 +57,13 @@ export default class AddEmployeeLicense extends Component{
             })
         }
         
+    }
+
+    handleResize(){
+        const h = document.documentElement.clientHeight - 240
+        this.setState({
+            theight: h
+        })
     }
 
     handleStart(date){
@@ -89,7 +100,7 @@ export default class AddEmployeeLicense extends Component{
                     />
                     <FormControl.Feedback />
                 </FormGroup>
-                <div className='data addLicense'>
+                <div className='data' id='addLicense'>
                     <Table striped hover>
                         <thead>
                             <tr>
@@ -97,7 +108,7 @@ export default class AddEmployeeLicense extends Component{
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody style={{height: this.state.theight}}>
                             {this.state.filtered.map((software) => 
                                 <tr>
                                     <td>{software.name}</td>

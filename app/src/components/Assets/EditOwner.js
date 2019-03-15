@@ -14,12 +14,14 @@ export default class EditOwner extends Component{
         this.handleStart = this.handleStart.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.handleChange = this.handleChange.bind(this)
+        this.handleResize = this.handleResize.bind(this);
 
         this.state={
             emp_id: null,
             start: new Date(),
             employees: [],
-            filtered: []
+            filtered: [],
+            theight: document.documentElement.clientHeight - 220
         }
     }
 
@@ -33,6 +35,8 @@ export default class EditOwner extends Component{
             console.log(err);
             alert(err.response.data);
         })
+
+        window.addEventListener('resize', this.handleResize)
     }
 
     filter = memoize(
@@ -50,6 +54,13 @@ export default class EditOwner extends Component{
                 filtered: this.state.employees
             })
         }
+    }
+
+    handleResize(){
+        const h = document.documentElement.clientHeight - 220
+        this.setState({
+            theight: h
+        })
     }
 
     handleSubmit(e){
@@ -99,7 +110,7 @@ export default class EditOwner extends Component{
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody style={{height: this.state.theight}}>
                             {this.state.filtered.map(employee => 
                                 <tr>
                                     <td>{employee.first_name+" "+employee.last_name}</td>

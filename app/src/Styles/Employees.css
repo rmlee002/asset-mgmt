@@ -1,5 +1,5 @@
 #employees tbody{
-    height: 460px;
+    height: 460px; 
 }
 
 #employees tr > :nth-child(2){
@@ -32,7 +32,7 @@
     width: 70px;    
 } 
 
-.data.empAssets tbody{
+#empAssets tbody{
     height: 520px;
 }
 
@@ -57,7 +57,7 @@
     width: 157px;
 }
 
-.data.addAsset tbody{
+#addAsset tbody{
     height: 500px;
 }
 
@@ -70,14 +70,14 @@
 .data.addAsset td:nth-child(3), .data.addAsset th:nth-child(3){
     width: 440px;
 }*/
-.data.addAsset td:nth-child(4), .data.addAsset th:nth-child(4){
+#addAsset td:nth-child(4), #addAsset th:nth-child(4){
     width: 137px;
     text-align: center;
 } 
 
-.data.empLicenses tbody{
+/* #empLicenses tbody{
     height: 470px;
-}
+} */
 
 /* .data.empLicenses td:nth-child(1), .data.empLicenses th:nth-child(1){
     width: 485px;
@@ -87,12 +87,13 @@
 }
 .data.empLicenses td:nth-child(3), .data.empLicenses th:nth-child(3){
     width: 485px;
-}
+}*/
 
-.data.addLicense tbody{
+#addLicense tbody{
     height: 470px;
+    overflow: auto;
 }
-
+/*
 .data.addLicense td:nth-child(1), .data.addLicense th:nth-child(1){
     width: 1355px;
 }

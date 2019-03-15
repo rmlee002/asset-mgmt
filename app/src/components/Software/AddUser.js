@@ -10,16 +10,16 @@ export default class AddUser extends Component{
         super(props)
 
         this.handleSubmit = this.handleSubmit.bind(this)
-        // this.handleEmployee = this.handleEmployee.bind(this)
         this.handleStart = this.handleStart.bind(this)
-        // this.handleEnd = this.handleEnd.bind(this)
         this.handleChange = this.handleChange.bind(this)
+        this.handleResize = this.handleResize.bind(this);
 
         this.state={
             employees: [],
             filtered: [],
             emp_id: null,
-            start: new Date()
+            start: new Date(),
+            theight: document.documentElement.clientHeight - 230
         }
     }
 
@@ -37,6 +37,8 @@ export default class AddUser extends Component{
             console.log(err)
             alert(err.response.data)
         })
+
+        window.addEventListener('resize', this.handleResize)
     }
 
     handleSubmit(e){
@@ -78,6 +80,13 @@ export default class AddUser extends Component{
         }
     }
 
+    handleResize(){
+        const h = document.documentElement.clientHeight - 230
+        this.setState({
+            theight: h
+        })
+    }
+
     render(){
         return(
             <React.Fragment>
@@ -103,7 +112,7 @@ export default class AddUser extends Component{
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody style={{height: this.state.theight}}>
                             {this.state.filtered.map(employee => 
                                 <tr>
                                     <td>{employee.first_name+" "+employee.last_name}</td>
