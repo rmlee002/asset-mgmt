@@ -13,6 +13,7 @@ export default class EmployeeLicenses extends Component{
         this.handleSubmit = this.handleSubmit.bind(this)
         this.handleEnd = this.handleEnd.bind(this)
         this.handleCheck = this.handleCheck.bind(this)
+        this.handleResize = this.handleResize.bind(this)
 
         this.state={
             licenses: [],
@@ -21,6 +22,7 @@ export default class EmployeeLicenses extends Component{
             end: new Date(),
             software_id: null,
             loggedIn: false,
+            theight: document.documentElement.clientHeight - 220
         }
     }
 
@@ -48,11 +50,20 @@ export default class EmployeeLicenses extends Component{
         .catch(err => {
             console.log(err)
         })
+        
+        window.addEventListener('resize', this.handleResize)
     }
 
     handleEnd(date){
         this.setState({
             end: date
+        })
+    }
+
+    handleResize(){
+        const h = document.documentElement.clientHeight - 220
+        this.setState({
+            theight: h
         })
     }
 
@@ -89,7 +100,7 @@ export default class EmployeeLicenses extends Component{
                 <Checkbox checked={this.state.showHistory} onChange={this.handleCheck}>
                     Show previous licenses
                 </Checkbox>
-                <div id='empLicenses'>             
+                <div className='data' id='empLicenses'>             
                     <Table striped hover>
                         <thead>
                             <tr>
@@ -98,7 +109,7 @@ export default class EmployeeLicenses extends Component{
                                 <th>End</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody style={{height: this.state.theight, overflowY: 'auto'}}>
                             {this.state.filtered.map((license) => 
                                 <tr>
                                     <td>{license.name}</td>

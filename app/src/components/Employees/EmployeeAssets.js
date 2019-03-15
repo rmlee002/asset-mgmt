@@ -12,13 +12,15 @@ export default class EmployeeAssets extends Component{
 
         this.handleEnd = this.handleEnd.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleResize = this.handleResize.bind(this)
 
         this.state = {
             show: false,
             end: new Date(),
             asset_id: null,
             assets: [],
-            loggedIn: false
+            loggedIn: false,
+            theight: document.documentElement.clientHeight - 200
         }
     }
 
@@ -45,11 +47,20 @@ export default class EmployeeAssets extends Component{
         .catch(err => {
             console.log(err)
         })
+
+        window.addEventListener('resize', this.handleResize)
     }
 
     handleEnd(date){
         this.setState({
             end: date
+        })
+    }
+
+    handleResize(){
+        const h = document.documentElement.clientHeight - 200
+        this.setState({
+            theight: h
         })
     }
 
@@ -80,7 +91,7 @@ export default class EmployeeAssets extends Component{
                     </LinkContainer>
                 }
                 
-                <div id='empAssets'>
+                <div className='data' id='empAssets'>
                     <Table striped hover>
                         <thead>
                             <tr>
@@ -91,7 +102,7 @@ export default class EmployeeAssets extends Component{
                                 {loggedIn && <th></th>}
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody style={{height: this.state.theight, overflowY: 'scroll'}}>
                             {this.state.assets.map(item => 
                                 <tr>
                                     <td>{item.serial_number}</td>

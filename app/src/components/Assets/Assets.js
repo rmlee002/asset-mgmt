@@ -16,7 +16,7 @@ export default class Assets extends Component{
             filtered: [],
             showArchived: false,
             loggedIn: false,
-            theight: document.documentElement.clientHeight - 245
+            theight: document.documentElement.clientHeight - 250
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleCheck = this.handleCheck.bind(this);
@@ -67,7 +67,7 @@ export default class Assets extends Component{
     }
 
     handleResize(){
-        const h = document.documentElement.clientHeight - 245
+        const h = document.documentElement.clientHeight - 250
         this.setState({
             theight: h
         })

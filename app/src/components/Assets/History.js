@@ -10,12 +10,14 @@ export default class History extends Component{
 
         this.handleEnd = this.handleEnd.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleResize = this.handleResize.bind(this)
 
         this.state = {
             show: false,
             end: new Date(),
             owners: [],
-            loggedIn: false
+            loggedIn: false,
+            theight: document.documentElement.clientHeight - 220
         }
     }
 
@@ -42,6 +44,8 @@ export default class History extends Component{
         .catch(err => {
             console.log(err)
         })
+        
+        window.addEventListener('resize', this.handleResize)
     }
 
     handleSubmit(id){
@@ -56,6 +60,13 @@ export default class History extends Component{
         .catch(err => {
             alert(err.response.data)
             console.log(err)
+        })
+    }
+
+    handleResize(){
+        const h = document.documentElement.clientHeight - 220
+        this.setState({
+            theight: h
         })
     }
 
@@ -79,7 +90,7 @@ export default class History extends Component{
                     />
                     <FormControl.Feedback />
                 </FormGroup>
-                <div id="history">
+                <div className='data' id="history">
                     <Table striped hover>
                         <thead>
                             <tr>
@@ -88,7 +99,7 @@ export default class History extends Component{
                                 <th>End</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody style={{height: this.state.theight, overflowY: 'auto'}}>
                             {this.state.owners.map(owner => 
                                 <tr>
                                     <td>{owner.first_name+' '+owner.last_name}</td>
