@@ -3,7 +3,7 @@ import { Nav, NavItem, Navbar } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import Axios from 'axios';
-import image from '../Images/icon.ico'
+import image from '../Images/logolarge.png'
 
 class Links extends Component{
     constructor(props){
@@ -54,10 +54,7 @@ class Links extends Component{
             <Navbar fixedTop fluid collapseOnSelect>
                 <Navbar.Header>
                     <Navbar.Brand>
-                        {/* <Link to="/home">
-                            Home
-                        </Link> */}
-                        <img src={image} alt='logo'/>
+                        <img src={image} alt='vid-logo'/>
                     </Navbar.Brand>
                 </Navbar.Header>                    
                 <Navbar.Collapse>
