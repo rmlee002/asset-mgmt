@@ -285,19 +285,22 @@ export default class ManageEmployee extends Component{
                                 />
                             </Col>
                         </FormGroup>
-                        <FormGroup controlId='end'>
-                            <Col componentClass={ControlLabel} sm={3}>
-                                End date
-                            </Col>
-                            <Col sm={7}>
-                                <DatePicker
-                                    isClearable
-                                    className='form-control'
-                                    selected={this.state.end}
-                                    onChange={this.handleEnd}
-                                />
-                            </Col>
-                        </FormGroup>
+                        {this.state.archived?
+                            <FormGroup controlId='end'>
+                                <Col componentClass={ControlLabel} sm={3}>
+                                    End date
+                                </Col>
+                                <Col sm={7}>
+                                    <DatePicker
+                                        isClearable
+                                        className='form-control'
+                                        selected={this.state.end}
+                                        onChange={this.handleEnd}
+                                    />
+                                </Col>
+                            </FormGroup>
+                            : null
+                        }                        
                         <FormGroup controlId='notes'>
                             <Col componentClass={ControlLabel} sm={3}>
                                 Notes
