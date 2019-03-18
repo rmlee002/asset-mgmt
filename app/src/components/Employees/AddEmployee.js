@@ -104,6 +104,10 @@ export default class AddEmployee extends Component{
     }
 
     render(){
+        const invalid = this.state.first_name === null || this.state.last_name === null || this.state.email === null
+                        || this.state.affiliation === null || this.state.department === null || this.state.supervisor === null
+                        || this.state.reviewer === null || this.state.time_approver === null || this.state.start === null
+
         return(
             <React.Fragment>
                 <form onSubmit={this.handleSubmit}>
@@ -232,7 +236,11 @@ export default class AddEmployee extends Component{
                         </FormGroup>
                         <FormGroup>
                             <Col smOffset={3} sm={1}>
-                                <Button type = 'submit' bsStyle='success'><FontAwesomeIcon icon='check'/> Add Employee</Button>
+                                <Button 
+                                    type = 'submit'
+                                    bsStyle='success'
+                                    disabled={invalid}
+                                ><FontAwesomeIcon icon='check'/> Add Employee</Button>
                             </Col>
                         </FormGroup>
                     </Form>    
