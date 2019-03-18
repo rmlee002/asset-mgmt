@@ -65,7 +65,7 @@ router.post('/retire', (req,res) => {
 
 router.post('/getUserData', (req,res)=>{
     connection.query('SELECT software.software_id, software.name, licenses.start, licenses.end FROM licenses JOIN software\
-        ON licenses.software_id = software.software_id AND software.archived=FALSE WHERE emp_id=?', req.body.emp_id, (err,results)=>{
+        ON licenses.software_id = software.software_id WHERE emp_id=?', req.body.emp_id, (err,results)=>{
             if (err){
                 console.log(err)
                 res.status(500).send("Database query error")

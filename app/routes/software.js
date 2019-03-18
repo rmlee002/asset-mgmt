@@ -24,7 +24,7 @@ router.post('/retire', (req,res)=>{
             console.log(err)
             res.status(500).send("Database query error")
         }
-        connection.query('UPDATE licenses SET end=? WHERE software_id=? AND end IS NULL', [req.body.end, req.body.software_id], (err,results) =>{
+        connection.query('UPDATE licenses SET end=CURDATE() WHERE software_id=? AND end IS NULL', [req.body.software_id], (err,results) =>{
             if (err){
                 console.log(err)
                 res.status(500).send("Database query error")
@@ -35,7 +35,7 @@ router.post('/retire', (req,res)=>{
 })
 
 router.post('/add', (req,res)=>{
-    connection.query('INSERT INTO software (name,cost) VALUES (?,?)', [req.body.license, req.body.cost], (err,results)=>{
+    connection.query('INSERT INTO software (name,cost) VALUES (?,?)', [req.body.name, req.body.cost], (err,results)=>{
         if (err){
             console.log(err)
             res.status(500).send("Database query error")
