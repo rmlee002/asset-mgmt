@@ -17,12 +17,21 @@ export default class Employees extends Component {
             filtered: [],
             showArchived: false,
             loggedIn: false,
-            theight: document.documentElement.clientHeight - 255
+            theight: document.documentElement.clientHeight - 255,
+            nameSort: null,
+            startSort: null,
+            endSort: null
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleCheck = this.handleCheck.bind(this);
         this.handleFilter = this.handleFilter.bind(this);
         this.handleResize = this.handleResize.bind(this);
+        this.handleNameSortAscend = this.handleNameSortAscend.bind(this);
+        this.handleNameSortDescend = this.handleNameSortDescend.bind(this);
+        this.handleStartAscend = this.handleStartAscend.bind(this);
+        this.handleStartDescend = this.handleStartDescend.bind(this);
+        this.handleEndAscend = this.handleEndAscend.bind(this);
+        this.handleEndDescend = this.handleEndDescend.bind(this);
     }
 
     componentDidMount(){
@@ -94,11 +103,114 @@ export default class Employees extends Component {
         })
     }
 
+    handleNameSortAscend(){
+        this.setState({
+            filtered: this.state.filtered.sort(function(a,b){return (a.first_name + a.last_name).localeCompare(b.first_name + b.last_name)}),
+            nameSort: 'ascend',
+            startSort: null,
+            endSort: null
+        })
+    }
+
+    handleNameSortDescend(){
+        this.setState({
+            filtered: this.state.filtered.sort(function(a,b){return (b.first_name + b.last_name).localeCompare(a.first_name + a.last_name)}),
+            nameSort: 'descend',
+            startSort: null,
+            endSort: null
+        })
+    }
+
+    handleStartAscend(){
+        this.setState({
+            filtered: this.state.filtered.sort(function(a,b){return(moment(a.start) - moment(b.start))}),
+            startSort: 'ascend',
+            nameSort: null,
+            endSort: null
+        })
+    }
+
+    handleStartDescend(){
+        this.setState({
+            filtered: this.state.filtered.sort(function(a,b){return(moment(b.start) - moment(a.start))}),
+            startSort: 'descend',
+            nameSort: null,
+            endSort: null
+        })
+    }
+
+    handleEndAscend(){
+        this.setState({
+            filtered: this.state.filtered.sort(function(a,b){return(moment(a.end) - moment(b.end))}),
+            endSort: 'ascend',
+            startSort: null,
+            nameSort: null
+        })
+    }
+
+    handleEndDescend(){
+        this.setState({
+            filtered: this.state.filtered.sort(function(a,b){return(moment(b.end) - moment(a.end))}),
+            endSort: 'descend',
+            startSort: null,
+            nameSort: null
+        })
+    }
+
     render(){
         const loggedIn = this.state.loggedIn
         const licensesHead = {
             width: loggedIn?'70px':'86.5px'
         }
+
+        const nameSort = this.state.nameSort
+        var nameIcon = null
+        var sortFunc = null
+        if (nameSort == null){
+            sortFunc=this.handleNameSortAscend
+            nameIcon = 'sort'
+        }
+        else if (nameSort === 'ascend'){
+            sortFunc = this.handleNameSortDescend
+            nameIcon = 'sort-up'
+        }
+        else{
+            sortFunc = this.handleNameSortAscend
+            nameIcon = 'sort-down'
+        }
+
+        const startSort = this.state.startSort
+        var startIcon = null
+        var startFunc = null
+        if (startSort == null){
+            startFunc = this.handleStartAscend
+            startIcon = 'sort'
+        }
+        else if (startSort === 'ascend'){
+            startFunc = this.handleStartDescend
+            startIcon = 'sort-up'
+        }
+        else{
+            startFunc = this.handleStartAscend
+            startIcon = 'sort-down'
+        }
+
+        const endSort = this.state.endSort
+        var endFunc = null
+        var endIcon = null
+        if (endSort == null){
+            endFunc = this.handleEndAscend
+            endIcon = 'sort'
+        }
+        else if (endSort === 'ascend'){
+            endFunc = this.handleEndDescend
+            endIcon = 'sort-up'
+        }
+        else{
+            endFunc = this.handleEndAscend
+            endIcon = 'sort-down'
+        }
+
         return(
             <React.Fragment>
                 <FormGroup>
@@ -119,15 +231,21 @@ export default class Employees extends Component {
                     <Table striped hover>
                         <thead>                            
                             <tr>
-                                <th>Name</th>
+                                <th className='sort-head' onClick={sortFunc}>
+                                    Name <FontAwesomeIcon icon={nameIcon}/>
+                                </th>
                                 <th>Email</th>
                                 <th>Affiliation</th>
                                 <th>Department</th>
                                 <th>Supervisor</th>
                                 <th>Reviewer</th>
                                 <th>Time approver</th>
-                                <th>Start date</th>
-                                <th>End date</th>
+                                <th className='sort-head' onClick={startFunc}>
+                                    Start Date <FontAwesomeIcon icon={startIcon}/>
+                                </th>                                
+                                <th className='sort-head' onClick={endFunc}>
+                                    End date <FontAwesomeIcon icon={endIcon}/>
+                                </th>
                                 <th>Notes</th>
                                 <th>Assets</th>
                                 <th style={licensesHead}>Licenses</th>

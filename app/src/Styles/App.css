@@ -20,6 +20,10 @@
     /* border: 1px solid black; */
 }
 
+.sort-head:hover{
+    background: #ececec;
+}
+
 .data {
     height: 100%;
     margin: auto;
