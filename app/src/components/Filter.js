@@ -72,8 +72,11 @@ export default class Filter extends Component{
     render(){
         return(
             <React.Fragment>
-                <Button bsStyle='link' onClick={()=>this.setState({open: !this.state.open})}>
-                    Filter
+                <Button 
+                    bsStyle='link'
+                    onClick={()=>this.setState({open: !this.state.open})}
+                >
+                    Filter <FontAwesomeIcon icon='filter'/>
                 </Button>
                 <Collapse in={this.state.open}>
                     <Well>
