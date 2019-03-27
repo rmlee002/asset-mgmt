@@ -245,6 +245,7 @@ export default class Assets extends Component{
                                     Out Date 
                                     {/* <FontAwesomeIcon icon={outIcon}/> */}
                                 </th>
+                                <th>Broken</th>
                                 <th>Comment</th>
                                 <th style={historyHead}></th>
                                 {loggedIn && <th></th>}
@@ -270,6 +271,7 @@ export default class Assets extends Component{
                                         {item.outDate?
                                             moment(item.outDate).utc().format('YYYY-MM-DD'):''}
                                     </td>
+                                    <td style={{textAlign: 'center'}}>{item.broken?'Y':'N'}</td>
                                     <td>{item.comment}</td>
                                     <td><Link to={`/assets/${item.asset_id}/history`}><FontAwesomeIcon icon='history'/></Link></td>
                                     {loggedIn &&

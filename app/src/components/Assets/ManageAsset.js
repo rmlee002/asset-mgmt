@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form , FormGroup, Col, ControlLabel, FormControl, ButtonToolbar } from 'react-bootstrap';
+import { Button, Form , FormGroup, Col, ControlLabel, FormControl, ButtonToolbar, Checkbox } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import Axios from 'axios';
 import moment from 'moment';
@@ -16,6 +16,7 @@ export default class ManageAsset extends Component{
         this.handleSubmit = this.handleSubmit.bind(this)
         this.handleRetire = this.handleRetire.bind(this)
         this.handleUnretire=this.handleUnretire.bind(this)
+        this.handleCheck = this.handleCheck.bind(this)
 
         this.state={
             asset_id: null,
@@ -30,7 +31,8 @@ export default class ManageAsset extends Component{
             warranty: null,
             inDate: null,
             outDate: null,
-            archived: null
+            archived: null,
+            broken: null
         }
     }
 
@@ -53,7 +55,8 @@ export default class ManageAsset extends Component{
                 warranty: asset.warranty,
                 inDate: asset.inDate,
                 outDate: asset.outDate,
-                archived: asset.archived
+                archived: asset.archived,
+                broken: asset.broken
             })
         })
         .catch(err => {
@@ -78,6 +81,12 @@ export default class ManageAsset extends Component{
         this.setState({
             outDate: date
         });
+    }
+
+    handleCheck(e){
+        this.setState({
+            broken: e.target.checked
+        })
     }
 
     handleRetire(e){
@@ -110,19 +119,18 @@ export default class ManageAsset extends Component{
 
     handleSubmit(e){
         Axios.post('/asset/updateAsset', {
+            asset_id: this.state.asset_id,
             model: this.state.model,
             serial_number: this.state.serial_number,
             warranty_provider: this.state.warranty_provider,
-            owner: this.state.owner,
-            owner_id: this.state.owner_id,
             cost: this.state.cost,
-            comment: this.state.comment,
             vendor: this.state.vendor,
             order_num: this.state.order_num,
             warranty: this.state.warranty,
             inDate: this.state.inDate?moment(this.state.inDate).format('YYYY-MM-DD'):null,
             outDate: this.state.outDate?moment(this.state.outDate).format('YYYY-MM-DD'):null,
-            asset_id: this.state.asset_id
+            broken: this.state.broken,
+            comment: this.state.comment
         }).catch(err => {
             alert(err.response.data)
             console.log(err)
@@ -186,19 +194,6 @@ export default class ManageAsset extends Component{
                                 />
                             </Col>
                         </FormGroup>
-                        <FormGroup controlId='comment'>
-                            <Col componentClass={ControlLabel} sm={3}>
-                                Comment
-                            </Col>
-                            <Col sm={6}>
-                                <FormControl
-                                    type='text'
-                                    value={this.state.comment}
-                                    placeholder='Comment'
-                                    onChange={this.handleChange}
-                                />
-                            </Col>
-                        </FormGroup>
                         <FormGroup controlId='vendor'>
                             <Col componentClass={ControlLabel} sm={3}>
                                 Vendor
@@ -211,7 +206,7 @@ export default class ManageAsset extends Component{
                                     onChange={this.handleChange}
                                 />
                             </Col>
-                        </FormGroup>
+                        </FormGroup>                        
                         <FormGroup controlId='order_num'>
                             <Col componentClass={ControlLabel} sm={3}>
                                 Order Number
@@ -260,6 +255,27 @@ export default class ManageAsset extends Component{
                                     className='form-control'
                                     selected={this.state.outDate}
                                     onChange={this.handleOut}
+                                />
+                            </Col>
+                        </FormGroup>
+                        <FormGroup controlId='broken'>
+                            <Col componentClass={ControlLabel} sm={3}>
+                                Broken
+                            </Col>
+                            <Col sm={6}>
+                                <Checkbox checked={this.state.broken} onChange={this.handleCheck}></Checkbox>
+                            </Col>
+                        </FormGroup>
+                        <FormGroup controlId='comment'>
+                            <Col componentClass={ControlLabel} sm={3}>
+                                Comment
+                            </Col>
+                            <Col sm={6}>
+                                <FormControl
+                                    type='text'
+                                    value={this.state.comment}
+                                    placeholder='Comment'
+                                    onChange={this.handleChange}
                                 />
                             </Col>
                         </FormGroup>

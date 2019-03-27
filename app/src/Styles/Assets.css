@@ -11,6 +11,9 @@
 #assets tr > :nth-child(6){
     width: 90px;
 }
+#assets td:nth-child(7){
+    word-wrap: break-word;
+}
 #assets tr > :nth-child(8){
     width: 80px;
 }
@@ -20,19 +23,22 @@
 #assets tr > :nth-child(10){
     width: 90px;
 }
-#assets tr > :nth-child(12){
+#assets tr > :nth-child(11){
+    width: 65px;
+}
+#assets tr > :nth-child(13){
     width: 50px;
     text-align: center;
 }
-#assets tr > :nth-child(13){
+#assets tr > :nth-child(14){
     width: 60px;
     text-align: center;
 }
-#assets td:nth-child(14){
+#assets td:nth-child(15){
     width: 50px;
     text-align: center;
 }
-#assets th:nth-child(14){
+#assets th:nth-child(15){
     width: 66.5px;
 }
 

@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
     connection.query(
         'SELECT hardware.asset_id,hardware.serial_number, hardware.model, hardware.cost,\
         hardware.warranty_provider, owner.first_name, owner.last_name, hardware.comment, hardware.vendor,\
-        hardware.order_num, hardware.warranty, hardware.inDate, hardware.outDate, hardware.archived\
+        hardware.order_num, hardware.warranty, hardware.inDate, hardware.outDate, hardware.archived, hardware.broken\
         FROM hardware \
         LEFT JOIN (SELECT history.asset_id, employees.first_name, employees.last_name\
         FROM employees\
@@ -61,13 +61,13 @@ router.post('/getAsset', (req,res) => {
 })
 
 router.post('/updateAsset', (req,res) => {
-    const {model, serial_number, warranty_provider, cost, comment, vendor, 
-        order_num, warranty, inDate, outDate, asset_id} = req.body;
+    const {asset_id, model, serial_number, warranty_provider, cost, vendor, 
+        order_num, warranty, inDate, outDate, broken, comment} = req.body;
 
     connection.query('UPDATE hardware SET model=?, serial_number=?, warranty_provider=?,\
-        cost=?, comment=?, vendor=?, order_num=?, warranty=?, inDate=?, outDate=?\
+        cost=?, comment=?, vendor=?, order_num=?, warranty=?, inDate=?, outDate=?, broken=?\
         WHERE asset_id=?', [model, serial_number, warranty_provider, cost, comment, 
-            vendor, order_num, warranty, inDate, outDate, asset_id], (err, results) =>{
+            vendor, order_num, warranty, inDate, outDate, broken, asset_id], (err, results) =>{
             if(err){
                 console.log(err)
                 res.status(500).send("Database query error")
