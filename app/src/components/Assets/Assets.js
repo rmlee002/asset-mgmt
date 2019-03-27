@@ -16,11 +16,23 @@ export default class Assets extends Component{
             filtered: [],
             showArchived: false,
             loggedIn: false,
-            theight: document.documentElement.clientHeight - 250
+            theight: document.documentElement.clientHeight - 250,
+            serialIcon: 'sort',
+            costIcon: 'sort',
+            inIcon: 'sort',
+            outIcon: 'sort'
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleCheck = this.handleCheck.bind(this);
         this.handleResize = this.handleResize.bind(this);
+        this.handleSerialAscend = this.handleSerialAscend.bind(this);
+        this.handleSerialDescend = this.handleSerialDescend.bind(this);
+        this.handleCostAscend = this.handleCostAscend.bind(this);
+        this.handleCostDescend = this.handleCostDescend.bind(this);
+        this.handleInAscend = this.handleInAscend.bind(this);
+        this.handleInDescend = this.handleInDescend.bind(this);
+        this.handleOutAscend = this.handleOutAscend.bind(this);
+        this.handleOutDescend = this.handleOutDescend.bind(this);
     }
 
     componentDidMount(){
@@ -80,11 +92,96 @@ export default class Assets extends Component{
         })
     }
 
+    handleSerialAscend(){
+        this.setState({
+            filtered: this.state.filtered.sort(function(a,b){ return a.serial_number.localeCompare(b.serial_number) }),
+            serialIcon: 'sort-up',
+            costIcon: 'sort',
+            inIcon: 'sort',
+            outIcon: 'sort'
+        })
+    }
+
+    handleSerialDescend(){
+        this.setState({
+            filtered: this.state.filtered.sort(function(a,b){ return b.serial_number.localeCompare(a.serial_number) }),
+            serialIcon: 'sort-down',
+            costIcon: 'sort',
+            inIcon: 'sort',
+            outIcon: 'sort'
+        })
+    }
+
+    handleCostAscend(){
+        this.setState({
+            filtered: this.state.filtered.sort(function(a,b){ return a.cost - b.cost }),
+            costIcon: 'sort-up',
+            serialIcon: 'sort',
+            inIcon: 'sort',
+            outIcon: 'sort'
+        })
+    }
+
+    handleCostDescend(){
+        this.setState({
+            filtered: this.state.filtered.sort(function(a,b){ return b.cost - a.cost }),
+            costIcon: 'sort-down',
+            serialIcon: 'sort',
+            inIcon: 'sort',
+            outIcon: 'sort'
+        })
+    }
+
+    handleInAscend(){
+        this.setState({
+            filtered: this.state.filtered.sort(function(a,b){return(moment(a.inDate) - moment(b.inDate))}),
+            inIcon: 'sort-up',
+            serialIcon: 'sort',
+            costIcon: 'sort',
+            outIcon: 'sort'
+        })
+    }
+
+    handleInDescend(){
+        this.setState({
+            filtered: this.state.filtered.sort(function(a,b){return(moment(b.inDate) - moment(a.inDate))}),
+            inIcon: 'sort-down',
+            serialIcon: 'sort',
+            costIcon: 'sort',
+            outIcon: 'sort'
+        })
+    }
+
+    handleOutAscend(){
+        this.setState({
+            filtered: this.state.filtered.sort(function(a,b){return a==null?-1:(moment(a.outDate) - moment(b.outDate))}),
+            outIcon: 'sort-up',
+            serialIcon: 'sort',
+            costIcon: 'sort',
+            inIcon: 'sort'
+        })
+    }
+
+    handleOutDescend(){
+        this.setState({
+            filtered: this.state.filtered.sort(function(a,b){return b==null?-1:(moment(b.outDate) - moment(a.outDate))}),
+            outIcon: 'sort-down',
+            serialIcon: 'sort',
+            costIcon: 'sort',
+            inIcon: 'sort'
+        })
+    }
+
     render(){     
         const loggedIn = this.state.loggedIn
         const historyHead = {
             width: loggedIn?'50px':'67px'
         }
+
+        const serialIcon = this.state.serialIcon
+        const costIcon = this.state.costIcon
+        const inIcon = this.state.inIcon
+        // const outIcon = this.state.outIcon
 
         return(
             <React.Fragment>
@@ -103,7 +200,12 @@ export default class Assets extends Component{
                     </Checkbox>   
                     {loggedIn && 
                         <LinkContainer to='/assets/add'>
-                            <Button className='pull-right' bsStyle='primary'><FontAwesomeIcon icon="laptop-medical"/> Add assets</Button>
+                            <Button 
+                                className='pull-right'
+                                bsStyle='primary'
+                            >
+                                <FontAwesomeIcon icon="laptop-medical"/> Add assets
+                            </Button>
                         </LinkContainer>
                     }
                     
@@ -112,16 +214,37 @@ export default class Assets extends Component{
                     <Table striped hover>
                         <thead>
                             <tr>
-                                <th>Serial Number</th>
+                                <th 
+                                    className='sort-head' 
+                                    onClick={(serialIcon === 'sort' ||serialIcon==='sort-down')?this.handleSerialAscend:this.handleSerialDescend}
+                                >
+                                    Serial Number <FontAwesomeIcon icon={serialIcon}/>
+                                </th>
                                 <th>Model</th>
                                 <th>Warranty Provider</th>
                                 <th>Owner</th>
-                                <th>Cost</th>
+                                <th 
+                                    className='sort-head'
+                                    onClick={(costIcon==='sort'||costIcon==='sort-down')?this.handleCostAscend:this.handleCostDescend}
+                                >
+                                    Cost <FontAwesomeIcon icon={costIcon}/>
+                                </th>
                                 <th>Vendor</th>
                                 <th>Order Number</th>
                                 <th>Warranty</th>
-                                <th>In Date</th>
-                                <th>Out Date</th>
+                                <th 
+                                    className='sort-head'
+                                    onClick={(inIcon === 'sort' || inIcon === 'sort-down')?this.handleInAscend:this.handleInDescend}    
+                                >
+                                    In Date <FontAwesomeIcon icon={inIcon}/>
+                                </th>
+                                <th 
+                                    // className='sort-head'
+                                    // onClick={(outIcon==='sort'||outIcon==='sort-down')?this.handleOutAscend:this.handleOutDescend}
+                                >
+                                    Out Date 
+                                    {/* <FontAwesomeIcon icon={outIcon}/> */}
+                                </th>
                                 <th>Comment</th>
                                 <th style={historyHead}></th>
                                 {loggedIn && <th></th>}

@@ -14,13 +14,19 @@ export default class Employees extends Component {
         this.handleChange = this.handleChange.bind(this)
         this.handleCheck = this.handleCheck.bind(this)
         this.handleResize = this.handleResize.bind(this)
+        this.handleNameAscend = this.handleNameAscend.bind(this)
+        this.handleNameDescend = this.handleNameDescend.bind(this)
+        this.handleCostAscend = this.handleCostAscend.bind(this)
+        this.handleCostDescend = this.handleCostDescend.bind(this)
 
         this.state={
             showArchived: false,
             software: [],
             filtered: [],
             loggedIn: false,
-            theight: document.documentElement.clientHeight - 250
+            theight: document.documentElement.clientHeight - 250,
+            nameIcon: 'sort',
+            costIcon: 'sort'
         }
     }
 
@@ -81,11 +87,47 @@ export default class Employees extends Component {
         })
     }
 
+    handleNameAscend(){
+        this.setState({
+            filtered: this.state.filtered.sort(function(a,b){ return a.name.localeCompare(b.name) }),
+            nameIcon: 'sort-up',
+            costIcon: 'sort'
+        })
+    }
+
+    handleNameDescend(){
+        this.setState({
+            filtered: this.state.filtered.sort(function(a,b){ return b.name.localeCompare(a.name) }),
+            nameIcon: 'sort-down',
+            costIcon: 'sort'
+        })
+    }
+
+    handleCostAscend(){
+        this.setState({
+            filtered: this.state.filtered.sort(function(a,b){ return a.cost - b.cost }),
+            costIcon: 'sort-up',
+            nameIcon: 'sort'
+        })
+    }
+
+    handleCostDescend(){
+        this.setState({
+            filtered: this.state.filtered.sort(function(a,b){ return b.cost - a.cost }),
+            costIcon: 'sort-down',
+            nameIcon: 'sort'
+        })
+    }
+
     render(){
         const loggedIn = this.state.loggedIn
         const userHead ={
             width: loggedIn?'150px':'166.5px'
         }
+
+        const nameIcon = this.state.nameIcon
+        const costIcon = this.state.costIcon
+
         return(
             <React.Fragment>
                 <FormGroup controlid="search">
@@ -114,13 +156,23 @@ export default class Employees extends Component {
                     <Table striped hover>
                         <thead>
                             <tr>
-                                <th>License</th>
-                                <th>Monthly Cost</th> 
+                                <th 
+                                    className='sort-head'
+                                    onClick={(nameIcon==='sort'||nameIcon==='sort-down')?this.handleNameAscend:this.handleNameDescend}    
+                                >
+                                    License <FontAwesomeIcon icon={nameIcon}/>
+                                </th>
+                                <th 
+                                    className='sort-head'
+                                    onClick={(costIcon==='sort'||costIcon==='sort-down')?this.handleCostAscend:this.handleCostDescend}    
+                                >
+                                    Monthly Cost <FontAwesomeIcon icon={costIcon}/>
+                                </th> 
                                 <th style={userHead}></th>
                                 {loggedIn && <th></th>}
                             </tr>
                         </thead>
-                        <tbody style={{height: this.state.theight, overflow: 'auto'}}>
+                        <tbody style={{height: this.state.theight}}>
                             {this.state.filtered.map((software) =>
                                 <tr>
                                     <td>{software.name}</td>

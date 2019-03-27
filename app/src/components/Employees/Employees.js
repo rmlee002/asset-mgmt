@@ -18,9 +18,9 @@ export default class Employees extends Component {
             showArchived: false,
             loggedIn: false,
             theight: document.documentElement.clientHeight - 255,
-            nameSort: null,
-            startSort: null,
-            endSort: null
+            nameIcon: 'sort',
+            startIcon: 'sort'
+            // endIcon: 'sort'
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleCheck = this.handleCheck.bind(this);
@@ -30,8 +30,8 @@ export default class Employees extends Component {
         this.handleNameSortDescend = this.handleNameSortDescend.bind(this);
         this.handleStartAscend = this.handleStartAscend.bind(this);
         this.handleStartDescend = this.handleStartDescend.bind(this);
-        this.handleEndAscend = this.handleEndAscend.bind(this);
-        this.handleEndDescend = this.handleEndDescend.bind(this);
+        // this.handleEndAscend = this.handleEndAscend.bind(this);
+        // this.handleEndDescend = this.handleEndDescend.bind(this);
     }
 
     componentDidMount(){
@@ -106,56 +106,56 @@ export default class Employees extends Component {
     handleNameSortAscend(){
         this.setState({
             filtered: this.state.filtered.sort(function(a,b){return (a.first_name + a.last_name).localeCompare(b.first_name + b.last_name)}),
-            nameSort: 'ascend',
-            startSort: null,
-            endSort: null
+            nameIcon: 'sort-up',
+            startIcon: 'sort',
+            endIcon: 'sort'
         })
     }
 
     handleNameSortDescend(){
         this.setState({
             filtered: this.state.filtered.sort(function(a,b){return (b.first_name + b.last_name).localeCompare(a.first_name + a.last_name)}),
-            nameSort: 'descend',
-            startSort: null,
-            endSort: null
+            nameIcon: 'sort-down',
+            startIcon: 'sort',
+            endIcon: 'sort'
         })
     }
 
     handleStartAscend(){
         this.setState({
             filtered: this.state.filtered.sort(function(a,b){return(moment(a.start) - moment(b.start))}),
-            startSort: 'ascend',
-            nameSort: null,
-            endSort: null
+            startIcon: 'sort-up',
+            nameIcon: 'sort',
+            endIcon: 'sort'
         })
     }
 
     handleStartDescend(){
         this.setState({
             filtered: this.state.filtered.sort(function(a,b){return(moment(b.start) - moment(a.start))}),
-            startSort: 'descend',
-            nameSort: null,
-            endSort: null
+            startIcon: 'sort-down',
+            nameIcon: 'sort',
+            endIcon: 'sort'
         })
     }
 
-    handleEndAscend(){
-        this.setState({
-            filtered: this.state.filtered.sort(function(a,b){return(moment(a.end) - moment(b.end))}),
-            endSort: 'ascend',
-            startSort: null,
-            nameSort: null
-        })
-    }
+    // handleEndAscend(){
+    //     this.setState({
+    //         filtered: this.state.filtered.sort(function(a,b){return(moment(a.end) - moment(b.end))}),
+    //         endIcon: 'sort-up',
+    //         nameIcon: 'sort',
+    //         startIcon: 'sort'
+    //     })
+    // }
 
-    handleEndDescend(){
-        this.setState({
-            filtered: this.state.filtered.sort(function(a,b){return(moment(b.end) - moment(a.end))}),
-            endSort: 'descend',
-            startSort: null,
-            nameSort: null
-        })
-    }
+    // handleEndDescend(){
+    //     this.setState({
+    //         filtered: this.state.filtered.sort(function(a,b){return(moment(b.end) - moment(a.end))}),
+    //         endIcon: 'sort-down',
+    //         nameIcon: 'sort',
+    //         startIcon: 'sort'
+    //     })
+    // }
 
     render(){
         const loggedIn = this.state.loggedIn
@@ -163,53 +163,9 @@ export default class Employees extends Component {
             width: loggedIn?'70px':'86.5px'
         }
 
-        const nameSort = this.state.nameSort
-        var nameIcon = null
-        var sortFunc = null
-        if (nameSort == null){
-            sortFunc=this.handleNameSortAscend
-            nameIcon = 'sort'
-        }
-        else if (nameSort === 'ascend'){
-            sortFunc = this.handleNameSortDescend
-            nameIcon = 'sort-up'
-        }
-        else{
-            sortFunc = this.handleNameSortAscend
-            nameIcon = 'sort-down'
-        }
-
-        const startSort = this.state.startSort
-        var startIcon = null
-        var startFunc = null
-        if (startSort == null){
-            startFunc = this.handleStartAscend
-            startIcon = 'sort'
-        }
-        else if (startSort === 'ascend'){
-            startFunc = this.handleStartDescend
-            startIcon = 'sort-up'
-        }
-        else{
-            startFunc = this.handleStartAscend
-            startIcon = 'sort-down'
-        }
-
-        const endSort = this.state.endSort
-        var endFunc = null
-        var endIcon = null
-        if (endSort == null){
-            endFunc = this.handleEndAscend
-            endIcon = 'sort'
-        }
-        else if (endSort === 'ascend'){
-            endFunc = this.handleEndDescend
-            endIcon = 'sort-up'
-        }
-        else{
-            endFunc = this.handleEndAscend
-            endIcon = 'sort-down'
-        }
+        const nameIcon = this.state.nameIcon
+        const startIcon = this.state.startIcon
+        // const endIcon = this.state.endIcon
 
         return(
             <React.Fragment>
@@ -231,7 +187,10 @@ export default class Employees extends Component {
                     <Table striped hover>
                         <thead>                            
                             <tr>
-                                <th className='sort-head' onClick={sortFunc}>
+                                <th 
+                                    className='sort-head'
+                                    onClick={(nameIcon==='sort'||nameIcon==='sort-down')?this.handleNameSortAscend:this.handleNameSortDescend}
+                                >
                                     Name <FontAwesomeIcon icon={nameIcon}/>
                                 </th>
                                 <th>Email</th>
@@ -240,11 +199,18 @@ export default class Employees extends Component {
                                 <th>Supervisor</th>
                                 <th>Reviewer</th>
                                 <th>Time approver</th>
-                                <th className='sort-head' onClick={startFunc}>
+                                <th 
+                                    className='sort-head'
+                                    onClick={(startIcon==='sort'||startIcon==='sort-down')?this.handleStartAscend:this.handleStartDescend}
+                                >
                                     Start Date <FontAwesomeIcon icon={startIcon}/>
                                 </th>                                
-                                <th className='sort-head' onClick={endFunc}>
-                                    End date <FontAwesomeIcon icon={endIcon}/>
+                                <th 
+                                    // className='sort-head'
+                                    // onClick={(endIcon==='sort'||endIcon==='sort-down')?this.handleEndAscend:this.handleEndDescend}
+                                >
+                                    End date 
+                                    {/* <FontAwesomeIcon icon={endIcon}/> */}
                                 </th>
                                 <th>Notes</th>
                                 <th>Assets</th>
