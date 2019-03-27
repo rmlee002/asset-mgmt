@@ -16,7 +16,7 @@ export default class Assets extends Component{
             filtered: [],
             showArchived: false,
             loggedIn: false,
-            theight: document.documentElement.clientHeight - 250,
+            theight: document.documentElement.clientHeight - 270,
             serialIcon: 'sort',
             costIcon: 'sort',
             inIcon: 'sort',
@@ -79,7 +79,7 @@ export default class Assets extends Component{
     }
 
     handleResize(){
-        const h = document.documentElement.clientHeight - 250
+        const h = document.documentElement.clientHeight - 270
         this.setState({
             theight: h
         })

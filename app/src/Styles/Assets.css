@@ -11,9 +11,6 @@
 #assets tr > :nth-child(6){
     width: 90px;
 }
-#assets td:nth-child(7){
-    word-wrap: break-word;
-}
 #assets tr > :nth-child(8){
     width: 80px;
 }
