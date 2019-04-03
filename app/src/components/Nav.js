@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Nav, NavItem, Navbar } from 'react-bootstrap';
+import { Nav, NavItem, Navbar, NavDropdown, MenuItem } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import Axios from 'axios';
@@ -59,15 +59,40 @@ class Links extends Component{
                 </Navbar.Header>                    
                 <Navbar.Collapse>
                     <Nav>
-                        <LinkContainer to='/employees'>
-                            <NavItem>Employees</NavItem>
-                        </LinkContainer>
-                        <LinkContainer to='/assets'>
-                            <NavItem>Hardware</NavItem>
-                        </LinkContainer>
-                        <LinkContainer to='/software'>
-                            <NavItem>Software</NavItem>
-                        </LinkContainer>
+                        <NavDropdown title='Employees'>
+                            <LinkContainer exact to='/employees'>
+                                <MenuItem>View Employees</MenuItem>
+                            </LinkContainer>
+                            <LinkContainer to='/employees/add'>
+                                <MenuItem>Add Employee</MenuItem>
+                            </LinkContainer>
+                        </NavDropdown>
+                        <NavDropdown title='Hardware'>
+                            <LinkContainer exact to='/assets/laptops'>
+                                <MenuItem>Laptops</MenuItem>
+                            </LinkContainer>
+                            {/* <LinkContainer to='/assets/laptops/add'>
+                                <MenuItem>Add Laptop</MenuItem>
+                            </LinkContainer> */}
+                            <LinkContainer exact to='/assets/nonlaptops'>
+                                <MenuItem>Non-Laptops</MenuItem>   
+                            </LinkContainer> 
+                            {/* <LinkContainer to='/assets/nonlaptops/add'>
+                                <MenuItem>Add non-laptop</MenuItem> 
+                            </LinkContainer>                              */}
+                            <LinkContainer to='/assets/reporting'>
+                                <MenuItem>Hardware Reporting</MenuItem>
+                            </LinkContainer>
+                        </NavDropdown>
+                        <NavDropdown title='Software'>
+                            <LinkContainer exact to='/software'>
+                                <MenuItem>View software</MenuItem>
+                            </LinkContainer>
+                            <LinkContainer to='/software/add'>
+                                <MenuItem>Add software</MenuItem>
+                            </LinkContainer>
+                            <MenuItem>Software Reporting</MenuItem>
+                        </NavDropdown>                        
                     </Nav>
                     <Nav pullRight>
                         {link}
