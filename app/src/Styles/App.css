@@ -56,10 +56,9 @@
     border-bottom: 1px solid #e6e6e6; 
 }
 
-.data td{
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+/* .data th{
+    border-left: 1px solid black;
+} */
 
 .react-datepicker {
     font-size: 1.3rem !important;

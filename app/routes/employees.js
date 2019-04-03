@@ -102,7 +102,7 @@ router.post('/retire', (req,res) => {
 			res.status(500).send("Database query error")
 		}
 		else{
-			connection.query('UPDATE history SET end=? WHERE emp_id=? AND end IS NULL', [req.body.end, req.body.emp_id], (err, results) =>{
+			connection.query('UPDATE laptopHistory SET end=? WHERE emp_id=? AND end IS NULL', [req.body.end, req.body.emp_id], (err, results) =>{
 				if (err){
 					console.log(err)
 					res.status(500).send("Database query error")
