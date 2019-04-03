@@ -5,21 +5,25 @@ import Employees from './Employees/Employees';
 import Software from './Software/Software';
 import protect from './protect'
 import ManageEmployee from './Employees/ManageEmployee';
-import Assets from './Assets/Assets';
-import AddAssets from './Assets/AddAsset';
-import History from './Assets/History';
-import ManageAsset from './Assets/ManageAsset';
+import Laptops from './Assets/Laptops/Laptops';
+import AddLaptop from './Assets/Laptops/AddLaptop';
+import LaptopHistory from './Assets/Laptops/LaptopHistory';
+import ManageLaptop from './Assets/Laptops/ManageLaptop';
 import EmployeeAssets from './Employees/EmployeeAssets';
 import AddAsset from './Employees/AddEmployeeAsset';
+import AssetReporting from './Assets/AssetReporting';
 import Users from './Software/Users';
 import AddEmployee from './Employees/AddEmployee';
-import EditOwner from './Assets/EditOwner';
+import EditOwner from './Assets/Laptops/EditOwner';
 import AddSoftware from './Software/AddSoftware';
 import AddUser from './Software/AddUser';
 import EmployeeLicenses from './Employees/EmployeeLicenses';
 import AddEmployeeLicense from './Employees/AddEmployeeLicense';
 import ManageSoftware from './Software/ManageSoftware';
 import SoftwareOverview from './Software/SoftwareOverview';
+import NonLaptops from './Assets/NonLaptops/NonLaptops';
+import AddNonLaptop from './Assets/NonLaptops/AddNonlaptop';
+import ManageNonLaptop from './Assets/NonLaptops/ManageNonLaptop';
 
 export default () => 
     <Switch>
@@ -32,11 +36,15 @@ export default () =>
         <Route path ='/employees/:emp_id/assets/add' component={protect(AddAsset)} />
         <Route exact path ='/employees/:emp_id/licenses' component={EmployeeLicenses} />
         <Route path='/employees/:emp_id/licenses/add' component={protect(AddEmployeeLicense)} />
-        <Route exact path='/assets' component={Assets} />
-        <Route path='/assets/add' component={protect(AddAssets)} />
-        <Route path='/assets/:asset_id/history' component={History} />
-        <Route exact path='/assets/:asset_id/manage' component={protect(ManageAsset)} />
-        <Route exact path='/assets/:asset_id/editOwner' component={protect(EditOwner)} />
+        <Route exact path='/assets/laptops' component={Laptops} />
+        <Route path='/assets/laptops/add' component={protect(AddLaptop)} />
+        <Route path='/assets/laptops/:laptop_id/history' component={LaptopHistory} />
+        <Route exact path='/assets/laptops/:laptop_id/manage' component={protect(ManageLaptop)} />
+        <Route exact path='/assets/nonlaptops' component={NonLaptops} />
+        <Route path='/assets/nonlaptops/add' component={AddNonLaptop} />
+        <Route path='/assets/nonlaptops/:hardware_id/manage' component={ManageNonLaptop} />
+        <Route path='/assets/reporting' component={AssetReporting} />
+        <Route exact path='/assets/laptops/:laptop_id/editOwner' component={protect(EditOwner)} />
         <Route exact path='/software' component={Software} />
         <Route path='/software/overview' component={SoftwareOverview} />
         <Route path='/software/:software_id/manage' component={protect(ManageSoftware)} />

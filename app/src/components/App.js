@@ -3,11 +3,11 @@ import '../Styles/App.css';
 import Routes from './Routes';
 import Links from './Nav';
 import { faUserPlus, faLaptopMedical, faTrash, faHistory, faEdit, faDesktop, faUsers, faCheck,
-    faArchive, faUndo, faSort, faFilter, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons';
+    faArchive, faUndo, faSort, faFilter, faSortUp, faSortDown, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 
 library.add(faUserPlus, faLaptopMedical, faTrash, faHistory, faEdit, faDesktop, faUsers, faCheck, 
-    faArchive, faUndo, faSort, faFilter, faSortUp, faSortDown)
+    faArchive, faUndo, faSort, faFilter, faSortUp, faSortDown, faPlus)
 
 export default class App extends Component {
     render(){
