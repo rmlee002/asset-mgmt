@@ -3,18 +3,17 @@ const app = express();
 const router = express.Router();
 const bodyParser = require('body-parser');
 const connection = require('../databases/assetDB.js');
-const request = require('request')
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 router.post('/add', (req,res) => {
-    connection.query('UPDATE history SET end=? WHERE asset_id=? AND end IS NULL', [req.body.start, req.body.asset_id], (err, results) => {
+    connection.query('UPDATE laptopHistory SET end=? WHERE laptop_id=? AND end IS NULL', [req.body.start, req.body.laptop_id], (err, results) => {
         if (err){
             console.log(err)
             res.status(500).send("Database query error")
         }
-        connection.query('INSERT INTO history (asset_id, emp_id, start,end) VALUES (?,?,?,NULL)', [req.body.asset_id, req.body.emp_id, req.body.start], (err,results) => {
+        connection.query('INSERT INTO laptopHistory (laptop_id, emp_id, start,end) VALUES (?,?,?,NULL)', [req.body.laptop_id, req.body.emp_id, req.body.start], (err,results) => {
             if(err){
                 console.log(err)
                 res.status(500).send("Database query error")
@@ -27,7 +26,7 @@ router.post('/add', (req,res) => {
 })
 
 router.post('/retire', (req,res)=>{
-    connection.query('UPDATE history SET end=? WHERE asset_id=? AND emp_id=? AND end IS NULL', [req.body.end, req.body.asset_id, req.body.emp_id], (err,results) => {
+    connection.query('UPDATE laptopHistory SET end=? WHERE laptop_id=? AND emp_id=? AND end IS NULL', [req.body.end, req.body.laptop_id, req.body.emp_id], (err,results) => {
         if (err){
             console.log(err)
             res.status(500).send("Database query error")
@@ -53,9 +52,9 @@ router.post('/retire', (req,res)=>{
 // })
 
 router.post('/employee', (req, res) => {
-    connection.query('SELECT hardware.asset_id, history.emp_id, hardware.serial_number, \
-    hardware.model, hardware.comment, history.start, history.end FROM history INNER JOIN hardware\
-    ON history.asset_id = hardware.asset_id AND history.emp_id=? AND history.end IS NULL', req.body.emp_id,(err,results) => {
+    connection.query('SELECT laptops.laptop_id, laptopHistory.emp_id, laptops.serial_number, \
+    laptops.model, laptops.comment, laptopHistory.start, laptopHistory.end FROM laptopHistory INNER JOIN laptops\
+    ON laptopHistory.laptop_id = laptops.laptop_id AND laptopHistory.emp_id=? AND laptopHistory.end IS NULL', req.body.emp_id,(err,results) => {
 			if (err){
 				console.log(err)
 				res.status(500).send("Database query error")
@@ -68,8 +67,8 @@ router.post('/employee', (req, res) => {
 
 router.get('/employee/add', (req,res) => {
     const id = req.body.emp_id;
-    connection.query('SELECT asset_id, serial_number, model, comment\
-        FROM hardware WHERE asset_id NOT IN (SELECT asset_id FROM history WHERE end IS NULL) AND archived = FALSE', (err, results) => {
+    connection.query('SELECT laptop_id, serial_number, model, comment\
+        FROM laptops WHERE laptop_id NOT IN (SELECT laptop_id FROM laptopHistory WHERE end IS NULL) AND archived = FALSE', (err, results) => {
 			if (err){
 				console.log(err)
 				res.status(500).send("Database query error")
@@ -80,9 +79,10 @@ router.get('/employee/add', (req,res) => {
 		})
 })
 
-router.post('/asset', (req,res) => {
-    connection.query('SELECT * FROM (SELECT history.asset_id, employees.emp_id, employees.first_name, employees.last_name, history.start, history.end\
-        FROM history INNER JOIN employees ON employees.emp_id=history.emp_id) AS j WHERE asset_id=?', req.body.asset_id, function(err, results){
+router.post('/laptop', (req,res) => {
+    connection.query('SELECT * FROM (SELECT laptopHistory.laptop_id, employees.emp_id, employees.first_name, employees.last_name, \
+        laptopHistory.start, laptopHistory.end FROM laptopHistory \
+        INNER JOIN employees ON employees.emp_id=laptopHistory.emp_id) AS j WHERE laptop_id=?', req.body.laptop_id, function(err, results){
         if (err){
             console.log(err);
             res.status(500).send("Database query error")
@@ -91,11 +91,11 @@ router.post('/asset', (req,res) => {
     })
 })
 
-router.post('/asset/add', (req,res)=>{
+router.post('/laptop/add', (req,res)=>{
     connection.query('SELECT first_name, last_name, email, affiliation, department, \
     emp_id FROM employees WHERE archived=FALSE AND emp_id NOT IN \
-        (SELECT emp_id FROM history WHERE end IS NULL AND asset_id=?)',
-        req.body.asset_id, (err, results) => {
+        (SELECT emp_id FROM laptopHistory WHERE end IS NULL AND laptop_id=?)',
+        req.body.laptop_id, (err, results) => {
             if (err) {
                 console.log(err)
                 res.status(500).send("Database query error")

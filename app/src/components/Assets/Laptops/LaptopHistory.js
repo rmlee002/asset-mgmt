@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Table, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import axios from 'axios';
 import moment from 'moment';
-import ManageModal from '../ManageModal';
+import ManageModal from '../../ManageModal';
 
-export default class History extends Component{
+export default class LaptopHistory extends Component{
     constructor(props){
         super(props);
 
@@ -22,8 +22,8 @@ export default class History extends Component{
     }
 
     componentDidMount(){
-        axios.post('/history/asset', {
-            asset_id: this.props.match.params.asset_id
+        axios.post('/laptopHistory/laptop', {
+            laptop_id: this.props.match.params.laptop_id
         })
         .then(res =>{
             this.setState({
@@ -49,13 +49,13 @@ export default class History extends Component{
     }
 
     handleSubmit(id){
-        axios.post('/history/retire', {
+        axios.post('/laptopHistory/retire', {
             end: moment(this.state.end).format('YYYY-MM-DD'),
-            asset_id: this.props.match.params.asset_id,
+            laptop_id: this.props.match.params.laptop_id,
             emp_id: id
         })
         .then(res => {
-            this.props.history.push(`/assets/${this.props.match.params.asset_id}/history`)
+            this.props.history.push(`/assets/laptops/${this.props.match.params.laptop_id}/history`)
         })
         .catch(err => {
             alert(err.response.data)

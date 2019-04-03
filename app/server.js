@@ -3,11 +3,12 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const authenticateRouter = require('./routes/authenticate');
 const employeeRouter = require('./routes/employees');
-const assetRouter = require('./routes/assets.js');
+const laptopRouter = require('./routes/laptops');
 const softwareRouter = require('./routes/software');
 const licensesRouter = require('./routes/licenses');
 const departmentRouter = require('./routes/departments.js');
-const historyRouter = require('./routes/history');
+const historyRouter = require('./routes/laptopHistory');
+const nonlaptopRouter = require('./routes/nonlaptops');
 const path = require('path');
 const cors = require('cors');
 const authorized = require('./auth');
@@ -24,11 +25,12 @@ app.set('view engine', 'ejs');
 
 app.use('/authenticate', authenticateRouter);
 app.use('/employee', employeeRouter);
-app.use('/asset', assetRouter);
+app.use('/laptops', laptopRouter);
 app.use('/softwares', softwareRouter);
 app.use('/licenses', licensesRouter);
 app.use('/departments', departmentRouter);
-app.use('/history', historyRouter);
+app.use('/laptopHistory', historyRouter);
+app.use('/nonlaptops', nonlaptopRouter);
 
 app.get('/checkToken', authorized, (req, res) => {
 	res.sendStatus(200);

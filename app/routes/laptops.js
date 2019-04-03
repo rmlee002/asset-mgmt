@@ -12,15 +12,15 @@ app.use(bodyParser.json());
 
 router.get('/', (req, res) => {
     connection.query(
-        'SELECT hardware.asset_id,hardware.serial_number, hardware.model, hardware.cost,\
-        hardware.warranty_provider, owner.first_name, owner.last_name, hardware.comment, hardware.vendor,\
-        hardware.order_num, hardware.warranty, hardware.inDate, hardware.outDate, hardware.archived, hardware.broken\
-        FROM hardware \
-        LEFT JOIN (SELECT history.asset_id, employees.first_name, employees.last_name\
+        'SELECT laptops.laptop_id, laptops.serial_number, laptops.model, laptops.cost,\
+        laptops.warranty_provider, owner.first_name, owner.last_name, laptops.comment, laptops.vendor,\
+        laptops.order_num, laptops.warranty, laptops.inDate, laptops.outDate, laptops.archived, laptops.broken\
+        FROM laptops \
+        LEFT JOIN (SELECT laptopHistory.laptop_id, employees.first_name, employees.last_name\
         FROM employees\
-        INNER JOIN history\
-        ON history.emp_id =  employees.emp_id AND history.end IS NULL) as owner\
-        ON owner.asset_id = hardware.asset_id', function(err, results){
+        INNER JOIN laptopHistory\
+        ON laptopHistory.emp_id =  employees.emp_id AND laptopHistory.end IS NULL) as owner\
+        ON owner.laptop_id = laptops.laptop_id', function(err, results){
         if (err){
             console.log(err);
             res.status(500).send("Database query error")
@@ -40,7 +40,7 @@ router.post('/add', (req,res)=>{
             req.body.inDate]
     }
     
-    connection.query('INSERT INTO hardware (model,serial_number,warranty_provider,cost,comment,vendor,order_num,warranty,inDate) VALUES ?',
+    connection.query('INSERT INTO laptops (model,serial_number,warranty_provider,cost,comment,vendor,order_num,warranty,inDate) VALUES ?',
         [values], (err, results) => {
         if (err){
             console.log(err)
@@ -50,8 +50,8 @@ router.post('/add', (req,res)=>{
     })
 })
 
-router.post('/getAsset', (req,res) => {
-    connection.query('SELECT * FROM hardware WHERE asset_id=?', req.body.asset_id, (err, results) => {
+router.post('/getLaptop', (req,res) => {
+    connection.query('SELECT * FROM laptops WHERE laptop_id=?', req.body.laptop_id, (err, results) => {
         if (err) {
             console.log(err);
             res.status(500).send("Database query error")
@@ -60,14 +60,14 @@ router.post('/getAsset', (req,res) => {
     })
 })
 
-router.post('/updateAsset', (req,res) => {
-    const {asset_id, model, serial_number, warranty_provider, cost, vendor, 
+router.post('/updateLaptop', (req,res) => {
+    const {laptop_id, model, serial_number, warranty_provider, cost, vendor, 
         order_num, warranty, inDate, outDate, broken, comment} = req.body;
 
-    connection.query('UPDATE hardware SET model=?, serial_number=?, warranty_provider=?,\
+    connection.query('UPDATE laptops SET model=?, serial_number=?, warranty_provider=?,\
         cost=?, comment=?, vendor=?, order_num=?, warranty=?, inDate=?, outDate=?, broken=?\
-        WHERE asset_id=?', [model, serial_number, warranty_provider, cost, comment, 
-            vendor, order_num, warranty, inDate, outDate, broken, asset_id], (err, results) =>{
+        WHERE laptop_id=?', [model, serial_number, warranty_provider, cost, comment, 
+            vendor, order_num, warranty, inDate, outDate, broken, laptop_id], (err, results) =>{
             if(err){
                 console.log(err)
                 res.status(500).send("Database query error")
@@ -79,14 +79,14 @@ router.post('/updateAsset', (req,res) => {
 })
 
 router.post('/retire', (req, res) => {
-    connection.query('UPDATE hardware SET archived=TRUE, outDate=? WHERE asset_id=?', [req.body.outDate,req.body.asset_id], (err,result) => {
+    connection.query('UPDATE laptops SET archived=TRUE, outDate=? WHERE laptop_id=?', [req.body.outDate,req.body.laptop_id], (err,result) => {
         if (err){
             console.log(err)
             res.status(500).send({
                 error: "Database query error"
             })
         }        
-        connection.query('UPDATE history SET end=CURDATE() WHERE asset_id=? AND end IS NULL', req.body.asset_id, (err,results)=>{
+        connection.query('UPDATE laptopHistory SET end=CURDATE() WHERE laptop_id=? AND end IS NULL', req.body.laptop_id, (err,results)=>{
             if (err){
                 console.log(err)
                 res.status(500).send("Database query error")
@@ -97,7 +97,7 @@ router.post('/retire', (req, res) => {
 })
 
 router.post('/unretire', (req,res) => {
-    connection.query('UPDATE hardware SET archived=FALSE, outDate=NULL WHERE asset_id=?', req.body.asset_id, (err,results)=>{
+    connection.query('UPDATE laptops SET archived=FALSE, outDate=NULL WHERE laptop_id=?', req.body.laptop_id, (err,results)=>{
         if (err){
             console.log(err)
             res.status(500).send("Database query error")

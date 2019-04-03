@@ -5,14 +5,14 @@ import { LinkContainer } from 'react-router-bootstrap';
 import moment from 'moment';
 import axios from 'axios';
 import memoize from 'memoize-one';
-import '../../Styles/Assets.css';
+import '../../../Styles/Assets.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export default class Assets extends Component{
+export default class Laptops extends Component{
     constructor(props){
         super(props);
         this.state = {
-            assets: [],
+            laptops: [],
             filtered: [],
             showArchived: false,
             loggedIn: false,
@@ -37,10 +37,10 @@ export default class Assets extends Component{
 
     componentDidMount(){
         let self = this;
-        axios.get('/asset')
+        axios.get('/laptops')
         .then(function(res) {
             self.setState({
-                assets: res.data,
+                laptops: res.data,
                 filtered: res.data.filter((item)=>!item.archived)
             });
         }).catch(err => {
@@ -68,12 +68,12 @@ export default class Assets extends Component{
     handleChange(e){
         if (e.target.value !== ''){
             this.setState({
-                filtered: this.filter(this.state.assets.filter((item) =>  !(item.archived) || this.state.showArchived), e.target.value)
+                filtered: this.filter(this.state.laptops.filter((item) =>  !(item.archived) || this.state.showArchived), e.target.value)
             })
         }
         else{
             this.setState({
-                filtered: this.state.assets.filter((item) =>  !(item.archived) || this.state.showArchived)
+                filtered: this.state.laptops.filter((item) =>  !(item.archived) || this.state.showArchived)
             })
         }
     }
@@ -88,7 +88,7 @@ export default class Assets extends Component{
     handleCheck(e){
         this.setState({
             showArchived: e.target.checked,
-            filtered: this.state.assets.filter((item) =>  !(item.archived) || e.target.checked)
+            filtered: this.state.laptops.filter((item) =>  !(item.archived) || e.target.checked)
         })
     }
 
@@ -199,18 +199,18 @@ export default class Assets extends Component{
                         Show retired
                     </Checkbox>   
                     {loggedIn && 
-                        <LinkContainer to='/assets/add'>
+                        <LinkContainer to='/assets/laptops/add'>
                             <Button 
                                 className='pull-right'
                                 bsStyle='primary'
                             >
-                                <FontAwesomeIcon icon="laptop-medical"/> Add assets
+                                <FontAwesomeIcon icon="laptop-medical"/> Add laptops
                             </Button>
                         </LinkContainer>
                     }
                     
                 </div>
-                <div className='data' id='assets'>
+                <div className='data' id='laptops'>
                     <Table striped hover>
                         <thead>
                             <tr>
@@ -254,7 +254,7 @@ export default class Assets extends Component{
                         </thead>
                         <tbody style={{height: this.state.theight}}>
                             {this.state.filtered.map(item =>
-                                <tr key={item.asset_id}>
+                                <tr key={item.laptop_id}>
                                     <td>{item.serial_number}</td>
                                     <td>{item.model}</td>
                                     <td>{item.warranty_provider}</td>
@@ -273,17 +273,17 @@ export default class Assets extends Component{
                                     </td>
                                     <td style={{textAlign: 'center'}}>{item.broken?'Y':'N'}</td>
                                     <td>{item.comment}</td>
-                                    <td><Link to={`/assets/${item.asset_id}/history`}><FontAwesomeIcon icon='history'/></Link></td>
+                                    <td><Link to={`/assets/laptops/${item.laptop_id}/history`}><FontAwesomeIcon icon='history'/></Link></td>
                                     {loggedIn &&
                                         <td>
                                             {!item.archived &&
-                                                <Link to={`/assets/${item.asset_id}/editOwner`}>Assign owner</Link>
+                                                <Link to={`/assets/laptops/${item.laptop_id}/editOwner`}>Assign owner</Link>
                                             }
                                         </td>
                                     }                                    
                                     {loggedIn &&
                                         <td>
-                                            <Link to={`/assets/${item.asset_id}/manage`}><FontAwesomeIcon icon='edit'/></Link>
+                                            <Link to={`/assets/laptops/${item.laptop_id}/manage`}><FontAwesomeIcon icon='edit'/></Link>
                                         </td>
                                     }  
                                 </tr>

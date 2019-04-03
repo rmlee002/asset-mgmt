@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Table, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 import Axios from 'axios';
 import memoize from 'memoize-one';
-import ManageModal from '../ManageModal';
+import ManageModal from '../../ManageModal';
 import moment from 'moment';
-import '../../Styles/Assets.css';
+import '../../../Styles/Assets.css';
 
 
 export default class EditOwner extends Component{
@@ -26,8 +26,8 @@ export default class EditOwner extends Component{
     }
 
     componentDidMount(){
-        Axios.post('/history/asset/add', {
-            asset_id: this.props.match.params.asset_id
+        Axios.post('/laptopHistory/laptop/add', {
+            laptop_id: this.props.match.params.laptop_id
         })
         .then(res => {
             this.setState({employees: res.data, filtered: res.data});
@@ -65,13 +65,13 @@ export default class EditOwner extends Component{
 
     handleSubmit(e){
         e.preventDefault()
-        Axios.post('/history/add', {
-            asset_id: this.props.match.params.asset_id,
+        Axios.post('/laptopHistory/add', {
+            laptop_id: this.props.match.params.laptop_id,
             emp_id: this.state.emp_id,
             start: this.state.start?moment(this.state.start).format('YYYY-MM-DD'):null
         })
         .then(res => {
-            this.props.history.push(`/assets/${this.props.match.params.asset_id}/history`)
+            this.props.history.push(`/assets/laptops/${this.props.match.params.laptop_id}/history`)
         })
         .catch(err => {
             alert(err.response.data)

@@ -5,11 +5,10 @@ import moment from 'moment';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export default class AddAssets extends Component{
+export default class AddLaptop extends Component{
     constructor(props){
         super(props)
 
-        // this.handleChange = this.handleChange.bind(this);
         this.handleIn = this.handleIn.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleAdd = this.handleAdd.bind(this);
@@ -62,7 +61,7 @@ export default class AddAssets extends Component{
 
     handleSubmit(e){
         e.preventDefault();
-        axios.post('/asset/add', {
+        axios.post('/laptops/add', {
             order_num: this.state.order_num,
             vendor: this.state.vendor,
             inDate: this.state.inDate?moment(this.state.inDate).format('YYYY-MM-DD'):null,
@@ -71,7 +70,7 @@ export default class AddAssets extends Component{
             assets: JSON.stringify(this.state.assets)
         })
         .then(res => {
-            this.props.history.push('/assets')
+            this.props.history.push('/assets/laptops')
         })
         .catch(err => {
             alert(err.response.data)
@@ -216,7 +215,7 @@ export default class AddAssets extends Component{
                         <FormGroup>
                             <Col smOffset={3} sm={2}>
                                 <ButtonToolbar>
-                                    <Button onClick={this.handleAdd}><FontAwesomeIcon icon='laptop-medical'/> Add asset</Button>
+                                    <Button onClick={this.handleAdd}><FontAwesomeIcon icon='laptop-medical'/> Add more</Button>
                                     <Button type='submit' bsStyle='success'> <FontAwesomeIcon icon='check'/> Submit</Button>   
                                 </ButtonToolbar>                                
                             </Col>

@@ -3,10 +3,10 @@ import { Button, Form , FormGroup, Col, ControlLabel, FormControl, ButtonToolbar
 import DatePicker from 'react-datepicker';
 import Axios from 'axios';
 import moment from 'moment';
-import ManageModal from '../ManageModal';
+import ManageModal from '../../ManageModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export default class ManageAsset extends Component{
+export default class ManageLaptop extends Component{
     constructor(props){
         super(props);
 
@@ -19,7 +19,7 @@ export default class ManageAsset extends Component{
         this.handleCheck = this.handleCheck.bind(this)
 
         this.state={
-            asset_id: null,
+            laptop_id: null,
             model: null,
             serial_number: null,
             warranty_provider: null,
@@ -37,26 +37,26 @@ export default class ManageAsset extends Component{
     }
 
     componentDidMount(){
-        Axios.post('/asset/getAsset', {
-            asset_id: this.props.match.params.asset_id
+        Axios.post('/laptops/getLaptop', {
+            laptop_id: this.props.match.params.laptop_id
         })
         .then(res => {
-            const asset = res.data[0]
+            const laptop = res.data[0]
             this.setState({
-                asset_id: asset.asset_id,
-                model: asset.model,
-                serial_number: asset.serial_number,
-                warranty_provider: asset.warranty_provider,
-                owner: asset.owner,
-                cost: asset.cost,
-                comment: asset.comment,
-                vendor: asset.vendor,
-                order_num: asset.order_num,
-                warranty: asset.warranty,
-                inDate: asset.inDate,
-                outDate: asset.outDate,
-                archived: asset.archived,
-                broken: asset.broken
+                laptop_id: laptop.laptop_id,
+                model: laptop.model,
+                serial_number: laptop.serial_number,
+                warranty_provider: laptop.warranty_provider,
+                owner: laptop.owner,
+                cost: laptop.cost,
+                comment: laptop.comment,
+                vendor: laptop.vendor,
+                order_num: laptop.order_num,
+                warranty: laptop.warranty,
+                inDate: laptop.inDate,
+                outDate: laptop.outDate,
+                archived: laptop.archived,
+                broken: laptop.broken
             })
         })
         .catch(err => {
@@ -91,12 +91,12 @@ export default class ManageAsset extends Component{
 
     handleRetire(e){
         e.preventDefault();
-        Axios.post('/asset/retire', {
-            asset_id: this.state.asset_id,
+        Axios.post('/laptops/retire', {
+            laptop_id: this.state.laptop_id,
             end: moment(this.state.end).format('YYYY-MM-DD')
         })
         .then(res => {
-            this.props.history.push('/assets')            
+            this.props.history.push('/assets/laptops')            
         })
         .catch(err => {
             console.log(err)
@@ -105,11 +105,11 @@ export default class ManageAsset extends Component{
     }
 
     handleUnretire(){
-        Axios.post('/asset/unretire', {
-            asset_id: this.state.asset_id
+        Axios.post('/laptops/unretire', {
+            laptop_id: this.state.laptop_id
         })
         .then(res=>{
-            this.props.history.push('/assets')
+            this.props.history.push('/assets/laptops')
         })
         .catch(err => {
             console.log(err)
@@ -118,8 +118,8 @@ export default class ManageAsset extends Component{
     }
 
     handleSubmit(e){
-        Axios.post('/asset/updateAsset', {
-            asset_id: this.state.asset_id,
+        Axios.post('/laptops/updateLaptop', {
+            laptop_id: this.state.laptop_id,
             model: this.state.model,
             serial_number: this.state.serial_number,
             warranty_provider: this.state.warranty_provider,
@@ -280,13 +280,13 @@ export default class ManageAsset extends Component{
                             </Col>
                         </FormGroup>
                         <FormGroup>
-                            <Col smOffset={3} sm={2}>
+                            <Col smOffset={3} sm={3}>
                                 <ButtonToolbar>
-                                    <Button type = 'submit' bsStyle='success'> <FontAwesomeIcon icon='check'/> Update Asset</Button>
+                                    <Button type = 'submit' bsStyle='success'> <FontAwesomeIcon icon='check'/> Update Laptop</Button> 
                                     {!this.state.archived?
                                         <ManageModal 
                                             type='Retire'
-                                            title='Retire asset'
+                                            title='Retire laptop'
                                             size='medium'
                                             date={this.state.outDate?this.state.outDate:new Date()}
                                             handleSubmit={this.handleRetire}
