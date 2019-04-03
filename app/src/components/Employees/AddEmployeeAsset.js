@@ -5,7 +5,7 @@ import memoize from 'memoize-one';
 import moment from 'moment';
 import ManageModal from '../ManageModal';
 
-export default class AddAsset extends Component{
+export default class AddLaptop extends Component{
     constructor(props){
         super(props);
 
@@ -16,8 +16,8 @@ export default class AddAsset extends Component{
 
         this.state = {
             show: false,
-            asset: null,
-            assets: [],
+            laptop: null,
+            laptops: [],
             filtered: [],
             start: new Date(),
             theight: document.documentElement.clientHeight - 230
@@ -25,12 +25,12 @@ export default class AddAsset extends Component{
     }
 
     componentDidMount(){
-        Axios.get('/history/employee/add', {
+        Axios.get('/laptopHistory/employee/add', {
             emp_id: this.props.match.params.emp_id
         })
         .then(res => {
             this.setState({
-                assets: res.data,
+                laptops: res.data,
                 filtered: res.data
             })
         })
@@ -49,12 +49,12 @@ export default class AddAsset extends Component{
     handleChange(e){
         if (e.target.value !== ''){
             this.setState({
-                filtered: this.filter(this.state.assets, e.target.value)
+                filtered: this.filter(this.state.laptops, e.target.value)
             })
         }
         else{
             this.setState({
-                filtered: this.state.assets
+                filtered: this.state.laptops
             })
         }        
     }   
@@ -68,8 +68,8 @@ export default class AddAsset extends Component{
 
     handleSubmit(e){
         e.preventDefault();
-        Axios.post('/history/add', {
-            asset_id: this.state.asset_id,
+        Axios.post('/laptopHistory/add', {
+            laptop_id: this.state.laptop_id,
             emp_id: this.props.match.params.emp_id,
             start: this.state.start?moment(this.state.start).format('YYYY-MM-DD'):null
         })
@@ -100,7 +100,7 @@ export default class AddAsset extends Component{
                     />
                     <FormControl.Feedback />
                 </FormGroup>
-                <div className='data' id='addAsset'>                
+                <div className='data' id='addLaptop'>                
                     <Table striped hover>
                         <thead>
                             <tr>
@@ -119,9 +119,9 @@ export default class AddAsset extends Component{
                                     <td>
                                         <ManageModal
                                             type='Assign'
-                                            title='Add asset'
+                                            title='Add laptop'
                                             date={this.state.start}
-                                            handleClick={()=>this.setState({ asset_id: item.asset_id })}
+                                            handleClick={()=>this.setState({ laptop_id: item.laptop_id })}
                                             handleSubmit={this.handleSubmit}
                                             handleDate={this.handleStart}
                                         />

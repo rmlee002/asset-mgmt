@@ -17,7 +17,7 @@ export default class EmployeeAssets extends Component{
         this.state = {
             show: false,
             end: new Date(),
-            asset_id: null,
+            laptop_id: null,
             assets: [],
             loggedIn: false,
             theight: document.documentElement.clientHeight - 200
@@ -25,7 +25,7 @@ export default class EmployeeAssets extends Component{
     }
 
     componentDidMount(){        
-        Axios.post('/history/employee', {
+        Axios.post('/laptopHistory/employee', {
             emp_id: this.props.match.params.emp_id
         })
         .then(res => {
@@ -65,8 +65,8 @@ export default class EmployeeAssets extends Component{
     }
 
     handleSubmit(){
-        Axios.post('/history/retire', {
-            asset_id: this.state.asset_id,
+        Axios.post('/laptopHistory/retire', {
+            laptop_id: this.state.laptop_id,
             emp_id: this.props.match.params.emp_id,
             end: this.state.end?moment(this.state.end).format('YYYY-MM-DD'):null
         })
@@ -115,7 +115,7 @@ export default class EmployeeAssets extends Component{
                                                 type='Retire'
                                                 title='Retire asset'
                                                 date={this.state.end}
-                                                handleClick={() => this.setState({asset_id: item.asset_id})}
+                                                handleClick={() => this.setState({laptop_id: item.laptop_id})}
                                                 handleSubmit={this.handleSubmit}
                                                 handleDate={this.handleEnd}
                                             />
