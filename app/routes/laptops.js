@@ -3,8 +3,6 @@ const app = express();
 const router = express.Router();
 const bodyParser = require('body-parser');
 const connection = require('../databases/assetDB.js');
-const request = require('request');
-const moment = require('moment')
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
