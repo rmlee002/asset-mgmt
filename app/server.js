@@ -9,6 +9,7 @@ const licensesRouter = require('./routes/licenses');
 const departmentRouter = require('./routes/departments.js');
 const historyRouter = require('./routes/laptopHistory');
 const nonlaptopRouter = require('./routes/nonlaptops');
+const hwReportingRouter = require('./routes/hwReporting');
 const path = require('path');
 const cors = require('cors');
 const authorized = require('./auth');
@@ -31,6 +32,7 @@ app.use('/licenses', licensesRouter);
 app.use('/departments', departmentRouter);
 app.use('/laptopHistory', historyRouter);
 app.use('/nonlaptops', nonlaptopRouter);
+app.use('/hwReporting', hwReportingRouter)
 
 app.get('/checkToken', authorized, (req, res) => {
 	res.sendStatus(200);

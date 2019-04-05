@@ -11,7 +11,7 @@ import LaptopHistory from './Assets/Laptops/LaptopHistory';
 import ManageLaptop from './Assets/Laptops/ManageLaptop';
 import EmployeeAssets from './Employees/EmployeeAssets';
 import AddAsset from './Employees/AddEmployeeAsset';
-import AssetReporting from './Assets/AssetReporting';
+import AssetReporting from './Assets/Reporting/AssetReporting';
 import Users from './Software/Users';
 import AddEmployee from './Employees/AddEmployee';
 import EditOwner from './Assets/Laptops/EditOwner';
