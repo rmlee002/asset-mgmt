@@ -24,6 +24,7 @@ import SoftwareOverview from './Software/SoftwareOverview';
 import NonLaptops from './Assets/NonLaptops/NonLaptops';
 import AddNonLaptop from './Assets/NonLaptops/AddNonlaptop';
 import ManageNonLaptop from './Assets/NonLaptops/ManageNonLaptop';
+import SoftwareReporting from './Software/SoftwareReporting';
 
 export default () => 
     <Switch>
@@ -43,7 +44,7 @@ export default () =>
         <Route exact path='/assets/nonlaptops' component={NonLaptops} />
         <Route path='/assets/nonlaptops/add' component={AddNonLaptop} />
         <Route path='/assets/nonlaptops/:hardware_id/manage' component={ManageNonLaptop} />
-        <Route path='/assets/reporting' component={AssetReporting} />
+        <Route path='/assets/reporting/:contract' component={AssetReporting} />
         <Route exact path='/assets/laptops/:laptop_id/editOwner' component={protect(EditOwner)} />
         <Route exact path='/software' component={Software} />
         <Route path='/software/overview' component={SoftwareOverview} />
@@ -51,4 +52,5 @@ export default () =>
         <Route path='/software/add' component={protect(AddSoftware)} />
         <Route exact path='/software/:software_id/users' component={Users} />
         <Route path='/software/:software_id/users/add' component={protect(AddUser)} />
+        <Route path='/software/reporting/:contract' component = {SoftwareReporting} />
     </Switch>

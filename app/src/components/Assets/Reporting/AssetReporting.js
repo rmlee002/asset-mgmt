@@ -11,9 +11,10 @@ export default class Reporting extends Component{
         super(props)
 
         this.state = {
+            key: 'all',
             departments: [],
             data: [],
-            overview: []
+            all: []
         }
 
         this.handleSelect = this.handleSelect.bind(this)
@@ -35,7 +36,7 @@ export default class Reporting extends Component{
         .then(res => {
             this.setState({
                 data: res.data,
-                overview: res.data
+                all: res.data
             })
         })
         .catch(err =>{
@@ -44,17 +45,23 @@ export default class Reporting extends Component{
                 alert(err.response.data)
             }
         })
+
+        this.setState({
+            key: this.props.match.params.contract
+        })
     }
 
     handleSelect(key){
-        if (key === 'overview'){
+        if (key === 'all'){
             this.setState({
-                data: this.state.overview
+                key: key,
+                data: this.state.all
             })
         }
         else{
             this.setState({
-                data: this.state.overview.filter(item => item.contract?item.contract.split(',').includes(key):false)
+                key: key,
+                data: this.state.all.filter(item => item.contract?item.contract.toLowerCase().split(',').includes(key):false)
             })
         }        
     }
@@ -62,11 +69,11 @@ export default class Reporting extends Component{
     render(){
         return(
             <React.Fragment>
-                <Tabs onSelect={this.handleSelect}>
-                    <Tab eventKey="overview" title="All"></Tab>
+                <Tabs activeKey={this.state.key} onSelect={this.handleSelect}>
+                    <Tab eventKey="all" title="All"></Tab>
                     {
                         this.state.departments.map(option =>
-                            <Tab eventKey={option.label} title={option.label}></Tab>
+                            <Tab eventKey={option.label.toLowerCase()} title={option.label}></Tab>
                         )
                     }
                 </Tabs>

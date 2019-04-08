@@ -41,12 +41,7 @@ class Links extends Component{
         }
         else{
             link = 
-                <LinkContainer 
-                    to={{
-                        pathname: '/login',
-                        state: {path: this.props.location.pathname}
-                    }}
-                >
+                <LinkContainer to= '/login'>
                     <NavItem>Login</NavItem>
                 </LinkContainer> 
         }
@@ -80,7 +75,7 @@ class Links extends Component{
                             {/* <LinkContainer to='/assets/nonlaptops/add'>
                                 <MenuItem>Add non-laptop</MenuItem> 
                             </LinkContainer>                              */}
-                            <LinkContainer to='/assets/reporting'>
+                            <LinkContainer to='/assets/reporting/all'>
                                 <MenuItem>Hardware Reporting</MenuItem>
                             </LinkContainer>
                         </NavDropdown>
@@ -91,7 +86,9 @@ class Links extends Component{
                             <LinkContainer to='/software/add'>
                                 <MenuItem>Add software</MenuItem>
                             </LinkContainer>
-                            <MenuItem>Software Reporting</MenuItem>
+                            <LinkContainer to='/software/reporting'>
+                                <MenuItem>Software Reporting</MenuItem>
+                            </LinkContainer>                            
                         </NavDropdown>                        
                     </Nav>
                     <Nav pullRight>
