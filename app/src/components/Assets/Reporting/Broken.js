@@ -1,45 +1,48 @@
 import React, { Component } from 'react';
 import { Panel, Table, FormGroup, Col, ControlLabel, Form } from 'react-bootstrap';
 import moment from 'moment';
-import CreatableSelect from 'react-select/lib/Creatable';
+import Select from 'react-select';
 
 export default class BrokenDevices extends Component{
     constructor(props){
         super(props)
 
         this.handleChange = this.handleChange.bind(this)
+        this.getData = this.getData.bind(this)
 
         this.state = {
             providers: [],
-            data: [],
-            filtered: []
+            // data: []
         }
     }
 
-    componentDidMount(){
-        this.setState({
-            filtered: this.state.data 
-        })
-    }
-
-    static getDerivedStateFromProps(nextProps, prevState){
-        if (nextProps.data.length !== prevState.data.length){
-            return {data: nextProps.data.filter(item => item.broken), filtered: nextProps.data.filter(item=>item.broken)}
-        }
-        return null;
-    }
+    // componentDidUpdate(prevProps){
+    //     if (this.state.data.length !== prevProps.data.length){
+    //         this.setState({ data: prevProps.data })
+    //     }
+    // }
     
     handleChange(providers){
         this.setState({
-            providers: providers,
-            filtered: this.state.data.filter(item => providers.map(val => val.value).includes(item.warranty_provider))
+            providers: providers
         })
+    }
+
+    getData(){
+        if (this.state.providers.length === 0){
+            return this.props.data
+        }
+        else{
+            return this.props.data.filter(item => this.state.providers.map(val => val.value).includes(item.warranty_provider))
+        }
     }
 
     render(){
         var providers = []
+        // const data = (this.state.providers == null)?this.props.data:this.props.data.filter(item => this.state.providers.map(val => val.value).includes(item.warranty_provider))
+        const data = this.getData()
 
-        this.state.data.forEach(function(item){
+        this.props.data.forEach(function(item){
             if (item.warranty_provider != null && !providers.includes(item.warranty_provider)){
                 providers.push(item.warranty_provider)
             }
@@ -55,7 +58,7 @@ export default class BrokenDevices extends Component{
                         <FormGroup>
                             <Col componentClass={ControlLabel} sm={2}>Sort by Warranty Provider: </Col>
                             <Col sm={6}>
-                                <CreatableSelect
+                                <Select
                                     isClearable
                                     isMulti
                                     options={providers.map(function(val){return {value: val, label: val}})}
@@ -80,7 +83,7 @@ export default class BrokenDevices extends Component{
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.filtered.map(item =>
+                            {data.map(item =>
                                 <tr>
                                     <td>{item.serial_number}</td>
                                     <td>{item.model}</td>
