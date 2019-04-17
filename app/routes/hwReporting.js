@@ -10,7 +10,7 @@ app.use(bodyParser.json());
 router.get('/', (req,res)=>{
     connection.query(
         '(SELECT laptops.serial_number, laptops.model, CONCAT(owner.first_name, " ", owner.last_name) AS owner,\
-         owner.department AS contract, laptops.warranty_provider, laptops.warranty, laptops.inDate, laptops.comment, laptops.broken\
+         laptops.cost, owner.department AS contract, laptops.warranty_provider, laptops.warranty, laptops.inDate, laptops.comment, laptops.broken\
         FROM laptops\
         LEFT JOIN\
         (SELECT laptopHistory.laptop_id, employees.first_name, employees.last_name, employees.department\
@@ -20,7 +20,7 @@ router.get('/', (req,res)=>{
         ON owner.laptop_id = laptops.laptop_id\
         WHERE laptops.archived IS FALSE)\
         UNION ALL\
-        (SELECT serial_number, model, owner, contract, warranty_provider, warranty, inDate, comment,\
+        (SELECT serial_number, model, owner, cost, contract, warranty_provider, warranty, inDate, comment,\
         broken FROM hardware WHERE archived IS FALSE)', (err,results) =>{
             if (err){
                 console.log(err)
