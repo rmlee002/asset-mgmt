@@ -34,7 +34,7 @@ export default class AssetReporting extends Component{
 
         Axios.get('/hwReporting')
         .then(res => {
-            if (this.props.match.params.contract === 'all'){
+            if (this.props.match.params.contract === 'overview'){
                 this.setState({
                     data: res.data,
                     filtered: res.data
@@ -54,14 +54,14 @@ export default class AssetReporting extends Component{
     }
 
     handleSelect(key){
-        if (key === 'all'){
+        if (key === 'overview'){
             this.setState({
                 filtered: this.state.data
             })
         }
         else{
             this.setState({
-                filtered: this.state.data.filter(item => item.contract?item.contract.split(',').includes(key):false)
+                filtered: this.state.data.filter(item => item.contract?item.contract.replace(/\s/,'').split(',').includes(key):false)
             })
         }
     }
@@ -71,8 +71,8 @@ export default class AssetReporting extends Component{
             <Row className='clearfix'>
                 <Col sm={2}>
                     <Nav bsStyle='pills' stacked activeKey={this.props.match.params.contract} onSelect={this.handleSelect}>
-                        <LinkContainer to='/assets/reporting/all'>
-                            <NavItem eventKey="all">All</NavItem>
+                        <LinkContainer to='/assets/reporting/overview'>
+                            <NavItem eventKey="overview">Overview</NavItem>
                         </LinkContainer>
                         {this.state.depts.map(dept => 
                             <LinkContainer to={`/assets/reporting/${dept.value}`}>
@@ -83,7 +83,7 @@ export default class AssetReporting extends Component{
                 <Col sm={10}>
                     <Tabs>
                         <Tab eventKey="data" title="Data">
-                            <Data />
+                            <Data data={this.state.filtered} depts={this.state.depts.map(dept => dept.value)}/>
                         </Tab>
                         <Tab eventKey="broken" title="Broken Devices">
                             <BrokenDevices data={this.state.filtered.filter(item => item.broken)}/>

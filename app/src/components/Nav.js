@@ -75,7 +75,7 @@ class Links extends Component{
                             {/* <LinkContainer to='/assets/nonlaptops/add'>
                                 <MenuItem>Add non-laptop</MenuItem> 
                             </LinkContainer>                              */}
-                            <LinkContainer to='/assets/reporting/all'>
+                            <LinkContainer to='/assets/reporting/overview'>
                                 <MenuItem>Hardware Reporting</MenuItem>
                             </LinkContainer>
                         </NavDropdown>
