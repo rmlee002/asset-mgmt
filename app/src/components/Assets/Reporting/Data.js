@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Panel, Table } from 'react-bootstrap';
 import '../../../../node_modules/react-vis/dist/style.css';
 import moment from 'moment';
-import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme, VictoryTooltip } from 'victory';
+import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme, VictoryTooltip, VictoryPie } from 'victory';
 import Select from 'react-select';
 
 
@@ -15,6 +15,7 @@ export default class Data extends Component{
 
         this.getBarData = this.getBarData.bind(this)
         this.getOptions = this.getOptions.bind(this)
+        this.getPieData = this.getPieData.bind(this)
     }
 
     getBarData(){
@@ -41,11 +42,11 @@ export default class Data extends Component{
 
     getPieData(){
         var deptData = {}
-        this.props.data.forEach(dept => deptData[`${dept}`] = 0)
+        this.props.depts.forEach(dept => deptData[`${dept}`] = 0)
         this.props.data.filter(item => item.contract != null && item.inDate != null && item.cost != null && moment(item.inDate).year() === this.state.year.value)
-            .forEach(item => deptData[`${item.contract}`] += item.cost)
+            .forEach(item => item.contract.replace(/\s/, "").split(',').forEach(dept => deptData[`${dept}`] += parseFloat(item.cost)))
 
-        return Object.keys(deptData).map(function(key){ return { x: key, y: deptData[`${key}`] } })
+        return Object.keys(deptData).filter(key => deptData[`${key}`] !== 0).map(function(key){ return { x: key, y: deptData[`${key}`] } })
     }
 
     getOptions(){
@@ -60,13 +61,21 @@ export default class Data extends Component{
 
     render(){
         const barData = this.getBarData();
+        const pieData = this.getPieData();
 
         return(
+          
             <Panel bsStyle='info'>
                 <Panel.Heading>
                     <Panel.Title componentClass='h3'>Data</Panel.Title>
                 </Panel.Heading>
-                <Panel.Body>
+                <Panel.Body> 
+                    <VictoryPie
+                        data={pieData}
+                        colorScale={["LimeGreen","DarkGreen","LightSeaGreen","Yellow"]}
+                        labels={val=>`${val.x}: $${val.y.toFixed(2)}`}
+                        // labelComponent={<VictoryTooltip/>}
+                    />
                     <Select
                         value={this.state.year}
                         options={this.getOptions()}
@@ -94,6 +103,7 @@ export default class Data extends Component{
                             labelComponent={<VictoryTooltip/>}
                         />
                     </VictoryChart>    
+                    
                     <Table>
                         <thead>
                             <tr>
