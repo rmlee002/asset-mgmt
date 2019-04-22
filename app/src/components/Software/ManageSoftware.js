@@ -21,7 +21,7 @@ export default class ManageSoftware extends Component{
     }
 
     componentDidMount(){
-        Axios.post('/softwares/getSoftware', {
+        Axios.post('/software/getSoftware', {
             software_id: this.props.match.params.software_id
         })
         .then(res => {
@@ -44,7 +44,7 @@ export default class ManageSoftware extends Component{
     }
 
     handleUpdate(){
-        Axios.post('/softwares/update', {
+        Axios.post('/software/update', {
             name: this.state.name,
             cost: this.state.cost,
             software_id: this.props.match.params.software_id
@@ -56,7 +56,7 @@ export default class ManageSoftware extends Component{
     }
 
     handleRetire(){
-        Axios.post('/softwares/retire', {
+        Axios.post('/software/retire', {
             software_id: this.props.match.params.software_id
         })
         .then(res => {
@@ -69,7 +69,7 @@ export default class ManageSoftware extends Component{
     }
 
     handleUnretire(){
-        Axios.post('/softwares/unretire',{
+        Axios.post('/software/unretire',{
             software_id: this.props.match.params.software_id
         })
         .then(res => {

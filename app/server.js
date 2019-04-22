@@ -27,7 +27,7 @@ app.set('view engine', 'ejs');
 app.use('/authenticate', authenticateRouter);
 app.use('/employee', employeeRouter);
 app.use('/laptops', laptopRouter);
-app.use('/softwares', softwareRouter);
+app.use('/software', softwareRouter);
 app.use('/licenses', licensesRouter);
 app.use('/departments', departmentRouter);
 app.use('/laptopHistory', historyRouter);

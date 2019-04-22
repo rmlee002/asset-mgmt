@@ -31,7 +31,7 @@ export default class Employees extends Component {
     }
 
     componentDidMount(){
-        Axios.get('/softwares')
+        Axios.get('/software')
         .then(res => {
             this.setState({
                 software: res.data,
