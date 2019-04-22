@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Nav, NavItem, Row, Col, Tabs, Tab } from 'react-bootstrap'
+import { Nav, NavItem, Row, Col, Tab, Form, FormGroup, ControlLabel } from 'react-bootstrap'
 import Axios from 'axios'
 import Data from './Data'
 import OldestDevices from './OldestDevices'
@@ -70,12 +70,22 @@ export default class AssetReporting extends Component{
     render(){
         return(
             <React.Fragment>
-                <Select
-                    options={this.state.depts}
-                    onChange={this.handleSelect}
-                    isClearable
-                    isMulti
-                />
+                <Form horizontal>
+                    <FormGroup>
+                        <Col componentClass={ControlLabel} sm={2}>
+                            Select contract: 
+                        </Col>
+                        <Col sm = {10}>
+                            <Select
+                                options={this.state.depts}
+                                onChange={this.handleSelect}
+                                isClearable
+                                isMulti
+                            />
+                        </Col>
+                    </FormGroup>
+                </Form>
+               
                 <Tab.Container defaultActiveKey="data">
                     <Row className='clearfix'>
                         <Col sm={2}>
