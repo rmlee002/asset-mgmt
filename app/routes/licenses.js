@@ -19,17 +19,13 @@ router.post('/', (req,res)=>{
         WHERE licenses.software_id=? AND licenses.end IS NULL', req.body.software_id, (err,results)=>{
         if(err){
             console.log(err)
-            res.status(500).send({
-                error: "Database query error"
-            })
+            res.status(500).send("Database query error")
         }
         else{
             connection.query('SELECT software.name FROM software WHERE software_id=?', req.body.software_id, (err,results2)=>{
                 if (err){
                     console.log(err)
-                    res.status(500).send({
-                        error: "Database query error"
-                    })
+                    res.status(500).send("Database query error")
                 }
                 res.send({
                     name: results2[0].name,
