@@ -41,7 +41,12 @@ class Links extends Component{
         }
         else{
             link = 
-                <LinkContainer to= '/login'>
+                <LinkContainer 
+                    to={{
+                        pathname: '/login',
+                        state: {path: this.props.location.pathname}
+                    }}
+                >
                     <NavItem>Login</NavItem>
                 </LinkContainer> 
         }
