@@ -76,4 +76,21 @@ router.post('/unretire', (req,res)=>{
     })
 })
 
+router.get('/reporting', (req,res)=>{
+    connection.query(
+        'SELECT software.cost, software.name AS software, CONCAT(employees.first_name, " ", employees.last_name) AS name, employees.department, licenses.start, licenses.end\
+        FROM licenses\
+        JOIN employees\
+        ON licenses.emp_id = employees.emp_id\
+        AND employees.archived=FALSE\
+        JOIN software\
+        ON licenses.software_id = software.software_id', (err,results)=>{
+        if (err){
+            console.log(err)
+            res.status(500).send("Database query error")
+        }
+        res.send(JSON.stringify(results))
+    })
+})
+
 module.exports = router;
