@@ -10,15 +10,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default class Users extends Component{
     constructor(props){
-        super(props)
+        super(props);
 
-        this.handleChange = this.handleChange.bind(this)
-        this.total=this.total.bind(this)
-        this.filterName = this.filterName.bind(this)
-        this.handleFilter = this.handleFilter.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this)
-        this.handleEnd = this.handleEnd.bind(this)
-        this.handleResize = this.handleResize.bind(this)
+        this.handleChange = this.handleChange.bind(this);
+        this.total=this.total.bind(this);
+        this.filterName = this.filterName.bind(this);
+        this.handleFilter = this.handleFilter.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleEnd = this.handleEnd.bind(this);
+        this.handleResize = this.handleResize.bind(this);
 
         this.state={
             users: [],
@@ -43,9 +43,9 @@ export default class Users extends Component{
             })
         })
         .catch(err => {
-            console.log(err)
+            console.log(err);
             alert(err.response.data)
-        })
+        });
 
         Axios.get('/checkToken')
         .then(res => {
@@ -55,14 +55,14 @@ export default class Users extends Component{
         })
         .catch(err => {
             console.log(err)
-        })
+        });
 
         window.addEventListener('resize', this.handleResize)
     }
 
     filterName = memoize(
         (list, filterText) => list.filter(item => (item.first_name+' '+item.last_name).toLowerCase().includes(filterText.toLowerCase()))
-    )
+    );
         
     handleFilter(options){
         this.setState({
@@ -102,37 +102,37 @@ export default class Users extends Component{
             emp_id: this.state.emp_id
         })
         .catch(err => {
-            alert(err.response.data)
+            alert(err.response.data);
             console.log(err)
         })
     }
 
     handleResize(){
-        const h = document.documentElement.clientHeight - 310
+        const h = document.documentElement.clientHeight - 310;
         this.setState({
             theight: h
         })
     }
 
     total(){
-        var total = 0;
+        let total = 0;
         this.state.filtered.forEach((user) => {
             if (moment(user.start).isBefore(moment(),'month')){
                 total += user.cost;
             }
             else{
-                var day = moment(user.start).date();
+                let day = moment(user.start).date();
                 if (day === 31){
                     day = 30;
                 }
                 total += ((30-day + 1) / 30) * parseInt(user.cost);
             }            
-        })
+        });
         return total.toFixed(2);
     }
 
     render(){
-        const loggedIn = this.state.loggedIn
+        const loggedIn = this.state.loggedIn;
 
         return(
             <React.Fragment>
