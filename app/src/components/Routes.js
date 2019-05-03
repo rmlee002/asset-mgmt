@@ -52,5 +52,5 @@ export default () =>
         <Route path='/software/add' component={protect(AddSoftware)} />
         <Route exact path='/software/:software_id/users' component={Users} />
         <Route path='/software/:software_id/users/add' component={protect(AddUser)} />
-        <Route path='/software/reporting/:contract' component = {SoftwareReporting} />
+        <Route path='/software/reporting' component = {SoftwareReporting} />
     </Switch>
