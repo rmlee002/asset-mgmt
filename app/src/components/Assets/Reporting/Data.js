@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Panel, Table } from 'react-bootstrap';
 import moment from 'moment';
-import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme, VictoryTooltip, VictoryPie } from 'victory';
+import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme, VictoryTooltip, VictoryPie, VictoryLine } from 'victory';
 import Select from 'react-select';
 
 
@@ -72,7 +72,7 @@ export default class Data extends Component{
                     <VictoryPie
                         data={pieData}
                         colorScale={["LimeGreen","DarkGreen","LightSeaGreen","Yellow"]}
-                        labels={val=>`${val.x}: $${val.y.toFixed(2)}`}
+                        labels={val=>`${val.x}: \n$${val.y.toFixed(2)}`}
                         // labelComponent={<VictoryTooltip/>}
                     />
                     <Select
@@ -98,9 +98,18 @@ export default class Data extends Component{
                             data={barData}
                             x="month"
                             y="total"
-                            labels={(d) => `$${d.total.toFixed(2)}`}
-                            labelComponent={<VictoryTooltip/>}
+                            labels={(d) => d.total !== 0 ? `$${d.total.toFixed(2)}` : null}
+                            style={{ labels: { fontSize: 8 } }}
+                            // labelComponent={<VictoryTooltip/>}
                         />
+                        {/*<VictoryLine*/}
+                            {/*interpolation='natural'*/}
+                            {/*data={barData}*/}
+                            {/*x="month"*/}
+                            {/*y="total"*/}
+                            {/*labels={(d) => `$${d.total.toFixed(2)}`}*/}
+                            {/*labelComponent={<VictoryTooltip renderInPortal/>}*/}
+                        {/*/>*/}
                     </VictoryChart>    
                     
                     <Table>
