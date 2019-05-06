@@ -4,7 +4,7 @@ import moment from 'moment';
 import ReactTable from "react-table";
 import 'react-table/react-table.css'
 import { Tab, Row, Col, Nav, NavItem, Form, ControlLabel, FormGroup, Radio } from 'react-bootstrap';
-import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme, VictoryPie, VictoryLabel } from 'victory';
+import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme, VictoryPie } from 'victory';
 import Select from 'react-select';
 
 export default class SoftwareReporting extends Component { 
@@ -29,7 +29,8 @@ export default class SoftwareReporting extends Component {
         this.handleContract = this.handleContract.bind(this);
         this.getBarData = this.getBarData.bind(this);
         this.getPieData = this.getPieData.bind(this);
-        this.getTotal = this.getTotal.bind(this);
+        // this.getTotal = this.getTotal.bind(this);
+        this.getCost = this.getCost.bind(this);
     }
 
     componentDidMount(){
@@ -112,56 +113,61 @@ export default class SoftwareReporting extends Component {
         return years;
     }
 
-    getTotal(values, rows){
-        let total = 0;
+    getCost(value){
+        const cost = value.cost;
 
-        if (rows[0]._nestingLevel !== 0){
-            values.forEach(cost => total += cost)
-        }
-        else{
-            if(this.state.yearly){
-                values.forEach((cost, index) => {
-                    let start = moment(rows[index].start).date() === 31? 30 : moment(rows[index].start).date();
-                    if (moment(rows[index].end) != null && moment(rows[index].end).year() === this.state.year.value){
-                        let end = moment(rows[index].end).date()===31 ? 30 : moment(rows[index].end).date();
-                        if (moment(rows[index].start).year() < this.state.year.value){
-                            total += cost * moment(rows[index].end).month() + (end/30 * cost);
-                        }
-                        else{
-                            total += (((30-start)+1)/30)*cost + (moment(rows[index].end).month()-moment(rows[index].start).month()-1)*cost + (end/30)*cost
-                        }
+        if(this.state.yearly){
+            let start = moment(value.start).date() === 31? 30 : moment(value.start).date();
+            if (moment(value.end) != null && moment(value.end).year() === this.state.year.value){
+                let end = moment(value.end).date()===31 ? 30 : moment(value.end).date();
+                if (moment(value.start).year() < this.state.year.value){
+                    return cost * moment(value.end).month() + (end/30 * cost);
+                }
+                else{
+                    if (moment(value.start).month() === moment(value.end).month()){
+                        return (((end-start)+1)/30)*cost;
                     }
-                    else{
-                        total += (((30-start)+1)/30)*cost + (moment().month()-moment(rows[index].start).month()-1)*cost + (moment().date()/30)*cost
+                    else {
+                        return (((30-start)+1)/30)*cost + (moment(value.end).month()-moment(value.start).month()-1)*cost + (end/30)*cost
                     }
-                })
+                }
             }
             else{
-                values.forEach((cost,index) => {
-                    if (moment(rows[index].start).isBefore(`${this.state.year.value}-${this.state.month.value}-01`,'month')){
-                        if (rows[index].end == null || moment(rows[index].end).month() > this.state.month.value){
-                            total += cost;
-                        }
-                        else{
-                            total += (moment(rows[index].end).date()/30) * cost;
-                        }
-                    }
-                    else{
-                        let day = moment(rows[index].start).date();
-                        if (day === 31){
-                            day = 30;
-                        }
-                        if (rows[index].end == null || moment(rows[index].end).month() > this.state.month.value){
-                            total += ((30-day) + 1)/30 * cost;
-                        }
-                        else{
-                            total += ((moment(rows[index].end).date()-day)+1)/30 * cost;
-                        }
-                    }
-                })
+                const curr = moment().date() === 31 ? 30 : moment().date();
+                if (moment().year() === this.state.year.value) {
+                    return (((30-start)+1)/30)*cost + (moment().month()-moment(value.start).month()-1)*cost + (curr/30)*cost
+                }
+                else{
+                    return (((30-start)+1)/30)*cost + (11-moment(value.start).month())*cost
+                }
             }
         }
+        else{
+            if (moment(value.start).isBefore(`${this.state.year.value}-${this.state.month.value + 1}-01`,'month')){
+                if (value.end == null || moment(value.end).isAfter(`${this.state.year.value}-${this.state.month.value + 1}-01`, 'month')){
+                    return cost;
+                }
+                else{
+                    let end = moment(value.end).date() === 31 ? 30 : moment(value.end).date();
+                    return (end/30) * cost;
+                }
+            }
+            else{
+                let start = moment(value.start).date() === 31 ? 30 : moment(value.start).date();
+                if (value.end == null ||  moment(value.end).isAfter(`${this.state.year.value}-${this.state.month.value + 1}-01`, 'month')){
+                    return ((30-start) + 1)/30 * cost;
+                }
+                else{
+                    let end = moment(value.end).date() === 31 ? 30 : moment(value.end).date();
+                    return ((end-start)+1)/30 * cost;
+                }
+            }
+        }
+    }
 
+    getTotal(values, rows){
+        let total = 0;
+        values.forEach(num => total += num);
         return total;
     }
 
@@ -220,8 +226,6 @@ export default class SoftwareReporting extends Component {
                                 .forEach(dept =>
                                     deptData[`${dept}`] += (((30 - start) + 1) / 30) * cost + (moment(item.end).month() - (moment(item.start).month() + 1)) * cost + (end / 30) * cost
                                 );
-                            console.log(item.department);
-                            console.log((((30 - start) + 1) / 30) * cost + (moment(item.end).month() - (moment(item.start).month() + 1)) * cost + (end / 30) * cost)
                         }
                     }
                 }
@@ -243,8 +247,6 @@ export default class SoftwareReporting extends Component {
                             item.department.split(', ').forEach(dept =>
                                 deptData[`${dept}`] += (((30-start)+1)/30)*cost + (moment().month()-(moment(item.start).month()+1))*cost + (curr/30)*cost
                             );
-                            // console.log(item.department);
-                            // console.log((((30-start)+1)/30)*cost + (moment().month()-(moment(item.start).month()+1))*cost + (curr/30)*cost)
                         }
                     }
                 }
@@ -271,10 +273,17 @@ export default class SoftwareReporting extends Component {
                 Aggregated: row => null
             },
             {
+                id: 'totalCost',
                 Header: !this.state.yearly?`Cost in ${this.state.month.label} ${this.state.year.value}`:`Cost in ${this.state.year.value}`,
-                accessor: "cost",
+                accessor: val => this.getCost(val),
                 Cell: val => `$${val.value.toFixed(2)}`,
                 aggregate: (values, rows) => this.getTotal(values,rows)
+            },
+            {
+                Header:"Subscription Fee",
+                accessor: "cost",
+                Cell: val => `$${val.value.toFixed(2)}`,
+                Aggregated: row => null
             },
             {
                 Header: "Start Date",
@@ -367,12 +376,12 @@ export default class SoftwareReporting extends Component {
                 moment(item.start).year() <= this.state.year.value && (item.end == null || moment(item.end).year() >= this.state.year.value ))
         }
         else{
-            data = this.state.data.filter(item => 
-                moment(item.start).month() <= this.state.month.value && moment(item.start).year() <= this.state.year.value
-                && (item.end==null || moment(item.end).month() === this.state.month.value && moment(item.end).year() === this.state.year.value)
+            data = this.state.data.filter(item =>
+                moment(item.start).isSameOrBefore(`${this.state.year.value}-${this.state.month.value + 1}-01`, 'month')
+                &&
+                (item.end == null || moment(item.end).isSameOrAfter(`${this.state.year.value}-${this.state.month.value + 1}-01`, 'month'))
             )
         }
-
         return(
             <React.Fragment>
                 <Tab.Container defaultActiveKey="data">
@@ -513,7 +522,7 @@ export default class SoftwareReporting extends Component {
                                     <ReactTable
                                         data={
                                             this.state.data.filter(item =>
-                                                moment(item.start).isSameOrBefore(moment().subtract(1, 'years')) && item.end == null)
+                                                item.end == null && moment(item.start).isSameOrBefore(moment().subtract(1, 'years')))
                                         }
                                         pivotBy={["software"]}
                                         columns={columns3}
