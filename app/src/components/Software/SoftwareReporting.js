@@ -89,7 +89,6 @@ export default class SoftwareReporting extends Component {
         }
         else{
             this.setState({
-                // month: {value: moment().month(), label: moment().month(moment().month().toString(),'MM').format('MMMM')},
                 yearly: true
             })
         }        
@@ -191,9 +190,19 @@ export default class SoftwareReporting extends Component {
             {month: 12, total: 0}
         ];
 
-        this.state.data.filter(item => (this.state.contract.length !== 0?item.department.split(', ').includes(this.state.contract.value):true) &&
+        this.state.data.filter(item => (this.state.contract.length !== 0?item.department.split(', ')
+                .some(dept => this.state.contract.map(val => val.value).includes(dept)):true) &&
             moment(item.inDate).year() === this.state.year.value)
-            .map(item => data[moment(item.start).month()].total += ((30-moment(item.start).date())+1)/30 * parseFloat(item.cost));
+            .map(item => {
+                const start = moment(item.start).date()===31?30:moment(item.start).date();
+                if (item.end != null && moment(item.end).isSame(item.start, 'month')){
+                    const end = moment(item.end).date()===31?30:moment(item.end).date();
+                    data[moment(item.start).month()].total += (((end-start)+1)/30)*item.cost;
+                }
+                else{
+                    data[moment(item.start).month()].total += ((30-start)+1)/30 * item.cost;
+                }
+            });
 
         return data;
     }
@@ -205,7 +214,7 @@ export default class SoftwareReporting extends Component {
         self.state.data
             .filter(item => moment(item.start).year() <= self.state.year.value && (item.end == null || moment(item.end).year() >= self.state.year.value))
             .forEach(function(item) {
-                const cost = parseFloat(item.cost);
+                const cost = item.cost;
                 if (item.end != null && moment(item.end).year() === self.state.year.value){
                     const end = moment(item.end).date() === 31 ? 30 : moment(item.end).date();
                     if (moment(item.start).year() < self.state.year.value) {
@@ -386,33 +395,33 @@ export default class SoftwareReporting extends Component {
             <React.Fragment>
                 <Tab.Container defaultActiveKey="data">
                     <Row>
-                        <Col sm={2}>
+                        <Col sm={2} style={{position:'fixed'}}>
                             <Nav bsStyle="pills" stacked>
                                 <NavItem eventKey="data">Data</NavItem>
                                 <NavItem eventKey="highest">Top 10 highest total costs</NavItem>
                                 <NavItem eventKey="longest">Longest license holders</NavItem>
                             </Nav>
                         </Col>
-                        <Col sm={10}>
+                        <Col sm={10} style={{marginLeft: '250px'}}>
                             <Tab.Content animation>
                                 <Tab.Pane eventKey="data">
                                     <Form horizontal>
                                         <FormGroup>
                                             <Col componentClass={ControlLabel} sm={1}>
-                                                Group by: 
+                                                Group by:
                                             </Col>
                                             <Col sm={3}>
-                                                <Radio 
-                                                    name="radioGroup" 
-                                                    inline 
+                                                <Radio
+                                                    name="radioGroup"
+                                                    inline
                                                     value="monthly"
                                                     checked={!this.state.yearly}
                                                     onChange={this.handleChange}
                                                 >
                                                     Monthly
                                                 </Radio>{' '}
-                                                <Radio 
-                                                    name="radioGroup" 
+                                                <Radio
+                                                    name="radioGroup"
                                                     inline
                                                     value="yearly"
                                                     checked={this.state.yearly}
@@ -422,6 +431,7 @@ export default class SoftwareReporting extends Component {
                                                 </Radio>
                                             </Col>
                                         </FormGroup>
+                                    </Form>
                                         <FormGroup>
                                             <Col componentClass={ControlLabel} sm={1}>
                                                 Year:
@@ -459,7 +469,8 @@ export default class SoftwareReporting extends Component {
                                                 />
                                             </Col>
                                         </FormGroup>}
-                                    </Form>
+                                        <br/>
+                                    <br/>
                                     <ReactTable
                                         data={data}
                                         pivotBy={["department","name"]}
