@@ -3,7 +3,7 @@ import { Panel, Table } from 'react-bootstrap';
 import moment from 'moment';
 import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme, VictoryTooltip, VictoryPie, VictoryLine } from 'victory';
 import Select from 'react-select';
-
+import DatePicker from 'react-datepicker';
 
 export default class Data extends Component{
     constructor(props){
@@ -68,12 +68,12 @@ export default class Data extends Component{
                 <Panel.Heading>
                     <Panel.Title componentClass='h3'>Data</Panel.Title>
                 </Panel.Heading>
-                <Panel.Body> 
-                    <VictoryPie
-                        data={pieData}
-                        colorScale={["LimeGreen","DarkGreen","LightSeaGreen","Yellow"]}
-                        labels={val=>`${val.x}: \n$${val.y.toFixed(2)}`}
-                        // labelComponent={<VictoryTooltip/>}
+                <Panel.Body>
+                    <DatePicker
+                        selected={this.state.startDate}
+                        onChange={this.handleChange}
+                        dateFormat="MM/yyyy"
+                        showMonthYearPicker
                     />
                     <Select
                         value={this.state.year}
@@ -110,26 +110,31 @@ export default class Data extends Component{
                             {/*labels={(d) => `$${d.total.toFixed(2)}`}*/}
                             {/*labelComponent={<VictoryTooltip renderInPortal/>}*/}
                         {/*/>*/}
-                    </VictoryChart>    
-                    
-                    <Table>
-                        <thead>
-                            <tr>
-                                <th>Contract</th>
-                                <th>Month</th>
-                                <th>Spending</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.props.data.filter(item => moment(item.inDate).year() === this.state.year.value).map(item => 
-                                <tr>
-                                    <td>{item.contract}</td>
-                                    <td>{moment(item.inDate).format('YYYY-MM-DD')}</td>
-                                    <td>{item.cost}</td>
-                                </tr>
-                                )}
-                        </tbody>
-                    </Table>                
+                    </VictoryChart>
+                    <VictoryPie
+                        data={pieData}
+                        colorScale={["LimeGreen","DarkGreen","LightSeaGreen","Yellow"]}
+                        labels={val=>`${val.x}: \n$${val.y.toFixed(2)}`}
+                        // labelComponent={<VictoryTooltip/>}
+                    />
+                    {/*<Table>*/}
+                        {/*<thead>*/}
+                            {/*<tr>*/}
+                                {/*<th>Contract</th>*/}
+                                {/*<th>Month</th>*/}
+                                {/*<th>Spending</th>*/}
+                            {/*</tr>*/}
+                        {/*</thead>*/}
+                        {/*<tbody>*/}
+                            {/*{this.props.data.filter(item => moment(item.inDate).year() === this.state.year.value).map(item => */}
+                                {/*<tr>*/}
+                                    {/*<td>{item.contract}</td>*/}
+                                    {/*<td>{moment(item.inDate).format('YYYY-MM-DD')}</td>*/}
+                                    {/*<td>{item.cost}</td>*/}
+                                {/*</tr>*/}
+                                {/*)}*/}
+                        {/*</tbody>*/}
+                    {/*</Table>                */}
                 </Panel.Body>
             </Panel>  
         )

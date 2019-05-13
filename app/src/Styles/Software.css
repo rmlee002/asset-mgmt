@@ -1,13 +1,3 @@
-/* #software .tbody{
-    height: 440px;
-} */
-
-/* .data.software td:nth-child(1), .data.software th:nth-child(1){
-    width: 630px;
-}
-.data.software td:nth-child(2), .data.software th:nth-child(2){
-    width: 630px;
-} */
 #software td:nth-child(3){
     width: 150px;
     text-align: center;
@@ -24,18 +14,6 @@
     height: 500px;
 }
 
-/* .data.addUser td:nth-child(1), .data.addUser th:nth-child(1){
-    width: 330px;
-}
-.data.addUser td:nth-child(2), .data.addUser th:nth-child(2){
-    width: 330px;
-}
-.data.addUser td:nth-child(3), .data.addUser th:nth-child(3){
-    width: 330px;
-}
-.data.addUser td:nth-child(4), .data.addUser th:nth-child(4){
-    width: 330px;
-} */
 #addUser td:nth-child(5){
     width: 135px;
     text-align: center;
@@ -51,4 +29,17 @@
 
 #users th:nth-child(4){
     width: 217px;
+}
+
+.rt-tbody{
+    height: 550px;
+}
+
+.rt-thead{
+    overflow-y: scroll;
+}
+
+.graphics{
+    height: 700px;
+    width: 1200px;
 }

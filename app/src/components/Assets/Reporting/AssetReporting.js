@@ -70,25 +70,27 @@ export default class AssetReporting extends Component{
     render(){
         return(
             <React.Fragment>
-                <Form horizontal>
-                    <FormGroup>
-                        <Col componentClass={ControlLabel} sm={2}>
-                            Select contract: 
-                        </Col>
-                        <Col sm = {10}>
-                            <Select
-                                options={this.state.depts}
-                                onChange={this.handleSelect}
-                                isClearable
-                                isMulti
-                            />
-                        </Col>
-                    </FormGroup>
-                </Form>
-               
+                <div id="contract-select">
+                    <Form horizontal>
+                        <FormGroup>
+                            <Col componentClass={ControlLabel} sm={2}>
+                                Select contract:
+                            </Col>
+                            <Col sm = {10}>
+                                <Select
+                                    options={this.state.depts}
+                                    onChange={this.handleSelect}
+                                    isClearable
+                                    isMulti
+                                />
+                            </Col>
+                        </FormGroup>
+                    </Form>
+                </div>
+
                 <Tab.Container defaultActiveKey="data">
                     <Row className='clearfix'>
-                        <Col sm={2}>
+                        <Col sm={2} style={{position: 'fixed'}}>
                             <Nav bsStyle='pills' stacked>
                                 {/* <LinkContainer to='/assets/reporting/overview'>
                                     <NavItem eventKey="overview">Overview</NavItem>
@@ -103,7 +105,7 @@ export default class AssetReporting extends Component{
                                 <NavItem eventKey="oldest">Oldest Devices</NavItem>
                             </Nav>
                         </Col>
-                        <Col sm={10}>
+                        <Col sm={10} style={{marginLeft: '250px'}}>
                             <Tab.Content animation>
                                 <Tab.Pane eventKey="data">
                                     <Data data={this.state.filtered} depts={this.state.depts.map(dept => dept.value)}/>

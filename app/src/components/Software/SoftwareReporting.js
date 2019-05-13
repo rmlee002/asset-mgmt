@@ -4,8 +4,11 @@ import moment from 'moment';
 import ReactTable from "react-table";
 import 'react-table/react-table.css'
 import { Tab, Row, Col, Nav, NavItem, Form, ControlLabel, FormGroup, Radio } from 'react-bootstrap';
-import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme, VictoryPie } from 'victory';
+import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme, VictoryPie, VictoryContainer } from 'victory';
 import Select from 'react-select';
+import '../../Styles/Software.css';
+import DatePicker from 'react-datepicker';
+import "../../../node_modules/react-datepicker/dist/react-datepicker.css";
 
 export default class SoftwareReporting extends Component { 
     constructor(props){
@@ -484,6 +487,13 @@ export default class SoftwareReporting extends Component {
                                             </Col>
                                         </FormGroup>
                                     </Form>
+                                    <DatePicker
+                                        selected={this.state.startDate}
+                                        onChange={this.handleChange}
+                                        dateFormat="MM/yyyy"
+                                        showMonthYearPicker
+                                        className='form-control'
+                                    />
                                         <FormGroup>
                                             <Col componentClass={ControlLabel} sm={1}>
                                                 Year:
@@ -528,6 +538,7 @@ export default class SoftwareReporting extends Component {
                                         pivotBy={["department","name"]}
                                         // pivotBy={["software", "department"]}
                                         columns={columns1}
+                                        className='license-data'
                                     />
                                     <FormGroup>
                                         <Col componentClass={ControlLabel} sm={1}>
@@ -542,46 +553,50 @@ export default class SoftwareReporting extends Component {
                                             />
                                         </Col>
                                     </FormGroup>
-                                    <VictoryChart
-                                        domainPadding={10}
-                                        theme={VictoryTheme.material}
-                                        width={400}
-                                        height={300}
-                                    >
-                                        <VictoryAxis
-                                            tickValues={[1,2,3,4,5,6,7,8,9,10,11,12]}
-                                            tickFormat={["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]}
-                                        />
-                                        <VictoryAxis
-                                            dependentAxis
-                                            tickFormat={x => `$${x}`}
-                                        />
-                                        <VictoryBar
-                                            data={this.getBarData()}
-                                            x="month"
-                                            y="total"
-                                            labels={(d) => d.total===0?null:`$${d.total.toFixed(2)}`}
-                                            style={{ labels: { fontSize: 6 } }}
-                                        />
-                                        {/*<VictoryLine*/}
+                                    <div className="graphics">
+                                        <VictoryChart
+                                            domainPadding={10}
+                                            theme={VictoryTheme.material}
+                                            // containerComponent={<VictoryContainer responsive={false}/>}
+                                            width={400}
+                                            height={300}
+                                        >
+                                            <VictoryAxis
+                                                tickValues={[1,2,3,4,5,6,7,8,9,10,11,12]}
+                                                tickFormat={["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]}
+                                            />
+                                            <VictoryAxis
+                                                dependentAxis
+                                                tickFormat={x => `$${x}`}
+                                            />
+                                            <VictoryBar
+                                                data={this.getBarData()}
+                                                x="month"
+                                                y="total"
+                                                labels={(d) => d.total===0?null:`$${d.total.toFixed(2)}`}
+                                                style={{ labels: { fontSize: 6 } }}
+                                            />
+                                            {/*<VictoryLine*/}
                                             {/*interpolation='natural'*/}
                                             {/*data={this.getBarData()}*/}
                                             {/*x={"month"}*/}
                                             {/*y={"total"}*/}
-                                        {/*/>*/}
-                                    </VictoryChart>
-                                    <VictoryPie
-                                        data={this.getPieData()}
-                                        colorScale={["LimeGreen","DarkGreen","LightSeaGreen","Yellow"]}
-                                        labels={val=>`${val.x}: \n$${val.y.toFixed(2)}`}
+                                            {/*/>*/}
+                                        </VictoryChart>
+                                        <VictoryPie
+                                            data={this.getPieData()}
+                                            colorScale={["LimeGreen","DarkGreen","LightSeaGreen","Yellow"]}
+                                            labels={val=>`${val.x}: \n$${val.y.toFixed(2)}`}
 
-                                    />
+                                        />
+                                    </div>
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="highest">
                                     <ReactTable
                                         data={this.getDataHighest()}
                                         pivotBy={["name"]}
                                         columns={columns2}
+                                        className='license-data'
                                     />
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="longest">
@@ -592,6 +607,7 @@ export default class SoftwareReporting extends Component {
                                         }
                                         pivotBy={["software"]}
                                         columns={columns3}
+                                        className='license-data'
                                     />
                                 </Tab.Pane>
                             </Tab.Content>
