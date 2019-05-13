@@ -29,7 +29,6 @@ export default class SoftwareReporting extends Component {
         this.handleContract = this.handleContract.bind(this);
         this.getBarData = this.getBarData.bind(this);
         this.getPieData = this.getPieData.bind(this);
-        // this.getTotal = this.getTotal.bind(this);
         this.getCost = this.getCost.bind(this);
     }
 
@@ -95,11 +94,15 @@ export default class SoftwareReporting extends Component {
     }
 
     handleYear(year){
-        this.setState({year})
+        this.setState({
+            year: year
+        })
     }
 
     handleMonth(month){
-        this.setState({ month })
+        this.setState({
+            month: month
+        })
     }
 
     static getYears(){
@@ -144,6 +147,9 @@ export default class SoftwareReporting extends Component {
         else{
             if (moment(value.start).isBefore(`${this.state.year.value}-${this.state.month.value + 1}-01`,'month')){
                 if (value.end == null || moment(value.end).isAfter(`${this.state.year.value}-${this.state.month.value + 1}-01`, 'month')){
+                    if (this.state.year.value === moment().year() && moment().month() === this.state.month.value){
+                        return (moment().date()/30)*cost;
+                    }
                     return cost;
                 }
                 else{
@@ -164,7 +170,7 @@ export default class SoftwareReporting extends Component {
         }
     }
 
-    getTotal(values, rows){
+    getTotal(values){
         let total = 0;
         values.forEach(num => total += num);
         return total;
@@ -190,17 +196,62 @@ export default class SoftwareReporting extends Component {
             {month: 12, total: 0}
         ];
 
-        this.state.data.filter(item => (this.state.contract.length !== 0?item.department.split(', ')
-                .some(dept => this.state.contract.map(val => val.value).includes(dept)):true) &&
-            moment(item.inDate).year() === this.state.year.value)
-            .map(item => {
+        this.state.data
+            .filter(item => (item.end == null || moment(item.end).year()===this.state.year.value) &&
+                (this.state.contract.length === 0 || item.department.split(', ')
+                    .some(dept => this.state.contract.forEach(val => val.value).includes(dept)))
+            )
+            .forEach(item => {
                 const start = moment(item.start).date()===31?30:moment(item.start).date();
-                if (item.end != null && moment(item.end).isSame(item.start, 'month')){
-                    const end = moment(item.end).date()===31?30:moment(item.end).date();
-                    data[moment(item.start).month()].total += (((end-start)+1)/30)*item.cost;
+                if(item.end == null || moment(item.end).year() > this.state.year.value){
+                    if (moment(item.start).year() < this.state.year.value){
+                        if (this.state.year.value === moment().year()){
+                            for (let i = 0; i < moment().month(); i++){
+                                data[i].total += item.cost;
+                            }
+                            data[moment().month()].total += (moment().date()/30) * item.cost;
+                        }
+                        else{
+                            for (let i = 0; i < 12; i++){
+                                data[i].total += item.cost;
+                            }
+                        }
+                    }
+                    else{
+                        data[moment(item.start).month()].total += (((30-start)+1)/30)*item.cost;
+                        if (this.state.year.value === moment().year()){
+                            for (let i = moment(item.start).month()+1; i < moment().month(); i++){
+                                data[i].total += item.cost;
+                            }
+                            data[moment().month()].total += (moment().date()/30)*item.cost;
+                        }
+                        else{
+                            for (let i = moment(item.start).month()+1; i < 12; i++){
+                                data[i].total += item.cost;
+                            }
+                        }
+                    }
                 }
                 else{
-                    data[moment(item.start).month()].total += ((30-start)+1)/30 * item.cost;
+                    const end = moment(item.end).date()===31?30:moment(item.end).date();
+                    if (moment(item.start).year() < this.state.year.value){
+                        data[moment(item.end).month()].total += (end/30)*item.cost;
+                        for (let i = moment(item.end).month()-1; i >= 0; i--){
+                            data[i].total += item.cost;
+                        }
+                    }
+                    else{
+                        if (moment(item.start).month() === moment(item.end).month()){
+                            data[moment(item.start).month()].total += (((end-start)+1)/30) * item.cost;
+                        }
+                        else{
+                            data[moment(item.start).month()].total += (((30-start)+1)/30) * item.cost;
+                            for (let i = moment(item.end).month()-1; i > moment(item.start).month(); i--){
+                                data[i].total += item.cost;
+                            }
+                            data[moment(item.end).month()].total += (end/30) * item.cost;
+                        }
+                    }
                 }
             });
 
@@ -286,7 +337,7 @@ export default class SoftwareReporting extends Component {
                 Header: !this.state.yearly?`Cost in ${this.state.month.label} ${this.state.year.value}`:`Cost in ${this.state.year.value}`,
                 accessor: val => this.getCost(val),
                 Cell: val => `$${val.value.toFixed(2)}`,
-                aggregate: (values, rows) => this.getTotal(values,rows)
+                aggregate: (values,rows) => this.getTotal(values)
             },
             {
                 Header:"Subscription Fee",
@@ -362,7 +413,7 @@ export default class SoftwareReporting extends Component {
                 Header: "Monthly Cost",
                 accessor: "cost",
                 Cell: val => `$${val.value}`,
-                Aggregated: null
+                Aggregated: row => null
             },
             {
                 Header: "Start Date",
@@ -381,7 +432,7 @@ export default class SoftwareReporting extends Component {
         let data = [];
 
         if (this.state.yearly){
-            data = this.state.data.filter(item => 
+            data = this.state.data.filter(item =>
                 moment(item.start).year() <= this.state.year.value && (item.end == null || moment(item.end).year() >= this.state.year.value ))
         }
         else{
@@ -391,6 +442,7 @@ export default class SoftwareReporting extends Component {
                 (item.end == null || moment(item.end).isSameOrAfter(`${this.state.year.value}-${this.state.month.value + 1}-01`, 'month'))
             )
         }
+
         return(
             <React.Fragment>
                 <Tab.Container defaultActiveKey="data">
@@ -477,12 +529,19 @@ export default class SoftwareReporting extends Component {
                                         // pivotBy={["software", "department"]}
                                         columns={columns1}
                                     />
-                                    <Select
-                                        isMulti
-                                        options={this.state.contracts}
-                                        value={this.state.contract}
-                                        onChange={this.handleContract}
-                                    />
+                                    <FormGroup>
+                                        <Col componentClass={ControlLabel} sm={1}>
+                                            Contract:
+                                        </Col>
+                                        <Col sm={5}>
+                                            <Select
+                                                isMulti
+                                                options={this.state.contracts}
+                                                value={this.state.contract}
+                                                onChange={this.handleContract}
+                                            />
+                                        </Col>
+                                    </FormGroup>
                                     <VictoryChart
                                         domainPadding={10}
                                         theme={VictoryTheme.material}
@@ -490,16 +549,12 @@ export default class SoftwareReporting extends Component {
                                         height={300}
                                     >
                                         <VictoryAxis
-                                            // label="Month"
                                             tickValues={[1,2,3,4,5,6,7,8,9,10,11,12]}
                                             tickFormat={["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]}
-                                            // axisLabelComponent={<VictoryLabel dy={20}/>}
                                         />
                                         <VictoryAxis
                                             dependentAxis
                                             tickFormat={x => `$${x}`}
-                                            // label="Total"
-                                            // axisLabelComponent={<VictoryLabel dy={-30}/>}
                                         />
                                         <VictoryBar
                                             data={this.getBarData()}
