@@ -121,11 +121,8 @@ export default class Users extends Component{
                 total += user.cost;
             }
             else{
-                let day = moment(user.start).date();
-                if (day === 31){
-                    day = 30;
-                }
-                total += ((30-day + 1) / 30) * parseInt(user.cost);
+                let day = moment(user.start).date() === 31 ? 30 : moment(user.start).date();
+                total += (((moment().date() - day)+1)/30)*user.cost;
             }            
         });
         return total.toFixed(2);
@@ -136,7 +133,7 @@ export default class Users extends Component{
 
         return(
             <React.Fragment>
-                <h3>Total monthly cost for {this.state.name} license: ${this.total()}</h3>
+                <h3>Current monthly cost for {this.state.name} license: ${this.total()}</h3>
                 <FormGroup controlId="search">
                     <ControlLabel>Search</ControlLabel>
                     <FormControl
