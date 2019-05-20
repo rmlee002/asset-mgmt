@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Panel, Table } from 'react-bootstrap';
+import { Panel } from 'react-bootstrap';
 import moment from 'moment';
-import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme, VictoryTooltip, VictoryPie, VictoryLine } from 'victory';
+import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme, VictoryPie } from 'victory';
 import Select from 'react-select';
 import DatePicker from 'react-datepicker';
 
@@ -40,7 +40,7 @@ export default class Data extends Component{
     }
 
     getPieData(){
-        var deptData = {};
+        let deptData = {};
         this.props.depts.forEach(dept => deptData[`${dept}`] = 0);
         this.props.data.filter(item => item.contract != null && item.inDate != null && item.cost != null && moment(item.inDate).year() === this.state.year.value)
             .forEach(item => item.contract.replace(/\s/, "").split(',').forEach(dept => deptData[`${dept}`] += parseFloat(item.cost)));
@@ -49,7 +49,7 @@ export default class Data extends Component{
     }
 
     getOptions(){
-        var options=[];
+        let options=[];
         this.props.data.filter(item => item.inDate != null).forEach(function(item){
             if (!options.includes(moment(item.inDate).year())){
                 options.push(moment(item.inDate).year());
@@ -100,41 +100,13 @@ export default class Data extends Component{
                             y="total"
                             labels={(d) => d.total !== 0 ? `$${d.total.toFixed(2)}` : null}
                             style={{ labels: { fontSize: 8 } }}
-                            // labelComponent={<VictoryTooltip/>}
                         />
-                        {/*<VictoryLine*/}
-                            {/*interpolation='natural'*/}
-                            {/*data={barData}*/}
-                            {/*x="month"*/}
-                            {/*y="total"*/}
-                            {/*labels={(d) => `$${d.total.toFixed(2)}`}*/}
-                            {/*labelComponent={<VictoryTooltip renderInPortal/>}*/}
-                        {/*/>*/}
                     </VictoryChart>
                     <VictoryPie
                         data={pieData}
                         colorScale={["LimeGreen","DarkGreen","LightSeaGreen","Yellow"]}
                         labels={val=>`${val.x}: \n$${val.y.toFixed(2)}`}
-                        // labelComponent={<VictoryTooltip/>}
                     />
-                    {/*<Table>*/}
-                        {/*<thead>*/}
-                            {/*<tr>*/}
-                                {/*<th>Contract</th>*/}
-                                {/*<th>Month</th>*/}
-                                {/*<th>Spending</th>*/}
-                            {/*</tr>*/}
-                        {/*</thead>*/}
-                        {/*<tbody>*/}
-                            {/*{this.props.data.filter(item => moment(item.inDate).year() === this.state.year.value).map(item => */}
-                                {/*<tr>*/}
-                                    {/*<td>{item.contract}</td>*/}
-                                    {/*<td>{moment(item.inDate).format('YYYY-MM-DD')}</td>*/}
-                                    {/*<td>{item.cost}</td>*/}
-                                {/*</tr>*/}
-                                {/*)}*/}
-                        {/*</tbody>*/}
-                    {/*</Table>                */}
                 </Panel.Body>
             </Panel>  
         )
