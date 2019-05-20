@@ -20,7 +20,6 @@ import AddUser from './Software/AddUser';
 import EmployeeLicenses from './Employees/EmployeeLicenses';
 import AddEmployeeLicense from './Employees/AddEmployeeLicense';
 import ManageSoftware from './Software/ManageSoftware';
-import SoftwareOverview from './Software/SoftwareOverview';
 import NonLaptops from './Assets/NonLaptops/NonLaptops';
 import AddNonLaptop from './Assets/NonLaptops/AddNonlaptop';
 import ManageNonLaptop from './Assets/NonLaptops/ManageNonLaptop';
@@ -47,7 +46,6 @@ export default () =>
         <Route exact path='/assets/reporting' component={AssetReporting} />
         <Route exact path='/assets/laptops/:laptop_id/editOwner' component={protect(EditOwner)} />
         <Route exact path='/software' component={Software} />
-        <Route path='/software/overview' component={SoftwareOverview} />
         <Route path='/software/:software_id/manage' component={protect(ManageSoftware)} />
         <Route path='/software/add' component={protect(AddSoftware)} />
         <Route exact path='/software/:software_id/users' component={Users} />
