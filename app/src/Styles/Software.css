@@ -41,5 +41,10 @@
 
 .graphics{
     height: 700px;
-    width: 1200px;
+    width: 1300px;
+}
+
+#tab-content{
+    /*border: 1px solid black;*/
+    margin-left: 250px;
 }
