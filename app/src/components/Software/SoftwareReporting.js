@@ -3,11 +3,10 @@ import Axios from 'axios';
 import moment from 'moment';
 import ReactTable from "react-table";
 import 'react-table/react-table.css'
-import { Tab, Row, Col, Nav, NavItem, Form, ControlLabel, FormGroup, Radio } from 'react-bootstrap';
-import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme, VictoryPie, VictoryContainer } from 'victory';
+import { Tabs, Tab, Row, Col, Nav, NavItem, Form, ControlLabel, FormGroup, Radio } from 'react-bootstrap';
+import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme, VictoryPie } from 'victory';
 import Select from 'react-select';
 import '../../Styles/Software.css';
-import DatePicker from 'react-datepicker';
 import "../../../node_modules/react-datepicker/dist/react-datepicker.css";
 
 export default class SoftwareReporting extends Component { 
@@ -29,7 +28,6 @@ export default class SoftwareReporting extends Component {
         this.handleYear = this.handleYear.bind(this);
         this.handleMonth = this.handleMonth.bind(this);
         this.getTotalHighest = this.getTotalHighest.bind(this);
-        this.handleContract = this.handleContract.bind(this);
         this.getBarData = this.getBarData.bind(this);
         this.getPieData = this.getPieData.bind(this);
         this.getCost = this.getCost.bind(this);
@@ -66,17 +64,15 @@ export default class SoftwareReporting extends Component {
 
     getTotalHighest(values, rows){
         let total = 0;
+        const curr = moment().date() === 31 ? 30 : moment().date();
 
         values.forEach((cost, index) => {
-            if (moment(rows[index].start).isBefore(moment())){
+            if (moment(rows[index].start).isBefore(moment(), 'month')){
                 total += cost;
             }
             else{
-                let day = moment(rows[index].start).date();
-                if (day === 31){
-                    day = 30;
-                }
-                total += ((30-day+1)/30)*cost;
+                let day = moment(rows[index].start).date()===31? 30 : moment(rows[index].start).date();
+                total += (((curr-day)+1)/30)*cost;
             }
         });
 
@@ -120,6 +116,7 @@ export default class SoftwareReporting extends Component {
 
     getCost(value){
         const cost = value.cost;
+        const curr = moment().date() === 31 ? 30 : moment().date();
 
         if(this.state.yearly){
             let start = moment(value.start).date() === 31? 30 : moment(value.start).date();
@@ -138,12 +135,16 @@ export default class SoftwareReporting extends Component {
                 }
             }
             else{
-                const curr = moment().date() === 31 ? 30 : moment().date();
-                if (moment().year() === this.state.year.value) {
-                    return (((30-start)+1)/30)*cost + (moment().month()-moment(value.start).month()-1)*cost + (curr/30)*cost
+                if (moment(value.start).year() < this.state.year.value){
+                    return moment().month()*value.cost + (curr/30)*value.cost;
                 }
                 else{
-                    return (((30-start)+1)/30)*cost + (11-moment(value.start).month())*cost
+                    if (moment().year() === this.state.year.value) {
+                        return (((30-start)+1)/30)*cost + (moment().month()-moment(value.start).month()-1)*cost + (curr/30)*cost
+                    }
+                    else{
+                        return (((30-start)+1)/30)*cost + (11-moment(value.start).month())*cost
+                    }
                 }
             }
         }
@@ -151,7 +152,7 @@ export default class SoftwareReporting extends Component {
             if (moment(value.start).isBefore(`${this.state.year.value}-${this.state.month.value + 1}-01`,'month')){
                 if (value.end == null || moment(value.end).isAfter(`${this.state.year.value}-${this.state.month.value + 1}-01`, 'month')){
                     if (this.state.year.value === moment().year() && moment().month() === this.state.month.value){
-                        return (moment().date()/30)*cost;
+                        return (curr/30)*cost;
                     }
                     return cost;
                 }
@@ -163,6 +164,9 @@ export default class SoftwareReporting extends Component {
             else{
                 let start = moment(value.start).date() === 31 ? 30 : moment(value.start).date();
                 if (value.end == null ||  moment(value.end).isAfter(`${this.state.year.value}-${this.state.month.value + 1}-01`, 'month')){
+                    if (moment(value.start).month() === moment().month()){
+                        return (((curr-start)+1)/30)*cost;
+                    }
                     return ((30-start) + 1)/30 * cost;
                 }
                 else{
@@ -177,10 +181,6 @@ export default class SoftwareReporting extends Component {
         let total = 0;
         values.forEach(num => total += num);
         return total;
-    }
-
-    handleContract(contract){
-        this.setState({ contract });
     }
 
     getBarData(){
@@ -199,10 +199,13 @@ export default class SoftwareReporting extends Component {
             {month: 12, total: 0}
         ];
 
+        const curr = moment().date() === 31 ? 30 : moment().date();
+
         this.state.data
-            .filter(item => (item.end == null || moment(item.end).year()===this.state.year.value) &&
-                (this.state.contract.length === 0 || item.department.split(', ')
-                    .some(dept => this.state.contract.forEach(val => val.value).includes(dept)))
+            .filter(item => moment(item.start).year() <= this.state.year.value
+                && (item.end == null || moment(item.end).year() >= this.state.year.value)
+                && (this.state.contract.length === 0 || item.department.split(', ')
+                    .some(dept => this.state.contract.map(val => val.value).includes(dept)))
             )
             .forEach(item => {
                 const start = moment(item.start).date()===31?30:moment(item.start).date();
@@ -212,7 +215,7 @@ export default class SoftwareReporting extends Component {
                             for (let i = 0; i < moment().month(); i++){
                                 data[i].total += item.cost;
                             }
-                            data[moment().month()].total += (moment().date()/30) * item.cost;
+                            data[moment().month()].total += (curr/30) * item.cost;
                         }
                         else{
                             for (let i = 0; i < 12; i++){
@@ -221,12 +224,17 @@ export default class SoftwareReporting extends Component {
                         }
                     }
                     else{
-                        data[moment(item.start).month()].total += (((30-start)+1)/30)*item.cost;
                         if (this.state.year.value === moment().year()){
-                            for (let i = moment(item.start).month()+1; i < moment().month(); i++){
-                                data[i].total += item.cost;
+                            if (moment(item.start).month() === moment().month()){
+                                data[moment().month()].total += (((curr-start)+1)/30)*item.cost
                             }
-                            data[moment().month()].total += (moment().date()/30)*item.cost;
+                            else{
+                                data[moment(item.start).month()].total += (((30-start)+1)/30)*item.cost;
+                                for (let i = moment(item.start).month()+1; i < moment().month(); i++){
+                                    data[i].total += item.cost;
+                                }
+                                data[moment().month()].total += (curr/30)*item.cost;
+                            }
                         }
                         else{
                             for (let i = moment(item.start).month()+1; i < 12; i++){
@@ -249,7 +257,7 @@ export default class SoftwareReporting extends Component {
                         }
                         else{
                             data[moment(item.start).month()].total += (((30-start)+1)/30) * item.cost;
-                            for (let i = moment(item.end).month()-1; i > moment(item.start).month(); i--){
+                            for (let i = moment(item.start).month()+1; i < moment(item.end).month(); i++){
                                 data[i].total += item.cost;
                             }
                             data[moment(item.end).month()].total += (end/30) * item.cost;
@@ -265,51 +273,43 @@ export default class SoftwareReporting extends Component {
         let deptData = {};
         this.state.contracts.forEach(dept => deptData[`${dept.value}`] = 0);
         let self = this;
+        const curr = moment().date() === 31 ? 30 : moment().date();
         self.state.data
-            .filter(item => moment(item.start).year() <= self.state.year.value && (item.end == null || moment(item.end).year() >= self.state.year.value))
-            .forEach(function(item) {
+            .filter(item => moment(item.start).year() <= self.state.year.value
+                && (item.end == null || moment(item.end).year() >= self.state.year.value))
+            .forEach(function(item){
                 const cost = item.cost;
                 if (item.end != null && moment(item.end).year() === self.state.year.value){
                     const end = moment(item.end).date() === 31 ? 30 : moment(item.end).date();
                     if (moment(item.start).year() < self.state.year.value) {
-                        item.department.split(', ')
-                            .forEach(dept =>
-                                deptData[`${dept}`] += (end / 30) * cost + (moment(item.end).month()) * cost
-                            )
+                        deptData[`${item.department.split(', ')[0]}`] += (end / 30) * cost + (moment(item.end).month()) * cost
                     }
                     else{
                         const start = moment(item.start).date() === 31 ? 30 : moment(item.start).date();
                         if (moment(item.start).month() === moment(item.end).month()){
-                            item.department.split(', ').forEach(dept =>
-                                deptData[`${dept}`] += (((end-start)+1)/30)*cost
-                            )
+                            deptData[`${item.department.split(', ')[0]}`] += (((end-start)+1)/30)*cost
                         }
                         else {
-                            item.department.split(', ')
-                                .forEach(dept =>
-                                    deptData[`${dept}`] += (((30 - start) + 1) / 30) * cost + (moment(item.end).month() - (moment(item.start).month() + 1)) * cost + (end / 30) * cost
-                                );
+                            deptData[`${item.department.split(', ')[0]}`] += (((30 - start) + 1) / 30) * cost + (moment(item.end).month() - (moment(item.start).month() + 1)) * cost + (end / 30) * cost
                         }
                     }
                 }
                 else{
-                    const curr = moment().date() === 31 ? 30 : moment().date();
                     if (moment(item.start).year() < self.state.year.value){
-                        item.department.split(', ').forEach(dept =>
-                            deptData[`${dept}`] += moment.month()*cost + (curr/30)*cost
-                        )
+                        deptData[`${item.department.split(', ')[0]}`] += moment().month()*cost + (curr/30)*cost
                     }
                     else{
                         const start = moment(item.start).date() === 31 ? 30 : moment(item.start).date();
-                        if (moment(item.start).month() === moment().month()){
-                            item.department.split(', ').forEach(dept =>
-                                deptData[`${dept}`] += ((curr-start)+1)*cost
-                            )
+                        if (self.state.year.value === moment().year()){
+                            if (moment(item.start).month() === moment().month()){
+                                deptData[`${item.department.split(', ')[0]}`] += (((curr-start)+1)/30)*cost
+                            }
+                            else{
+                                deptData[`${item.department.split(', ')[0]}`] += (((30-start)+1)/30)*cost + (moment().month()-(moment(item.start).month()+1))*cost + (curr/30)*cost
+                            }
                         }
                         else{
-                            item.department.split(', ').forEach(dept =>
-                                deptData[`${dept}`] += (((30-start)+1)/30)*cost + (moment().month()-(moment(item.start).month()+1))*cost + (curr/30)*cost
-                            );
+                            deptData[`${item.department.split(', ')[0]}`] += (((30-start)+1)/30)*cost + (11-moment(item.start).month())*cost
                         }
                     }
                 }
@@ -340,7 +340,8 @@ export default class SoftwareReporting extends Component {
                 Header: !this.state.yearly?`Cost in ${this.state.month.label} ${this.state.year.value}`:`Cost in ${this.state.year.value}`,
                 accessor: val => this.getCost(val),
                 Cell: val => `$${val.value.toFixed(2)}`,
-                aggregate: (values,rows) => this.getTotal(values)
+                aggregate: (values,rows) => this.getTotal(values),
+                Aggregated: row => {return <h5>${row.value.toFixed(2)}</h5>}
             },
             {
                 Header:"Subscription Fee",
@@ -382,18 +383,13 @@ export default class SoftwareReporting extends Component {
                 Header: "Cost",
                 accessor: "cost",
                 Cell: val => `$${val.value}`,
-                aggregate: (values, rows) => this.getTotalHighest(values, rows)
+                aggregate: (values, rows) => this.getTotalHighest(values, rows),
+                Aggregated: row => {return <h5>${row.value.toFixed(2)}</h5>}
             },
             {
                 Header: "Start Date",
                 accessor: "start",
                 Cell: val => moment(val.value).format('YYYY-MM-DD'),
-                Aggregated: row => null
-            },
-            {
-                Header: "End Date",
-                accessor: "end",
-                Cell: val => val.value != null ? moment(val.value).format('YYYY-MM-DD') : null,
                 Aggregated: row => null
             }
         ];
@@ -423,12 +419,6 @@ export default class SoftwareReporting extends Component {
                 accessor: "start",
                 Cell: val => moment(val.value).format('YYYY-MM-DD'),
                 Aggregated: row => null
-            },
-            {
-                Header: "End Date",
-                accessor: "end",
-                Cell: val => val.value != null ? moment(val.value).format('YYYY-MM-DD') : null,
-                Aggregated: row => null
             }
         ];
 
@@ -457,139 +447,135 @@ export default class SoftwareReporting extends Component {
                                 <NavItem eventKey="longest">Longest license holders</NavItem>
                             </Nav>
                         </Col>
-                        <Col sm={10} style={{marginLeft: '250px'}}>
+                        <Col sm={10} id='tab-content'>
                             <Tab.Content animation>
                                 <Tab.Pane eventKey="data">
-                                    <Form horizontal>
-                                        <FormGroup>
-                                            <Col componentClass={ControlLabel} sm={1}>
-                                                Group by:
-                                            </Col>
-                                            <Col sm={3}>
-                                                <Radio
-                                                    name="radioGroup"
-                                                    inline
-                                                    value="monthly"
-                                                    checked={!this.state.yearly}
-                                                    onChange={this.handleChange}
-                                                >
-                                                    Monthly
-                                                </Radio>{' '}
-                                                <Radio
-                                                    name="radioGroup"
-                                                    inline
-                                                    value="yearly"
-                                                    checked={this.state.yearly}
-                                                    onChange={this.handleChange}
-                                                >
-                                                    Yearly
-                                                </Radio>
-                                            </Col>
-                                        </FormGroup>
-                                    </Form>
-                                    <DatePicker
-                                        selected={this.state.startDate}
-                                        onChange={this.handleChange}
-                                        dateFormat="MM/yyyy"
-                                        showMonthYearPicker
-                                        className='form-control'
-                                    />
-                                        <FormGroup>
-                                            <Col componentClass={ControlLabel} sm={1}>
-                                                Year:
-                                            </Col>
-                                            <Col sm={3}>
-                                                <Select
-                                                    value={this.state.year}
-                                                    options={SoftwareReporting.getYears()}
-                                                    onChange={this.handleYear}
-                                                />
-                                            </Col>
-                                        </FormGroup>
-                                        {!this.state.yearly && <FormGroup>
-                                            <Col componentClass={ControlLabel} sm={1}>
-                                                Month:
-                                            </Col>
-                                            <Col sm={3}>
-                                                <Select
-                                                    value={this.state.month}
-                                                    options={[
-                                                        {value: 0, label:"January"},
-                                                        {value: 1, label:"February"},
-                                                        {value: 2, label:"March"},
-                                                        {value: 3, label:"April"},
-                                                        {value: 4, label:"May"},
-                                                        {value: 5, label:"June"},
-                                                        {value: 6, label:"July"},
-                                                        {value: 7, label:"August"},
-                                                        {value: 8, label:"September"},
-                                                        {value: 9, label:"October"},
-                                                        {value: 10, label:"November"},
-                                                        {value: 11, label:"December"},
-                                                    ]}
-                                                    onChange={this.handleMonth}
-                                                />
-                                            </Col>
-                                        </FormGroup>}
-                                        <br/>
-                                    <br/>
-                                    <ReactTable
-                                        data={data}
-                                        pivotBy={["department","name"]}
-                                        // pivotBy={["software", "department"]}
-                                        columns={columns1}
-                                        className='license-data'
-                                    />
-                                    <FormGroup>
-                                        <Col componentClass={ControlLabel} sm={1}>
-                                            Contract:
-                                        </Col>
-                                        <Col sm={5}>
-                                            <Select
-                                                isMulti
-                                                options={this.state.contracts}
-                                                value={this.state.contract}
-                                                onChange={this.handleContract}
+                                    {/*<Tabs defaultActiveKey={1}>*/}
+                                        {/*<Tab eventKey={1} title="Data Table">*/}
+                                            <Form horizontal>
+                                                <FormGroup>
+                                                    <Col componentClass={ControlLabel} sm={1}>
+                                                        Group by:
+                                                    </Col>
+                                                    <Col sm={3}>
+                                                        <Radio
+                                                            name="radioGroup"
+                                                            inline
+                                                            value="monthly"
+                                                            checked={!this.state.yearly}
+                                                            onChange={this.handleChange}
+                                                        >
+                                                            Monthly
+                                                        </Radio>{' '}
+                                                        <Radio
+                                                            name="radioGroup"
+                                                            inline
+                                                            value="yearly"
+                                                            checked={this.state.yearly}
+                                                            onChange={this.handleChange}
+                                                        >
+                                                            Yearly
+                                                        </Radio>
+                                                    </Col>
+                                                </FormGroup>
+                                            </Form>
+                                            <FormGroup>
+                                                <Col componentClass={ControlLabel} sm={1}>
+                                                    Year:
+                                                </Col>
+                                                <Col sm={3}>
+                                                    <Select
+                                                        value={this.state.year}
+                                                        options={SoftwareReporting.getYears()}
+                                                        onChange={this.handleYear}
+                                                    />
+                                                </Col>
+                                            </FormGroup>
+                                            {!this.state.yearly && <FormGroup>
+                                                <Col componentClass={ControlLabel} sm={1}>
+                                                    Month:
+                                                </Col>
+                                                <Col sm={3}>
+                                                    <Select
+                                                        value={this.state.month}
+                                                        options={[
+                                                            {value: 0, label:"January"},
+                                                            {value: 1, label:"February"},
+                                                            {value: 2, label:"March"},
+                                                            {value: 3, label:"April"},
+                                                            {value: 4, label:"May"},
+                                                            {value: 5, label:"June"},
+                                                            {value: 6, label:"July"},
+                                                            {value: 7, label:"August"},
+                                                            {value: 8, label:"September"},
+                                                            {value: 9, label:"October"},
+                                                            {value: 10, label:"November"},
+                                                            {value: 11, label:"December"},
+                                                        ]}
+                                                        onChange={this.handleMonth}
+                                                    />
+                                                </Col>
+                                            </FormGroup>}
+                                            <br/>
+                                            <br/>
+                                            <ReactTable
+                                                data={data}
+                                                pivotBy={["department","name"]}
+                                                // pivotBy={["software", "department"]}
+                                                columns={columns1}
+                                                className='license-data'
                                             />
-                                        </Col>
-                                    </FormGroup>
-                                    <div className="graphics">
-                                        <VictoryChart
-                                            domainPadding={10}
-                                            theme={VictoryTheme.material}
-                                            // containerComponent={<VictoryContainer responsive={false}/>}
-                                            width={400}
-                                            height={300}
-                                        >
-                                            <VictoryAxis
-                                                tickValues={[1,2,3,4,5,6,7,8,9,10,11,12]}
-                                                tickFormat={["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]}
-                                            />
-                                            <VictoryAxis
-                                                dependentAxis
-                                                tickFormat={x => `$${x}`}
-                                            />
-                                            <VictoryBar
-                                                data={this.getBarData()}
-                                                x="month"
-                                                y="total"
-                                                labels={(d) => d.total===0?null:`$${d.total.toFixed(2)}`}
-                                                style={{ labels: { fontSize: 6 } }}
-                                            />
-                                            {/*<VictoryLine*/}
-                                            {/*interpolation='natural'*/}
-                                            {/*data={this.getBarData()}*/}
-                                            {/*x={"month"}*/}
-                                            {/*y={"total"}*/}
-                                            {/*/>*/}
-                                        </VictoryChart>
-                                        <VictoryPie
-                                            data={this.getPieData()}
-                                            colorScale={["LimeGreen","DarkGreen","LightSeaGreen","Yellow"]}
-                                            labels={val=>`${val.x}: \n$${val.y.toFixed(2)}`}
+                                        {/*</Tab>*/}
+                                        {/*<Tab eventKey={2} title="Graphics">*/}
+                                            <Form>
+                                                <FormGroup>
+                                                    <Col componentClass={ControlLabel} sm={1}>
+                                                        Contract:
+                                                    </Col>
+                                                    <Col sm={5}>
+                                                        <Select
+                                                            isMulti
+                                                            options={this.state.contracts}
+                                                            value={this.state.contract}
+                                                            onChange={contract => this.setState({contract})}
+                                                        />
+                                                    </Col>
+                                                </FormGroup>
+                                            </Form>
 
-                                        />
-                                    </div>
+                                            <div className="graphics">
+                                                <VictoryChart
+                                                    domainPadding={10}
+                                                    theme={VictoryTheme.material}
+                                                    // containerComponent={<VictoryContainer responsive={false}/>}
+                                                    width={400}
+                                                    height={300}
+                                                >
+                                                    <VictoryAxis
+                                                        tickValues={[1,2,3,4,5,6,7,8,9,10,11,12]}
+                                                        tickFormat={["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]}
+                                                    />
+                                                    <VictoryAxis
+                                                        dependentAxis
+                                                        tickFormat={x => `$${x}`}
+                                                    />
+                                                    <VictoryBar
+                                                        data={this.getBarData()}
+                                                        x="month"
+                                                        y="total"
+                                                        labels={(d) => d.total===0?null:`$${d.total.toFixed(2)}`}
+                                                        style={{ labels: { fontSize: 6 } }}
+                                                    />
+                                                </VictoryChart>
+                                                <VictoryPie
+                                                    data={this.getPieData()}
+                                                    colorScale={["LimeGreen","DarkGreen","LightSeaGreen","Yellow"]}
+                                                    labels={val=>`${val.x}: \n$${val.y.toFixed(2)}`}
+
+                                                />
+                                            </div>
+                                        {/*</Tab>*/}
+                                    {/*</Tabs>;*/}
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="highest">
                                     <ReactTable
