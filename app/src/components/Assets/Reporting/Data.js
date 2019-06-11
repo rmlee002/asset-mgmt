@@ -1,20 +1,36 @@
 import React, { Component } from 'react';
-import { Panel } from 'react-bootstrap';
 import moment from 'moment';
 import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme, VictoryPie } from 'victory';
 import Select from 'react-select';
-import DatePicker from 'react-datepicker';
+import {Col, ControlLabel, Form, FormGroup} from "react-bootstrap";
+import Axios from 'axios';
 
 export default class Data extends Component{
     constructor(props){
         super(props);
         this.state={
-            year: {value: moment().year(), label: moment().year()}
+            year: {value: moment().year(), label: moment().year()},
+            depts: [],
+            filter: []
         };
 
         this.getBarData = this.getBarData.bind(this);
         this.getOptions = this.getOptions.bind(this);
         this.getPieData = this.getPieData.bind(this);
+        this.handleSelect = this.handleSelect.bind(this);
+    }
+
+    componentDidMount() {
+        Axios.get('/departments')
+        .then(res => {
+            this.setState({
+                depts: res.data
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            alert(err.response.data)
+        });
     }
 
     getBarData(){
@@ -33,19 +49,31 @@ export default class Data extends Component{
             {month: 12, total: 0}
         ];
 
-        this.props.data.filter(item => item.inDate != null && item.cost != null && moment(item.inDate).year() === this.state.year.value)
-            .map(item => data[moment(item.inDate).month()].total += parseFloat(item.cost));
-            
+        if (this.state.filter.length !== 0) {
+            this.props.data
+                .filter(item =>
+                    item.contract?item.contract.replace(/\s/, '').split(',').some(dept => this.state.filter.includes(dept)):false
+                    && item.inDate != null && item.cost != null && moment(item.inDate).year() === this.state.year.value)
+                .map(item => data[moment(item.inDate).month()].total += parseFloat(item.cost));
+        }
+        else{
+            this.props.data
+                .filter(item => item.inDate != null && item.cost != null && moment(item.inDate).year() === this.state.year.value)
+                .map(item => data[moment(item.inDate).month()].total += parseFloat(item.cost));
+        }
         return data;
     }
 
     getPieData(){
         let deptData = {};
-        this.props.depts.forEach(dept => deptData[`${dept}`] = 0);
-        this.props.data.filter(item => item.contract != null && item.inDate != null && item.cost != null && moment(item.inDate).year() === this.state.year.value)
-            .forEach(item => item.contract.replace(/\s/, "").split(',').forEach(dept => deptData[`${dept}`] += parseFloat(item.cost)));
+        this.state.depts.map(dept => dept.value).forEach(dept => deptData[`${dept}`] = 0);
 
-        return Object.keys(deptData).filter(key => deptData[`${key}`] !== 0).map(function(key){ return { x: key, y: deptData[`${key}`] } });
+        this.props.data
+            .filter(item => item.contract != null && item.inDate != null && item.cost != null
+                && moment(item.inDate).year() === this.state.year.value)
+            .forEach(item => deptData[`${item.contract.replace(/\s/, "").split(',')[0]}`] += item.cost);
+
+        return Object.keys(deptData).filter(key => deptData[`${key}`] !== 0).map(function(key){ return {x: key, y: deptData[`${key}`]} });
     }
 
     getOptions(){
@@ -58,30 +86,50 @@ export default class Data extends Component{
         return options.sort().reverse().map(function(year){ return {value:year, label:year}});
     }
 
+    handleSelect(keys){
+        this.setState({
+            filter: keys.map(key => key.value)
+        })
+    }
+
     render(){
         const barData = this.getBarData();
         const pieData = this.getPieData();
+        console.log(pieData);
 
         return(
-          
-            <Panel bsStyle='info'>
-                <Panel.Heading>
-                    <Panel.Title componentClass='h3'>Data</Panel.Title>
-                </Panel.Heading>
-                <Panel.Body>
-                    <DatePicker
-                        selected={this.state.startDate}
-                        onChange={this.handleChange}
-                        dateFormat="MM/yyyy"
-                        showMonthYearPicker
-                    />
-                    <Select
-                        value={this.state.year}
-                        options={this.getOptions()}
-                        onChange={year => this.setState({ year })}
-                    />
-                    <VictoryChart 
-                        domainPadding={10} 
+            <div>
+                <Form horizontal>
+                    <FormGroup>
+                        <Col componentClass={ControlLabel} sm={1}>
+                            Year:
+                        </Col>
+                        <Col sm={10}>
+                            <Select
+                                value={this.state.year}
+                                options={this.getOptions()}
+                                onChange={year => this.setState({ year })}
+                            />
+                        </Col>
+                    </FormGroup>
+                    <FormGroup>
+                        <Col componentClass={ControlLabel} sm={1}>
+                            Contract:
+                        </Col>
+                        <Col sm = {10}>
+                            <Select
+                                options={this.state.depts}
+                                onChange={this.handleSelect}
+                                isClearable
+                                isMulti
+                            />
+                        </Col>
+                    </FormGroup>
+                </Form>
+
+                <div style={{width: '1200px', height: '700px'}}>
+                    <VictoryChart
+                        domainPadding={10}
                         theme={VictoryTheme.material}
                         width={400}
                         height={300}
@@ -107,8 +155,8 @@ export default class Data extends Component{
                         colorScale={["LimeGreen","DarkGreen","LightSeaGreen","Yellow"]}
                         labels={val=>`${val.x}: \n$${val.y.toFixed(2)}`}
                     />
-                </Panel.Body>
-            </Panel>  
+                </div>
+            </div>
         )
     }
 }
