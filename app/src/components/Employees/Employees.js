@@ -8,6 +8,7 @@ import memoize from 'memoize-one';
 import "../../Styles/Employees.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Filter from '../Filter';
+import ReactTable from 'react-table';
 
 export default class Employees extends Component {
     constructor(props){
@@ -17,19 +18,19 @@ export default class Employees extends Component {
             filtered: [],
             showArchived: false,
             loggedIn: false,
-            theight: document.documentElement.clientHeight - 255,
+            /*theight: document.documentElement.clientHeight - 255,
             nameIcon: 'sort',
-            startIcon: 'sort'
+            startIcon: 'sort'*/
             // endIcon: 'sort'
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleCheck = this.handleCheck.bind(this);
         this.handleFilter = this.handleFilter.bind(this);
-        this.handleResize = this.handleResize.bind(this);
+        /*this.handleResize = this.handleResize.bind(this);
         this.handleNameSortAscend = this.handleNameSortAscend.bind(this);
         this.handleNameSortDescend = this.handleNameSortDescend.bind(this);
         this.handleStartAscend = this.handleStartAscend.bind(this);
-        this.handleStartDescend = this.handleStartDescend.bind(this);
+        this.handleStartDescend = this.handleStartDescend.bind(this);*/
         // this.handleEndAscend = this.handleEndAscend.bind(this);
         // this.handleEndDescend = this.handleEndDescend.bind(this);
     }
@@ -44,7 +45,7 @@ export default class Employees extends Component {
         }).catch(err => {
             console.log(err);
             alert(err.response.data)
-        })
+        });
 
         axios.get('/checkToken')
         .then(res => {
@@ -54,14 +55,14 @@ export default class Employees extends Component {
         })
         .catch(err => {
             console.log(err)
-        })
+        });
 
         window.addEventListener('resize', this.handleResize)
     }
 
     filter = memoize(
         (list, filterText) => list.filter(item => (item.first_name + ' ' + item.last_name).toLowerCase().includes(filterText.toLowerCase()))
-    )
+    );
 
     handleChange(e){
         if (e.target.value !== ''){
@@ -96,7 +97,7 @@ export default class Employees extends Component {
         })
     }
 
-    handleResize(){
+   /* handleResize(){
         const h = document.documentElement.clientHeight - 255
         this.setState({
             theight: h
@@ -139,33 +140,115 @@ export default class Employees extends Component {
         })
     }
 
-    // handleEndAscend(){
-    //     this.setState({
-    //         filtered: this.state.filtered.sort(function(a,b){return(moment(a.end) - moment(b.end))}),
-    //         endIcon: 'sort-up',
-    //         nameIcon: 'sort',
-    //         startIcon: 'sort'
-    //     })
-    // }
+    handleEndAscend(){
+        this.setState({
+            filtered: this.state.filtered.sort(function(a,b){return(moment(a.end) - moment(b.end))}),
+            endIcon: 'sort-up',
+            nameIcon: 'sort',
+            startIcon: 'sort'
+        })
+    }
 
-    // handleEndDescend(){
-    //     this.setState({
-    //         filtered: this.state.filtered.sort(function(a,b){return(moment(b.end) - moment(a.end))}),
-    //         endIcon: 'sort-down',
-    //         nameIcon: 'sort',
-    //         startIcon: 'sort'
-    //     })
-    // }
+    handleEndDescend(){
+        this.setState({
+            filtered: this.state.filtered.sort(function(a,b){return(moment(b.end) - moment(a.end))}),
+            endIcon: 'sort-down',
+            nameIcon: 'sort',
+            startIcon: 'sort'
+        })
+    }*/
 
     render(){
-        const loggedIn = this.state.loggedIn
-        const licensesHead = {
+        const loggedIn = this.state.loggedIn;
+        /*const licensesHead = {
             width: loggedIn?'70px':'86.5px'
-        }
+        };
 
-        const nameIcon = this.state.nameIcon
-        const startIcon = this.state.startIcon
+        const nameIcon = this.state.nameIcon;
+        const startIcon = this.state.startIcon;*/
         // const endIcon = this.state.endIcon
+
+        const columns = [
+            {
+                Header: "Name",
+                id: "name",
+                accessor: val => val.first_name + " " + val.last_name,
+                style: { 'white-space': 'unset' }
+            },
+            {
+                Header: "Email",
+                accessor: "email",
+                style: { 'white-space': 'unset' }
+            },
+            {
+                Header: "Affiliation",
+                accessor: "affiliation"
+            },
+            {
+                Header: "Department",
+                accessor: "department"
+            },
+            {
+                Header: "Supervisor",
+                id: "supervisor",
+                accessor: val => val.super_first? val.super_first + " " + val.super_last : "",
+                style: { 'white-space': 'unset' }
+            },
+            {
+                Header: "Reviewer",
+                id: "reviewer",
+                accessor: val => val.reviewer_first? val.reviewer_first + ' ' + val.reviewer_last : "",
+                style: { 'white-space': 'unset' }
+            },
+            {
+                Header: "Time Approver",
+                id: "time_approver",
+                accessor: val => val.time_first? val.time_first + ' ' + val.time_last : "",
+                style: { 'white-space': 'unset' }
+            },
+            {
+                Header: "Start Date",
+                accessor: "start",
+                Cell: val => moment(val.value).format('YYYY-MM-DD')
+            },
+            {
+                Header: "End Date",
+                accessor: "end",
+                Cell: val => val.value? moment(val.value).format('YYYY-MM-DD') : null
+            },
+            {
+                Header: "Notes",
+                accessor: "notes",
+                style: { 'white-space': 'unset' }
+            },
+            {
+                id: "links",
+                accessor: val => val,
+                Cell: val => {
+                    return (
+                        <div>
+                            <div>
+                                <Link to={`/employees/${val.value.emp_id}/assets`}>
+                                    Assets
+                                </Link>
+                            </div>
+                            <div>
+                                <Link to={`/employees/${val.value.emp_id}/licenses`}>
+                                    Licenses
+                                </Link>
+                            </div>
+                            {loggedIn &&
+                                <div>
+                                    <Link to={`/employees/${val.value.emp_id}/manage`}>
+                                        Edit <FontAwesomeIcon icon='edit'/>
+                                    </Link>
+                                </div>
+                            }
+                        </div>
+                    )
+                }
+            }
+        ];
 
         return(
             <React.Fragment>
@@ -183,7 +266,31 @@ export default class Employees extends Component {
                     </LinkContainer>
                 }
                 <Filter handleFilter={this.handleFilter} checkbox/>
-                <div className='data' id='employees'>
+                <br/>
+                <br/>
+                <ReactTable
+                    data={this.state.filtered}
+                    columns={columns}
+                    className='-striped -highlight'
+                   /* SubComponent={row => {
+                        return (
+                            <div>
+                                <Link to={`/employees/${row.original.emp_id}/assets`}>
+                                    Assets
+                                </Link>
+                                <Link to={`/employees/${row.original.emp_id}/licenses`}>
+                                    Licenses
+                                </Link>
+                                {loggedIn &&
+                                    <Link to={`/employees/${row.original.emp_id}/manage`}>
+                                        Edit <FontAwesomeIcon icon='edit'/>
+                                    </Link>
+                                }
+                            </div>
+                        )
+                    }}*/
+                />
+               {/* <div className='data' id='employees'>
                     <Table striped hover>
                         <thead>                            
                             <tr>
@@ -210,7 +317,7 @@ export default class Employees extends Component {
                                     // onClick={(endIcon==='sort'||endIcon==='sort-down')?this.handleEndAscend:this.handleEndDescend}
                                 >
                                     End date 
-                                    {/* <FontAwesomeIcon icon={endIcon}/> */}
+                                     <FontAwesomeIcon icon={endIcon}/>
                                 </th>
                                 <th>Notes</th>
                                 <th>Assets</th>
@@ -258,7 +365,7 @@ export default class Employees extends Component {
                             )}
                         </tbody>
                     </Table>
-                </div>
+                </div>*/}
             </React.Fragment>
         );
     }

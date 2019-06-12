@@ -7,6 +7,7 @@ import axios from 'axios';
 import memoize from 'memoize-one';
 import '../../../Styles/Assets.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ReactTable from 'react-table';
 
 export default class Laptops extends Component{
     constructor(props){
@@ -16,15 +17,16 @@ export default class Laptops extends Component{
             filtered: [],
             showArchived: false,
             loggedIn: false,
-            theight: document.documentElement.clientHeight - 270,
+            /*theight: document.documentElement.clientHeight - 270,
             serialIcon: 'sort',
             costIcon: 'sort',
             inIcon: 'sort',
-            outIcon: 'sort'
-        }
+            outIcon: 'sort'*/
+        };
+
         this.handleChange = this.handleChange.bind(this);
         this.handleCheck = this.handleCheck.bind(this);
-        this.handleResize = this.handleResize.bind(this);
+        /*this.handleResize = this.handleResize.bind(this);
         this.handleSerialAscend = this.handleSerialAscend.bind(this);
         this.handleSerialDescend = this.handleSerialDescend.bind(this);
         this.handleCostAscend = this.handleCostAscend.bind(this);
@@ -32,7 +34,7 @@ export default class Laptops extends Component{
         this.handleInAscend = this.handleInAscend.bind(this);
         this.handleInDescend = this.handleInDescend.bind(this);
         this.handleOutAscend = this.handleOutAscend.bind(this);
-        this.handleOutDescend = this.handleOutDescend.bind(this);
+        this.handleOutDescend = this.handleOutDescend.bind(this);*/
     }
 
     componentDidMount(){
@@ -46,7 +48,7 @@ export default class Laptops extends Component{
         }).catch(err => {
             console.log(err);
             alert(err.response.data);
-        })
+        });
 
         axios.get('/checkToken')
         .then(res => {
@@ -56,14 +58,14 @@ export default class Laptops extends Component{
         })
         .catch(err => {
             console.log(err)
-        })
+        });
 
         window.addEventListener('resize', this.handleResize)
     }
 
     filter = memoize(
         (list, filterText) => list.filter(item => (item.serial_number).toLowerCase().includes(filterText.toLowerCase()))
-    )
+    );
 
     handleChange(e){
         if (e.target.value !== ''){
@@ -78,12 +80,12 @@ export default class Laptops extends Component{
         }
     }
 
-    handleResize(){
+    /*handleResize(){
         const h = document.documentElement.clientHeight - 270
         this.setState({
             theight: h
         })
-    }
+    }*/
 
     handleCheck(e){
         this.setState({
@@ -92,7 +94,7 @@ export default class Laptops extends Component{
         })
     }
 
-    handleSerialAscend(){
+   /* handleSerialAscend(){
         this.setState({
             filtered: this.state.filtered.sort(function(a,b){ return a.serial_number.localeCompare(b.serial_number) }),
             serialIcon: 'sort-up',
@@ -170,18 +172,108 @@ export default class Laptops extends Component{
             costIcon: 'sort',
             inIcon: 'sort'
         })
-    }
+    }*/
 
     render(){     
-        const loggedIn = this.state.loggedIn
-        const historyHead = {
+        const loggedIn = this.state.loggedIn;
+       /* const historyHead = {
             width: loggedIn?'50px':'67px'
-        }
+        };
 
-        const serialIcon = this.state.serialIcon
-        const costIcon = this.state.costIcon
-        const inIcon = this.state.inIcon
+        const serialIcon = this.state.serialIcon;
+        const costIcon = this.state.costIcon;
+        const inIcon = this.state.inIcon;*/
         // const outIcon = this.state.outIcon
+
+        const columns = [
+            {
+                Header: "Serial Number",
+                accessor: "serial_number",
+                style: { 'white-space': 'unset' }
+            },
+            {
+                Header: "Model",
+                accessor: "model",
+                style: { 'white-space': 'unset' }
+            },
+            {
+                Header: "Warranty Provider",
+                accessor: "warranty_provider"
+            },
+            {
+                Header: "Owner",
+                id: "owner",
+                accessor: val => val.first_name?val.first_name + " " + val.last_name : "",
+                style: { 'white-space': 'unset' }
+            },
+            {
+                Header: "Cost",
+                accessor: "cost",
+                Cell: val => val.value? "$"+val.value : ""
+            },
+            {
+                Header: "Vendor",
+                accessor: "vendor"
+            },
+            {
+                Header: "Order Number",
+                accessor: "order_num",
+                style: { 'white-space': 'unset' }
+            },
+            {
+                Header: "Warranty",
+                accessor: "warranty"
+            },
+            {
+                Header: "In Date",
+                accessor: "inDate",
+                Cell: val => moment(val.value).format('YYYY-MM-DD')
+            },
+            {
+                Header: "Out Date",
+                accessor: "outDate",
+                Cell: val => val.value? moment(val.value).format("YYYY-MM-DD"): ""
+            },
+            {
+                Header: "Broken?",
+                accessor: "broken",
+                Cell: val => val.value===0?"N":"Y"
+            },
+            {
+                Header: "Comment",
+                accessor: "comment",
+                style: { 'white-space': 'unset' }
+            },
+            {
+                id: "links",
+                accessor: val => val,
+                Cell: val => {
+                    return (
+                        <div>
+                            <div>
+                                <Link to={`/assets/laptops/${val.value.laptop_id}/history`}>
+                                    History <FontAwesomeIcon icon='history'/>
+                                </Link>
+                            </div>
+                            {loggedIn && !val.value.archived &&
+                                <div>
+                                    <Link to={`/assets/laptops/${val.value.laptop_id}/editOwner`}>
+                                        Assign owner
+                                    </Link>
+                                </div>
+                            }
+                            {loggedIn &&
+                                <div>
+                                    <Link to={`/assets/laptops/${val.value.laptop_id}/manage`}>
+                                        Edit <FontAwesomeIcon icon='edit'/>
+                                    </Link>
+                                </div>
+                            }
+                        </div>
+                    )
+                }
+            }
+        ];
 
         return(
             <React.Fragment>
@@ -208,9 +300,28 @@ export default class Laptops extends Component{
                             </Button>
                         </LinkContainer>
                     }
-                    
                 </div>
-                <div className='data' id='laptops'>
+                <br/>
+                <ReactTable
+                    data={this.state.filtered}
+                    columns={columns}
+                    className='-striped -highlight'
+                    /*SubComponent={row => {
+                        return (
+                            <div>
+                                <Link to={`/assets/laptops/${row.original.laptop_id}/history`}>History <FontAwesomeIcon icon='history'/></Link>
+                                {loggedIn &&
+                                    !row.original.archived &&
+                                    <Link to={`/assets/laptops/${row.original.laptop_id}/editOwner`}>Assign owner</Link>
+                                }
+                                {loggedIn &&
+                                    <Link to={`/assets/laptops/${row.original.laptop_id}/manage`}> Edit <FontAwesomeIcon icon='edit'/></Link>
+                                }
+                            </div>
+                        );
+                    }}*/
+                />
+                {/*<div className='data' id='laptops'>
                     <Table striped hover>
                         <thead>
                             <tr>
@@ -243,7 +354,7 @@ export default class Laptops extends Component{
                                     // onClick={(outIcon==='sort'||outIcon==='sort-down')?this.handleOutAscend:this.handleOutDescend}
                                 >
                                     Out Date 
-                                    {/* <FontAwesomeIcon icon={outIcon}/> */}
+                                     <FontAwesomeIcon icon={outIcon}/>
                                 </th>
                                 <th>Broken</th>
                                 <th>Comment</th>
@@ -290,7 +401,7 @@ export default class Laptops extends Component{
                             )}
                         </tbody>
                     </Table>
-                </div>
+                </div>*/}
             </React.Fragment>
         );
     }

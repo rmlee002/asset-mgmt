@@ -6,27 +6,28 @@ import memoize from 'memoize-one';
 import Axios from 'axios';
 import '../../Styles/Software.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ReactTable from 'react-table';
 
 export default class Employees extends Component {
     constructor(props){
-        super(props)
+        super(props);
 
-        this.handleChange = this.handleChange.bind(this)
-        this.handleCheck = this.handleCheck.bind(this)
-        this.handleResize = this.handleResize.bind(this)
-        this.handleNameAscend = this.handleNameAscend.bind(this)
+        this.handleChange = this.handleChange.bind(this);
+        this.handleCheck = this.handleCheck.bind(this);
+        // this.handleResize = this.handleResize.bind(this);
+        /*this.handleNameAscend = this.handleNameAscend.bind(this)
         this.handleNameDescend = this.handleNameDescend.bind(this)
         this.handleCostAscend = this.handleCostAscend.bind(this)
-        this.handleCostDescend = this.handleCostDescend.bind(this)
+        this.handleCostDescend = this.handleCostDescend.bind(this)*/
 
         this.state={
             showArchived: false,
             software: [],
             filtered: [],
             loggedIn: false,
-            theight: document.documentElement.clientHeight - 250,
+            /*theight: document.documentElement.clientHeight - 250,
             nameIcon: 'sort',
-            costIcon: 'sort'
+            costIcon: 'sort'*/
         }
     }
 
@@ -39,9 +40,9 @@ export default class Employees extends Component {
             })
         })
         .catch(err => {
-            alert(err.response.data)
+            alert(err.response.data);
             console.log(err)
-        })
+        });
 
         Axios.get('/checkToken')
         .then(res => {
@@ -51,14 +52,14 @@ export default class Employees extends Component {
         })
         .catch(err => {
             console.log(err)
-        })
+        });
 
         window.addEventListener('resize', this.handleResize)
     }
 
     filter = memoize(
         (list, filterText) => list.filter(item => (item.name).toLowerCase().includes(filterText.toLowerCase()))
-    )
+    );
 
     handleChange(e){
         if (e.target.value !== ''){
@@ -73,12 +74,12 @@ export default class Employees extends Component {
         }        
     }
 
-    handleResize(){
-        const h = document.documentElement.clientHeight - 250
+   /* handleResize(){
+        const h = document.documentElement.clientHeight - 250;
         this.setState({
             theight: h
         })
-    }
+    }*/
 
     handleCheck(e){
         this.setState({
@@ -87,7 +88,7 @@ export default class Employees extends Component {
         })
     }
 
-    handleNameAscend(){
+    /*handleNameAscend(){
         this.setState({
             filtered: this.state.filtered.sort(function(a,b){ return a.name.localeCompare(b.name) }),
             nameIcon: 'sort-up',
@@ -117,16 +118,48 @@ export default class Employees extends Component {
             costIcon: 'sort-down',
             nameIcon: 'sort'
         })
-    }
+    }*/
 
     render(){
-        const loggedIn = this.state.loggedIn
-        const userHead ={
+        const loggedIn = this.state.loggedIn;
+        /*const userHead ={
             width: loggedIn?'150px':'166.5px'
-        }
+        };
 
-        const nameIcon = this.state.nameIcon
-        const costIcon = this.state.costIcon
+        const nameIcon = this.state.nameIcon;
+        const costIcon = this.state.costIcon;*/
+
+        const columns1 = [
+            {
+                Header: "License",
+                accessor: "name"
+            },
+            {
+                Header: "Monthly Cost",
+                accessor: "cost",
+                Cell: val => "$"+val.value
+            },
+            {
+                id: "users",
+                accessor: val => val,
+                Cell: val => { return (
+                    <div>
+                        <div>
+                            <Link to={`/software/${val.value.software_id}/users`}>
+                                Users <FontAwesomeIcon icon='users'/>
+                            </Link>
+                        </div>
+                        <div>
+                            {loggedIn &&
+                                <Link to={`software/${val.value.software_id}/manage`}>
+                                    Manage <FontAwesomeIcon icon='edit'/>
+                                </Link>
+                            }
+                        </div>
+                    </div>
+                )}
+            }
+        ];
 
         return(
             <React.Fragment>
@@ -147,12 +180,16 @@ export default class Employees extends Component {
                         <LinkContainer to='/software/add'>
                             <Button bsStyle='primary'> <FontAwesomeIcon icon='desktop'/> Add Software</Button>
                         </LinkContainer>   
-                    }                                     
-                    <LinkContainer to='/software/overview'>
-                        <Button>View all active licenses</Button>
-                    </LinkContainer>                    
+                    }
                 </ButtonToolbar>
-                <div className='data' id='software'>
+                <br/>
+                <br/>
+                <ReactTable
+                    data={this.state.filtered}
+                    columns={columns1}
+                    className='-striped -highlight'
+                />
+                {/*<div className='data' id='software'>
                     <Table striped hover>
                         <thead>
                             <tr>
@@ -193,7 +230,7 @@ export default class Employees extends Component {
                                 )}
                         </tbody>
                     </Table>
-                </div>
+                </div>*/}
             </React.Fragment>
         );
     }
