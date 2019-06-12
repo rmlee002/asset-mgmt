@@ -5,10 +5,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default class AddSoftware extends Component{
     constructor(props){
-        super(props)
+        super(props);
 
-        this.handleSubmit = this.handleSubmit.bind(this)
-        this.handleChange = this.handleChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
 
         this.state={
             name: null,
@@ -26,7 +26,7 @@ export default class AddSoftware extends Component{
             this.props.history.push('/software')
         })
         .catch(err => {
-            console.log(err)
+            console.log(err);
             alert(err.response.data)
         })
     }
@@ -38,6 +38,8 @@ export default class AddSoftware extends Component{
     }
 
     render(){
+        const invalid = this.state.name == null || this.state.name === '' || this.state.cost == null || this.state.cost === '';
+
         return(
             <React.Fragment>
                 <form onSubmit={this.handleSubmit}>
@@ -68,7 +70,13 @@ export default class AddSoftware extends Component{
                         </FormGroup>           
                         <FormGroup>
                             <Col smOffset={3} sm={1}>
-                                <Button type='submit' bsStyle='success'>Add <FontAwesomeIcon icon='check'/></Button>    
+                                <Button
+                                    type='submit'
+                                    bsStyle='success'
+                                    disabled={invalid}
+                                >
+                                    Add <FontAwesomeIcon icon='check'/>
+                                </Button>
                             </Col>    
                         </FormGroup>
                     </Form>

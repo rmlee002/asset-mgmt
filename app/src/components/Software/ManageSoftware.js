@@ -5,12 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default class ManageSoftware extends Component{
     constructor(props){
-        super(props)
+        super(props);
 
-        this.handleChange = this.handleChange.bind(this)
-        this.handleRetire = this.handleRetire.bind(this)
-        this.handleUpdate = this.handleUpdate.bind(this)
-        this.handleUnretire = this.handleUnretire.bind(this)
+        this.handleChange = this.handleChange.bind(this);
+        this.handleRetire = this.handleRetire.bind(this);
+        this.handleUpdate = this.handleUpdate.bind(this);
+        this.handleUnretire = this.handleUnretire.bind(this);
         
         this.state={
             name: null,
@@ -32,7 +32,7 @@ export default class ManageSoftware extends Component{
             })
         })
         .catch(err => {
-            alert(err.response.data)
+            alert(err.response.data);
             console.log(err)
         })
     }
@@ -50,7 +50,7 @@ export default class ManageSoftware extends Component{
             software_id: this.props.match.params.software_id
         })
         .catch(err=>{
-            console.log(err)
+            console.log(err);
             alert(err.response.data)
         })
     }
@@ -63,7 +63,7 @@ export default class ManageSoftware extends Component{
             this.props.history.push('/software')
         })
         .catch(err => {
-            console.log(err)
+            console.log(err);
             alert(err.response.data)
         })
     }
@@ -76,12 +76,14 @@ export default class ManageSoftware extends Component{
             this.props.history.push('/software')
         })
         .catch(err => {
-            alert(err.response.data)
+            alert(err.response.data);
             console.log(err)
         })
     }
 
     render(){
+        const invalid = this.state.name === '' || this.state.cost === '';
+
         return(
             <React.Fragment>
                 <form onSubmit={this.handleUpdate}>
@@ -113,7 +115,13 @@ export default class ManageSoftware extends Component{
                         <FormGroup>
                             <Col smOffset={3} sm={2}>
                                 <ButtonToolbar>
-                                    <Button type='submit' bsStyle='success'>Update <FontAwesomeIcon icon='check'/></Button>
+                                    <Button
+                                        type='submit'
+                                        bsStyle='success'
+                                        disabled={invalid}
+                                    >
+                                        Update <FontAwesomeIcon icon='check'/>
+                                    </Button>
                                     {!this.state.archived?
                                         <Button bsStyle='danger' onClick={this.handleRetire}>Retire <FontAwesomeIcon icon='archive'/></Button>
                                         :<Button bsStyle='primary' onClick={this.handleUnretire}>Unarchive</Button>}

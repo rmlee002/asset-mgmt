@@ -11,15 +11,15 @@ export default class ManageLaptop extends Component{
     constructor(props){
         super(props);
 
-        this.handleChange = this.handleChange.bind(this)
-        this.handleIn = this.handleIn.bind(this)
-        this.handleOut = this.handleOut.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this)
-        this.handleRetire = this.handleRetire.bind(this)
-        this.handleUnretire=this.handleUnretire.bind(this)
-        this.handleCheck = this.handleCheck.bind(this)
-        this.handleContract = this.handleContract.bind(this)
-        this.handleCreateContractOption = this.handleCreateContractOption.bind(this)
+        this.handleChange = this.handleChange.bind(this);
+        this.handleIn = this.handleIn.bind(this);
+        this.handleOut = this.handleOut.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleRetire = this.handleRetire.bind(this);
+        this.handleUnretire=this.handleUnretire.bind(this);
+        this.handleCheck = this.handleCheck.bind(this);
+        this.handleContract = this.handleContract.bind(this);
+        this.handleCreateContractOption = this.handleCreateContractOption.bind(this);
 
         this.state={
             hardware_id: null,
@@ -67,7 +67,7 @@ export default class ManageLaptop extends Component{
             })
         })
         .catch(err => {
-            alert(err.response.data)
+            alert(err.response.data);
             console.log(err)
         })
     }
@@ -116,7 +116,7 @@ export default class ManageLaptop extends Component{
             this.props.history.push('/assets/nonlaptops')            
         })
         .catch(err => {
-            console.log(err)
+            console.log(err);
             alert(err.response.data)
         })
     }
@@ -129,7 +129,7 @@ export default class ManageLaptop extends Component{
             this.props.history.push('/assets/nonlaptops')
         })
         .catch(err => {
-            console.log(err)
+            console.log(err);
             alert(err.response.data)
         })
     }
@@ -152,12 +152,15 @@ export default class ManageLaptop extends Component{
             broken: this.state.broken,
             comment: this.state.comment
         }).catch(err => {
-            alert(err.response.data)
+            alert(err.response.data);
             console.log(err)
         })        
     }
 
     render(){
+        const invalid = this.state.order_number == null || this.state.inDate == null
+            || this.state.model == null || this.state.serial_number == null || this.state.cost == null;
+
         return(
             <React.Fragment>          
                 <form onSubmit={this.handleSubmit}>
@@ -234,7 +237,7 @@ export default class ManageLaptop extends Component{
                             <Col sm={6}>
                                 <Departments
                                     defaultvalue={this.state.contract}
-                                    createDept = {this.handleContracttOption} 
+                                    createDept = {this.handleCreateContractOption}
                                     handleChange={this.handleContract} 
                                     depts={this.state.contract}
                                 />
@@ -325,7 +328,7 @@ export default class ManageLaptop extends Component{
                                 Broken
                             </Col>
                             <Col sm={6}>
-                                <Checkbox checked={this.state.broken} onChange={this.handleCheck}></Checkbox>
+                                <Checkbox checked={this.state.broken} onChange={this.handleCheck}/>
                             </Col>
                         </FormGroup>
                         <FormGroup controlId='comment'>
@@ -344,7 +347,13 @@ export default class ManageLaptop extends Component{
                         <FormGroup>
                             <Col smOffset={3} sm={3}>
                                 <ButtonToolbar>
-                                    <Button type = 'submit' bsStyle='success'> <FontAwesomeIcon icon='check'/> Update Non-Laptop</Button> 
+                                    <Button
+                                        type = 'submit'
+                                        bsStyle='success'
+                                        disabled={invalid}
+                                    >
+                                        <FontAwesomeIcon icon='check'/> Update Non-Laptop
+                                    </Button>
                                     {!this.state.archived?
                                         <ManageModal 
                                             type='Retire'

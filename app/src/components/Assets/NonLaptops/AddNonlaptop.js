@@ -7,12 +7,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default class AddNonLaptop extends Component{
     constructor(props){
-        super(props)
+        super(props);
 
         this.handleIn = this.handleIn.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleAdd = this.handleAdd.bind(this);
-        this.handleRemove = this.handleRemove.bind(this)
+        this.handleRemove = this.handleRemove.bind(this);
 
         this.state = {
             warranty_provider: null,
@@ -31,10 +31,10 @@ export default class AddNonLaptop extends Component{
     }
 
     handleAssetChange = index => e => {
-        let assets = [...this.state.assets]
-        assets[index][e.target.id] = nullify(e.target.value)
+        let assets = [...this.state.assets];
+        assets[index][e.target.id] = nullify(e.target.value);
         this.setState({ assets })             
-    }
+    };
 
     handleOrderChange(e){
         this.setState({
@@ -74,12 +74,15 @@ export default class AddNonLaptop extends Component{
             this.props.history.push('/assets/nonlaptops')
         })
         .catch(err => {
-            alert(err.response.data)
+            alert(err.response.data);
             console.log(err)
         })
     }
     
     render(){
+        const invalid = this.state.order_num == null || this.state.inDate == null
+            || this.state.assets.some(val => val.model == null || val.serial_number == null || val.cost == null);
+
         return(
             <React.Fragment>
                 <form onSubmit={this.handleSubmit}>
@@ -231,7 +234,13 @@ export default class AddNonLaptop extends Component{
                             <Col smOffset={3} sm={2}>
                                 <ButtonToolbar>
                                     <Button onClick={this.handleAdd}><FontAwesomeIcon icon='plus'/> Add more</Button>
-                                    <Button type='submit' bsStyle='success'> <FontAwesomeIcon icon='check'/> Submit</Button>   
+                                    <Button
+                                        type='submit'
+                                        bsStyle='success'
+                                        disabled={invalid}
+                                    >
+                                        <FontAwesomeIcon icon='check'/> Submit
+                                    </Button>
                                 </ButtonToolbar>                                
                             </Col>
                         </FormGroup>          

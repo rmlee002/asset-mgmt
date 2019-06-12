@@ -7,12 +7,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default class AddLaptop extends Component{
     constructor(props){
-        super(props)
+        super(props);
 
         this.handleIn = this.handleIn.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleAdd = this.handleAdd.bind(this);
-        this.handleRemove = this.handleRemove.bind(this)
+        this.handleRemove = this.handleRemove.bind(this);
+        this.getValidationState = this.getValidationState.bind(this);
 
         this.state = {
             warranty_provider: null,
@@ -30,10 +31,10 @@ export default class AddLaptop extends Component{
     }
 
     handleAssetChange = index => e => {
-        let assets = [...this.state.assets]
-        assets[index][e.target.id] = nullify(e.target.value)
-        this.setState({ assets })             
-    }
+        let assets = [...this.state.assets];
+        assets[index][e.target.id] = nullify(e.target.value);
+        this.setState({ assets });
+    };
 
     handleOrderChange(e){
         this.setState({
@@ -73,9 +74,14 @@ export default class AddLaptop extends Component{
             this.props.history.push('/assets/laptops')
         })
         .catch(err => {
-            alert(err.response.data)
+            alert(err.response.data);
             console.log(err)
         })
+    }
+
+    getValidationState(){
+        return this.state.order_num == null || this.state.inDate == null
+            || this.state.assets.some(val => { return val.model == null || val.serial_number == null })
     }
     
     render(){
@@ -155,7 +161,9 @@ export default class AddLaptop extends Component{
                                         Item #{index+1}
                                     </Col>
                                     <Col sm={6}>
-                                        <Button bsStyle='danger' onClick={() => this.handleRemove(index)}><FontAwesomeIcon icon='trash'/> Remove</Button> 
+                                        <Button bsStyle='danger' onClick={() => this.handleRemove(index)}>
+                                            <FontAwesomeIcon icon='trash'/> Remove
+                                        </Button>
                                     </Col>
                                 </FormGroup>
                                 <FormGroup controlId='serial_number'>                                        
@@ -216,7 +224,13 @@ export default class AddLaptop extends Component{
                             <Col smOffset={3} sm={2}>
                                 <ButtonToolbar>
                                     <Button onClick={this.handleAdd}><FontAwesomeIcon icon='laptop-medical'/> Add more</Button>
-                                    <Button type='submit' bsStyle='success'> <FontAwesomeIcon icon='check'/> Submit</Button>   
+                                    <Button
+                                        type='submit'
+                                        bsStyle='success'
+                                        disabled={this.getValidationState()}
+                                    >
+                                        <FontAwesomeIcon icon='check'/> Submit
+                                    </Button>
                                 </ButtonToolbar>                                
                             </Col>
                         </FormGroup>          
