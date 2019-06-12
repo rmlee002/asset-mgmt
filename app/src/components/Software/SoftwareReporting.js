@@ -514,6 +514,7 @@ export default class SoftwareReporting extends Component {
                                         data={data}
                                         pivotBy={["department","name"]}
                                         columns={columns1}
+                                        className="-striped -highlight"
                                     />
                                     <Form>
                                         <FormGroup>
@@ -558,7 +559,6 @@ export default class SoftwareReporting extends Component {
                                             data={this.getPieData()}
                                             colorScale={["LimeGreen","DarkGreen","LightSeaGreen","Yellow"]}
                                             labels={val=>`${val.x}: \n$${val.y.toFixed(2)}`}
-
                                         />
                                     </div>
                                 </Tab.Pane>
@@ -573,6 +573,7 @@ export default class SoftwareReporting extends Component {
                                                 desc: true
                                             }
                                         ]}
+                                        className="-striped -highlight"
                                         defaultPageSize={10}
                                         showPagination={false}
                                     />
@@ -585,6 +586,7 @@ export default class SoftwareReporting extends Component {
                                         }
                                         pivotBy={["software"]}
                                         columns={columns3}
+                                        className="-striped -highlight"
                                     />
                                 </Tab.Pane>
                             </Tab.Content>

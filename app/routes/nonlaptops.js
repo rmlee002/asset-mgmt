@@ -15,7 +15,7 @@ router.get('/', (req,res) => {
         }
         res.send(JSON.stringify(results))
     })
-})
+});
 
 router.post('/add', (req,res)=>{
     let assets = JSON.parse(req.body.assets)
@@ -36,7 +36,7 @@ router.post('/add', (req,res)=>{
         }
         res.status(200).send("Success")
     })
-})
+});
 
 router.post('/getNonLaptop', (req,res)=>{
     connection.query('SELECT * FROM hardware WHERE hardware_id = ?', req.body.hardware_id, (err, results) => {
@@ -46,7 +46,7 @@ router.post('/getNonLaptop', (req,res)=>{
         }
         res.send(JSON.stringify(results))
     })
-})
+});
 
 router.post('/updateNonLaptop', (req,res)=>{
     const {hardware_id, model, description, serial_number, warranty_provider, owner, contract, cost,vendor,
@@ -63,7 +63,7 @@ router.post('/updateNonLaptop', (req,res)=>{
                 res.status(200).send("Success")
             }
         })
-})
+});
 
 router.post('/retire', (req,res)=>{
     connection.query('UPDATE hardware SET archived = TRUE WHERE hardware_id = ?', req.body.hardware_id, (err,results)=>{
@@ -75,7 +75,7 @@ router.post('/retire', (req,res)=>{
             res.status(200).send("Sucess")
         }
     })
-})
+});
 
 router.post('/unretire', (req,res)=>{
     connection.query('UPDATE hardware SET archived = FALSE WHERE hardware_id = ?', req.body.hardware_id, (err,results)=>{
@@ -87,6 +87,6 @@ router.post('/unretire', (req,res)=>{
             res.status(200).send("Sucess")
         }
     })
-})
+});
 
 module.exports = router;

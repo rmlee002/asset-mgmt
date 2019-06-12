@@ -36,7 +36,7 @@ app.use('/hwReporting', hwReportingRouter)
 
 app.get('/checkToken', authorized, (req, res) => {
 	res.sendStatus(200);
-})
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
