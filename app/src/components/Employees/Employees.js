@@ -87,9 +87,9 @@ export default class Employees extends Component {
     handleFilter(options){
         this.setState({
             filtered: this.state.employees.filter((emp)=>!emp.archived || options.showArchived).filter(item => 
-                moment(item.start).isSameOrAfter(options.start)
+                moment(item.inDate).isSameOrAfter(options.start)
                 &&
-                moment(item.start).isSameOrBefore(options.end)
+                moment(item.inDate).isSameOrBefore(options.end)
                 &&
                 (options.depts.length > 0 ? options.depts.map(dept => dept.value).some(dept => item.department.split(', ').includes(dept)): true)
             ),
@@ -208,12 +208,12 @@ export default class Employees extends Component {
             },
             {
                 Header: "Start Date",
-                accessor: "start",
+                accessor: "inDate",
                 Cell: val => moment(val.value).format('YYYY-MM-DD')
             },
             {
                 Header: "End Date",
-                accessor: "end",
+                accessor: "outDate",
                 Cell: val => val.value? moment(val.value).format('YYYY-MM-DD') : null
             },
             {

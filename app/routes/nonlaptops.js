@@ -18,8 +18,8 @@ router.get('/', (req,res) => {
 });
 
 router.post('/add', (req,res)=>{
-    let assets = JSON.parse(req.body.assets)
-    values = assets.map(extract)
+    let assets = JSON.parse(req.body.assets);
+    values = assets.map(extract);
 
     function extract(asset){
         return [asset.serial_number, asset.model, asset.description,
@@ -31,7 +31,7 @@ router.post('/add', (req,res)=>{
         'INSERT INTO hardware (serial_number, model, description, warranty_provider, cost, vendor,\
             order_number, warranty, inDate, comment) VALUES ?', [values], (err, results) =>{
         if (err){
-            console.log(err)
+            console.log(err);
             res.status(500).send("Database query error")
         }
         res.status(200).send("Success")
@@ -41,7 +41,7 @@ router.post('/add', (req,res)=>{
 router.post('/getNonLaptop', (req,res)=>{
     connection.query('SELECT * FROM hardware WHERE hardware_id = ?', req.body.hardware_id, (err, results) => {
         if (err){
-            console.log(err)
+            console.log(err);
             res.status(500).send("Database query error")
         }
         res.send(JSON.stringify(results))
@@ -56,7 +56,7 @@ router.post('/updateNonLaptop', (req,res)=>{
     WHERE hardware_id=?', [model, description, serial_number, warranty_provider, owner, contract, cost, vendor,
         order_number, warranty, inDate, outDate, broken, comment, hardware_id], (err, results)=>{
             if(err){
-                console.log(err)
+                console.log(err);
                 res.status(500).send("Database query error")
             }
             else{
@@ -66,13 +66,13 @@ router.post('/updateNonLaptop', (req,res)=>{
 });
 
 router.post('/retire', (req,res)=>{
-    connection.query('UPDATE hardware SET archived = TRUE WHERE hardware_id = ?', req.body.hardware_id, (err,results)=>{
+    connection.query('UPDATE hardware SET outDate=?, archived = TRUE WHERE hardware_id = ?', [req.body.outDate, req.body.hardware_id], (err,results)=>{
         if (err){
-            console.log(err)
+            console.log(err);
             res.status(500).send("Database query error")
         }
         else{
-            res.status(200).send("Sucess")
+            res.status(200).send("Success")
         }
     })
 });
@@ -80,11 +80,11 @@ router.post('/retire', (req,res)=>{
 router.post('/unretire', (req,res)=>{
     connection.query('UPDATE hardware SET archived = FALSE WHERE hardware_id = ?', req.body.hardware_id, (err,results)=>{
         if (err){
-            console.log(err)
+            console.log(err);
             res.status(500).send("Database query error")
         }
         else{
-            res.status(200).send("Sucess")
+            res.status(200).send("Success")
         }
     })
 });

@@ -110,7 +110,7 @@ export default class ManageLaptop extends Component{
         e.preventDefault();
         Axios.post('/nonlaptops/retire', {
             hardware_id: this.state.hardware_id,
-            // end: moment(this.state.end).format('YYYY-MM-DD')
+            outDate: moment(this.state.outDate).format('YYYY-MM-DD')
         })
         .then(res => {
             this.props.history.push('/assets/nonlaptops')            

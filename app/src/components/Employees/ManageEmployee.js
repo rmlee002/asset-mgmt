@@ -60,8 +60,8 @@ export default class ManageEmployee extends Component{
                 supervisor: employee.super_first?{value: employee.supervisor_id, label:employee.super_first+' '+employee.super_last}:null,
                 reviewer: employee.reviewer_first?{value: employee.reviewer_id, label:employee.reviewer_first+' '+employee.reviewer_last}:null,
                 time_approver: employee.time_first?{value: employee.time_approver_id, label:employee.time_first+' '+employee.time_last}:null,
-                start: employee.start,
-                end: employee.end,
+                start: employee.inDate,
+                end: employee.outDate,
                 notes: employee.notes,
                 archived: employee.archived
             })
@@ -110,13 +110,13 @@ export default class ManageEmployee extends Component{
         this.setState({ 
             [id]: value
         })
-    }
+    };
 
     handleRetire(e){
         e.preventDefault();
         axios.post('/employee/retire', {
             emp_id: this.state.emp_id,
-            end: moment(this.state.date).format('YYYY-MM-DD')
+            outDate: moment(this.state.date).format('YYYY-MM-DD')
         })
         .then(res => {
             this.props.history.push('/employees')
@@ -158,7 +158,7 @@ export default class ManageEmployee extends Component{
             reviewer: this.state.reviewer?this.state.reviewer.value:null,
             time_approver: this.state.time_approver?this.state.time_approver.value:null,
             start: this.state.start?moment(this.state.start).format('YYYY-MM-DD'):null,
-            end: this.state.end?moment(this.state.end).format('YYYY-MM-DD'):null,
+            outDate: this.state.end?moment(this.state.end).format('YYYY-MM-DD'):null,
             notes: this.state.notes
         })
         .catch(err => {
