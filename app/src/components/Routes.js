@@ -24,6 +24,7 @@ import NonLaptops from './Assets/NonLaptops/NonLaptops';
 import AddNonLaptop from './Assets/NonLaptops/AddNonlaptop';
 import ManageNonLaptop from './Assets/NonLaptops/ManageNonLaptop';
 import SoftwareReporting from './Software/SoftwareReporting';
+import PageNotFound from './PageNotFound';
 
 export default () => 
     <Switch>
@@ -50,5 +51,6 @@ export default () =>
         <Route path='/software/add' component={protect(AddSoftware)} />
         <Route exact path='/software/:software_id/users' component={Users} />
         <Route path='/software/:software_id/users/add' component={protect(AddUser)} />
-        <Route path='/software/reporting' component = {SoftwareReporting} />
+        <Route exact path='/software/reporting' component = {SoftwareReporting} />
+        <Route path='/' component={PageNotFound}/>
     </Switch>
