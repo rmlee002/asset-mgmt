@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FormGroup, ControlLabel, FormControl, Table, Button, Checkbox } from 'react-bootstrap';
+import { FormGroup, ControlLabel, FormControl, ButtonToolbar, Button, Checkbox } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import moment from 'moment';
@@ -244,7 +244,7 @@ export default class Laptops extends Component{
                 accessor: "comment",
                 style: { 'white-space': 'unset' }
             },
-            {
+            /*{
                 id: "links",
                 accessor: val => val,
                 Cell: val => {
@@ -272,7 +272,7 @@ export default class Laptops extends Component{
                         </div>
                     )
                 }
-            }
+            }*/
         ];
 
         return(
@@ -306,20 +306,28 @@ export default class Laptops extends Component{
                     data={this.state.filtered}
                     columns={columns}
                     className='-striped -highlight'
-                    /*SubComponent={row => {
+                    // getTrProps={(state, rowInfo) => ({
+                    //     onClick: () => this.props.history.push(`/assets/laptops/${rowInfo.original.laptop_id}/manage`)
+                    // })}
+                    SubComponent={row => {
                         return (
-                            <div>
-                                <Link to={`/assets/laptops/${row.original.laptop_id}/history`}>History <FontAwesomeIcon icon='history'/></Link>
-                                {loggedIn &&
-                                    !row.original.archived &&
-                                    <Link to={`/assets/laptops/${row.original.laptop_id}/editOwner`}>Assign owner</Link>
-                                }
-                                {loggedIn &&
-                                    <Link to={`/assets/laptops/${row.original.laptop_id}/manage`}> Edit <FontAwesomeIcon icon='edit'/></Link>
-                                }
+                            <div style={{margin: 'auto', padding: '20px'}}>
+                                <ButtonToolbar>
+                                    <LinkContainer to={`/assets/laptops/${row.original.laptop_id}/history`}>
+                                        <Button bsStyle={'primary'}>History <FontAwesomeIcon icon='history'/></Button>
+                                    </LinkContainer>
+                                    <LinkContainer to={`/assets/laptops/${row.original.laptop_id}/editOwner`}>
+                                        <Button bsStyle={'primary'}>Assign Owner</Button>
+                                    </LinkContainer>
+                                    {this.state.loggedIn &&
+                                        <LinkContainer to={`/assets/laptops/${row.original.laptop_id}/manage`}>
+                                            <Button bsStyle={'primary'}>Edit <FontAwesomeIcon icon='edit'/></Button>
+                                        </LinkContainer>
+                                    }
+                                </ButtonToolbar>
                             </div>
-                        );
-                    }}*/
+                        )
+                    }}
                 />
                 {/*<div className='data' id='laptops'>
                     <Table striped hover>

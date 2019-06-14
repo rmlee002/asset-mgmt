@@ -291,18 +291,15 @@ export default class NonLaptops extends Component{
                             data={this.state.filtered}
                             columns={columns}
                             className="-striped -highlight"
-                            getTrProps={(state, rowInfo) => ({
-                                onClick: () => this.props.history.push(`/assets/nonlaptops/${rowInfo.original.hardware_id}/manage`)
-                            })}
-                            /*SubComponent={row => {
+                            SubComponent={row => {
                                 return (
-                                    <div className="">
-                                        {/!*<Link to={`/assets/nonlaptops/${row.original.hardware_id}/history`}>History <FontAwesomeIcon icon='history'/></Link>
-                                        <Link to={`/assets/nonlaptops/${row.original.hardware_id}/editOwner`}>Assign owner</Link>*!/}
-                                        <Link to={`/assets/nonlaptops/${row.original.hardware_id}/manage`}>Edit <FontAwesomeIcon icon='edit'/></Link>
+                                    <div style={{margin: 'auto', padding:'20px'}}>
+                                        <LinkContainer to={`/assets/nonlaptops/${row.original.hardware_id}/manage`}>
+                                            <Button bsStyle={'primary'}>Edit <FontAwesomeIcon icon='edit'/></Button>
+                                        </LinkContainer>
                                     </div>
                                 )
-                            }}*/
+                            }}
                         />
                     :
                         <ReactTable

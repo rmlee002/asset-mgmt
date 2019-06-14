@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from'react-router-dom';
-import { Table, FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
+import { Table, FormGroup, FormControl, ControlLabel, Button, ButtonToolbar } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import moment from 'moment';
 import axios from 'axios';
@@ -173,12 +173,14 @@ export default class Employees extends Component {
                 Header: "Name",
                 id: "name",
                 accessor: val => val.first_name + " " + val.last_name,
-                style: { 'white-space': 'unset' }
+                // style: { 'white-space': 'unset' }
+
             },
             {
                 Header: "Email",
                 accessor: "email",
-                style: { 'white-space': 'unset' }
+                // style: { 'white-space': 'unset'
+                style: { 'break-word': 'break-all' }
             },
             {
                 Header: "Affiliation",
@@ -221,7 +223,7 @@ export default class Employees extends Component {
                 accessor: "notes",
                 style: { 'white-space': 'unset' }
             },
-            {
+            /*{
                 id: "links",
                 accessor: val => val,
                 Cell: val => {
@@ -247,7 +249,7 @@ export default class Employees extends Component {
                         </div>
                     )
                 }
-            }
+            }*/
         ];
 
         return(
@@ -272,23 +274,28 @@ export default class Employees extends Component {
                     data={this.state.filtered}
                     columns={columns}
                     className='-striped -highlight'
-                   /* SubComponent={row => {
+                    /*getTrProps={(state, rowInfo) => ({
+                        onClick: () => this.props.history.push(`/employees/${rowInfo.original.emp_id}/manage`)
+                    })}*/
+                    SubComponent={row => {
                         return (
-                            <div>
-                                <Link to={`/employees/${row.original.emp_id}/assets`}>
-                                    Assets
-                                </Link>
-                                <Link to={`/employees/${row.original.emp_id}/licenses`}>
-                                    Licenses
-                                </Link>
-                                {loggedIn &&
-                                    <Link to={`/employees/${row.original.emp_id}/manage`}>
-                                        Edit <FontAwesomeIcon icon='edit'/>
-                                    </Link>
-                                }
+                            <div style={{margin: 'auto', padding: '20px'}}>
+                                <ButtonToolbar>
+                                    <LinkContainer to={`/employees/${row.original.emp_id}/assets`}>
+                                        <Button bsStyle={'primary'}>Assets</Button>
+                                    </LinkContainer>
+                                    <LinkContainer to={`/employees/${row.original.emp_id}/licenses`}>
+                                        <Button bsStyle={'primary'}>Licenses</Button>
+                                    </LinkContainer>
+                                    {this.state.loggedIn &&
+                                        <LinkContainer to={`/employees/${row.original.emp_id}/manage`}>
+                                            <Button bsStyle={'primary'}> Edit <FontAwesomeIcon icon='edit'/></Button>
+                                        </LinkContainer>
+                                    }
+                                </ButtonToolbar>
                             </div>
                         )
-                    }}*/
+                    }}
                 />
                {/* <div className='data' id='employees'>
                     <Table striped hover>

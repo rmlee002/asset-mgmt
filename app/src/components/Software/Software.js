@@ -139,26 +139,15 @@ export default class Employees extends Component {
                 accessor: "cost",
                 Cell: val => "$"+val.value
             },
-            {
+            /*{
                 id: "users",
                 accessor: val => val,
                 Cell: val => { return (
-                    <div>
-                        <div>
-                            <Link to={`/software/${val.value.software_id}/users`}>
-                                Users <FontAwesomeIcon icon='users'/>
-                            </Link>
-                        </div>
-                        <div>
-                            {loggedIn &&
-                                <Link to={`software/${val.value.software_id}/manage`}>
-                                    Manage <FontAwesomeIcon icon='edit'/>
-                                </Link>
-                            }
-                        </div>
-                    </div>
+                    <Link to={`/software/${val.value.software_id}/users`}>
+                        Users <FontAwesomeIcon icon='users'/>
+                    </Link>
                 )}
-            }
+            }*/
         ];
 
         return(
@@ -178,7 +167,7 @@ export default class Employees extends Component {
                 <ButtonToolbar className='pull-right'>
                     {loggedIn &&
                         <LinkContainer to='/software/add'>
-                            <Button bsStyle='primary'> <FontAwesomeIcon icon='desktop'/> Add Software</Button>
+                            <Button bsStyle='primary'><FontAwesomeIcon icon='desktop'/> Add Software</Button>
                         </LinkContainer>   
                     }
                 </ButtonToolbar>
@@ -188,6 +177,22 @@ export default class Employees extends Component {
                     data={this.state.filtered}
                     columns={columns1}
                     className='-striped -highlight'
+                    SubComponent={row => {
+                        return (
+                            <div style={{margin: 'auto', padding: '20px'}}>
+                                <ButtonToolbar>
+                                    <LinkContainer to={`/software/${row.original.software_id}/users`}>
+                                        <Button bsStyle={'primary'}>Users <FontAwesomeIcon icon='users'/></Button>
+                                    </LinkContainer>
+                                    {this.state.loggedIn &&
+                                        <LinkContainer to={`/software/${row.original.software_id}/manage`}>
+                                            <Button bsStyle={'primary'}>Edit <FontAwesomeIcon icon='edit'/></Button>
+                                        </LinkContainer>
+                                    }
+                                </ButtonToolbar>
+                            </div>
+                        )
+                    }}
                 />
                 {/*<div className='data' id='software'>
                     <Table striped hover>
