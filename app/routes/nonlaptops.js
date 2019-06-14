@@ -78,7 +78,7 @@ router.post('/retire', (req,res)=>{
 });
 
 router.post('/unretire', (req,res)=>{
-    connection.query('UPDATE hardware SET archived = FALSE WHERE hardware_id = ?', req.body.hardware_id, (err,results)=>{
+    connection.query('UPDATE hardware SET archived = FALSE, outDate = NULL WHERE hardware_id = ?', req.body.hardware_id, (err,results)=>{
         if (err){
             console.log(err);
             res.status(500).send("Database query error")
