@@ -43,7 +43,7 @@
 
 .data td{
     border-right: 2px solid #e8e8e8;
-    word-wrap: break-word;
+    /*word-wrap: break-word;*/
 }
 
 .data tbody{

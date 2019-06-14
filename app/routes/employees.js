@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
 		ON a.time_approver_id = d.emp_id', 
 		function(err, results){
 			if (err){
-				console.log(err)
+				console.log(err);
 				res.status(500).send("Database query error")
 			}
 			res.send(JSON.stringify(results));
@@ -32,14 +32,14 @@ router.post('/add', (req,res) => {
 	const {
 		first_name, last_name, email, affiliation, department, supervisor, reviewer,
 		time_approver, start, end, notes
-	} = req.body
+	} = req.body;
 
 	connection.query('INSERT INTO employees (first_name, last_name,\
 		email, affiliation, department, supervisor_id, reviewer_id,time_approver_id, inDate, outDate, notes)\
 		VALUES (?,?,?,?,?,?,?,?,?,?,?)', [first_name, last_name, email, affiliation, department,
 			supervisor, reviewer, time_approver, start, end, notes], (err, results) => {
 			if (err){
-				console.log(err)
+				console.log(err);
 				res.status(500).send("Database query error")
 			}
 			else{
@@ -66,37 +66,36 @@ router.post('/getEmployee', (req,res) => {
 		WHERE a.emp_id=?', 
 		emp_id, (err, results) => {
 		if (err){
-			console.log(err)
+			console.log(err);
 			res.status(500).send("Database query error")
 		}
 		else{
 			res.send(JSON.stringify(results));
 		}
 	})
-})
+});
 
 router.post('/update', (req,res) => {
 	const {
 		emp_id, first_name, last_name, email, affiliation, department, supervisor, 
-		reviewer, time_approver, start, end, notes} = req.body
+		reviewer, time_approver, start, end, notes} = req.body;
 		
 	connection.query('UPDATE employees SET first_name=?, last_name=?, email=?, affiliation=?,\
 		department=?, supervisor_id=?, reviewer_id=?, time_approver_id=?, inDate=?, outDate=?, notes=? WHERE emp_id=?',
 		[first_name, last_name, email, affiliation, department, supervisor, reviewer,
 		time_approver, start, end, notes, emp_id], (err) => {
 			if (err){
-				console.log(err)
+				console.log(err);
 				res.status(500).send("Database query error")
 			}
 			else{
 				res.status(200).send("Success")
 			}
 		})
-})
+});
 
 router.post('/retire', (req,res) => {
-	console.log(req.body.outDate);
-	connection.query('UPDATE employees SET outDate=?, archived=TRUE WHERE emp_id=?', [req.body.outDate, req.body.emp_id], (err,results) => {
+	connection.query('UPDATE employees SET archived=TRUE, outDate=? WHERE emp_id=?', [req.body.outDate, req.body.emp_id], (err,results) => {
 		if (err){
 			console.log(err);
 			res.status(500).send("Database query error")
@@ -104,13 +103,13 @@ router.post('/retire', (req,res) => {
 		else{
 			connection.query('UPDATE laptopHistory SET end=? WHERE emp_id=? AND end IS NULL', [req.body.outDate, req.body.emp_id], (err, results) =>{
 				if (err){
-					console.log(err)
+					console.log(err);
 					res.status(500).send("Database query error")
 				}
 				else{
 					connection.query('UPDATE licenses SET end=? WHERE emp_id=? AND end IS NULL', [req.body.outDate, req.body.emp_id], (err, results) => {
 						if (err){
-							console.log(err)
+							console.log(err);
 							res.status(500).send("Database query error")
 						}
 						res.status(200).send('Success')
@@ -124,11 +123,11 @@ router.post('/retire', (req,res) => {
 router.post('/unretire', (req,res)=>{
 	connection.query('UPDATE employees SET outDate=NULL, archived=FALSE WHERE emp_id=?', req.body.emp_id, (err,results)=>{
 		if (err){
-			console.log(err)
+			console.log(err);
 			res.status(500).send('Database query error')
 		}
 		res.status(200).send('Success')
 	})
-})
+});
 
 module.exports = router;

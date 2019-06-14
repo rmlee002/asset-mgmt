@@ -20,7 +20,8 @@ export default class AssetReporting extends Component{
         .then(res => {
             this.setState({
                 data: res.data
-            })
+            });
+            console.log(res.data)
         })
         .catch(err => {
             console.log(err);
