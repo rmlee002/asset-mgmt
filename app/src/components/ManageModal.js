@@ -5,9 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default class ManageModal extends Component{
     constructor(props){
-        super(props)
+        super(props);
 
-        this.handleClick = this.handleClick.bind(this)
+        this.handleClick = this.handleClick.bind(this);
 
         this.state={
             show: false,
@@ -59,7 +59,7 @@ export default class ManageModal extends Component{
                     <Modal.Header closeButton>
                         <Modal.Title>{this.props.title}</Modal.Title>
                     </Modal.Header>
-                        <form onSubmit={this.props.handleSubmit}>
+                        <form>
                             <Modal.Body>
                                 <Form horizontal>
                                     <FormGroup>
@@ -80,7 +80,7 @@ export default class ManageModal extends Component{
                                 <Button 
                                     disabled={this.props.date === null} 
                                     bsStyle={this.state.style}
-                                    type='submit'
+                                    onClick={this.props.handleSubmit}
                                 >
                                     {this.props.type} <FontAwesomeIcon icon={this.props.type==='Retire'?'archive':'check'}/>
                                 </Button>

@@ -101,6 +101,9 @@ export default class Users extends Component{
             software_id: this.props.match.params.software_id,
             emp_id: this.state.emp_id
         })
+        .then(res => {
+            window.location.reload()
+        })
         .catch(err => {
             alert(err.response.data);
             console.log(err)

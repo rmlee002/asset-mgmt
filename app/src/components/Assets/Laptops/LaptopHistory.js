@@ -8,9 +8,9 @@ export default class LaptopHistory extends Component{
     constructor(props){
         super(props);
 
-        this.handleEnd = this.handleEnd.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this)
-        this.handleResize = this.handleResize.bind(this)
+        this.handleEnd = this.handleEnd.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleResize = this.handleResize.bind(this);
 
         this.state = {
             show: false,
@@ -31,9 +31,9 @@ export default class LaptopHistory extends Component{
             })    
         })
         .catch(err => {
-            alert(err.response.data)
+            alert(err.response.data);
             console.log(err);
-        })
+        });
 
         axios.get('/checkToken')
         .then(res => {
@@ -43,8 +43,8 @@ export default class LaptopHistory extends Component{
         })
         .catch(err => {
             console.log(err)
-        })
-        
+        });
+
         window.addEventListener('resize', this.handleResize)
     }
 
@@ -52,19 +52,19 @@ export default class LaptopHistory extends Component{
         axios.post('/laptopHistory/retire', {
             end: moment(this.state.end).format('YYYY-MM-DD'),
             laptop_id: this.props.match.params.laptop_id,
-            emp_id: id
+            emp_id: this.state.emp_id
         })
         .then(res => {
-            this.props.history.push(`/assets/laptops/${this.props.match.params.laptop_id}/history`)
+            window.location.reload()
         })
         .catch(err => {
-            alert(err.response.data)
+            alert(err.response.data);
             console.log(err)
         })
     }
 
     handleResize(){
-        const h = document.documentElement.clientHeight - 220
+        const h = document.documentElement.clientHeight - 220;
         this.setState({
             theight: h
         })
@@ -77,7 +77,7 @@ export default class LaptopHistory extends Component{
     }
 
     render(){       
-        const loggedIn = this.state.loggedIn
+        const loggedIn = this.state.loggedIn;
 
         return(
             <React.Fragment>

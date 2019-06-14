@@ -8,12 +8,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default class EmployeeLicenses extends Component{
     constructor(props){
-        super(props)
+        super(props);
 
-        this.handleSubmit = this.handleSubmit.bind(this)
-        this.handleEnd = this.handleEnd.bind(this)
-        this.handleCheck = this.handleCheck.bind(this)
-        this.handleResize = this.handleResize.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleEnd = this.handleEnd.bind(this);
+        this.handleCheck = this.handleCheck.bind(this);
+        this.handleResize = this.handleResize.bind(this);
 
         this.state={
             licenses: [],
@@ -39,7 +39,7 @@ export default class EmployeeLicenses extends Component{
         .catch(err => {
             console.log(err)
             alert(err.response.data)
-        })
+        });
 
         Axios.get('/checkToken')
         .then(res => {
@@ -49,7 +49,7 @@ export default class EmployeeLicenses extends Component{
         })
         .catch(err => {
             console.log(err)
-        })
+        });
         
         window.addEventListener('resize', this.handleResize)
     }
@@ -61,7 +61,7 @@ export default class EmployeeLicenses extends Component{
     }
 
     handleResize(){
-        const h = document.documentElement.clientHeight - 220
+        const h = document.documentElement.clientHeight - 220;
         this.setState({
             theight: h
         })
@@ -80,14 +80,17 @@ export default class EmployeeLicenses extends Component{
             software_id: this.state.software_id,
             emp_id: this.props.match.params.emp_id
         })
+        .then(res => {
+            window.location.reload();
+        })
         .catch(err => {
-            alert(err.response.data)
+            alert(err.response.data);
             console.log(err)
         })
     }
 
     render(){
-        const loggedIn = this.state.loggedIn
+        const loggedIn = this.state.loggedIn;
         
         return(
             <React.Fragment>

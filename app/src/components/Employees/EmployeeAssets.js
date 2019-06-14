@@ -10,9 +10,9 @@ export default class EmployeeAssets extends Component{
     constructor(props){
         super(props);
 
-        this.handleEnd = this.handleEnd.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this)
-        this.handleResize = this.handleResize.bind(this)
+        this.handleEnd = this.handleEnd.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleResize = this.handleResize.bind(this);
 
         this.state = {
             show: false,
@@ -34,9 +34,9 @@ export default class EmployeeAssets extends Component{
             })
         })
         .catch(err =>{
-            alert(err.response.data)
+            alert(err.response.data);
             console.log(err)
-        })
+        });
 
         Axios.get('/checkToken')
         .then(res => {
@@ -46,7 +46,7 @@ export default class EmployeeAssets extends Component{
         })
         .catch(err => {
             console.log(err)
-        })
+        });
 
         window.addEventListener('resize', this.handleResize)
     }
@@ -58,7 +58,7 @@ export default class EmployeeAssets extends Component{
     }
 
     handleResize(){
-        const h = document.documentElement.clientHeight - 200
+        const h = document.documentElement.clientHeight - 200;
         this.setState({
             theight: h
         })
@@ -70,17 +70,20 @@ export default class EmployeeAssets extends Component{
             emp_id: this.props.match.params.emp_id,
             end: this.state.end?moment(this.state.end).format('YYYY-MM-DD'):null
         })
+        .then(res => {
+            window.location.reload();
+        })
         .catch(err => {
-            console.log(err)
+            console.log(err);
             alert(err.response.data)
         })
     }
 
     render(){
-        const loggedIn = this.state.loggedIn
+        const loggedIn = this.state.loggedIn;
         const startHead={
             width: loggedIn?null:'336.5px'
-        }
+        };
         return(
             <React.Fragment>
                 {loggedIn &&
