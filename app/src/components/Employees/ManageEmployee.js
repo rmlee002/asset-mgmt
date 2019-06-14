@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Col, FormControl, ControlLabel, ButtonToolbar } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import DatePicker from 'react-datepicker';
 import axios from 'axios';
 import moment from 'moment';
@@ -168,8 +169,8 @@ export default class ManageEmployee extends Component{
     }
 
     render(){
-        const isValid = this.state.first_name && this.state.last_name;        
-        return(
+        const isValid = this.state.first_name && this.state.last_name;
+        return (
             <React.Fragment>
                 <form onSubmit={this.handleUpdate}>
                     <Form horizontal>
@@ -195,7 +196,7 @@ export default class ManageEmployee extends Component{
                                     type='text'
                                     value={this.state.last_name}
                                     placeholder='Last name'
-                                    help = 'Required'
+                                    help='Required'
                                     onChange={this.handleChange}
                                 />
                             </Col>
@@ -211,7 +212,7 @@ export default class ManageEmployee extends Component{
                                     placeholder='Email'
                                     onChange={this.handleChange}
                                 />
-                            </Col>                                
+                            </Col>
                         </FormGroup>
                         <FormGroup controlId='affiliation'>
                             <Col componentClass={ControlLabel} sm={3}>Affiliation</Col>
@@ -221,7 +222,7 @@ export default class ManageEmployee extends Component{
                                     options={[
                                         {value: 'Contractor', label: 'Contractor'},
                                         {value: 'Employee', label: 'Employee'},
-                                        {value: 'Part-time/Hourly', label: 'Part-time/Hourly' },
+                                        {value: 'Part-time/Hourly', label: 'Part-time/Hourly'},
                                         {value: 'Intern', label: 'Intern'}
                                     ]}
                                     value={{value: this.state.affiliation, label: this.state.affiliation}}
@@ -234,10 +235,10 @@ export default class ManageEmployee extends Component{
                             <Col sm={7}>
                                 <Departments
                                     defaultvalue={this.state.depts}
-                                    createDept = {this.handleCreateDepartmentOption} 
-                                    handleChange={this.handleDepartment} 
+                                    createDept={this.handleCreateDepartmentOption}
+                                    handleChange={this.handleDepartment}
                                     depts={this.state.depts}
-                                /> 
+                                />
                             </Col>
                         </FormGroup>
                         <FormGroup controlId='supervisor'>
@@ -245,10 +246,10 @@ export default class ManageEmployee extends Component{
                                 Supervisor(s)
                             </Col>
                             <Col sm={7}>
-                                <EmployeeSelect 
-                                    value={this.state.supervisor} 
+                                <EmployeeSelect
+                                    value={this.state.supervisor}
                                     onChange={this.handleEmployeeAssign('supervisor')}
-                                />    
+                                />
                             </Col>
                         </FormGroup>
                         <FormGroup controlId='reviewer'>
@@ -256,8 +257,8 @@ export default class ManageEmployee extends Component{
                                 Reviewer(s)
                             </Col>
                             <Col sm={7}>
-                                <EmployeeSelect 
-                                    value={this.state.reviewer} 
+                                <EmployeeSelect
+                                    value={this.state.reviewer}
                                     onChange={this.handleEmployeeAssign('reviewer')}
                                 />
                             </Col>
@@ -267,8 +268,8 @@ export default class ManageEmployee extends Component{
                                 Time Approver(s)
                             </Col>
                             <Col sm={7}>
-                                <EmployeeSelect 
-                                    value={this.state.time_approver} 
+                                <EmployeeSelect
+                                    value={this.state.time_approver}
                                     onChange={this.handleEmployeeAssign('time_approver')}
                                 />
                             </Col>
@@ -285,7 +286,7 @@ export default class ManageEmployee extends Component{
                                 />
                             </Col>
                         </FormGroup>
-                        {this.state.archived?
+                        {this.state.archived ?
                             <FormGroup controlId='end'>
                                 <Col componentClass={ControlLabel} sm={3}>
                                     End date
@@ -300,13 +301,13 @@ export default class ManageEmployee extends Component{
                                 </Col>
                             </FormGroup>
                             : null
-                        }                        
+                        }
                         <FormGroup controlId='notes'>
                             <Col componentClass={ControlLabel} sm={3}>
                                 Notes
                             </Col>
                             <Col sm={7}>
-                                <FormControl 
+                                <FormControl
                                     type='text'
                                     value={this.state.notes}
                                     placeholder='Notes'
@@ -317,9 +318,10 @@ export default class ManageEmployee extends Component{
                         <FormGroup>
                             <Col smOffset={3} sm={3}>
                                 <ButtonToolbar>
-                                    <Button type='submit' bsStyle='success' disabled={!isValid}>Update employee <FontAwesomeIcon icon='check'/></Button>
-                                    {!this.state.archived?
-                                        <ManageModal 
+                                    <Button type='submit' bsStyle='success' disabled={!isValid}>Update
+                                        employee <FontAwesomeIcon icon='check'/></Button>
+                                    {!this.state.archived ?
+                                        <ManageModal
                                             type='Retire'
                                             title='Retire employee'
                                             size='medium'
@@ -327,12 +329,12 @@ export default class ManageEmployee extends Component{
                                             handleSubmit={this.handleRetire}
                                             handleDate={this.handleDate}
                                         />
-                                    : <Button bsStyle='primary' onClick={this.handleUnretire}>Unarchive</Button>}
-                                </ButtonToolbar>                                   
+                                        : <Button bsStyle='primary' onClick={this.handleUnretire}>Unarchive</Button>}
+                                </ButtonToolbar>
                             </Col>
                         </FormGroup>
-                    </Form>    
-                </form>                   
+                    </Form>
+                </form>
             </React.Fragment>
         );
     }

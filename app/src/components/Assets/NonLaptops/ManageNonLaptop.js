@@ -323,14 +323,6 @@ export default class ManageLaptop extends Component{
                             </FormGroup>
                             : null
                         }
-                        <FormGroup controlId='broken'>
-                            <Col componentClass={ControlLabel} sm={3}>
-                                Broken
-                            </Col>
-                            <Col sm={6}>
-                                <Checkbox checked={this.state.broken} onChange={this.handleCheck}/>
-                            </Col>
-                        </FormGroup>
                         <FormGroup controlId='comment'>
                             <Col componentClass={ControlLabel} sm={3}>
                                 Comment
@@ -342,6 +334,14 @@ export default class ManageLaptop extends Component{
                                     placeholder='Comment'
                                     onChange={this.handleChange}
                                 />
+                            </Col>
+                        </FormGroup>
+                        <FormGroup controlId='broken'>
+                            <Col componentClass={ControlLabel} sm={3}>
+                                Broken
+                            </Col>
+                            <Col sm={6}>
+                                <Checkbox checked={this.state.broken} onChange={this.handleCheck}/>
                             </Col>
                         </FormGroup>
                         <FormGroup>
@@ -363,7 +363,7 @@ export default class ManageLaptop extends Component{
                                             handleSubmit={this.handleRetire}
                                             handleDate={this.handleOut}
                                         />:
-                                        <Button bsStyle='primary'  onClick={this.handleUnretire}>Unarchive</Button>}
+                                        <Button bsStyle='primary' onClick={this.handleUnretire}>Unarchive</Button>}
                                 </ButtonToolbar>                                   
                             </Col>
                         </FormGroup>

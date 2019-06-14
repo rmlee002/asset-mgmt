@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Form, FormGroup, FormControl, ControlLabel, Col, Button, ButtonToolbar } from 'react-bootstrap';
 import Axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { LinkContainer } from 'react-router-bootstrap';
 
 export default class ManageSoftware extends Component{
     constructor(props){
@@ -84,7 +85,7 @@ export default class ManageSoftware extends Component{
     render(){
         const invalid = this.state.name === '' || this.state.cost === '';
 
-        return(
+        return (
             <React.Fragment>
                 <form onSubmit={this.handleUpdate}>
                     <Form horizontal onChange={this.handleChange}>
@@ -97,7 +98,7 @@ export default class ManageSoftware extends Component{
                                     type='text'
                                     value={this.state.name}
                                     placeholder='License Name'
-                                />                        
+                                />
                             </Col>
                         </FormGroup>
                         <FormGroup controlId='cost'>
@@ -109,7 +110,7 @@ export default class ManageSoftware extends Component{
                                     type='number'
                                     value={this.state.cost}
                                     placeholder='Monthly cost'
-                                />                        
+                                />
                             </Col>
                         </FormGroup>
                         <FormGroup>
@@ -122,15 +123,16 @@ export default class ManageSoftware extends Component{
                                     >
                                         Update <FontAwesomeIcon icon='check'/>
                                     </Button>
-                                    {!this.state.archived?
-                                        <Button bsStyle='danger' onClick={this.handleRetire}>Retire <FontAwesomeIcon icon='archive'/></Button>
-                                        :<Button bsStyle='primary' onClick={this.handleUnretire}>Unarchive</Button>}
-                                </ButtonToolbar> 
+                                    {!this.state.archived ?
+                                        <Button bsStyle='danger' onClick={this.handleRetire}>Retire <FontAwesomeIcon
+                                            icon='archive'/></Button>
+                                        : <Button bsStyle='primary' onClick={this.handleUnretire}>Unarchive</Button>}
+                                </ButtonToolbar>
                             </Col>
-                        </FormGroup>                             
+                        </FormGroup>
                     </Form>
                 </form>
-            </React.Fragment>            
+            </React.Fragment>
         );
     }
 }

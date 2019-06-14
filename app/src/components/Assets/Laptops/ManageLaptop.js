@@ -5,6 +5,7 @@ import Axios from 'axios';
 import moment from 'moment';
 import ManageModal from '../../ManageModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { LinkContainer } from 'react-router-bootstrap';
 
 export default class ManageLaptop extends Component{
     constructor(props){
@@ -17,6 +18,7 @@ export default class ManageLaptop extends Component{
         this.handleRetire = this.handleRetire.bind(this);
         this.handleUnretire=this.handleUnretire.bind(this);
         this.handleCheck = this.handleCheck.bind(this);
+        this.handleDate = this.handleDate.bind(this);
 
         this.state={
             laptop_id: null,
@@ -32,7 +34,8 @@ export default class ManageLaptop extends Component{
             inDate: null,
             outDate: null,
             archived: null,
-            broken: null
+            broken: null,
+            date: null
         }
     }
 
@@ -83,6 +86,10 @@ export default class ManageLaptop extends Component{
         });
     }
 
+    handleDate(date){
+        this.setState({date});
+    }
+
     handleCheck(e){
         this.setState({
             broken: e.target.checked
@@ -91,12 +98,13 @@ export default class ManageLaptop extends Component{
 
     handleRetire(e){
         e.preventDefault();
+        const end = this.state.outDate?moment(this.state.outDate).format('YYYY-MM-DD'):moment().format('YYYY-MM-DD');
         Axios.post('/laptops/retire', {
             laptop_id: this.state.laptop_id,
-            end: moment(this.state.end).format('YYYY-MM-DD')
+            end: end
         })
         .then(res => {
-            this.props.history.push('/assets/laptops')            
+            this.props.history.push('/assets/laptops')
         })
         .catch(err => {
             console.log(err);
@@ -134,14 +142,13 @@ export default class ManageLaptop extends Component{
         }).catch(err => {
             alert(err.response.data);
             console.log(err)
-        })        
+        })
     }
 
     render(){
         const invalid = this.state.serial_number == null || this.state.model == null || this.state.inDate == null || this.state.order_num == null;
-
         return(
-            <React.Fragment>          
+            <React.Fragment>
                 <form onSubmit={this.handleSubmit}>
                     <Form horizontal>                                
                         <FormGroup controlId='serial_number'>
@@ -260,14 +267,6 @@ export default class ManageLaptop extends Component{
                                 />
                             </Col>
                         </FormGroup>
-                        <FormGroup controlId='broken'>
-                            <Col componentClass={ControlLabel} sm={3}>
-                                Broken
-                            </Col>
-                            <Col sm={6}>
-                                <Checkbox checked={this.state.broken} onChange={this.handleCheck}></Checkbox>
-                            </Col>
-                        </FormGroup>
                         <FormGroup controlId='comment'>
                             <Col componentClass={ControlLabel} sm={3}>
                                 Comment
@@ -279,6 +278,14 @@ export default class ManageLaptop extends Component{
                                     placeholder='Comment'
                                     onChange={this.handleChange}
                                 />
+                            </Col>
+                        </FormGroup>
+                        <FormGroup controlId='broken'>
+                            <Col componentClass={ControlLabel} sm={3}>
+                                Broken
+                            </Col>
+                            <Col sm={6}>
+                                <Checkbox checked={this.state.broken} onChange={this.handleCheck}/>
                             </Col>
                         </FormGroup>
                         <FormGroup>
@@ -296,7 +303,7 @@ export default class ManageLaptop extends Component{
                                             type='Retire'
                                             title='Retire laptop'
                                             size='medium'
-                                            date={this.state.outDate?this.state.outDate:new Date()}
+                                            date={this.state.outDate?this.state.outDate:new Date().toISOString()}
                                             handleSubmit={this.handleRetire}
                                             handleDate={this.handleOut}
                                         />:
