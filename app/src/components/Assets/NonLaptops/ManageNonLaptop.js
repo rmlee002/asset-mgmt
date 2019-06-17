@@ -61,7 +61,7 @@ export default class ManageLaptop extends Component{
                 order_number: hardware.order_number,
                 warranty: hardware.warranty,
                 inDate: hardware.inDate,
-                outDate: hardware.outDate,
+                outDate: hardware.outDate? hardware.outDate : null,
                 archived: hardware.archived,
                 broken: hardware.broken
             })
@@ -108,9 +108,11 @@ export default class ManageLaptop extends Component{
 
     handleRetire(e){
         e.preventDefault();
+        const end = this.state.outDate?moment(this.state.outDate).format('YYYY-MM-DD'):moment().format('YYYY-MM-DD');
+
         Axios.post('/nonlaptops/retire', {
             hardware_id: this.state.hardware_id,
-            outDate: moment(this.state.outDate).format('YYYY-MM-DD')
+            outDate: end
         })
         .then(res => {
             this.props.history.push('/assets/nonlaptops')            

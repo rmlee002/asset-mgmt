@@ -22,7 +22,7 @@
     "path": "^0.12.7",
     "react": "^16.7.0",
     "react-bootstrap": "^0.32.4",
-    "react-datepicker": "^2.4.0",
+    "react-datepicker": "^2.7.0",
     "react-dom": "^16.7.0",
     "react-router-bootstrap": "^0.24.4",
     "react-router-dom": "^4.3.1",

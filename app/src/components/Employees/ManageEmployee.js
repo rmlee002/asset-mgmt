@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Col, FormControl, ControlLabel, ButtonToolbar } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
 import DatePicker from 'react-datepicker';
 import axios from 'axios';
 import moment from 'moment';
@@ -62,13 +61,13 @@ export default class ManageEmployee extends Component{
                 reviewer: employee.reviewer_first?{value: employee.reviewer_id, label:employee.reviewer_first+' '+employee.reviewer_last}:null,
                 time_approver: employee.time_first?{value: employee.time_approver_id, label:employee.time_first+' '+employee.time_last}:null,
                 start: employee.inDate,
-                end: employee.outDate,
+                end: employee.outDate? employee.outDate : null,
                 notes: employee.notes,
                 archived: employee.archived
             })
         })
         .catch(err => {
-            alert(err.response.data)
+            alert(err.response.data);
             console.log(err);
         })
     }
@@ -123,7 +122,7 @@ export default class ManageEmployee extends Component{
             this.props.history.push('/employees')
         })
         .catch(err => {
-            console.log(err)
+            console.log(err);
             alert(err.response.data)
         })
     }
@@ -169,7 +168,7 @@ export default class ManageEmployee extends Component{
     }
 
     render(){
-        const isValid = this.state.first_name && this.state.last_name;
+        const isValid = this.state.first_name && this.state.last_name && this.state.email && this.state.start;
         return (
             <React.Fragment>
                 <form onSubmit={this.handleUpdate}>

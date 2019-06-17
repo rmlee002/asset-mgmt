@@ -5,7 +5,6 @@ import Axios from 'axios';
 import moment from 'moment';
 import ManageModal from '../../ManageModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { LinkContainer } from 'react-router-bootstrap';
 
 export default class ManageLaptop extends Component{
     constructor(props){
@@ -57,7 +56,7 @@ export default class ManageLaptop extends Component{
                 order_num: laptop.order_num,
                 warranty: laptop.warranty,
                 inDate: laptop.inDate,
-                outDate: laptop.outDate,
+                outDate: laptop.outDate ? laptop.outDate : null,
                 archived: laptop.archived,
                 broken: laptop.broken
             })
@@ -146,7 +145,8 @@ export default class ManageLaptop extends Component{
     }
 
     render(){
-        const invalid = this.state.serial_number == null || this.state.model == null || this.state.inDate == null || this.state.order_num == null;
+        const invalid = this.state.serial_number == null || this.state.model == null || this.state.inDate == null || this.state.order_num == null
+                            || this.state.cost == null;
         return(
             <React.Fragment>
                 <form onSubmit={this.handleSubmit}>
