@@ -145,8 +145,11 @@ export default class ManageLaptop extends Component{
     }
 
     render(){
-        const invalid = this.state.serial_number == null || this.state.model == null || this.state.inDate == null || this.state.order_num == null
+        const invalid1 = this.state.serial_number == null || this.state.model == null || this.state.inDate == null || this.state.order_num == null
                             || this.state.cost == null;
+        const invalid2 = this.state.serial_number == null || this.state.model == null || this.state.inDate == null || this.state.order_num == null
+                            || this.state.cost == null || this.state.outDate == null;
+
         return(
             <React.Fragment>
                 <form onSubmit={this.handleSubmit}>
@@ -254,19 +257,22 @@ export default class ManageLaptop extends Component{
                                 />
                             </Col>
                         </FormGroup>
-                        <FormGroup controlId='out'>
-                            <Col componentClass={ControlLabel} sm={3}>
-                                Out Date
-                            </Col>
-                            <Col sm={6}>
-                                <DatePicker
-                                    isClearable
-                                    className='form-control'
-                                    selected={this.state.outDate}
-                                    onChange={this.handleOut}
-                                />
-                            </Col>
-                        </FormGroup>
+                        {this.state.archived ?
+                            <FormGroup controlId='out'>
+                                <Col componentClass={ControlLabel} sm={3}>
+                                    Out Date
+                                </Col>
+                                <Col sm={6}>
+                                    <DatePicker
+                                        isClearable
+                                        className='form-control'
+                                        selected={this.state.outDate}
+                                        onChange={this.handleOut}
+                                    />
+                                </Col>
+                            </FormGroup>
+                            : null
+                        }
                         <FormGroup controlId='comment'>
                             <Col componentClass={ControlLabel} sm={3}>
                                 Comment
@@ -294,7 +300,7 @@ export default class ManageLaptop extends Component{
                                     <Button
                                         type = 'submit'
                                         bsStyle='success'
-                                        disabled={invalid}
+                                        disabled={this.state.archived? invalid2 : invalid1}
                                     >
                                         <FontAwesomeIcon icon='check'/> Update Laptop
                                     </Button>

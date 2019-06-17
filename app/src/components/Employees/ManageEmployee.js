@@ -168,7 +168,8 @@ export default class ManageEmployee extends Component{
     }
 
     render(){
-        const isValid = this.state.first_name && this.state.last_name && this.state.email && this.state.start;
+        const isValid1 = this.state.first_name && this.state.last_name && this.state.email && this.state.start;
+        const isValid2 = this.state.first_name && this.state.last_name && this.state.email && this.state.start && this.state.end;
         return (
             <React.Fragment>
                 <form onSubmit={this.handleUpdate}>
@@ -317,7 +318,7 @@ export default class ManageEmployee extends Component{
                         <FormGroup>
                             <Col smOffset={3} sm={3}>
                                 <ButtonToolbar>
-                                    <Button type='submit' bsStyle='success' disabled={!isValid}>Update
+                                    <Button type='submit' bsStyle='success' disabled={this.state.archived?!isValid2:!isValid1}>Update
                                         employee <FontAwesomeIcon icon='check'/></Button>
                                     {!this.state.archived ?
                                         <ManageModal

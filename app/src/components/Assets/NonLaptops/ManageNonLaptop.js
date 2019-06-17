@@ -160,9 +160,10 @@ export default class ManageLaptop extends Component{
     }
 
     render(){
-        const invalid = this.state.order_number == null || this.state.inDate == null
+        const invalid1 = this.state.order_number == null || this.state.inDate == null
             || this.state.model == null || this.state.serial_number == null || this.state.cost == null;
-
+        const invalid2 = this.state.order_number == null || this.state.inDate == null
+            || this.state.model == null || this.state.serial_number == null || this.state.cost == null || this.state.outDate == null;
         return(
             <React.Fragment>          
                 <form onSubmit={this.handleSubmit}>
@@ -352,7 +353,7 @@ export default class ManageLaptop extends Component{
                                     <Button
                                         type = 'submit'
                                         bsStyle='success'
-                                        disabled={invalid}
+                                        disabled={this.state.archived? invalid2 : invalid1}
                                     >
                                         <FontAwesomeIcon icon='check'/> Update Non-Laptop
                                     </Button>
