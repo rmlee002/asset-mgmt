@@ -21,11 +21,10 @@ export default class AssetReporting extends Component{
             this.setState({
                 data: res.data
             });
-            console.log(res.data)
         })
         .catch(err => {
             console.log(err);
-            alert(err);
+            alert(err.response.data);
         })
     }
 
@@ -47,13 +46,13 @@ export default class AssetReporting extends Component{
                                 <Data data={this.state.data}/>
                             </Tab.Pane>
                             <Tab.Pane eventKey="broken">
-                                <BrokenDevices data={this.state.data.filter(item => item.broken)}/>
+                                <BrokenDevices data={this.state.data.filter(item => item.broken && !item.archived)}/>
                             </Tab.Pane>
                             <Tab.Pane eventKey="oow">
-                                <OOWDevices data={this.state.data}/>
+                                <OOWDevices data={this.state.data.filter(item => !item.archived)}/>
                             </Tab.Pane>
                             <Tab.Pane eventKey="oldest">
-                                <OldestDevices data={this.state.data}/>
+                                <OldestDevices data={this.state.data.filter(item => !item.archived)}/>
                             </Tab.Pane>
                         </Tab.Content>
                     </Col>
