@@ -181,7 +181,7 @@ export default class Laptops extends Component{
                                     <LinkContainer to={`/assets/laptops/${row.original.laptop_id}/history`}>
                                         <Button bsStyle={'primary'}>History <FontAwesomeIcon icon='history'/></Button>
                                     </LinkContainer>
-                                    { !row.original.archived &&
+                                    { this.state.loggedIn && !row.original.archived &&
                                         <LinkContainer to={`/assets/laptops/${row.original.laptop_id}/editOwner`}>
                                             <Button bsStyle={'primary'}>Assign Owner</Button>
                                         </LinkContainer>
