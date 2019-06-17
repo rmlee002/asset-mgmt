@@ -70,7 +70,11 @@ export default class BrokenDevices extends Component{
                 Header: "Warranty End",
                 id: "warranty_end",
                 accessor: val => moment(val.inDate).add(parseInt(val.warranty.replace(/\D+/, '')), 'years').format('YYYY-MM-DD'),
-                // style:
+                Cell: row => (
+                    <div style={getColor(row)}>
+                        {row.value}
+                    </div>
+                )
             },
             {
                 Header: "Comment",
@@ -110,9 +114,9 @@ export default class BrokenDevices extends Component{
     }
 }
 
-// function getColor(item){
-//     if (item.warranty == null || moment().isSameOrAfter(moment(item.inDate).add(parseInt(item.warranty.replace(/\D+/, '')), 'years').subtract(3, 'months'))){
-//         return {'background': '#f2dede'}
-//     }
-//     return null
-// }
+function getColor(item){
+    if (item.warranty == null || moment().isSameOrAfter(moment(item.inDate).add(parseInt(item.warranty.replace(/\D+/, '')), 'years').subtract(3, 'months'))){
+        return {'background': '#f2dede'}
+    }
+    return null
+}
