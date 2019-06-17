@@ -28,7 +28,9 @@ export default class SoftwareReporting extends Component {
         this.getTotalHighest = this.getTotalHighest.bind(this);
         this.getBarData = this.getBarData.bind(this);
         this.getPieData = this.getPieData.bind(this);
-        this.getCost = this.getCost.bind(this);
+        this.getYearlyCost = this.getYearlyCost.bind(this);
+        this.getMonthlyCost = this.getMonthlyCost.bind(this);
+        this.getCurrent = this.getCurrent.bind(this);
     }
 
     componentDidMount(){
@@ -107,66 +109,90 @@ export default class SoftwareReporting extends Component {
         return years;
     }
 
-    getCost(value){
+    getYearlyCost(value){
         const cost = value.cost;
         const curr = moment().date() === 31 ? 30 : moment().date();
 
-        if(this.state.yearly){
-            let start = moment(value.start).date() === 31? 30 : moment(value.start).date();
-            if (moment(value.end) != null && moment(value.end).year() === this.state.year.value){
-                let end = moment(value.end).date()===31 ? 30 : moment(value.end).date();
-                if (moment(value.start).year() < this.state.year.value){
-                    return cost * moment(value.end).month() + (end/30 * cost);
-                }
-                else{
-                    if (moment(value.start).month() === moment(value.end).month()){
-                        return (((end-start)+1)/30)*cost;
-                    }
-                    else {
-                        return (((30-start)+1)/30)*cost + (moment(value.end).month()-moment(value.start).month()-1)*cost + (end/30)*cost
-                    }
-                }
+        let start = moment(value.start).date() === 31? 30 : moment(value.start).date();
+        if (moment(value.end) != null && moment(value.end).year() === this.state.year.value){
+            let end = moment(value.end).date()===31 ? 30 : moment(value.end).date();
+            if (moment(value.start).year() < this.state.year.value){
+                return cost * moment(value.end).month() + (end/30 * cost);
             }
             else{
-                if (moment(value.start).year() < this.state.year.value){
-                    return moment().month()*value.cost + (curr/30)*value.cost;
+                if (moment(value.start).month() === moment(value.end).month()){
+                    return (((end-start)+1)/30)*cost;
                 }
-                else{
-                    if (moment().year() === this.state.year.value) {
-                        return (((30-start)+1)/30)*cost + (moment().month()-moment(value.start).month()-1)*cost + (curr/30)*cost
-                    }
-                    else{
-                        return (((30-start)+1)/30)*cost + (11-moment(value.start).month())*cost
-                    }
+                else {
+                    return (((30-start)+1)/30)*cost + (moment(value.end).month()-moment(value.start).month()-1)*cost + (end/30)*cost
                 }
             }
         }
         else{
-            if (moment(value.start).isBefore(`${this.state.year.value}-${this.state.month.value + 1}-01`,'month')){
-                if (value.end == null || moment(value.end).isAfter(`${this.state.year.value}-${this.state.month.value + 1}-01`, 'month')){
-                    if (this.state.year.value === moment().year() && moment().month() === this.state.month.value){
-                        return (curr/30)*cost;
-                    }
-                    return cost;
-                }
-                else{
-                    let end = moment(value.end).date() === 31 ? 30 : moment(value.end).date();
-                    return (end/30) * cost;
-                }
+            if (moment(value.start).year() < this.state.year.value){
+                return moment().month()*value.cost + (curr/30)*value.cost;
             }
             else{
-                let start = moment(value.start).date() === 31 ? 30 : moment(value.start).date();
-                if (value.end == null ||  moment(value.end).isAfter(`${this.state.year.value}-${this.state.month.value + 1}-01`, 'month')){
-                    if (moment(value.start).month() === moment().month()){
-                        return (((curr-start)+1)/30)*cost;
-                    }
-                    return ((30-start) + 1)/30 * cost;
+                if (moment().year() === this.state.year.value) {
+                    return (((30-start)+1)/30)*cost + (moment().month()-moment(value.start).month()-1)*cost + (curr/30)*cost
                 }
                 else{
-                    let end = moment(value.end).date() === 31 ? 30 : moment(value.end).date();
-                    return ((end-start)+1)/30 * cost;
+                    return (((30-start)+1)/30)*cost + (11-moment(value.start).month())*cost
                 }
             }
+        }
+    }
+
+    getMonthlyCost(value){
+        const cost = value.cost;
+        const curr = moment().date() === 31 ? 30 : moment().date();
+
+        if (moment(value.start).isBefore(`${this.state.year.value}-${this.state.month.value + 1}-01`,'month')){
+            if (value.end == null || moment(value.end).isAfter(`${this.state.year.value}-${this.state.month.value + 1}-01`, 'month')){
+                if (this.state.year.value === moment().year() && moment().month() === this.state.month.value){
+                    return (curr/30)*cost;
+                }
+                return cost;
+            }
+            else{
+                let end = moment(value.end).date() === 31 ? 30 : moment(value.end).date();
+                return (end/30) * cost;
+            }
+        }
+        else{
+            let start = moment(value.start).date() === 31 ? 30 : moment(value.start).date();
+            if (value.end == null ||  moment(value.end).isAfter(`${this.state.year.value}-${this.state.month.value + 1}-01`, 'month')){
+                if (moment(value.start).month() === moment().month()){
+                    return (((curr-start)+1)/30)*cost;
+                }
+                return ((30-start) + 1)/30 * cost;
+            }
+            else{
+                let end = moment(value.end).date() === 31 ? 30 : moment(value.end).date();
+                return ((end-start)+1)/30 * cost;
+            }
+        }
+    }
+
+    getCurrent(value){
+        const start = moment(value.start).date() === 31 ? 30 : moment(value.start).date();
+        const firstMonth = (((30-start)+1)/30)*value.cost;
+        const end = moment().date() === 31? 30: moment().date();
+        const curr = (end/30)*value.cost;
+
+        const yearsBetween = moment().year()-moment(value.start).year()-1;
+
+        //Started this year
+        if (yearsBetween < 0){
+            const monthsBetween = moment().month() - moment(value.start).month();
+            if (monthsBetween === 0){
+                return (((end-start)+1)/30)*value.cost;
+            }
+            return firstMonth + (monthsBetween-1)*value.cost + curr;
+        }
+        //Started before this year
+        else{
+            return firstMonth + (11-moment(value.start).month())*value.cost + (yearsBetween*12*value.cost) + moment().month()*value.cost + curr;
         }
     }
 
@@ -233,6 +259,7 @@ export default class SoftwareReporting extends Component {
                             for (let i = moment(item.start).month()+1; i < 12; i++){
                                 data[i].total += item.cost;
                             }
+                            data[moment(item.start).month()].total += (((30-start)+1)/30) * item.cost;
                         }
                     }
                 }
@@ -331,7 +358,7 @@ export default class SoftwareReporting extends Component {
             {
                 id: 'totalCost',
                 Header: !this.state.yearly?`Cost in ${this.state.month.label} ${this.state.year.value}`:`Cost in ${this.state.year.value}`,
-                accessor: val => this.getCost(val),
+                accessor: val => this.state.yearly? this.getYearlyCost(val) : this.getMonthlyCost(val),
                 Cell: val => `$${val.value.toFixed(2)}`,
                 aggregate: (values,rows) => this.getTotal(values),
                 Aggregated: row => {return <h5>${row.value.toFixed(2)}</h5>}
@@ -373,9 +400,15 @@ export default class SoftwareReporting extends Component {
                 Aggregated: row => null
             },
             {
+                Header: 'Monthly Cost',
+                accessor: 'cost',
+                Cell: val => `$${val.value}`,
+                Aggregated: row => null
+            },
+            {
                 id: 'totalCost',
-                Header: 'Cost',
-                accessor: val => this.getCost(val),
+                Header: 'Total Cost',
+                accessor: val => this.getCurrent(val),
                 Cell: val => `$${val.value.toFixed(2)}`,
                 aggregate: (values,rows) => this.getTotal(values),
                 Aggregated: row => {return <h5>${row.value.toFixed(2)}</h5>}
@@ -563,7 +596,7 @@ export default class SoftwareReporting extends Component {
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="highest">
                                     <ReactTable
-                                        data={data}
+                                        data={this.state.data.filter(item => !item.end)}
                                         pivotBy={["name"]}
                                         columns={columns2}
                                         defaultSorted={[
