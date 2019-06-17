@@ -21,7 +21,8 @@ export default class OOWDevices extends Component{
             },
             {
                 Header: "Contract",
-                accessor: "contract"
+                accessor: "contract",
+                width: 80
             },
             {
                 Header: "Owner",
@@ -29,7 +30,8 @@ export default class OOWDevices extends Component{
             },
             {
                 Header: "Warranty",
-                accessor: "warranty"
+                accessor: "warranty",
+                width: 80
             },
             {
                 Header: "Warranty Provider",
@@ -38,12 +40,14 @@ export default class OOWDevices extends Component{
             {
                 Header: "In Date",
                 accessor: "inDate",
-                Cell: val => moment(val.value).format('YYYY-MM-DD')
+                Cell: val => moment(val.value).format('YYYY-MM-DD'),
+                width: 90
             },
             {
                 Header: "Broken?",
                 accessor: "broken",
-                Cell: val => val.value===0?'N':'Y'
+                Cell: val => val.value===0?'N':'Y',
+                width: 70
             },
             {
                 Header: "Comment",
