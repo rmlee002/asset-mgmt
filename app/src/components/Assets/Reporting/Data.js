@@ -95,7 +95,6 @@ export default class Data extends Component{
     render(){
         const barData = this.getBarData();
         const pieData = this.getPieData();
-        console.log(pieData);
 
         return(
             <div>

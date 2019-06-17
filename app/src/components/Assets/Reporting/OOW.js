@@ -5,7 +5,7 @@ import moment from 'moment';
 export default class OOWDevices extends Component{
 
     render(){
-        const data = this.props.data.filter(item => 
+        const data = this.props.data.filter(item =>
             item.warranty?moment(item.inDate).isBefore(moment().subtract(parseInt(item.warranty.replace(/\D+/, '')), 'years')):true);
 
         const columns = [

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Table, FormGroup, ControlLabel, FormControl, Button, ButtonToolbar, Checkbox } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { FormGroup, ControlLabel, FormControl, Button, ButtonToolbar, Checkbox } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import memoize from 'memoize-one';
 import Axios from 'axios';
@@ -14,20 +13,12 @@ export default class Employees extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleCheck = this.handleCheck.bind(this);
-        // this.handleResize = this.handleResize.bind(this);
-        /*this.handleNameAscend = this.handleNameAscend.bind(this)
-        this.handleNameDescend = this.handleNameDescend.bind(this)
-        this.handleCostAscend = this.handleCostAscend.bind(this)
-        this.handleCostDescend = this.handleCostDescend.bind(this)*/
 
         this.state={
             showArchived: false,
             software: [],
             filtered: [],
             loggedIn: false,
-            /*theight: document.documentElement.clientHeight - 250,
-            nameIcon: 'sort',
-            costIcon: 'sort'*/
         }
     }
 
@@ -74,13 +65,6 @@ export default class Employees extends Component {
         }        
     }
 
-   /* handleResize(){
-        const h = document.documentElement.clientHeight - 250;
-        this.setState({
-            theight: h
-        })
-    }*/
-
     handleCheck(e){
         this.setState({
             showArchived: e.target.checked,
@@ -88,46 +72,8 @@ export default class Employees extends Component {
         })
     }
 
-    /*handleNameAscend(){
-        this.setState({
-            filtered: this.state.filtered.sort(function(a,b){ return a.name.localeCompare(b.name) }),
-            nameIcon: 'sort-up',
-            costIcon: 'sort'
-        })
-    }
-
-    handleNameDescend(){
-        this.setState({
-            filtered: this.state.filtered.sort(function(a,b){ return b.name.localeCompare(a.name) }),
-            nameIcon: 'sort-down',
-            costIcon: 'sort'
-        })
-    }
-
-    handleCostAscend(){
-        this.setState({
-            filtered: this.state.filtered.sort(function(a,b){ return a.cost - b.cost }),
-            costIcon: 'sort-up',
-            nameIcon: 'sort'
-        })
-    }
-
-    handleCostDescend(){
-        this.setState({
-            filtered: this.state.filtered.sort(function(a,b){ return b.cost - a.cost }),
-            costIcon: 'sort-down',
-            nameIcon: 'sort'
-        })
-    }*/
-
     render(){
         const loggedIn = this.state.loggedIn;
-        /*const userHead ={
-            width: loggedIn?'150px':'166.5px'
-        };
-
-        const nameIcon = this.state.nameIcon;
-        const costIcon = this.state.costIcon;*/
 
         const columns1 = [
             {
@@ -138,16 +84,7 @@ export default class Employees extends Component {
                 Header: "Monthly Cost",
                 accessor: "cost",
                 Cell: val => "$"+val.value
-            },
-            /*{
-                id: "users",
-                accessor: val => val,
-                Cell: val => { return (
-                    <Link to={`/software/${val.value.software_id}/users`}>
-                        Users <FontAwesomeIcon icon='users'/>
-                    </Link>
-                )}
-            }*/
+            }
         ];
 
         return(
@@ -194,48 +131,6 @@ export default class Employees extends Component {
                         )
                     }}
                 />
-                {/*<div className='data' id='software'>
-                    <Table striped hover>
-                        <thead>
-                            <tr>
-                                <th 
-                                    className='sort-head'
-                                    onClick={(nameIcon==='sort'||nameIcon==='sort-down')?this.handleNameAscend:this.handleNameDescend}    
-                                >
-                                    License <FontAwesomeIcon icon={nameIcon}/>
-                                </th>
-                                <th 
-                                    className='sort-head'
-                                    onClick={(costIcon==='sort'||costIcon==='sort-down')?this.handleCostAscend:this.handleCostDescend}    
-                                >
-                                    Monthly Cost <FontAwesomeIcon icon={costIcon}/>
-                                </th> 
-                                <th style={userHead}></th>
-                                {loggedIn && <th></th>}
-                            </tr>
-                        </thead>
-                        <tbody style={{height: this.state.theight}}>
-                            {this.state.filtered.map((software) =>
-                                <tr>
-                                    <td>{software.name}</td>
-                                    <td>{software.cost?'$'+software.cost:''}</td>
-                                    <td>
-                                        <Link to={`/software/${software.software_id}/users`}>
-                                            <FontAwesomeIcon icon='users'/> Users
-                                        </Link>
-                                    </td>
-                                    {loggedIn &&
-                                        <td>
-                                            <Link to={`software/${software.software_id}/manage`}>
-                                                <FontAwesomeIcon icon='edit'/> Manage
-                                            </Link>
-                                        </td>
-                                    }                                    
-                                </tr>                            
-                                )}
-                        </tbody>
-                    </Table>
-                </div>*/}
             </React.Fragment>
         );
     }
