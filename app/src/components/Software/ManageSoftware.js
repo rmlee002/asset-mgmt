@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Form, FormGroup, FormControl, ControlLabel, Col, Button, ButtonToolbar } from 'react-bootstrap';
 import Axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { LinkContainer } from 'react-router-bootstrap';
 
 export default class ManageSoftware extends Component{
     constructor(props){
