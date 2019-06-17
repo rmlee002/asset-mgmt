@@ -7,7 +7,6 @@ import { Tab, Row, Col, Nav, NavItem, Form, ControlLabel, FormGroup, Radio } fro
 import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme, VictoryPie } from 'victory';
 import Select from 'react-select';
 import '../../Styles/Software.css';
-import "../../../node_modules/react-datepicker/dist/react-datepicker.css";
 
 export default class SoftwareReporting extends Component { 
     constructor(props){
