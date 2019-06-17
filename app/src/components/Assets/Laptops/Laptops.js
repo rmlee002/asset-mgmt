@@ -189,7 +189,8 @@ export default class Laptops extends Component{
             {
                 Header: "Serial Number",
                 accessor: "serial_number",
-                style: { 'white-space': 'unset' }
+                style: { 'white-space': 'unset' },
+                width: 140
             },
             {
                 Header: "Model",
@@ -198,7 +199,8 @@ export default class Laptops extends Component{
             },
             {
                 Header: "Warranty Provider",
-                accessor: "warranty_provider"
+                accessor: "warranty_provider",
+                minWidth: 100
             },
             {
                 Header: "Owner",
@@ -209,7 +211,8 @@ export default class Laptops extends Component{
             {
                 Header: "Cost",
                 accessor: "cost",
-                Cell: val => val.value? "$"+val.value : ""
+                Cell: val => val.value? "$"+val.value : "",
+                width: 75
             },
             {
                 Header: "Vendor",
@@ -222,57 +225,32 @@ export default class Laptops extends Component{
             },
             {
                 Header: "Warranty",
-                accessor: "warranty"
+                accessor: "warranty",
+                width: 80
             },
             {
                 Header: "In Date",
                 accessor: "inDate",
-                Cell: val => moment(val.value).format('YYYY-MM-DD')
+                Cell: val => moment(val.value).format('YYYY-MM-DD'),
+                width: 90
             },
             {
                 Header: "Out Date",
                 accessor: "outDate",
-                Cell: val => val.value? moment(val.value).format("YYYY-MM-DD"): ""
+                Cell: val => val.value? moment(val.value).format("YYYY-MM-DD"): "",
+                width: 90
             },
             {
                 Header: "Broken?",
                 accessor: "broken",
-                Cell: val => val.value===0?"N":"Y"
+                Cell: val => val.value===0?"N":"Y",
+                width: 70
             },
             {
                 Header: "Comment",
                 accessor: "comment",
                 style: { 'white-space': 'unset' }
-            },
-            /*{
-                id: "links",
-                accessor: val => val,
-                Cell: val => {
-                    return (
-                        <div>
-                            <div>
-                                <Link to={`/assets/laptops/${val.value.laptop_id}/history`}>
-                                    History <FontAwesomeIcon icon='history'/>
-                                </Link>
-                            </div>
-                            {loggedIn && !val.value.archived &&
-                                <div>
-                                    <Link to={`/assets/laptops/${val.value.laptop_id}/editOwner`}>
-                                        Assign owner
-                                    </Link>
-                                </div>
-                            }
-                            {loggedIn &&
-                                <div>
-                                    <Link to={`/assets/laptops/${val.value.laptop_id}/manage`}>
-                                        Edit <FontAwesomeIcon icon='edit'/>
-                                    </Link>
-                                </div>
-                            }
-                        </div>
-                    )
-                }
-            }*/
+            }
         ];
 
         return(

@@ -173,22 +173,22 @@ export default class Employees extends Component {
                 Header: "Name",
                 id: "name",
                 accessor: val => val.first_name + " " + val.last_name,
-                // style: { 'white-space': 'unset' }
-
+                style: { 'white-space': 'unset' }
             },
             {
                 Header: "Email",
                 accessor: "email",
-                // style: { 'white-space': 'unset'
-                style: { 'break-word': 'break-all' }
+                width: 240
             },
             {
                 Header: "Affiliation",
-                accessor: "affiliation"
+                accessor: "affiliation",
+                width: 90
             },
             {
                 Header: "Department",
-                accessor: "department"
+                accessor: "department",
+                width: 90
             },
             {
                 Header: "Supervisor",
@@ -211,12 +211,14 @@ export default class Employees extends Component {
             {
                 Header: "Start Date",
                 accessor: "inDate",
-                Cell: val => moment(val.value).format('YYYY-MM-DD')
+                Cell: val => moment(val.value).format('YYYY-MM-DD'),
+                width: 90
             },
             {
                 Header: "End Date",
                 accessor: "outDate",
-                Cell: val => val.value? moment(val.value).format('YYYY-MM-DD') : null
+                Cell: val => val.value? moment(val.value).format('YYYY-MM-DD') : null,
+                width: 90
             },
             {
                 Header: "Notes",
@@ -274,9 +276,6 @@ export default class Employees extends Component {
                     data={this.state.filtered}
                     columns={columns}
                     className='-striped -highlight'
-                    /*getTrProps={(state, rowInfo) => ({
-                        onClick: () => this.props.history.push(`/employees/${rowInfo.original.emp_id}/manage`)
-                    })}*/
                     SubComponent={row => {
                         return (
                             <div style={{margin: 'auto', padding: '20px'}}>
@@ -284,6 +283,7 @@ export default class Employees extends Component {
                                     <LinkContainer to={`/employees/${row.original.emp_id}/assets`}>
                                         <Button bsStyle={'primary'}>Assets</Button>
                                     </LinkContainer>
+
                                     <LinkContainer to={`/employees/${row.original.emp_id}/licenses`}>
                                         <Button bsStyle={'primary'}>Licenses</Button>
                                     </LinkContainer>
