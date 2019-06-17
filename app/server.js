@@ -34,11 +34,6 @@ app.use('/laptopHistory', historyRouter);
 app.use('/nonlaptops', nonlaptopRouter);
 app.use('/hwReporting', hwReportingRouter);
 
-app.use((req, res, next) => {
-    res.header("Vary", "X-Requested-With");
-    next();
-});
-
 app.get('/checkToken', authorized, (req, res) => {
 	res.sendStatus(200);
 });
