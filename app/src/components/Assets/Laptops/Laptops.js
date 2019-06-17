@@ -181,9 +181,11 @@ export default class Laptops extends Component{
                                     <LinkContainer to={`/assets/laptops/${row.original.laptop_id}/history`}>
                                         <Button bsStyle={'primary'}>History <FontAwesomeIcon icon='history'/></Button>
                                     </LinkContainer>
-                                    <LinkContainer to={`/assets/laptops/${row.original.laptop_id}/editOwner`}>
-                                        <Button bsStyle={'primary'}>Assign Owner</Button>
-                                    </LinkContainer>
+                                    { !row.original.archived &&
+                                        <LinkContainer to={`/assets/laptops/${row.original.laptop_id}/editOwner`}>
+                                            <Button bsStyle={'primary'}>Assign Owner</Button>
+                                        </LinkContainer>
+                                    }
                                     {this.state.loggedIn &&
                                         <LinkContainer to={`/assets/laptops/${row.original.laptop_id}/manage`}>
                                             <Button bsStyle={'primary'}>Edit <FontAwesomeIcon icon='edit'/></Button>

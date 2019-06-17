@@ -22,7 +22,8 @@ export default class EmployeeLicenses extends Component{
             end: new Date(),
             software_id: null,
             loggedIn: false,
-            theight: document.documentElement.clientHeight - 220
+            theight: document.documentElement.clientHeight - 220,
+            archived: false
         }
     }
 
@@ -50,7 +51,20 @@ export default class EmployeeLicenses extends Component{
         .catch(err => {
             console.log(err)
         });
-        
+
+        Axios.post('/employee/checkArchived', {
+            emp_id: this.props.match.params.emp_id
+        })
+        .then(res => {
+            this.setState({
+                archived: res.data[0].archived
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            alert(err.response.data);
+        });
+
         window.addEventListener('resize', this.handleResize)
     }
 
@@ -94,7 +108,7 @@ export default class EmployeeLicenses extends Component{
         
         return(
             <React.Fragment>
-                {loggedIn && 
+                {loggedIn && !this.state.archived &&
                     <LinkContainer to={`/employees/${this.props.match.params.emp_id}/licenses/add`}>
                         <Button bsStyle='primary'> <FontAwesomeIcon icon='desktop'/> Add license</Button>
                     </LinkContainer>   

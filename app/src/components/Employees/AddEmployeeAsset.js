@@ -20,7 +20,8 @@ export default class AddLaptop extends Component{
             laptops: [],
             filtered: [],
             start: new Date(),
-            theight: document.documentElement.clientHeight - 230
+            theight: document.documentElement.clientHeight - 230,
+            archived: false
         }
     }
 
@@ -37,6 +38,19 @@ export default class AddLaptop extends Component{
         .catch(err => {
             alert(err.response.data);
             console.log(err)
+        });
+
+        Axios.post('/employee/checkArchived', {
+            emp_id: this.props.match.params.emp_id
+        })
+        .then(res => {
+            this.setState({
+                archived: res.data[0].archived
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            alert(err.response.data);
         });
 
         window.addEventListener('resize', this.handleResize)
@@ -68,18 +82,23 @@ export default class AddLaptop extends Component{
 
     handleSubmit(e){
         e.preventDefault();
-        Axios.post('/laptopHistory/add', {
-            laptop_id: this.state.laptop_id,
-            emp_id: this.props.match.params.emp_id,
-            start: moment(this.state.start).format('YYYY-MM-DD')
-        })
-        .then(res => {
-            this.props.history.push(`/employees/${this.props.match.params.emp_id}/assets`)
-        })
-        .catch(err => {
-            console.log(err);
-            alert(err.response.data)
-        })
+        if (this.state.archived){
+            alert('Error: Cannot add assets to retired employee!')
+        }
+        else{
+            Axios.post('/laptopHistory/add', {
+                laptop_id: this.state.laptop_id,
+                emp_id: this.props.match.params.emp_id,
+                start: moment(this.state.start).format('YYYY-MM-DD')
+            })
+            .then(res => {
+                this.props.history.push(`/employees/${this.props.match.params.emp_id}/assets`)
+            })
+            .catch(err => {
+                console.log(err);
+                alert(err.response.data)
+            })
+        }
     }
 
     handleStart(date){
@@ -89,6 +108,14 @@ export default class AddLaptop extends Component{
     }
     
     render(){
+        /*if (this.state.archived){
+            return (
+                <div>
+                    <h1>Error</h1>
+                    <span>Cannot add assets to retired employee</span>
+                </div>
+            )
+        }*/
         return(
             <React.Fragment>
                 <FormGroup controlid="search">

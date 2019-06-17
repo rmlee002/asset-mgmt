@@ -27,7 +27,8 @@ export default class Users extends Component{
             end: new Date(),
             emp_id: null,
             loggedIn: false,
-            theight: document.documentElement.clientHeight - 310
+            theight: document.documentElement.clientHeight - 310,
+            archived: false
         }
     }
 
@@ -55,6 +56,19 @@ export default class Users extends Component{
         })
         .catch(err => {
             console.log(err)
+        });
+
+        Axios.post('/software/checkArchived', {
+            software_id: this.props.match.params.software_id
+        })
+        .then(res => {
+            this.setState({
+                archived: res.data[0].archived
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            alert(err.response.data)
         });
 
         window.addEventListener('resize', this.handleResize)
@@ -146,7 +160,7 @@ export default class Users extends Component{
                     />
                     <FormControl.Feedback />
                 </FormGroup>
-                {loggedIn && 
+                {loggedIn && !this.state.archived &&
                     <LinkContainer to={`/software/${this.props.match.params.software_id}/users/add`}>
                         <Button bsStyle='primary' className='pull-right'> <FontAwesomeIcon icon='user-plus'/> Add User</Button>  
                     </LinkContainer>  

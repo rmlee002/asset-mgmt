@@ -19,7 +19,8 @@ export default class AddEmployeeLicense extends Component{
             filtered: [],
             show: false,
             start: new Date(),
-            theight: document.documentElement.clientHeight - 240
+            theight: document.documentElement.clientHeight - 240,
+            archived: false
         }
     }
 
@@ -37,6 +38,19 @@ export default class AddEmployeeLicense extends Component{
             alert(err.response.data);
             console.log(err)
         });
+
+        Axios.post('/employee/checkArchived', {
+            emp_id: this.props.match.params.emp_id
+        })
+        .then(res => {
+            this.setState({
+                archived: res.data[0].archived
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            alert(err.response.data);
+        })
 
         window.addEventListener('resize', this.handleResize)
     }
@@ -74,18 +88,23 @@ export default class AddEmployeeLicense extends Component{
 
     handleSubmit(e){
         e.preventDefault();
-        Axios.post('/licenses/add', {
-            emp_id: this.props.match.params.emp_id,
-            software_id: this.state.software_id,
-            start: moment(this.state.start).format('YYYY-MM-DD')
-        })
-        .then(res => {
-            this.props.history.push(`/employees/${this.props.match.params.emp_id}/licenses`)
-        })
-        .catch(err => {
-            console.log(err);
-            alert(err.response.data)
-        })
+        if (this.state.archived){
+            alert('Error: Cannot add license to retired employee!');
+        }
+        else{
+            Axios.post('/licenses/add', {
+                emp_id: this.props.match.params.emp_id,
+                software_id: this.state.software_id,
+                start: moment(this.state.start).format('YYYY-MM-DD')
+            })
+            .then(res => {
+                this.props.history.push(`/employees/${this.props.match.params.emp_id}/licenses`)
+            })
+            .catch(err => {
+                console.log(err);
+                alert(err.response.data)
+            })
+        }
     }
 
     render(){

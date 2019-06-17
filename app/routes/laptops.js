@@ -104,4 +104,14 @@ router.post('/unretire', (req,res) => {
     })
 });
 
+router.post('/checkArchived', (req,res)=>{
+    connection.query('SELECT archived FROM laptops WHERE laptop_id=?', req.body.laptop_id, (err,results)=>{
+        if (err){
+            console.log(err);
+            res.status(500).send('Database query error');
+        }
+        res.send(JSON.stringify(results));
+    })
+});
+
 module.exports = router;

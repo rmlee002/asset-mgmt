@@ -130,4 +130,14 @@ router.post('/unretire', (req,res)=>{
 	})
 });
 
+router.post('/checkArchived', (req,res)=> {
+	connection.query('SELECT archived FROM employees WHERE emp_id=?', req.body.emp_id, (err,results)=>{
+		if (err){
+			console.log(err);
+			res.status(500).send('Database query error')
+		}
+		res.send(JSON.stringify(results));
+	})
+});
+
 module.exports = router;

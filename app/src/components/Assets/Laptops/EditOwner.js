@@ -9,11 +9,11 @@ import '../../../Styles/Assets.css';
 
 export default class EditOwner extends Component{
     constructor(props){
-        super(props)
+        super(props);
 
-        this.handleStart = this.handleStart.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this)
-        this.handleChange = this.handleChange.bind(this)
+        this.handleStart = this.handleStart.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
         this.handleResize = this.handleResize.bind(this);
 
         this.state={
@@ -21,7 +21,8 @@ export default class EditOwner extends Component{
             start: new Date(),
             employees: [],
             filtered: [],
-            theight: document.documentElement.clientHeight - 220
+            theight: document.documentElement.clientHeight - 220,
+            archived: false
         }
     }
 
@@ -34,14 +35,27 @@ export default class EditOwner extends Component{
         }).catch(err => {
             console.log(err);
             alert(err.response.data);
+        });
+
+        Axios.post('/laptops/checkArchived', {
+            laptop_id: this.props.match.params.laptop_id
         })
+        .then(res => {
+            this.setState({
+                archived: res.data[0].archived
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            alert(err.response.data);
+        });
 
         window.addEventListener('resize', this.handleResize)
     }
 
     filter = memoize(
         (list, filterText) => list.filter(item => (item.first_name + ' ' + item.last_name).toLowerCase().includes(filterText.toLowerCase()))
-    )
+    );
 
     handleChange(e){
         if (e.target.value !== ''){
@@ -57,26 +71,31 @@ export default class EditOwner extends Component{
     }
 
     handleResize(){
-        const h = document.documentElement.clientHeight - 220
+        const h = document.documentElement.clientHeight - 220;
         this.setState({
             theight: h
         })
     }
 
     handleSubmit(e){
-        e.preventDefault()
-        Axios.post('/laptopHistory/add', {
-            laptop_id: this.props.match.params.laptop_id,
-            emp_id: this.state.emp_id,
-            start: this.state.start?moment(this.state.start).format('YYYY-MM-DD'):null
-        })
-        .then(res => {
-            this.props.history.push(`/assets/laptops/${this.props.match.params.laptop_id}/history`)
-        })
-        .catch(err => {
-            alert(err.response.data)
-            console.log(err)
-        })
+        e.preventDefault();
+        if (this.state.archived){
+            alert('Error: Cannot assign owner to retired asset!');
+        }
+        else{
+            Axios.post('/laptopHistory/add', {
+                laptop_id: this.props.match.params.laptop_id,
+                emp_id: this.state.emp_id,
+                start: this.state.start?moment(this.state.start).format('YYYY-MM-DD'):null
+            })
+            .then(res => {
+                this.props.history.push(`/assets/laptops/${this.props.match.params.laptop_id}/history`)
+            })
+            .catch(err => {
+                alert(err.response.data);
+                console.log(err)
+            })
+        }
     }
 
     handleStart(date){

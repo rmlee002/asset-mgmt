@@ -20,7 +20,8 @@ export default class EmployeeAssets extends Component{
             laptop_id: null,
             assets: [],
             loggedIn: false,
-            theight: document.documentElement.clientHeight - 200
+            theight: document.documentElement.clientHeight - 200,
+            archived: false
         }
     }
 
@@ -45,6 +46,19 @@ export default class EmployeeAssets extends Component{
             })
         })
         .catch(err => {
+            console.log(err)
+        });
+
+        Axios.post('/employee/checkArchived', {
+            emp_id: this.props.match.params.emp_id
+        })
+        .then(res => {
+            this.setState({
+                archived: res.data[0].archived
+            });
+        })
+        .catch(err => {
+            alert(err.response.data);
             console.log(err)
         });
 
@@ -86,14 +100,13 @@ export default class EmployeeAssets extends Component{
         };
         return(
             <React.Fragment>
-                {loggedIn &&
+                {loggedIn && !this.state.archived &&
                     <LinkContainer to={`/employees/${this.props.match.params.emp_id}/assets/add`}>
                         <Button bsStyle='primary'>
                             <FontAwesomeIcon icon='laptop-medical'/> Add asset
                         </Button>
                     </LinkContainer>
                 }
-                
                 <div className='data' id='empAssets'>
                     <Table striped hover>
                         <thead>

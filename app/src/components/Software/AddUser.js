@@ -19,7 +19,8 @@ export default class AddUser extends Component{
             filtered: [],
             emp_id: null,
             start: new Date(),
-            theight: document.documentElement.clientHeight - 230
+            theight: document.documentElement.clientHeight - 230,
+            archived: false
         }
     }
 
@@ -38,23 +39,42 @@ export default class AddUser extends Component{
             alert(err.response.data)
         });
 
+        Axios.post('/software/checkArchived', {
+            software_id: this.props.match.params.software_id
+        })
+        .then(res => {
+            this.setState({
+                archived: res.data[0].archived
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            alert(err.response.data);
+        });
+
         window.addEventListener('resize', this.handleResize)
     }
 
     handleSubmit(e){
         e.preventDefault();
-        Axios.post('/licenses/add', {
-            emp_id: this.state.emp_id,
-            software_id: this.props.match.params.software_id,
-            start: moment(this.state.start).format('YYYY-MM-DD')
-        })
-        .then(res => {
-            this.props.history.push(`/software/${this.props.match.params.software_id}/users`)
-        })
-        .catch(err => {
-            console.log(err)
-            alert(err.response.data)
-        })
+
+        if (this.state.archived){
+            alert("Error: Cannot add user to a retired software!")
+        }
+        else{
+            Axios.post('/licenses/add', {
+                emp_id: this.state.emp_id,
+                software_id: this.props.match.params.software_id,
+                start: moment(this.state.start).format('YYYY-MM-DD')
+            })
+            .then(res => {
+                this.props.history.push(`/software/${this.props.match.params.software_id}/users`)
+            })
+            .catch(err => {
+                console.log(err);
+                alert(err.response.data)
+            })
+        }
     }
 
     handleStart(date){
