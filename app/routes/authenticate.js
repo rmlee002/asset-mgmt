@@ -10,20 +10,20 @@ app.use(bodyParser.json());
 
 router.post('/login', function(req, res) {
 	const { user, password } = req.body;
-	adminConnection.query('SELECT password AS pass FROM admins WHERE user = ?', user, function(err, results, fields){
+	connection.query('SELECT password AS pass FROM admins WHERE user = ?', user, function(err, results, fields){
 		if (err){
 			console.log(err);
 			res.status(500).send('Database query error')
 		}
 		else{
 			//Username doesn't exist
-			if (results.length == 0){
+			if (results.length === 0){
 				res.status(401).send('Invalid username');
 			}
 			//Username exists, check password
 			else{
 				//Correct login info
-				if (password == results[0].pass){
+				if (password === results[0].pass){
 					const payload = { user };
 					const token = jwt.sign(payload, process.env.TOK_SECRET, {
 						expiresIn: '1d'
