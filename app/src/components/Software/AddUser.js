@@ -7,11 +7,11 @@ import ManageModal from '../ManageModal';
 
 export default class AddUser extends Component{
     constructor(props){
-        super(props)
+        super(props);
 
-        this.handleSubmit = this.handleSubmit.bind(this)
-        this.handleStart = this.handleStart.bind(this)
-        this.handleChange = this.handleChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleStart = this.handleStart.bind(this);
+        this.handleChange = this.handleChange.bind(this);
         this.handleResize = this.handleResize.bind(this);
 
         this.state={
@@ -34,9 +34,9 @@ export default class AddUser extends Component{
             })
         })
         .catch(err => {
-            console.log(err)
+            console.log(err);
             alert(err.response.data)
-        })
+        });
 
         window.addEventListener('resize', this.handleResize)
     }
@@ -65,7 +65,7 @@ export default class AddUser extends Component{
 
     filter = memoize(
         (list, filterText) => list.filter(item => (item.first_name+' '+item.last_name).toLowerCase().includes(filterText.toLowerCase()))
-    )
+    );
 
     handleChange(e){
         if (e.target.value !== ''){
@@ -81,7 +81,7 @@ export default class AddUser extends Component{
     }
 
     handleResize(){
-        const h = document.documentElement.clientHeight - 230
+        const h = document.documentElement.clientHeight - 230;
         this.setState({
             theight: h
         })

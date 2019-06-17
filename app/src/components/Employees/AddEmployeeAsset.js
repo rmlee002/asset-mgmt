@@ -9,9 +9,9 @@ export default class AddLaptop extends Component{
     constructor(props){
         super(props);
 
-        this.handleChange = this.handleChange.bind(this)
-        this.handleStart = this.handleStart.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleChange = this.handleChange.bind(this);
+        this.handleStart = this.handleStart.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
         this.handleResize = this.handleResize.bind(this);
 
         this.state = {
@@ -35,16 +35,16 @@ export default class AddLaptop extends Component{
             })
         })
         .catch(err => {
-            alert(err.response.data)
+            alert(err.response.data);
             console.log(err)
-        })
+        });
 
         window.addEventListener('resize', this.handleResize)
     }
 
     filter = memoize(
         (list, filterText) => list.filter(item => (item.serial_number).toLowerCase().includes(filterText.toLowerCase()))
-    )
+    );
 
     handleChange(e){
         if (e.target.value !== ''){
@@ -71,13 +71,13 @@ export default class AddLaptop extends Component{
         Axios.post('/laptopHistory/add', {
             laptop_id: this.state.laptop_id,
             emp_id: this.props.match.params.emp_id,
-            start: this.state.start?moment(this.state.start).format('YYYY-MM-DD'):null
+            start: moment(this.state.start).format('YYYY-MM-DD')
         })
         .then(res => {
             this.props.history.push(`/employees/${this.props.match.params.emp_id}/assets`)
         })
         .catch(err => {
-            console.log(err)
+            console.log(err);
             alert(err.response.data)
         })
     }

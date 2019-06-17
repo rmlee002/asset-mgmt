@@ -60,8 +60,8 @@ export default class ManageLaptop extends Component{
                 vendor: hardware.vendor,
                 order_number: hardware.order_number,
                 warranty: hardware.warranty,
-                inDate: hardware.inDate,
-                outDate: hardware.outDate? hardware.outDate : null,
+                inDate: new Date(hardware.inDate),
+                outDate: hardware.outDate? new Date(hardware.outDate) : null,
                 archived: hardware.archived,
                 broken: hardware.broken
             })

@@ -60,8 +60,8 @@ export default class ManageEmployee extends Component{
                 supervisor: employee.super_first?{value: employee.supervisor_id, label:employee.super_first+' '+employee.super_last}:null,
                 reviewer: employee.reviewer_first?{value: employee.reviewer_id, label:employee.reviewer_first+' '+employee.reviewer_last}:null,
                 time_approver: employee.time_first?{value: employee.time_approver_id, label:employee.time_first+' '+employee.time_last}:null,
-                start: employee.inDate,
-                end: employee.outDate? employee.outDate : null,
+                start: new Date(employee.inDate),
+                end: employee.outDate? new Date(employee.outDate) : null,
                 notes: employee.notes,
                 archived: employee.archived
             })
