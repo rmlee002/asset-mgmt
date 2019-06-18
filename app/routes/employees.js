@@ -78,12 +78,12 @@ router.post('/getEmployee', (req,res) => {
 router.post('/update', (req,res) => {
 	const {
 		emp_id, first_name, last_name, email, affiliation, department, supervisor, 
-		reviewer, time_approver, start, end, notes} = req.body;
+		reviewer, time_approver, start, outDate, notes} = req.body;
 		
 	connection.query('UPDATE employees SET first_name=?, last_name=?, email=?, affiliation=?,\
 		department=?, supervisor_id=?, reviewer_id=?, time_approver_id=?, inDate=?, outDate=?, notes=? WHERE emp_id=?',
 		[first_name, last_name, email, affiliation, department, supervisor, reviewer,
-		time_approver, start, end, notes, emp_id], (err) => {
+		time_approver, start, outDate, notes, emp_id], (err) => {
 			if (err){
 				console.log(err);
 				res.status(500).send("Database query error")
