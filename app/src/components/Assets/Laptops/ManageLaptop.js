@@ -100,7 +100,7 @@ export default class ManageLaptop extends Component{
         const end = this.state.outDate?moment(this.state.outDate).format('YYYY-MM-DD'):moment().format('YYYY-MM-DD');
         Axios.post('/laptops/retire', {
             laptop_id: this.state.laptop_id,
-            end: end
+            end: moment(this.state.outDate).format('YYYY-MM-DD')
         })
         .then(res => {
             this.props.history.push('/assets/laptops')
@@ -309,7 +309,7 @@ export default class ManageLaptop extends Component{
                                             type='Retire'
                                             title='Retire laptop'
                                             size='medium'
-                                            date={this.state.outDate?this.state.outDate:new Date().toISOString()}
+                                            date={this.state.outDate?this.state.outDate:new Date()}
                                             handleSubmit={this.handleRetire}
                                             handleDate={this.handleOut}
                                         />:
