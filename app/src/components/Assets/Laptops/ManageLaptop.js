@@ -295,7 +295,7 @@ export default class ManageLaptop extends Component{
                             </Col>
                         </FormGroup>
                         <FormGroup>
-                            <Col smOffset={3} sm={3}>
+                            <Col smOffset={3} sm={7}>
                                 <ButtonToolbar>
                                     <Button
                                         type = 'submit'

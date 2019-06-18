@@ -113,7 +113,7 @@ export default class ManageSoftware extends Component{
                             </Col>
                         </FormGroup>
                         <FormGroup>
-                            <Col smOffset={3} sm={2}>
+                            <Col smOffset={3} sm={4}>
                                 <ButtonToolbar>
                                     <Button
                                         type='submit'

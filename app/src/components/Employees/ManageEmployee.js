@@ -316,7 +316,7 @@ export default class ManageEmployee extends Component{
                             </Col>
                         </FormGroup>
                         <FormGroup>
-                            <Col smOffset={3} sm={3}>
+                            <Col smOffset={3} sm={7}>
                                 <ButtonToolbar>
                                     <Button type='submit' bsStyle='success' disabled={this.state.archived?!isValid2:!isValid1}>Update
                                         employee <FontAwesomeIcon icon='check'/></Button>

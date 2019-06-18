@@ -126,10 +126,11 @@ export default class Data extends Component{
                     </FormGroup>
                 </Form>
 
-                <div style={{width: '1200px', height: '700px'}}>
+                <div style={{width: '90%', height: '700px'}}>
                     <VictoryChart
                         domainPadding={10}
                         theme={VictoryTheme.material}
+                        // containerComponent={<VictoryContainer responsive={false}/>}
                         width={400}
                         height={300}
                     >
