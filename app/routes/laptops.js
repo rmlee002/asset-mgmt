@@ -77,8 +77,6 @@ router.post('/updateLaptop', (req,res) => {
 });
 
 router.post('/retire', (req, res) => {
-    console.log(req.body.end);
-    console.log(typeof req.body.end);
     connection.query('UPDATE laptops SET outDate=?, archived=TRUE WHERE laptop_id=?', [req.body.end, req.body.laptop_id], (err,result) => {
         if (err){
             console.log(err);

@@ -157,7 +157,7 @@ export default class ManageEmployee extends Component{
             supervisor: this.state.supervisor?this.state.supervisor.value:null,
             reviewer: this.state.reviewer?this.state.reviewer.value:null,
             time_approver: this.state.time_approver?this.state.time_approver.value:null,
-            start: this.state.start?moment(this.state.start).format('YYYY-MM-DD'):null,
+            start: moment(this.state.start).format('YYYY-MM-DD'),
             outDate: this.state.end?moment(this.state.end).format('YYYY-MM-DD'):null,
             notes: this.state.notes
         })
