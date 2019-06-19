@@ -162,14 +162,14 @@ export default class AddNonLaptop extends Component{
                                         <Button bsStyle='danger' onClick={() => this.handleRemove(index)}><FontAwesomeIcon icon='trash'/> Remove</Button> 
                                     </Col>
                                 </FormGroup>
-                                <FormGroup controlId='serial_number'>                                        
+                                <FormGroup controlId='serial_number'>
                                     <Col componentClass={ControlLabel} sm={3}>
                                         Serial Number
                                     </Col>
                                     <Col sm={6}>
                                         <FormControl
                                             type='text'
-                                            value={this.state.serial_number}
+                                            // value={this.state.serial_number}
                                             placeholder='Serial Number'
                                             onChange={this.handleAssetChange(index)}
                                         />
@@ -182,20 +182,20 @@ export default class AddNonLaptop extends Component{
                                     <Col sm={6}>
                                         <FormControl
                                             type='text'
-                                            value={this.state.model}
+                                            // value={this.state.model}
                                             placeholder='Model'
                                             onChange={this.handleAssetChange(index)}
                                         />
                                     </Col>
                                 </FormGroup>
-                                <FormGroup>
+                                <FormGroup controlId={'description'}>
                                     <Col componentClass={ControlLabel} sm={3}>
                                         Description
                                     </Col>
                                     <Col sm={6}>
                                         <FormControl
                                             type='text'
-                                            value={this.state.description}
+                                            // value={this.state.description}
                                             placeholder='Description'
                                             onChange={this.handleAssetChange(index)}
                                         />
@@ -209,7 +209,7 @@ export default class AddNonLaptop extends Component{
                                         <FormControl
                                             type='number'
                                             step='.01'
-                                            value={this.state.cost}
+                                            // value={this.state.cost}
                                             placeholder='Cost'
                                             onChange={this.handleAssetChange(index)}
                                         />
@@ -222,7 +222,7 @@ export default class AddNonLaptop extends Component{
                                     <Col sm={6}>
                                         <FormControl
                                             type='text'
-                                            value={this.state.comment}
+                                            // value={this.state.comment}
                                             placeholder='Comment'
                                             onChange={this.handleAssetChange(index)}
                                         />
