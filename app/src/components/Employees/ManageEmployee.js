@@ -21,10 +21,10 @@ export default class ManageEmployee extends Component{
         this.handleUpdate = this.handleUpdate.bind(this);
         this.handleDepartment = this.handleDepartment.bind(this);
         this.handleCreateDepartmentOption = this.handleCreateDepartmentOption.bind(this);
-        this.handleAffiliation = this.handleAffiliation.bind(this)
-        this.handleEmployeeAssign = this.handleEmployeeAssign.bind(this)
-        this.handleDate = this.handleDate.bind(this)
-        this.handleUnretire = this.handleUnretire.bind(this)
+        this.handleAffiliation = this.handleAffiliation.bind(this);
+        this.handleEmployeeAssign = this.handleEmployeeAssign.bind(this);
+        this.handleDate = this.handleDate.bind(this);
+        this.handleUnretire = this.handleUnretire.bind(this);
 
         this.state = {
             show: false,
@@ -135,7 +135,7 @@ export default class ManageEmployee extends Component{
             this.props.history.push('/employees')
         })
         .catch(err=>{
-            console.log(err)
+            console.log(err);
             alert(err.response.data)
         })
     }
@@ -162,14 +162,14 @@ export default class ManageEmployee extends Component{
             notes: this.state.notes
         })
         .catch(err => {
-            console.log(err)
+            console.log(err);
             alert(err.response.data)
         });
     }
 
     render(){
-        const isValid1 = this.state.first_name && this.state.last_name && this.state.email && this.state.start;
-        const isValid2 = this.state.first_name && this.state.last_name && this.state.email && this.state.start && this.state.end;
+        const isValid1 = this.state.first_name && this.state.last_name && this.state.email && this.state.start && this.state.depts.length !== 0;
+        const isValid2 = this.state.first_name && this.state.last_name && this.state.email && this.state.start && this.state.depts.length !==0 && this.state.end;
         return (
             <React.Fragment>
                 <form onSubmit={this.handleUpdate}>
