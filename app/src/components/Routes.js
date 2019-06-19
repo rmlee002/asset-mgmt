@@ -42,7 +42,7 @@ export default () =>
         <Route path='/assets/laptops/:laptop_id/history' component={LaptopHistory} />
         <Route exact path='/assets/laptops/:laptop_id/manage' component={protect(ManageLaptop)} />
         <Route exact path='/assets/nonlaptops' component={NonLaptops} />
-        <Route path='/assets/nonlaptops/add' component={AddNonLaptop} />
+        <Route path='/assets/nonlaptops/add' component={protect(AddNonLaptop)} />
         <Route path='/assets/nonlaptops/:hardware_id/manage' component={protect(ManageNonLaptop)} />
         <Route exact path='/assets/reporting' component={AssetReporting} />
         <Route exact path='/assets/laptops/:laptop_id/editOwner' component={protect(EditOwner)} />
