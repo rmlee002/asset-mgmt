@@ -119,7 +119,7 @@ export default class BrokenDevices extends Component{
 }
 
 function getColor(item){
-    if (item.warranty == null || moment().isSameOrAfter(moment(item.inDate).add(parseInt(item.warranty.replace(/\D+/, '')), 'years').subtract(3, 'months'))){
+    if (item.original.warranty == null || moment().isSameOrAfter(moment(item.original.inDate).add(parseInt(item.original.warranty.replace(/\D+/, '')), 'years').subtract(3, 'months'))){
         return {'background': '#f2dede'}
     }
     return null
