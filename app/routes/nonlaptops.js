@@ -24,7 +24,7 @@ router.post('/add', (req,res)=>{
     function extract(asset){
         return [asset.serial_number, asset.model, asset.description,
             req.body.warranty_provider, asset.cost, req.body.vendor, 
-            req.body.order_number, req.body.warranty, req.body.inDate, asset.comment]
+            req.body.order_num, req.body.warranty, req.body.inDate, asset.comment]
     }
 
     connection.query(

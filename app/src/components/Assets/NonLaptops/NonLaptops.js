@@ -117,7 +117,7 @@ export default class NonLaptops extends Component{
             },
             {
                 Header: "Order Number",
-                accessor: "order_num",
+                accessor: "order_number",
                 style: { 'white-space': 'unset' }
             },
             {
