@@ -34,10 +34,12 @@ router.post('/add', (req,res) => {
 		time_approver, start, end, notes
 	} = req.body;
 
+	const archived = end != null;
+
 	connection.query('INSERT INTO employees (first_name, last_name,\
-		email, affiliation, department, supervisor_id, reviewer_id,time_approver_id, inDate, outDate, notes)\
-		VALUES (?,?,?,?,?,?,?,?,?,?,?)', [first_name, last_name, email, affiliation, department,
-			supervisor, reviewer, time_approver, start, end, notes], (err, results) => {
+		email, affiliation, department, supervisor_id, reviewer_id,time_approver_id, inDate, outDate, notes, archived)\
+		VALUES (?,?,?,?,?,?,?,?,?,?,?,?)', [first_name, last_name, email, affiliation, department,
+			supervisor, reviewer, time_approver, start, end, notes, archived], (err, results) => {
 			if (err){
 				console.log(err);
 				res.status(500).send("Database query error")
