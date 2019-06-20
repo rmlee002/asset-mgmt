@@ -7,13 +7,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default class Filter extends Component{
     constructor(props){
-        super(props)
+        super(props);
 
-        this.handleSubmit = this.handleSubmit.bind(this)
-        this.handleDepartment = this.handleDepartment.bind(this)
-        this.handleCreateDepartmentOption = this.handleCreateDepartmentOption.bind(this)
-        this.handleClear = this.handleClear.bind(this)
-        this.handleCheck = this.handleCheck.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleDepartment = this.handleDepartment.bind(this);
+        this.handleCreateDepartmentOption = this.handleCreateDepartmentOption.bind(this);
+        this.handleClear = this.handleClear.bind(this);
+        this.handleCheck = this.handleCheck.bind(this);
 
         this.state={
             open: false,
@@ -38,10 +38,10 @@ export default class Filter extends Component{
         e.preventDefault();
         this.props.handleFilter({
             start: this.state.start?this.state.start:new Date(1970,0,1),
-            end: this.state.end?this.state.end:new Date(),
+            end: this.state.end?this.state.end:null,
             showArchived: this.state.showArchived,
             depts: this.state.depts
-        })
+        });
         this.setState({
             open: false
         })
@@ -50,10 +50,10 @@ export default class Filter extends Component{
     handleClear(){
         this.props.handleFilter({
             start: new Date(1970, 0, 1),
-            end: new Date(),
+            end: null,
             showArchived: false,
             depts: []
-        })
+        });
         this.setState({
             open: false,
             start: null,

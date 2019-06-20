@@ -83,7 +83,7 @@ export default class Users extends Component{
             filtered: this.state.users.filter(item =>
                 moment(item.start).isSameOrAfter(options.start) 
                 && 
-                moment(item.start).isSameOrBefore(options.end)
+                (options.end? moment(item.start).isSameOrBefore(options.end) : true)
                 &&
                 (options.depts.length > 0 ? options.depts.map(dept => dept.value).some(dept => item.department.split(', ').includes(dept)): true)
             )

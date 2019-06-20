@@ -19,7 +19,6 @@ export default class Employees extends Component {
             loggedIn: false
         };
         this.handleChange = this.handleChange.bind(this);
-        this.handleCheck = this.handleCheck.bind(this);
         this.handleFilter = this.handleFilter.bind(this);
     }
 
@@ -65,19 +64,12 @@ export default class Employees extends Component {
         }
     }
 
-    handleCheck(e){
-        this.setState({
-            showArchived: e.target.checked,
-            filtered: this.state.employees.filter((emp)=>!emp.archived || e.target.checked)
-        })
-    }
-
     handleFilter(options){
         this.setState({
             filtered: this.state.employees.filter((emp)=>!emp.archived || options.showArchived).filter(item => 
                 moment(item.inDate).isSameOrAfter(options.start)
                 &&
-                moment(item.inDate).isSameOrBefore(options.end)
+                (options.end? moment(item.inDate).isSameOrBefore(options.end) : true)
                 &&
                 (options.depts.length > 0 ? options.depts.map(dept => dept.value).some(dept => item.department.split(', ').includes(dept)): true)
             ),
