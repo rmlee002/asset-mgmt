@@ -44,7 +44,7 @@ export default class AddNonLaptop extends Component{
 
     handleAdd(){
         this.setState((prevState) => ({
-            assets: [...prevState.assets, {model:null, serial_number:null, cost:null, comment:null}]
+            assets: [...prevState.assets, {model:null, description: null, serial_number:null, cost:null, comment:null}]
         }))
     }
 
