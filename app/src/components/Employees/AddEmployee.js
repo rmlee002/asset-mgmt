@@ -106,7 +106,8 @@ export default class AddEmployee extends Component{
     render(){
         const invalid = this.state.first_name === null || this.state.last_name === null || this.state.email === null
                         || this.state.affiliation === null || this.state.department === null || this.state.supervisor === null
-                        || this.state.reviewer === null || this.state.time_approver === null || this.state.start === null;
+                        || this.state.reviewer === null || this.state.time_approver === null || this.state.start === null
+                        || this.state.depts.length === 0;
 
         return(
             <React.Fragment>
