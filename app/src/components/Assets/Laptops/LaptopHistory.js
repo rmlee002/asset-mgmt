@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 import axios from 'axios';
 import moment from 'moment';
 import ManageModal from '../../ManageModal';
@@ -81,15 +81,6 @@ export default class LaptopHistory extends Component{
 
         return(
             <React.Fragment>
-                <FormGroup controlid="search">
-                    <ControlLabel>Search</ControlLabel>
-                    <FormControl
-                        type='text'
-                        placeholder='Enter a name'
-                        onChange = {this.handleChange}
-                    />
-                    <FormControl.Feedback />
-                </FormGroup>
                 <div className='data' id="history">
                     <Table striped hover>
                         <thead>
