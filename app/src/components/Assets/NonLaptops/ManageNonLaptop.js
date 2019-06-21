@@ -144,7 +144,7 @@ export default class ManageLaptop extends Component{
             serial_number: this.state.serial_number,
             warranty_provider: this.state.warranty_provider,
             owner: this.state.owner,
-            contract: this.state.contract.map(val => val.value).join(', '),
+            contract: this.state.contract.length !== 0? this.state.contract.map(val => val.value).join(', '): null,
             cost: this.state.cost,
             vendor: this.state.vendor,
             order_number: this.state.order_number,
