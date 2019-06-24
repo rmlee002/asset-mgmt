@@ -175,7 +175,7 @@ export default class AddEmployee extends Component{
                         </FormGroup>
                         <FormGroup controlId='supervisor'>
                             <Col componentClass={ControlLabel} sm={3}>
-                                Supervisor(s)
+                                Supervisor
                             </Col>
                             <Col sm={6}>
                                 <EmployeeSelect onChange={this.handleEmployeeAssign('supervisor')}/>
@@ -183,7 +183,7 @@ export default class AddEmployee extends Component{
                         </FormGroup>
                         <FormGroup controlId='reviewer'>
                             <Col componentClass={ControlLabel} sm={3}>
-                                Reviewer(s)
+                                Reviewer
                             </Col>
                             <Col sm={6}>
                                 <EmployeeSelect onChange={this.handleEmployeeAssign('reviewer')}/>
@@ -191,7 +191,7 @@ export default class AddEmployee extends Component{
                         </FormGroup>
                         <FormGroup controlId='time_approver'>
                             <Col componentClass={ControlLabel} sm={3}>
-                                Time Approver(s)
+                                Time Approver
                             </Col>
                             <Col sm={6}>
                                 <EmployeeSelect onChange={this.handleEmployeeAssign('time_approver')}/>
