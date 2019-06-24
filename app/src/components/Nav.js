@@ -63,9 +63,11 @@ class Links extends Component{
                             <LinkContainer exact to='/employees'>
                                 <MenuItem>View Employees</MenuItem>
                             </LinkContainer>
-                            <LinkContainer to='/employees/add'>
-                                <MenuItem>Add Employee</MenuItem>
-                            </LinkContainer>
+                            {this.state.loggedIn &&
+                                <LinkContainer to='/employees/add'>
+                                    <MenuItem>Add Employee</MenuItem>
+                                </LinkContainer>
+                            }
                         </NavDropdown>
                         <NavDropdown title='Hardware'>
                             <LinkContainer exact to='/assets/laptops'>
@@ -88,9 +90,11 @@ class Links extends Component{
                             <LinkContainer exact to='/software'>
                                 <MenuItem>View software</MenuItem>
                             </LinkContainer>
-                            <LinkContainer to='/software/add'>
-                                <MenuItem>Add software</MenuItem>
-                            </LinkContainer>
+                            {this.state.loggedIn &&
+                                <LinkContainer to='/software/add'>
+                                    <MenuItem>Add software</MenuItem>
+                                </LinkContainer>
+                            }
                             <LinkContainer to='/software/reporting'>
                                 <MenuItem>Software Reporting</MenuItem>
                             </LinkContainer>                            
