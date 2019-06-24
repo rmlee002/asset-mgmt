@@ -424,11 +424,13 @@ export default class SoftwareReporting extends Component {
         const columns3 = [
             {
                 Header: "Name",
-                accessor: 'name'
+                accessor: 'name',
+                Aggregated: row => null
             },
             {
                 Header: "Contract",
-                accessor: "department"
+                accessor: "department",
+                Aggregated: row => null
             },
             {
                 Header: "Software",
@@ -617,6 +619,12 @@ export default class SoftwareReporting extends Component {
                                                 item.end == null && moment(item.start).isSameOrBefore(moment().subtract(1, 'years')))
                                         }
                                         pivotBy={["software"]}
+                                        defaultSorted={[
+                                            {
+                                                id: 'start',
+                                                desc: false
+                                            }
+                                        ]}
                                         columns={columns3}
                                         className="-striped -highlight"
                                     />
