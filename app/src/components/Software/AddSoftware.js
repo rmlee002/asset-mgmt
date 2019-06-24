@@ -63,6 +63,7 @@ export default class AddSoftware extends Component{
                             <Col sm={6}>
                                 <FormControl
                                     type='number'
+                                    step={'any'}
                                     value={this.state.cost}
                                     placeholder='Monthly cost'
                                 />                        
