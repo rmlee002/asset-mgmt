@@ -52,7 +52,7 @@ export default class Data extends Component{
         if (this.state.filter.length !== 0) {
             this.props.data
                 .filter(item =>
-                    item.contract?item.contract.replace(/\s/, '').split(',').some(dept => this.state.filter.includes(dept)):false
+                    (item.contract?item.contract.replace(/\s/, '').split(',').some(dept => this.state.filter.includes(dept)):false)
                     && item.inDate != null && item.cost != null && moment(item.inDate).year() === this.state.year.value)
                 .map(item => data[moment(item.inDate).month()].total += parseFloat(item.cost));
         }
@@ -126,35 +126,43 @@ export default class Data extends Component{
                     </FormGroup>
                 </Form>
 
-                <div style={{width: '90%', height: '700px'}}>
-                    <VictoryChart
-                        domainPadding={10}
-                        theme={VictoryTheme.material}
-                        // containerComponent={<VictoryContainer responsive={false}/>}
-                        width={400}
-                        height={300}
-                    >
-                        <VictoryAxis
-                            tickValues={[1,2,3,4,5,6,7,8,9,10,11,12]}
-                            tickFormat={["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]}
+                <div style={{width: '90%', height: '700px', 'textAlign': 'center'}}>
+                    <h2>{`Cost distribution for ${this.state.year.value}`}</h2>
+                    {barData.some(item => item.total !== 0)?
+                        <VictoryChart
+                            domainPadding={10}
+                            theme={VictoryTheme.material}
+                            width={400}
+                            height={300}
+                        >
+                            <VictoryAxis
+                                tickValues={[1,2,3,4,5,6,7,8,9,10,11,12]}
+                                tickFormat={["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]}
+                            />
+                            <VictoryAxis
+                                dependentAxis
+                                tickFormat={x => `$${x}`}
+                            />
+                            <VictoryBar
+                                data={barData}
+                                x="month"
+                                y="total"
+                                labels={(d) => d.total !== 0 ? `$${d.total.toFixed(2)}` : null}
+                                style={{ labels: { fontSize: 8 } }}
+                            />
+                        </VictoryChart>
+                        :
+                        <p>No bar graph data available</p>
+                    }
+                    {pieData.length !== 0?
+                        <VictoryPie
+                            data={pieData}
+                            colorScale={["LimeGreen","DarkGreen","LightSeaGreen","Yellow"]}
+                            labels={val=>`${val.x}: \n$${val.y.toFixed(2)}`}
                         />
-                        <VictoryAxis
-                            dependentAxis
-                            tickFormat={x => `$${x}`}
-                        />
-                        <VictoryBar
-                            data={barData}
-                            x="month"
-                            y="total"
-                            labels={(d) => d.total !== 0 ? `$${d.total.toFixed(2)}` : null}
-                            style={{ labels: { fontSize: 8 } }}
-                        />
-                    </VictoryChart>
-                    <VictoryPie
-                        data={pieData}
-                        colorScale={["LimeGreen","DarkGreen","LightSeaGreen","Yellow"]}
-                        labels={val=>`${val.x}: \n$${val.y.toFixed(2)}`}
-                    />
+                        :
+                        <p>No pie chart data available</p>
+                    }
                 </div>
             </div>
         )
