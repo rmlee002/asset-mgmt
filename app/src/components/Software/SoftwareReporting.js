@@ -465,6 +465,9 @@ export default class SoftwareReporting extends Component {
             )
         }
 
+        const barData = this.getBarData();
+        const pieData = this.getPieData();
+
         return(
             <React.Fragment>
                 <Tab.Container defaultActiveKey="data">
@@ -565,35 +568,45 @@ export default class SoftwareReporting extends Component {
                                             </Col>
                                         </FormGroup>
                                     </Form>
-
-                                    <div className="graphics">
-                                        <VictoryChart
-                                            domainPadding={10}
-                                            theme={VictoryTheme.material}
-                                            width={400}
-                                            height={300}
-                                        >
-                                            <VictoryAxis
-                                                tickValues={[1,2,3,4,5,6,7,8,9,10,11,12]}
-                                                tickFormat={["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]}
+                                    <br/>
+                                    <br/>
+                                    <div className="graphics" style={{'textAlign': 'center'}}>
+                                        <h2>{`Cost distribution for ${this.state.year.value}`}</h2>
+                                        {barData.some(item => item.total !== 0) ?
+                                            <VictoryChart
+                                                domainPadding={10}
+                                                theme={VictoryTheme.material}
+                                                width={400}
+                                                height={300}
+                                            >
+                                                <VictoryAxis
+                                                    tickValues={[1,2,3,4,5,6,7,8,9,10,11,12]}
+                                                    tickFormat={["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]}
+                                                />
+                                                <VictoryAxis
+                                                    dependentAxis
+                                                    tickFormat={x => `$${x}`}
+                                                />
+                                                <VictoryBar
+                                                    data={barData}
+                                                    x="month"
+                                                    y="total"
+                                                    labels={(d) => d.total===0?null:`$${d.total.toFixed(2)}`}
+                                                    style={{ labels: { fontSize: 6 } }}
+                                                />
+                                            </VictoryChart>
+                                            :
+                                            <p>No bar data available</p>
+                                        }
+                                        {pieData.length !== 0 ?
+                                            <VictoryPie
+                                                data={pieData}
+                                                colorScale={["LimeGreen","DarkGreen","LightSeaGreen","Yellow"]}
+                                                labels={val=>`${val.x}: \n$${val.y.toFixed(2)}`}
                                             />
-                                            <VictoryAxis
-                                                dependentAxis
-                                                tickFormat={x => `$${x}`}
-                                            />
-                                            <VictoryBar
-                                                data={this.getBarData()}
-                                                x="month"
-                                                y="total"
-                                                labels={(d) => d.total===0?null:`$${d.total.toFixed(2)}`}
-                                                style={{ labels: { fontSize: 6 } }}
-                                            />
-                                        </VictoryChart>
-                                        <VictoryPie
-                                            data={this.getPieData()}
-                                            colorScale={["LimeGreen","DarkGreen","LightSeaGreen","Yellow"]}
-                                            labels={val=>`${val.x}: \n$${val.y.toFixed(2)}`}
-                                        />
+                                            :
+                                            <p>No pie data available</p>
+                                        }
                                     </div>
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="highest">
