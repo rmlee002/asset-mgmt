@@ -133,13 +133,14 @@ export default class Users extends Component{
 
     total(){
         let total = 0;
+        const date = moment.date()===31?30:moment.date();
         this.state.filtered.forEach((user) => {
             if (moment(user.start).isBefore(moment(),'month')){
-                total += user.cost;
+                total += (date/30)*user.cost;
             }
             else{
                 let day = moment(user.start).date() === 31 ? 30 : moment(user.start).date();
-                total += (((moment().date() - day)+1)/30)*user.cost;
+                total += (((date - day)+1)/30)*user.cost;
             }            
         });
         return total.toFixed(2);
