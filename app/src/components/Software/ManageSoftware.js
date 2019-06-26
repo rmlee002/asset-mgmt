@@ -43,11 +43,15 @@ export default class ManageSoftware extends Component{
         })
     }
 
-    handleUpdate(){
+    handleUpdate(e){
+        e.preventDefault();
         Axios.post('/software/update', {
             name: this.state.name,
             cost: this.state.cost,
             software_id: this.props.match.params.software_id
+        })
+        .then(res => {
+            window.location.reload();
         })
         .catch(err=>{
             console.log(err);

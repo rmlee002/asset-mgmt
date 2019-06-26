@@ -137,6 +137,7 @@ export default class ManageLaptop extends Component{
     }
 
     handleSubmit(e){
+        e.preventDefault();
         Axios.post('/nonlaptops/updateNonLaptop', {
             hardware_id: this.state.hardware_id,
             model: this.state.model,
@@ -153,7 +154,11 @@ export default class ManageLaptop extends Component{
             outDate: this.state.outDate?moment(this.state.outDate).format('YYYY-MM-DD'):null,
             broken: this.state.broken,
             comment: this.state.comment
-        }).catch(err => {
+        })
+        .then(res => {
+            window.location.reload();
+        })
+        .catch(err => {
             alert(err.response.data);
             console.log(err)
         })        
