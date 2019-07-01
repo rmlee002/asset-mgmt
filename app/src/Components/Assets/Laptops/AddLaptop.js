@@ -81,6 +81,7 @@ export default class AddLaptop extends Component{
 
     getValidationState(){
         return this.state.order_num == null || this.state.inDate == null
+            || this.state.assets.length === 0
             || this.state.assets.some(val => { return val.cost == null || val.model == null || val.serial_number == null })
     }
     
