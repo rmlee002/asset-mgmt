@@ -126,7 +126,8 @@ export default class ManageLaptop extends Component{
 
     handleSubmit(e){
         e.preventDefault();
-        Axios.post('/laptops/updateLaptop', {
+        alert(this.state.inDate + " " + this.state.inDate.format('YYYY-MM-DD'));
+        /* Axios.post('/laptops/updateLaptop', {
             laptop_id: this.state.laptop_id,
             model: this.state.model,
             serial_number: this.state.serial_number,
@@ -146,7 +147,7 @@ export default class ManageLaptop extends Component{
         .catch(err => {
             alert(err.response.data);
             console.log(err)
-        })
+        })*/
     }
 
     render(){
@@ -256,6 +257,7 @@ export default class ManageLaptop extends Component{
                                 In Date
                             </Col>
                             <Col sm={7}>
+                                <h1>{this.state.inDate}</h1>
                                 <DatePicker
                                     className='form-control'
                                     selected={this.state.inDate}
