@@ -101,7 +101,7 @@ export default class Laptops extends Component{
             {
                 Header: "Cost",
                 accessor: "cost",
-                Cell: val => val.value? "$"+val.value : "",
+                Cell: val => val.value? "$"+val.value.toFixed(2) : "",
                 width: 75
             },
             {

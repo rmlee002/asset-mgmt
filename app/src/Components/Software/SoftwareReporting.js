@@ -404,7 +404,7 @@ export default class SoftwareReporting extends Component {
             {
                 Header: 'Monthly Cost',
                 accessor: 'cost',
-                Cell: val => `$${val.value}`,
+                Cell: val => `$${val.value.toFixed(2)}`,
                 Aggregated: row => null
             },
             {

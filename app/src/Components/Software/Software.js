@@ -83,7 +83,7 @@ export default class Employees extends Component {
             {
                 Header: "Monthly Cost",
                 accessor: "cost",
-                Cell: val => "$"+val.value
+                Cell: val => "$"+val.value.toFixed(2)
             }
         ];
 
