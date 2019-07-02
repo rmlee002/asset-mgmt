@@ -44,7 +44,7 @@ export default class ManageLaptop extends Component{
         })
         .then(res => {
             const laptop = res.data[0];
-            console.log(moment(laptop.inDate).format('YYYY-MM-DD'));
+            console.log(laptop.inDate);
             this.setState({
                 laptop_id: laptop.laptop_id,
                 model: laptop.model,

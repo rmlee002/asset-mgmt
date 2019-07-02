@@ -54,6 +54,7 @@ router.post('/getLaptop', (req,res) => {
             console.log(err);
             res.status(500).send("Database query error")
         }
+        console.log(results[0].inDate);
         res.send(JSON.stringify(results));
     })
 });
