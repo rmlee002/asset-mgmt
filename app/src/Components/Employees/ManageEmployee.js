@@ -52,9 +52,9 @@ export default class ManageEmployee extends Component{
         .then(res => {
             const employee = res.data[0];
             const utcStart = new Date(employee.inDate);
-            const localStart = new Date(utcStart.getTime() + utcStart.getTimezoneOffset() + 60000);
+            const localStart = new Date(utcStart.getTime() + utcStart.getTimezoneOffset() * 60000);
             const utcEnd = employee.outDate? new Date(employee.outDate) : null;
-            const localEnd = utcEnd ? new Date(utcEnd.getTime() + utcEnd.getTimezoneOffset() + 60000) : utcEnd;
+            const localEnd = utcEnd ? new Date(utcEnd.getTime() + utcEnd.getTimezoneOffset() * 60000) : utcEnd;
 
             this.setState({
                 first_name: employee.first_name,
