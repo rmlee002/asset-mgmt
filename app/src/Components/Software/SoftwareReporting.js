@@ -150,6 +150,7 @@ export default class SoftwareReporting extends Component {
         if (moment(value.start).utc().isBefore(`${this.state.year.value}-${this.state.month.value + 1}-01`,'month')){
             if (value.end == null || moment(value.end).utc().isAfter(`${this.state.year.value}-${this.state.month.value + 1}-01`, 'month')){
                 if (this.state.year.value === moment().utc().year() && moment().utc().month() === this.state.month.value){
+                    console.log(value + " " + curr);
                     return (curr/30)*cost;
                 }
                 return cost;
