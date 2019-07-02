@@ -44,6 +44,7 @@ export default class ManageLaptop extends Component{
         })
         .then(res => {
             const laptop = res.data[0];
+            console.log(moment(laptop.inDate).format('YYYY-MM-DD'));
             this.setState({
                 laptop_id: laptop.laptop_id,
                 model: laptop.model,
@@ -126,7 +127,7 @@ export default class ManageLaptop extends Component{
 
     handleSubmit(e){
         e.preventDefault();
-        alert(this.state.inDate + " " + this.state.inDate.format('YYYY-MM-DD'));
+        alert(this.state.inDate + " " + moment(this.state.inDate).format('YYYY-MM-DD'));
         /* Axios.post('/laptops/updateLaptop', {
             laptop_id: this.state.laptop_id,
             model: this.state.model,
