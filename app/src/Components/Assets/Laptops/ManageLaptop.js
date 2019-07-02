@@ -257,7 +257,7 @@ export default class ManageLaptop extends Component{
                                 In Date
                             </Col>
                             <Col sm={7}>
-                                <h1>{this.state.inDate}</h1>
+                                <h1>{moment(this.state.inDate).format('YYYY-MM-DD')}</h1>
                                 <DatePicker
                                     className='form-control'
                                     selected={this.state.inDate}
