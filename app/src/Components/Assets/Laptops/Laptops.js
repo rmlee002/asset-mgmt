@@ -121,7 +121,7 @@ export default class Laptops extends Component{
             {
                 Header: "In Date",
                 accessor: "inDate",
-                Cell: val => moment(val.value).format('YYYY-MM-DD'),
+                Cell: val => val.value,
                 width: 90
             },
             {
