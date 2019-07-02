@@ -150,7 +150,6 @@ export default class SoftwareReporting extends Component {
         if (moment(value.start).utc().isBefore(`${this.state.year.value}-${this.state.month.value + 1}-01`,'month')){
             if (value.end == null || moment(value.end).utc().isAfter(`${this.state.year.value}-${this.state.month.value + 1}-01`, 'month')){
                 if (this.state.year.value === moment().utc().year() && moment().utc().month() === this.state.month.value){
-                    console.log(value + " " + curr);
                     return (curr/30)*cost;
                 }
                 return cost;
@@ -164,6 +163,8 @@ export default class SoftwareReporting extends Component {
             let start = moment(value.start).utc().date() === 31 ? 30 : moment(value.start).utc().date();
             if (value.end == null ||  moment(value.end).utc().isAfter(`${this.state.year.value}-${this.state.month.value + 1}-01`, 'month')){
                 if (moment(value.start).utc().month() === moment().utc().month()){
+                    console.log("Start: " + start);
+                    console.log("Curr: " + curr);
                     return (((curr-start)+1)/30)*cost;
                 }
                 return ((30-start) + 1)/30 * cost;
