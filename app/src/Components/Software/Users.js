@@ -182,7 +182,7 @@ export default class Users extends Component{
                                 <tr>
                                     <td>{user.first_name+' '+user.last_name}</td>
                                     <td>{user.department}</td>
-                                    <td>{user.start?moment(user.start).format('YYYY-MM-DD'):''}</td>
+                                    <td>{moment(user.start).utc().format('YYYY-MM-DD')}</td>
                                     {loggedIn && 
                                         <td>
                                             <ManageModal
