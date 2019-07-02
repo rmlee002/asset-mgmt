@@ -50,6 +50,12 @@ export default class Data extends Component{
         ];
 
         if (this.state.filter.length !== 0) {
+            console.log(
+                this.props.data
+                    .filter(item =>
+                        (item.contract?item.contract.replace(/\s/, '').split(',').some(dept => this.state.filter.includes(dept)):false)
+                        && item.inDate != null && item.cost != null && moment(item.inDate).utc().year() === this.state.year.value)
+            );
             this.props.data
                 .filter(item =>
                     (item.contract?item.contract.replace(/\s/, '').split(',').some(dept => this.state.filter.includes(dept)):false)
