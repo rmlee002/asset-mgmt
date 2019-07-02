@@ -121,13 +121,21 @@ export default class Laptops extends Component{
             {
                 Header: "In Date",
                 accessor: "inDate",
-                Cell: val => val.value,
+                Cell: val => {
+                    const utcStart = new Date(val.value);
+                    const localStart = new Date(utcStart.getTime() + utcStart.getTimezoneOffset()*60000);
+                    return moment(localStart).format('YYYY-MM-DD');
+                },
                 width: 90
             },
             {
                 Header: "Out Date",
                 accessor: "outDate",
-                Cell: val => val.value? moment(val.value).format("YYYY-MM-DD"): "",
+                Cell: val => {
+                    const utcEnd = val.value? new Date(val.value): null;
+                    const localEnd = val.value? new Date(utcEnd.getTime() + utcEnd.getTimezoneOffset()*60000) : null;
+                    return moment(localEnd).format('YYYY-MM-DD');
+                },
                 width: 90
             },
             {
