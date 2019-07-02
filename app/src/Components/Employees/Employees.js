@@ -68,9 +68,9 @@ export default class Employees extends Component {
     handleFilter(options){
         this.setState({
             filtered: this.state.employees.filter((emp)=>!emp.archived || options.showArchived).filter(item => 
-                moment(item.inDate).utc().isSameOrAfter(options.start)
+                moment(item.inDate).utc().isSameOrAfter(options.start, 'day')
                 &&
-                (options.end? moment(item.inDate).utc().isSameOrBefore(options.end) : true)
+                (options.end? moment(item.inDate).utc().isSameOrBefore(options.end, 'day') : true)
                 &&
                 (options.depts.length > 0 ? options.depts.map(dept => dept.value).some(dept => item.department.split(', ').includes(dept)): true)
             ),

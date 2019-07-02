@@ -79,13 +79,11 @@ export default class Users extends Component{
     );
         
     handleFilter(options){
-
-        console.log(options.start);
         this.setState({
             filtered: this.state.users.filter(item =>
-                moment(item.start).utc().isSameOrAfter(options.start)
+                moment(item.start).utc().isSameOrAfter(options.start, 'day')
                 && 
-                (options.end? moment(item.start).utc().isSameOrBefore(options.end) : true)
+                (options.end? moment(item.start).utc().isSameOrBefore(options.end, 'day') : true)
                 &&
                 (options.depts.length > 0 ? options.depts.map(dept => dept.value).some(dept => item.department.split(', ').includes(dept)): true)
             )
