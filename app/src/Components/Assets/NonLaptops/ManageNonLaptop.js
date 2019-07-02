@@ -46,7 +46,11 @@ export default class ManageLaptop extends Component{
             hardware_id: this.props.match.params.hardware_id
         })
         .then(res => {
-            const hardware = res.data[0]
+            const hardware = res.data[0];
+            const utcStart = new Date(hardware.start);
+            const localStart = new Date(utcStart.getTime() + utcStart.getTimezoneOffset() * 60000);
+            const utcEnd = hardware.outDate? new Date(hardware.outDate) : null;
+            const localEnd = utcEnd? new Date(utcEnd.getTime() + utcEnd.getTimezoneOffset() + 60000) : utcEnd;
             this.setState({
                 hardware_id: hardware.hardware_id,
                 model: hardware.model,
@@ -60,8 +64,8 @@ export default class ManageLaptop extends Component{
                 vendor: hardware.vendor,
                 order_number: hardware.order_number,
                 warranty: hardware.warranty,
-                inDate: new Date(hardware.inDate),
-                outDate: hardware.outDate? new Date(hardware.outDate) : null,
+                inDate: localStart,
+                outDate: localEnd,
                 archived: hardware.archived,
                 broken: hardware.broken
             })

@@ -51,6 +51,11 @@ export default class ManageEmployee extends Component{
         })
         .then(res => {
             const employee = res.data[0];
+            const utcStart = new Date(employee.inDate);
+            const localStart = new Date(utcStart.getTime() + utcStart.getTimezoneOffset() + 60000);
+            const utcEnd = employee.outDate? new Date(employee.outDate) : null;
+            const localEnd = utcEnd ? new Date(utcEnd.getTime() + utcEnd.getTimezoneOffset() + 60000) : utcEnd;
+
             this.setState({
                 first_name: employee.first_name,
                 last_name: employee.last_name,
@@ -60,8 +65,8 @@ export default class ManageEmployee extends Component{
                 supervisor: employee.super_first?{value: employee.supervisor_id, label:employee.super_first+' '+employee.super_last}:null,
                 reviewer: employee.reviewer_first?{value: employee.reviewer_id, label:employee.reviewer_first+' '+employee.reviewer_last}:null,
                 time_approver: employee.time_first?{value: employee.time_approver_id, label:employee.time_first+' '+employee.time_last}:null,
-                start: new Date(employee.inDate),
-                end: employee.outDate? new Date(employee.outDate) : null,
+                start: localStart,
+                end: localEnd,
                 notes: employee.notes,
                 archived: employee.archived
             })
