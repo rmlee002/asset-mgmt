@@ -310,7 +310,7 @@ export default class SoftwareReporting extends Component {
                             deptData[`${item.department.split(', ')[0]}`] += (((end-start)+1)/30)*cost
                         }
                         else {
-                            deptData[`${item.department.split(', ')[0]}`] += (((30 - start) + 1) / 30) * cost + (moment(item.end).utc().month() - (moment(item.start).month() + 1)) * cost + (end / 30) * cost
+                            deptData[`${item.department.split(', ')[0]}`] += (((30 - start) + 1) / 30) * cost + (moment(item.end).utc().month() - (moment(item.start).utc().month() + 1)) * cost + (end / 30) * cost
                         }
                     }
                 }
@@ -372,13 +372,13 @@ export default class SoftwareReporting extends Component {
             {
                 Header: "Start Date",
                 accessor: "start",
-                Cell: val => moment(val.value).format('YYYY-MM-DD'),
+                Cell: val => moment(val.value).utc().format('YYYY-MM-DD'),
                 Aggregated: row => null
             },
             {
                 Header: "End Date",
                 accessor: "end",
-                Cell: val => val.value != null ? moment(val.value).format('YYYY-MM-DD') : null,
+                Cell: val => val.value != null ? moment(val.value).utc().format('YYYY-MM-DD') : null,
                 Aggregated: row => null
             }
         ];
@@ -416,7 +416,7 @@ export default class SoftwareReporting extends Component {
             {
                 Header: "Start Date",
                 accessor: "start",
-                Cell: val => moment(val.value).format('YYYY-MM-DD'),
+                Cell: val => moment(val.value).utc().format('YYYY-MM-DD'),
                 Aggregated: row => null
             }
         ];
@@ -446,7 +446,7 @@ export default class SoftwareReporting extends Component {
             {
                 Header: "Start Date",
                 accessor: "start",
-                Cell: val => moment(val.value).format('YYYY-MM-DD'),
+                Cell: val => moment(val.value).utc().format('YYYY-MM-DD'),
                 Aggregated: row => null
             }
         ];
@@ -455,13 +455,13 @@ export default class SoftwareReporting extends Component {
 
         if (this.state.yearly){
             data = this.state.data.filter(item =>
-                moment(item.start).year() <= this.state.year.value && (item.end == null || moment(item.end).year() >= this.state.year.value ))
+                moment(item.start).utc().year() <= this.state.year.value && (item.end == null || moment(item.end).utc().year() >= this.state.year.value ))
         }
         else{
             data = this.state.data.filter(item =>
-                moment(item.start).isSameOrBefore(`${this.state.year.value}-${this.state.month.value + 1}-01`, 'month')
+                moment(item.start).utc().isSameOrBefore(`${this.state.year.value}-${this.state.month.value + 1}-01`, 'month')
                 &&
-                (item.end == null || moment(item.end).isSameOrAfter(`${this.state.year.value}-${this.state.month.value + 1}-01`, 'month'))
+                (item.end == null || moment(item.end).utc().isSameOrAfter(`${this.state.year.value}-${this.state.month.value + 1}-01`, 'month'))
             )
         }
 
@@ -629,7 +629,7 @@ export default class SoftwareReporting extends Component {
                                     <ReactTable
                                         data={
                                             this.state.data.filter(item =>
-                                                item.end == null && moment(item.start).isSameOrBefore(moment().subtract(1, 'years')))
+                                                item.end == null && moment(item.start).utc().isSameOrBefore(moment().utc().subtract(1, 'years')))
                                         }
                                         pivotBy={["software"]}
                                         defaultSorted={[
