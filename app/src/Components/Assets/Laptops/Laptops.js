@@ -134,7 +134,7 @@ export default class Laptops extends Component{
                 Cell: val => {
                     const utcEnd = val.value? new Date(val.value): null;
                     const localEnd = val.value? new Date(utcEnd.getTime() + utcEnd.getTimezoneOffset()*60000) : null;
-                    return moment(localEnd).format('YYYY-MM-DD');
+                    return localEnd? moment(localEnd).format('YYYY-MM-DD') : null;
                 },
                 width: 90
             },

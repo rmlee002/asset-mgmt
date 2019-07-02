@@ -124,7 +124,7 @@ export default class EmployeeAssets extends Component{
                                     <td>{item.serial_number}</td>
                                     <td>{item.model}</td>
                                     <td>{item.comment}</td>
-                                    <td>{item.start?moment(item.start).format('YYYY-MM-DD'):''}</td>
+                                    <td>{moment(item.start).utc().format('YYYY-MM-DD')}</td>
                                     {loggedIn &&
                                         <td>
                                             <ManageModal

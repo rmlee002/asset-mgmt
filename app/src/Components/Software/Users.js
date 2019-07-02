@@ -81,9 +81,9 @@ export default class Users extends Component{
     handleFilter(options){
         this.setState({
             filtered: this.state.users.filter(item =>
-                moment(item.start).isSameOrAfter(options.start) 
+                moment(item.start).utc().isSameOrAfter(options.start)
                 && 
-                (options.end? moment(item.start).isSameOrBefore(options.end) : true)
+                (options.end? moment(item.start).utc().isSameOrBefore(options.end) : true)
                 &&
                 (options.depts.length > 0 ? options.depts.map(dept => dept.value).some(dept => item.department.split(', ').includes(dept)): true)
             )
@@ -133,13 +133,13 @@ export default class Users extends Component{
 
     total(){
         let total = 0;
-        const date = moment().date()===31?30:moment().date();
+        const date = moment().utc().date()===31?30:moment().utc().date();
         this.state.filtered.forEach((user) => {
-            if (moment(user.start).isBefore(moment(),'month')){
+            if (moment(user.start).utc().isBefore(moment(),'month')){
                 total += (date/30)*user.cost;
             }
             else{
-                let day = moment(user.start).date() === 31 ? 30 : moment(user.start).date();
+                let day = moment(user.start).utc().date() === 31 ? 30 : moment(user.start).utc().date();
                 total += (((date - day)+1)/30)*user.cost;
             }            
         });

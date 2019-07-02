@@ -128,13 +128,13 @@ export default class NonLaptops extends Component{
             {
                 Header: "In Date",
                 accessor: "inDate",
-                Cell: val => moment(val.value).format('YYYY-MM-DD'),
+                Cell: val => moment(val.value).utc().format('YYYY-MM-DD'),
                 width: 90
             },
             {
                 Header: "Out Date",
                 accessor: "outDate",
-                Cell: val => val.value?moment(val.value).format('YYYY-MM-DD'):null,
+                Cell: val => val.value?moment(val.value).utc().format('YYYY-MM-DD'):null,
                 width: 90
             },
             {

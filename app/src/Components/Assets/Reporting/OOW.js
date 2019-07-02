@@ -6,7 +6,7 @@ export default class OOWDevices extends Component{
 
     render(){
         const data = this.props.data.filter(item =>
-            item.warranty?moment(item.inDate).isBefore(moment().subtract(parseInt(item.warranty.replace(/\D+/, '')), 'years')):true);
+            item.warranty?moment(item.inDate).utc().isBefore(moment().utc().subtract(parseInt(item.warranty.replace(/\D+/, '')), 'years')):true);
 
         const columns = [
             {
@@ -40,7 +40,7 @@ export default class OOWDevices extends Component{
             {
                 Header: "In Date",
                 accessor: "inDate",
-                Cell: val => moment(val.value).format('YYYY-MM-DD'),
+                Cell: val => moment(val.value).utc().format('YYYY-MM-DD'),
                 width: 90
             },
             {

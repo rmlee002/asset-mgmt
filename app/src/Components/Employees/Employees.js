@@ -25,6 +25,7 @@ export default class Employees extends Component {
     componentDidMount(){
         axios.get('/employee')
         .then(res => {
+            console.log(res.data);
             this.setState({
                 employees: res.data,
                 filtered: res.data.filter((emp)=>!emp.archived)
@@ -123,13 +124,13 @@ export default class Employees extends Component {
             {
                 Header: "Start Date",
                 accessor: "inDate",
-                Cell: val => moment(val.value).format('YYYY-MM-DD'),
+                Cell: val => moment(val.value).utc().format('YYYY-MM-DD'),
                 width: 90
             },
             {
                 Header: "End Date",
                 accessor: "outDate",
-                Cell: val => val.value? moment(val.value).format('YYYY-MM-DD') : null,
+                Cell: val => val.value? moment(val.value).utc().format('YYYY-MM-DD') : null,
                 width: 90
             },
             {

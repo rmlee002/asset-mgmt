@@ -66,14 +66,14 @@ export default class BrokenDevices extends Component{
             {
                 Header: "In Date",
                 accessor: "inDate",
-                Cell: val => moment(val.value).format('YYYY-MM-DD'),
+                Cell: val => moment(val.value).utc().format('YYYY-MM-DD'),
                 width: 90
             },
             {
                 Header: "Warranty End",
                 id: "warranty_end",
                 accessor: val => val.warranty?
-                    moment(val.inDate).add(parseInt(val.warranty.replace(/\D+/, '')), 'years').format('YYYY-MM-DD')
+                    moment(val.inDate).utc().add(parseInt(val.warranty.replace(/\D+/, '')), 'years').format('YYYY-MM-DD')
                     : "No warranty",
                 Cell: row => (
                     <div style={getColor(row)}>

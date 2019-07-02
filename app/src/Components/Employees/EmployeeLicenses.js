@@ -130,9 +130,9 @@ export default class EmployeeLicenses extends Component{
                             {this.state.filtered.map((license) => 
                                 <tr>
                                     <td>{license.name}</td>
-                                    <td>{license.start?moment(license.start).format('YYYY-MM-DD'):''}</td>
+                                    <td>{moment(license.start).utc().format('YYYY-MM-DD')}</td>
                                     <td>
-                                        {license.end?moment(license.end).format('YYYY-MM-DD'):
+                                        {license.end?moment(license.end).utc().format('YYYY-MM-DD'):
                                             loggedIn &&
                                             <ManageModal
                                                 type='Retire'

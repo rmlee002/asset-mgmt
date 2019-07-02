@@ -53,13 +53,13 @@ export default class Data extends Component{
             this.props.data
                 .filter(item =>
                     (item.contract?item.contract.replace(/\s/, '').split(',').some(dept => this.state.filter.includes(dept)):false)
-                    && item.inDate != null && item.cost != null && moment(item.inDate).year() === this.state.year.value)
-                .map(item => data[moment(item.inDate).month()].total += parseFloat(item.cost));
+                    && item.inDate != null && item.cost != null && moment(item.inDate).utc().year() === this.state.year.value)
+                .map(item => data[moment(item.inDate).utc().month()].total += parseFloat(item.cost));
         }
         else{
             this.props.data
-                .filter(item => item.inDate != null && item.cost != null && moment(item.inDate).year() === this.state.year.value)
-                .map(item => data[moment(item.inDate).month()].total += parseFloat(item.cost));
+                .filter(item => item.inDate != null && item.cost != null && moment(item.inDate).utc().year() === this.state.year.value)
+                .map(item => data[moment(item.inDate).utc().month()].total += parseFloat(item.cost));
         }
         return data;
     }
@@ -70,7 +70,7 @@ export default class Data extends Component{
 
         this.props.data
             .filter(item => item.contract != null && item.inDate != null && item.cost != null
-                && moment(item.inDate).year() === this.state.year.value)
+                && moment(item.inDate).utc().year() === this.state.year.value)
             .forEach(item => deptData[`${item.contract.replace(/\s/, "").split(',')[0]}`] += item.cost);
 
         return Object.keys(deptData).filter(key => deptData[`${key}`] !== 0).map(function(key){ return {x: key, y: deptData[`${key}`]} });
@@ -79,8 +79,8 @@ export default class Data extends Component{
     getOptions(){
         let options=[];
         this.props.data.filter(item => item.inDate != null).forEach(function(item){
-            if (!options.includes(moment(item.inDate).year())){
-                options.push(moment(item.inDate).year());
+            if (!options.includes(moment(item.inDate).utc().year())){
+                options.push(moment(item.inDate).utc().year());
             }
         });
         return options.sort().reverse().map(function(year){ return {value:year, label:year}});

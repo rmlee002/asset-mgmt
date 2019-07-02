@@ -29,7 +29,7 @@ export default class OldestDevices extends Component{
             {
                 Header: "In Date",
                 accessor: "inDate",
-                Cell: val => moment(val.value).format("YYYY-MM-DD"),
+                Cell: val => moment(val.value).utc().format("YYYY-MM-DD"),
                 width: 90
             },
             {

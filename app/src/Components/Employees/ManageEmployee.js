@@ -121,7 +121,7 @@ export default class ManageEmployee extends Component{
         e.preventDefault();
         axios.post('/employee/retire', {
             emp_id: this.state.emp_id,
-            outDate: moment(this.state.date).format('YYYY-MM-DD')
+            outDate: moment(this.state.date).utc().format('YYYY-MM-DD')
         })
         .then(res => {
             this.props.history.push('/employees')
@@ -163,8 +163,8 @@ export default class ManageEmployee extends Component{
             supervisor: this.state.supervisor?this.state.supervisor.value:null,
             reviewer: this.state.reviewer?this.state.reviewer.value:null,
             time_approver: this.state.time_approver?this.state.time_approver.value:null,
-            start: moment(this.state.start).format('YYYY-MM-DD'),
-            outDate: this.state.end?moment(this.state.end).format('YYYY-MM-DD'):null,
+            start: moment(this.state.start).utc().format('YYYY-MM-DD'),
+            outDate: this.state.end?moment(this.state.end).utc().format('YYYY-MM-DD'):null,
             notes: this.state.notes
         })
         .then(res => {
