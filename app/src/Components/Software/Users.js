@@ -79,6 +79,8 @@ export default class Users extends Component{
     );
         
     handleFilter(options){
+        console.log(moment(item.start).utc());
+        console.log(options.start);
         this.setState({
             filtered: this.state.users.filter(item =>
                 moment(item.start).utc().isSameOrAfter(options.start)
