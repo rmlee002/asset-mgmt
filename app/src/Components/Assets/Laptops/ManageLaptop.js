@@ -55,8 +55,8 @@ export default class ManageLaptop extends Component{
                 vendor: laptop.vendor,
                 order_num: laptop.order_num,
                 warranty: laptop.warranty,
-                inDate: new Date(Date.parse(laptop.inDate + ' EDT')),
-                outDate: laptop.outDate ? new Date(Date.parse(laptop.outDate + ' EDT')) : null,
+                inDate: new Date(moment(laptop.inDate).add(1, 'day').format('YYYY-MM-DD')),
+                outDate: laptop.outDate ? new Date(moment(laptop.outDate).add(1,'day').format('YYYY-MM-DD')) : null,
                 archived: laptop.archived,
                 broken: laptop.broken
             })
