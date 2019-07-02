@@ -44,7 +44,9 @@ export default class ManageLaptop extends Component{
         })
         .then(res => {
             const laptop = res.data[0];
+            const inDate = moment(laptop.inDate).add(1,'days').format('YYYY-MM-DD');
             console.log(laptop.inDate);
+            console.log(inDate);
 
             this.setState({
                 laptop_id: laptop.laptop_id,
@@ -57,7 +59,7 @@ export default class ManageLaptop extends Component{
                 vendor: laptop.vendor,
                 order_num: laptop.order_num,
                 warranty: laptop.warranty,
-                inDate: new Date(moment(laptop.inDate).add(1, 'days').format('YYYY-MM-DD')),
+                inDate: inDate,
                 outDate: laptop.outDate ? new Date(moment(laptop.outDate).add(1,'days').format('YYYY-MM-DD')) : null,
                 archived: laptop.archived,
                 broken: laptop.broken
