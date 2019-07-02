@@ -47,7 +47,7 @@ export default class ManageLaptop extends Component{
         })
         .then(res => {
             const hardware = res.data[0];
-            const utcStart = new Date(hardware.start);
+            const utcStart = new Date(hardware.inDate);
             const localStart = new Date(utcStart.getTime() + utcStart.getTimezoneOffset() * 60000);
             const utcEnd = hardware.outDate? new Date(hardware.outDate) : null;
             const localEnd = utcEnd? new Date(utcEnd.getTime() + utcEnd.getTimezoneOffset() + 60000) : utcEnd;
