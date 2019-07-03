@@ -156,9 +156,9 @@ export default class ManageLaptop extends Component{
 
     render(){
         const invalid1 = this.state.serial_number == null || this.state.model == null || this.state.inDate == null || this.state.order_num == null
-                            || this.state.cost == null;
+                            || this.state.cost == null || this.state.cost < 0;
         const invalid2 = this.state.serial_number == null || this.state.model == null || this.state.inDate == null || this.state.order_num == null
-                            || this.state.cost == null || this.state.outDate == null;
+                            || this.state.cost == null || this.state.outDate == null || this.state.cost < 0;
 
         return(
             <React.Fragment>

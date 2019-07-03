@@ -39,7 +39,7 @@ export default class ManageSoftware extends Component{
 
     handleChange(e){
         this.setState({
-            [e.target.id]: e.target.value
+            [e.target.id]: nullify(e.target.value)
         })
     }
 
@@ -86,7 +86,7 @@ export default class ManageSoftware extends Component{
     }
 
     render(){
-        const invalid = this.state.name === '' || this.state.cost === '';
+        const invalid = this.state.name == null || this.state.cost == null || this.state.cost < 0;
 
         return (
             <React.Fragment>
@@ -139,4 +139,11 @@ export default class ManageSoftware extends Component{
             </React.Fragment>
         );
     }
+}
+
+function nullify(value){
+    if (value === '' || value==='Select...') {
+        return null
+    }
+    return value
 }

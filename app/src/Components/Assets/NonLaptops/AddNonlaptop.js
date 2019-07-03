@@ -82,7 +82,7 @@ export default class AddNonLaptop extends Component{
     render(){
         const invalid = this.state.order_num == null || this.state.inDate == null
             || this.state.assets.length === 0
-            || this.state.assets.some(val => val.model == null || val.serial_number == null || val.cost == null);
+            || this.state.assets.some(val => val.model == null || val.serial_number == null || val.cost == null || val.cost < 0);
 
         return(
             <React.Fragment>
