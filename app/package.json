@@ -37,7 +37,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "forever": "forever start -c 'npm start' ./ && forever start -c 'nodemon server.js' ./"
+    "forever": "forever start -c 'npm start' ./ && forever start -c 'node server.js' ./"
   },
   "eslintConfig": {
     "extends": "react-app"
