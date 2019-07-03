@@ -21,7 +21,7 @@
     "mysql2": "^1.6.4",
     "nodemon": "^1.19.1",
     "path": "^0.12.7",
-    "react": "^16.7.0",
+    "react": "^16.8.6",
     "react-bootstrap": "^0.32.4",
     "react-datepicker": "^2.7.0",
     "react-dom": "^16.7.0",
@@ -36,7 +36,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "forever": "forever start -c 'npm start' ./ && forever start -c 'nodemon server.js' ./"
   },
   "eslintConfig": {
     "extends": "react-app"
