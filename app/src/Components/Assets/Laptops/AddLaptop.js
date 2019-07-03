@@ -92,7 +92,7 @@ export default class AddLaptop extends Component{
                     <Form horizontal>
                         <FormGroup controlId='order_num'>
                             <Col componentClass={ControlLabel} sm={3}>
-                                Order Number
+                                Order Number*
                             </Col>
                             <Col sm={6}>
                                 <FormControl
@@ -118,7 +118,7 @@ export default class AddLaptop extends Component{
                         </FormGroup>         
                         <FormGroup controlId='inDate'>
                             <Col componentClass={ControlLabel} sm={3}>
-                                In Date
+                                In Date*
                             </Col>
                             <Col sm={6}>
                                 <DatePicker
@@ -169,7 +169,7 @@ export default class AddLaptop extends Component{
                                 </FormGroup>
                                 <FormGroup controlId='serial_number'>                                        
                                     <Col componentClass={ControlLabel} sm={3}>
-                                        Serial Number
+                                        Serial Number*
                                     </Col>
                                     <Col sm={6}>
                                         <FormControl
@@ -182,7 +182,7 @@ export default class AddLaptop extends Component{
                                 </FormGroup>
                                 <FormGroup controlId='model'>
                                     <Col componentClass={ControlLabel} sm={3}>
-                                        Model
+                                        Model*
                                     </Col>
                                     <Col sm={6}>
                                         <FormControl
@@ -195,7 +195,7 @@ export default class AddLaptop extends Component{
                                 </FormGroup>
                                 <FormGroup controlId='cost'>
                                     <Col componentClass={ControlLabel} sm={3}>
-                                        Cost
+                                        Cost*
                                     </Col>
                                     <Col sm={6}>
                                         <FormControl

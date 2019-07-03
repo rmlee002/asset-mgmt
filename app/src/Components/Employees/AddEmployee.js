@@ -115,7 +115,7 @@ export default class AddEmployee extends Component{
                     <Form horizontal>
                         <FormGroup controlId='first_name' validationState={this.validateFirst}>
                             <Col componentClass={ControlLabel} sm={3}>
-                                First Name
+                                First Name*
                             </Col>
                             <Col sm={6}>
                                 <FormControl
@@ -128,7 +128,7 @@ export default class AddEmployee extends Component{
                         </FormGroup>
                         <FormGroup controlId='last_name' validationState={this.validateLast}>
                             <Col componentClass={ControlLabel} sm={3}>
-                                Last Name
+                                Last Name*
                             </Col>
                             <Col sm={6}>
                                 <FormControl
@@ -141,7 +141,7 @@ export default class AddEmployee extends Component{
                         </FormGroup>
                         <FormGroup controlId='email'>
                             <Col componentClass={ControlLabel} sm={3}>
-                                Email
+                                Email*
                             </Col>
                             <Col sm={6}>
                                 <FormControl
@@ -153,7 +153,7 @@ export default class AddEmployee extends Component{
                             </Col>                                
                         </FormGroup>
                         <FormGroup controlId='affiliation'>
-                            <Col componentClass={ControlLabel} sm={3}>Affiliation</Col>
+                            <Col componentClass={ControlLabel} sm={3}>Affiliation*</Col>
                             <Col sm={6}>
                                 <Select
                                     onChange={this.handleAffiliation}
@@ -168,14 +168,14 @@ export default class AddEmployee extends Component{
                             </Col>
                         </FormGroup>
                         <FormGroup controlId='department'>
-                            <Col componentClass={ControlLabel} sm={3}>Department</Col>
+                            <Col componentClass={ControlLabel} sm={3}>Department*</Col>
                             <Col sm={6}>
                                 <Departments createDept = {this.handleCreateDepartmentOption} handleChange={this.handleDepartment} value={this.state.depts}/>
                             </Col>
                         </FormGroup>
                         <FormGroup controlId='supervisor'>
                             <Col componentClass={ControlLabel} sm={3}>
-                                Supervisor
+                                Supervisor*
                             </Col>
                             <Col sm={6}>
                                 <EmployeeSelect onChange={this.handleEmployeeAssign('supervisor')}/>
@@ -183,7 +183,7 @@ export default class AddEmployee extends Component{
                         </FormGroup>
                         <FormGroup controlId='reviewer'>
                             <Col componentClass={ControlLabel} sm={3}>
-                                Reviewer
+                                Reviewer*
                             </Col>
                             <Col sm={6}>
                                 <EmployeeSelect onChange={this.handleEmployeeAssign('reviewer')}/>
@@ -191,7 +191,7 @@ export default class AddEmployee extends Component{
                         </FormGroup>
                         <FormGroup controlId='time_approver'>
                             <Col componentClass={ControlLabel} sm={3}>
-                                Time Approver
+                                Time Approver*
                             </Col>
                             <Col sm={6}>
                                 <EmployeeSelect onChange={this.handleEmployeeAssign('time_approver')}/>
@@ -199,7 +199,7 @@ export default class AddEmployee extends Component{
                         </FormGroup>
                         <FormGroup controlId='start'>
                             <Col componentClass={ControlLabel} sm={3}>
-                                Start date
+                                Start date*
                             </Col>
                             <Col sm={6}>
                                 <DatePicker

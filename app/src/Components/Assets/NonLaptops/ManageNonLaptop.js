@@ -179,7 +179,7 @@ export default class ManageLaptop extends Component{
                     <Form horizontal>                                
                         <FormGroup controlId='serial_number'>
                             <Col componentClass={ControlLabel} sm={3}>
-                                Serial Number
+                                Serial Number*
                             </Col>
                             <Col sm={6}>
                                 <FormControl
@@ -192,7 +192,7 @@ export default class ManageLaptop extends Component{
                         </FormGroup>
                         <FormGroup controlId='model'>
                             <Col componentClass={ControlLabel} sm={3}>
-                                Model
+                                Model*
                             </Col>
                             <Col sm={6}>
                                 <FormControl
@@ -244,7 +244,7 @@ export default class ManageLaptop extends Component{
                         </FormGroup>
                         <FormGroup controlId='contract'>
                             <Col componentClass={ControlLabel} sm={3}>
-                                Contract
+                                Contract*
                             </Col>
                             <Col sm={6}>
                                 <Departments
@@ -257,7 +257,7 @@ export default class ManageLaptop extends Component{
                         </FormGroup>
                         <FormGroup controlId='cost'>
                             <Col componentClass={ControlLabel} sm={3}>
-                                Cost
+                                Cost*
                             </Col>
                             <Col sm={6}>
                                 <FormControl
@@ -284,7 +284,7 @@ export default class ManageLaptop extends Component{
                         </FormGroup>                        
                         <FormGroup controlId='order_number'>
                             <Col componentClass={ControlLabel} sm={3}>
-                                Order Number
+                                Order Number*
                             </Col>
                             <Col sm={6}>
                                 <FormControl
@@ -310,7 +310,7 @@ export default class ManageLaptop extends Component{
                         </FormGroup>
                         <FormGroup controlId='in'>
                             <Col componentClass={ControlLabel} sm={3}>
-                                In Date
+                                In Date*
                             </Col>
                             <Col sm={7}>
                                 <DatePicker

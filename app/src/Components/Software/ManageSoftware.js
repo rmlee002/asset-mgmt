@@ -94,7 +94,7 @@ export default class ManageSoftware extends Component{
                     <Form horizontal onChange={this.handleChange}>
                         <FormGroup controlId='name'>
                             <Col componentClass={ControlLabel} sm={3}>
-                                License
+                                License*
                             </Col>
                             <Col sm={6}>
                                 <FormControl
@@ -106,7 +106,7 @@ export default class ManageSoftware extends Component{
                         </FormGroup>
                         <FormGroup controlId='cost'>
                             <Col componentClass={ControlLabel} sm={3}>
-                                Monthly subscription cost
+                                Monthly subscription cost*
                             </Col>
                             <Col sm={6}>
                                 <FormControl

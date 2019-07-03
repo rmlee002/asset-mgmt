@@ -185,7 +185,7 @@ export default class ManageEmployee extends Component{
                     <Form horizontal>
                         <FormGroup controlId='first_name'>
                             <Col componentClass={ControlLabel} sm={3}>
-                                First Name
+                                First Name*
                             </Col>
                             <Col sm={7}>
                                 <FormControl
@@ -198,7 +198,7 @@ export default class ManageEmployee extends Component{
                         </FormGroup>
                         <FormGroup controlId='last_name'>
                             <Col componentClass={ControlLabel} sm={3}>
-                                Last Name
+                                Last Name*
                             </Col>
                             <Col sm={7}>
                                 <FormControl
@@ -212,7 +212,7 @@ export default class ManageEmployee extends Component{
                         </FormGroup>
                         <FormGroup controlId='email'>
                             <Col componentClass={ControlLabel} sm={3}>
-                                Email
+                                Email*
                             </Col>
                             <Col sm={7}>
                                 <FormControl
@@ -224,7 +224,7 @@ export default class ManageEmployee extends Component{
                             </Col>
                         </FormGroup>
                         <FormGroup controlId='affiliation'>
-                            <Col componentClass={ControlLabel} sm={3}>Affiliation</Col>
+                            <Col componentClass={ControlLabel} sm={3}>Affiliation*</Col>
                             <Col sm={7}>
                                 <Select
                                     onChange={this.handleAffiliation}
@@ -240,7 +240,7 @@ export default class ManageEmployee extends Component{
                             </Col>
                         </FormGroup>
                         <FormGroup controlId='department'>
-                            <Col componentClass={ControlLabel} sm={3}>Department</Col>
+                            <Col componentClass={ControlLabel} sm={3}>Department*</Col>
                             <Col sm={7}>
                                 <Departments
                                     defaultvalue={this.state.depts}
@@ -252,7 +252,7 @@ export default class ManageEmployee extends Component{
                         </FormGroup>
                         <FormGroup controlId='supervisor'>
                             <Col componentClass={ControlLabel} sm={3}>
-                                Supervisor
+                                Supervisor*
                             </Col>
                             <Col sm={7}>
                                 <EmployeeSelect
@@ -263,7 +263,7 @@ export default class ManageEmployee extends Component{
                         </FormGroup>
                         <FormGroup controlId='reviewer'>
                             <Col componentClass={ControlLabel} sm={3}>
-                                Reviewer
+                                Reviewer*
                             </Col>
                             <Col sm={7}>
                                 <EmployeeSelect
@@ -274,7 +274,7 @@ export default class ManageEmployee extends Component{
                         </FormGroup>
                         <FormGroup controlId='time_approver'>
                             <Col componentClass={ControlLabel} sm={3}>
-                                Time Approver
+                                Time Approver*
                             </Col>
                             <Col sm={7}>
                                 <EmployeeSelect
@@ -285,7 +285,7 @@ export default class ManageEmployee extends Component{
                         </FormGroup>
                         <FormGroup controlId='start'>
                             <Col componentClass={ControlLabel} sm={3}>
-                                Start date
+                                Start date*
                             </Col>
                             <Col sm={7}>
                                 <DatePicker
