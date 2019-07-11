@@ -59,7 +59,7 @@ class Links extends Component{
                 </Navbar.Header>                    
                 <Navbar.Collapse>
                     <Nav>
-                        <NavDropdown title='Employees'>
+                        <NavDropdown title='Employees' id={'employees'}>
                             <LinkContainer exact to='/employees'>
                                 <MenuItem>View Employees</MenuItem>
                             </LinkContainer>
@@ -69,7 +69,7 @@ class Links extends Component{
                                 </LinkContainer>
                             }
                         </NavDropdown>
-                        <NavDropdown title='Hardware'>
+                        <NavDropdown title='Hardware' id={'hardware'}>
                             <LinkContainer exact to='/assets/laptops'>
                                 <MenuItem>Laptops</MenuItem>
                             </LinkContainer>
@@ -86,7 +86,7 @@ class Links extends Component{
                                 <MenuItem>Hardware Reporting</MenuItem>
                             </LinkContainer>
                         </NavDropdown>
-                        <NavDropdown title='Software'>
+                        <NavDropdown title='Software' id={'software'}>
                             <LinkContainer exact to='/software'>
                                 <MenuItem>View software</MenuItem>
                             </LinkContainer>

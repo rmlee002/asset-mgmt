@@ -34,8 +34,7 @@ export default class Filter extends Component{
         })        
     }
 
-    handleSubmit(e){
-        e.preventDefault();
+    handleSubmit(){
         this.props.handleFilter({
             start: this.state.start?this.state.start:new Date(1970,0,1),
             end: this.state.end?this.state.end:null,
@@ -80,64 +79,62 @@ export default class Filter extends Component{
                 </Button>
                 <Collapse in={this.state.open}>
                     <Well>
-                        <form onSubmit={this.handleSubmit}>
-                            <Form horizontal> 
-                                <FormGroup>
-                                    <Col componentClass={ControlLabel} sm={1}>
-                                        From: 
-                                    </Col>
-                                    <Col sm = {2}>
-                                        <DatePicker 
-                                            className='form-control'
-                                            fixedHeight
-                                            isClearable 
-                                            selected={this.state.start} 
-                                            onChange={date => this.setState({start: date})}
-                                        />
-                                    </Col>
-                                    <Col componentClass={ControlLabel} sm={1}>
-                                        To: 
-                                    </Col>    
-                                    <Col sm={2}>
-                                        <DatePicker 
-                                            isClearable 
-                                            className='form-control'
-                                            selected={this.state.end} 
-                                            onChange={date => this.setState({end: date})}
-                                        />
-                                    </Col>
-                                </FormGroup>              
-                            </Form>      
-                            <Form horizontal>
-                                <FormGroup>
-                                    <Col componentClass={ControlLabel} sm={1}>
-                                        Department(s):
-                                    </Col>
-                                    <Col sm={5}>
-                                        <Departments createDept={this.handleCreateDepartmentOption} handleChange={this.handleDepartment} value={this.state.depts}/>
-                                    </Col>
-                                </FormGroup>
-                                {this.props.checkbox &&
-                                    <FormGroup>
-                                        <Col smOffset={1} sm={2}>
-                                            <Checkbox checked={this.state.showArchived} onChange={this.handleCheck}>Show retired</Checkbox>
-                                        </Col>
-                                    </FormGroup>
-                                }                                
+                        <Form horizontal>
+                            <FormGroup>
+                                <Col componentClass={ControlLabel} sm={1}>
+                                    From:
+                                </Col>
+                                <Col sm = {2}>
+                                    <DatePicker
+                                        className='form-control'
+                                        fixedHeight
+                                        isClearable
+                                        selected={this.state.start}
+                                        onChange={date => this.setState({start: date})}
+                                    />
+                                </Col>
+                                <Col componentClass={ControlLabel} sm={1}>
+                                    To:
+                                </Col>
+                                <Col sm={2}>
+                                    <DatePicker
+                                        isClearable
+                                        className='form-control'
+                                        selected={this.state.end}
+                                        onChange={date => this.setState({end: date})}
+                                    />
+                                </Col>
+                            </FormGroup>
+                        </Form>
+                        <Form horizontal>
+                            <FormGroup>
+                                <Col componentClass={ControlLabel} sm={1}>
+                                    Department(s):
+                                </Col>
+                                <Col sm={5}>
+                                    <Departments createDept={this.handleCreateDepartmentOption} handleChange={this.handleDepartment} value={this.state.depts}/>
+                                </Col>
+                            </FormGroup>
+                            {this.props.checkbox &&
                                 <FormGroup>
                                     <Col smOffset={1} sm={2}>
-                                        <ButtonToolbar>                                
-                                            <Button type='submit' bsSize='small' bsStyle='success'>
-                                                Apply <FontAwesomeIcon icon="check"/>
-                                            </Button> 
-                                            <Button bsSize='small' onClick={this.handleClear}>
-                                                Clear <FontAwesomeIcon icon="undo"/>
-                                            </Button>                               
-                                        </ButtonToolbar>
-                                    </Col>  
-                                </FormGroup>                                
-                            </Form>                                                 
-                        </form>    
+                                        <Checkbox checked={this.state.showArchived} onChange={this.handleCheck}>Show retired</Checkbox>
+                                    </Col>
+                                </FormGroup>
+                            }
+                            <FormGroup>
+                                <Col smOffset={1} sm={2}>
+                                    <ButtonToolbar>
+                                        <Button onClick={this.handleSubmit} bsSize='small' bsStyle='success'>
+                                            Apply <FontAwesomeIcon icon="check"/>
+                                        </Button>
+                                        <Button bsSize='small' onClick={this.handleClear}>
+                                            Clear <FontAwesomeIcon icon="undo"/>
+                                        </Button>
+                                    </ButtonToolbar>
+                                </Col>
+                            </FormGroup>
+                        </Form>
                     </Well>
                 </Collapse>
             </React.Fragment>

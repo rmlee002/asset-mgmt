@@ -12,12 +12,12 @@ export default class OOWDevices extends Component{
             {
                 Header: "Serial Number",
                 accessor: "serial_number",
-                style: { 'white-space': 'unset' }
+                style: { 'whiteSpace': 'unset' }
             },
             {
                 Header: "Model",
                 accessor: "model",
-                style: { 'white-space': 'unset' }
+                style: { 'whiteSpace': 'unset' }
             },
             {
                 Header: "Contract",
@@ -52,7 +52,7 @@ export default class OOWDevices extends Component{
             {
                 Header: "Comment",
                 accessor: "comment",
-                style: { 'white-space': 'unset' }
+                style: { 'whiteSpace': 'unset' }
             }
         ];
 

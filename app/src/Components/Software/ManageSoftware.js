@@ -43,8 +43,7 @@ export default class ManageSoftware extends Component{
         })
     }
 
-    handleUpdate(e){
-        e.preventDefault();
+    handleUpdate(){
         Axios.post('/software/update', {
             name: this.state.name,
             cost: this.state.cost,
@@ -90,52 +89,50 @@ export default class ManageSoftware extends Component{
 
         return (
             <React.Fragment>
-                <form onSubmit={this.handleUpdate}>
-                    <Form horizontal onChange={this.handleChange}>
-                        <FormGroup controlId='name'>
-                            <Col componentClass={ControlLabel} sm={3}>
-                                License*
-                            </Col>
-                            <Col sm={6}>
-                                <FormControl
-                                    type='text'
-                                    value={this.state.name}
-                                    placeholder='License Name'
-                                />
-                            </Col>
-                        </FormGroup>
-                        <FormGroup controlId='cost'>
-                            <Col componentClass={ControlLabel} sm={3}>
-                                Monthly subscription cost*
-                            </Col>
-                            <Col sm={6}>
-                                <FormControl
-                                    type='number'
-                                    step={'any'}
-                                    value={this.state.cost}
-                                    placeholder='Monthly cost'
-                                />
-                            </Col>
-                        </FormGroup>
-                        <FormGroup>
-                            <Col smOffset={3} sm={4}>
-                                <ButtonToolbar>
-                                    <Button
-                                        type='submit'
-                                        bsStyle='success'
-                                        disabled={invalid}
-                                    >
-                                        Update <FontAwesomeIcon icon='check'/>
-                                    </Button>
-                                    {!this.state.archived ?
-                                        <Button bsStyle='danger' onClick={this.handleRetire}>Retire <FontAwesomeIcon
-                                            icon='archive'/></Button>
-                                        : <Button bsStyle='primary' onClick={this.handleUnretire}>Unarchive</Button>}
-                                </ButtonToolbar>
-                            </Col>
-                        </FormGroup>
-                    </Form>
-                </form>
+                <Form horizontal onChange={this.handleChange}>
+                    <FormGroup controlId='name'>
+                        <Col componentClass={ControlLabel} sm={3}>
+                            License*
+                        </Col>
+                        <Col sm={6}>
+                            <FormControl
+                                type='text'
+                                value={this.state.name}
+                                placeholder='License Name'
+                            />
+                        </Col>
+                    </FormGroup>
+                    <FormGroup controlId='cost'>
+                        <Col componentClass={ControlLabel} sm={3}>
+                            Monthly subscription cost*
+                        </Col>
+                        <Col sm={6}>
+                            <FormControl
+                                type='number'
+                                step={'any'}
+                                value={this.state.cost}
+                                placeholder='Monthly cost'
+                            />
+                        </Col>
+                    </FormGroup>
+                    <FormGroup>
+                        <Col smOffset={3} sm={4}>
+                            <ButtonToolbar>
+                                <Button
+                                    onClick={this.handleUpdate}
+                                    bsStyle='success'
+                                    disabled={invalid}
+                                >
+                                    Update <FontAwesomeIcon icon='check'/>
+                                </Button>
+                                {!this.state.archived ?
+                                    <Button bsStyle='danger' onClick={this.handleRetire}>Retire <FontAwesomeIcon
+                                        icon='archive'/></Button>
+                                    : <Button bsStyle='primary' onClick={this.handleUnretire}>Unarchive</Button>}
+                            </ButtonToolbar>
+                        </Col>
+                    </FormGroup>
+                </Form>
             </React.Fragment>
         );
     }

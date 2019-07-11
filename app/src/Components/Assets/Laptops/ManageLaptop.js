@@ -162,174 +162,171 @@ export default class ManageLaptop extends Component{
 
         return(
             <React.Fragment>
-                <form onSubmit={this.handleSubmit}>
-                    <Form horizontal>                                
-                        <FormGroup controlId='serial_number'>
+                <Form horizontal>
+                    <FormGroup controlId='serial_number'>
+                        <Col componentClass={ControlLabel} sm={3}>
+                            Serial Number*
+                        </Col>
+                        <Col sm={6}>
+                            <FormControl
+                                type='text'
+                                value={this.state.serial_number}
+                                placeholder='Serial Number'
+                                onChange={this.handleChange}
+                            />
+                        </Col>
+                    </FormGroup>
+                    <FormGroup controlId='model'>
+                        <Col componentClass={ControlLabel} sm={3}>
+                            Model*
+                        </Col>
+                        <Col sm={6}>
+                            <FormControl
+                                type='text'
+                                value={this.state.model}
+                                placeholder='Model'
+                                onChange={this.handleChange}
+                            />
+                        </Col>
+                    </FormGroup>
+                    <FormGroup controlId='warranty_provider'>
+                        <Col componentClass={ControlLabel} sm={3}>
+                            Warranty Provider
+                        </Col>
+                        <Col sm={6}>
+                            <FormControl
+                                type='text'
+                                value={this.state.warranty_provider}
+                                placeholder='Warranty Provider'
+                                onChange={this.handleChange}
+                            />
+                        </Col>
+                    </FormGroup>
+                    <FormGroup controlId='cost'>
+                        <Col componentClass={ControlLabel} sm={3}>
+                            Cost*
+                        </Col>
+                        <Col sm={6}>
+                            <FormControl
+                                type='number'
+                                step={'any'}
+                                value={this.state.cost}
+                                placeholder='Cost'
+                                onChange={this.handleChange}
+                            />
+                        </Col>
+                    </FormGroup>
+                    <FormGroup controlId='vendor'>
+                        <Col componentClass={ControlLabel} sm={3}>
+                            Vendor
+                        </Col>
+                        <Col sm={6}>
+                            <FormControl
+                                type='text'
+                                value={this.state.vendor}
+                                placeholder='Vendor'
+                                onChange={this.handleChange}
+                            />
+                        </Col>
+                    </FormGroup>
+                    <FormGroup controlId='order_num'>
+                        <Col componentClass={ControlLabel} sm={3}>
+                            Order Number*
+                        </Col>
+                        <Col sm={6}>
+                            <FormControl
+                                type='text'
+                                value={this.state.order_num}
+                                placeholder='Order Number'
+                                onChange={this.handleChange}
+                            />
+                        </Col>
+                    </FormGroup>
+                    <FormGroup controlId='warranty'>
+                        <Col componentClass={ControlLabel} sm={3}>
+                            Warranty
+                        </Col>
+                        <Col sm={6}>
+                            <FormControl
+                                type='text'
+                                value={this.state.warranty}
+                                placeholder='Warranty'
+                                onChange={this.handleChange}
+                            />
+                        </Col>
+                    </FormGroup>
+                    <FormGroup controlId='in'>
+                        <Col componentClass={ControlLabel} sm={3}>
+                            In Date*
+                        </Col>
+                        <Col sm={7}>
+                            <DatePicker
+                                className='form-control'
+                                selected={this.state.inDate}
+                                onChange={this.handleIn}
+                            />
+                        </Col>
+                    </FormGroup>
+                    {this.state.archived ?
+                        <FormGroup controlId='out'>
                             <Col componentClass={ControlLabel} sm={3}>
-                                Serial Number*
+                                Out Date
                             </Col>
                             <Col sm={6}>
-                                <FormControl
-                                    type='text'
-                                    value={this.state.serial_number}
-                                    placeholder='Serial Number'
-                                    onChange={this.handleChange}
-                                />
-                            </Col>
-                        </FormGroup>
-                        <FormGroup controlId='model'>
-                            <Col componentClass={ControlLabel} sm={3}>
-                                Model*
-                            </Col>
-                            <Col sm={6}>
-                                <FormControl
-                                    type='text'
-                                    value={this.state.model}
-                                    placeholder='Model'
-                                    onChange={this.handleChange}
-                                />
-                            </Col>
-                        </FormGroup>
-                        <FormGroup controlId='warranty_provider'>
-                            <Col componentClass={ControlLabel} sm={3}>
-                                Warranty Provider
-                            </Col>
-                            <Col sm={6}>
-                                <FormControl
-                                    type='text'
-                                    value={this.state.warranty_provider}
-                                    placeholder='Warranty Provider'
-                                    onChange={this.handleChange}
-                                />
-                            </Col>
-                        </FormGroup>
-                        <FormGroup controlId='cost'>
-                            <Col componentClass={ControlLabel} sm={3}>
-                                Cost*
-                            </Col>
-                            <Col sm={6}>
-                                <FormControl
-                                    type='number'
-                                    step={'any'}
-                                    value={this.state.cost}
-                                    placeholder='Cost'
-                                    onChange={this.handleChange}
-                                />
-                            </Col>
-                        </FormGroup>
-                        <FormGroup controlId='vendor'>
-                            <Col componentClass={ControlLabel} sm={3}>
-                                Vendor
-                            </Col>
-                            <Col sm={6}>
-                                <FormControl
-                                    type='text'
-                                    value={this.state.vendor}
-                                    placeholder='Vendor'
-                                    onChange={this.handleChange}
-                                />
-                            </Col>
-                        </FormGroup>                        
-                        <FormGroup controlId='order_num'>
-                            <Col componentClass={ControlLabel} sm={3}>
-                                Order Number*
-                            </Col>
-                            <Col sm={6}>
-                                <FormControl
-                                    type='text'
-                                    value={this.state.order_num}
-                                    placeholder='Order Number'
-                                    onChange={this.handleChange}
-                                />
-                            </Col>
-                        </FormGroup>
-                        <FormGroup controlId='warranty'>
-                            <Col componentClass={ControlLabel} sm={3}>
-                                Warranty
-                            </Col>
-                            <Col sm={6}>
-                                <FormControl
-                                    type='text'
-                                    value={this.state.warranty}
-                                    placeholder='Warranty'
-                                    onChange={this.handleChange}
-                                />
-                            </Col>
-                        </FormGroup>
-                        <FormGroup controlId='in'>
-                            <Col componentClass={ControlLabel} sm={3}>
-                                In Date*
-                            </Col>
-                            <Col sm={7}>
                                 <DatePicker
+                                    isClearable
                                     className='form-control'
-                                    selected={this.state.inDate}
-                                    onChange={this.handleIn}
+                                    selected={this.state.outDate}
+                                    onChange={this.handleOut}
                                 />
                             </Col>
                         </FormGroup>
-                        {this.state.archived ?
-                            <FormGroup controlId='out'>
-                                <Col componentClass={ControlLabel} sm={3}>
-                                    Out Date
-                                </Col>
-                                <Col sm={6}>
-                                    <DatePicker
-                                        isClearable
-                                        className='form-control'
-                                        selected={this.state.outDate}
-                                        onChange={this.handleOut}
-                                    />
-                                </Col>
-                            </FormGroup>
-                            : null
-                        }
-                        <FormGroup controlId='comment'>
-                            <Col componentClass={ControlLabel} sm={3}>
-                                Comment
-                            </Col>
-                            <Col sm={6}>
-                                <FormControl
-                                    type='text'
-                                    value={this.state.comment}
-                                    placeholder='Comment'
-                                    onChange={this.handleChange}
-                                />
-                            </Col>
-                        </FormGroup>
-                        <FormGroup controlId='broken'>
-                            <Col componentClass={ControlLabel} sm={3}>
-                                Broken
-                            </Col>
-                            <Col sm={6}>
-                                <Checkbox checked={this.state.broken} onChange={this.handleCheck}/>
-                            </Col>
-                        </FormGroup>
-                        <FormGroup>
-                            <Col smOffset={3} sm={7}>
-                                <ButtonToolbar>
-                                    <Button
-                                        type = 'submit'
-                                        bsStyle='success'
-                                        disabled={this.state.archived? invalid2 : invalid1}
-                                    >
-                                        <FontAwesomeIcon icon='check'/> Update Laptop
-                                    </Button>
-                                    {!this.state.archived?
-                                        <ManageModal 
-                                            type='Retire'
-                                            title='Retire laptop'
-                                            size='medium'
-                                            date={this.state.outDate?this.state.outDate:new Date()}
-                                            handleSubmit={this.handleRetire}
-                                            handleDate={this.handleOut}
-                                        />:
-                                        <Button bsStyle='primary' onClick={this.handleUnretire}>Unarchive</Button>}
-                                </ButtonToolbar>
-                            </Col>
-                        </FormGroup>
-                    </Form>                                        
-                </form>
+                        : null
+                    }
+                    <FormGroup controlId='comment'>
+                        <Col componentClass={ControlLabel} sm={3}>
+                            Comment
+                        </Col>
+                        <Col sm={6}>
+                            <FormControl
+                                type='text'
+                                value={this.state.comment}
+                                placeholder='Comment'
+                                onChange={this.handleChange}
+                            />
+                        </Col>
+                    </FormGroup>
+                    <FormGroup controlId='broken'>
+                        <Col componentClass={ControlLabel} sm={3}>
+                            Broken
+                        </Col>
+                        <Col sm={6}>
+                            <Checkbox checked={this.state.broken} onChange={this.handleCheck}/>
+                        </Col>
+                    </FormGroup>
+                    <FormGroup>
+                        <Col smOffset={3} sm={7}>
+                            <ButtonToolbar>
+                                <Button
+                                    onClick={this.handleSubmit}
+                                    bsStyle='success'
+                                    disabled={this.state.archived? invalid2 : invalid1}
+                                >
+                                    <FontAwesomeIcon icon='check'/> Update Laptop
+                                </Button>
+                                {!this.state.archived?
+                                    <ManageModal
+                                        type='Retire'
+                                        title='Retire laptop'
+                                        date={this.state.outDate?this.state.outDate:new Date()}
+                                        handleSubmit={this.handleRetire}
+                                        handleDate={this.handleOut}
+                                    />:
+                                    <Button bsStyle='primary' onClick={this.handleUnretire}>Unarchive</Button>}
+                            </ButtonToolbar>
+                        </Col>
+                    </FormGroup>
+                </Form>
             </React.Fragment>
         );
     }

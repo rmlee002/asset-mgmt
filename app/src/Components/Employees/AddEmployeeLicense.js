@@ -129,7 +129,7 @@ export default class AddEmployeeLicense extends Component{
                         </thead>
                         <tbody style={{height: this.state.theight}}>
                             {this.state.filtered.map((software) => 
-                                <tr>
+                                <tr key={software.software_id}>
                                     <td>{software.name}</td>
                                     <td>
                                         <Button bsSize='small' bsStyle='success' onClick={()=>this.setState({show:true, software_id: software.software_id})}>Add</Button>

@@ -25,7 +25,6 @@ export default class Employees extends Component {
     componentDidMount(){
         axios.get('/employee')
         .then(res => {
-            console.log(res.data);
             this.setState({
                 employees: res.data,
                 filtered: res.data.filter((emp)=>!emp.archived)
@@ -86,7 +85,7 @@ export default class Employees extends Component {
                 Header: "Name",
                 id: "name",
                 accessor: val => val.first_name + " " + val.last_name,
-                style: { 'white-space': 'unset' }
+                style: { 'whiteSpace': 'unset' }
             },
             {
                 Header: "Email",
@@ -107,19 +106,19 @@ export default class Employees extends Component {
                 Header: "Supervisor",
                 id: "supervisor",
                 accessor: val => val.super_first? val.super_first + " " + val.super_last : "",
-                style: { 'white-space': 'unset' }
+                style: { 'whiteSpace': 'unset' }
             },
             {
                 Header: "Reviewer",
                 id: "reviewer",
                 accessor: val => val.reviewer_first? val.reviewer_first + ' ' + val.reviewer_last : "",
-                style: { 'white-space': 'unset' }
+                style: { 'whiteSpace': 'unset' }
             },
             {
                 Header: "Time Approver",
                 id: "time_approver",
                 accessor: val => val.time_first? val.time_first + ' ' + val.time_last : "",
-                style: { 'white-space': 'unset' }
+                style: { 'whiteSpace': 'unset' }
             },
             {
                 Header: "Start Date",
@@ -136,7 +135,7 @@ export default class Employees extends Component {
             {
                 Header: "Notes",
                 accessor: "notes",
-                style: { 'white-space': 'unset' }
+                style: { 'whiteSpace': 'unset' }
             }
         ];
 

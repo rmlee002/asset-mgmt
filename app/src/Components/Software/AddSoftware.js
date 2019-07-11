@@ -42,46 +42,44 @@ export default class AddSoftware extends Component{
 
         return(
             <React.Fragment>
-                <form onSubmit={this.handleSubmit}>
-                    <Form horizontal onChange={this.handleChange}>
-                        <FormGroup controlId='name'>
-                            <Col componentClass={ControlLabel} sm={3}>
-                                License*
-                            </Col>
-                            <Col sm={6}>
-                                <FormControl
-                                    type='text'
-                                    value={this.state.name}
-                                    placeholder='License Name'
-                                />                        
-                            </Col>
-                        </FormGroup>
-                        <FormGroup controlId='cost'>
-                            <Col componentClass={ControlLabel} sm={3}>
-                                Monthly subscription cost*
-                            </Col>
-                            <Col sm={6}>
-                                <FormControl
-                                    type='number'
-                                    step={'any'}
-                                    value={this.state.cost}
-                                    placeholder='Monthly cost'
-                                />                        
-                            </Col>
-                        </FormGroup>           
-                        <FormGroup>
-                            <Col smOffset={3} sm={1}>
-                                <Button
-                                    type='submit'
-                                    bsStyle='success'
-                                    disabled={invalid}
-                                >
-                                    Add <FontAwesomeIcon icon='check'/>
-                                </Button>
-                            </Col>    
-                        </FormGroup>
-                    </Form>
-                </form>
+                <Form horizontal onChange={this.handleChange}>
+                    <FormGroup controlId='name'>
+                        <Col componentClass={ControlLabel} sm={3}>
+                            License*
+                        </Col>
+                        <Col sm={6}>
+                            <FormControl
+                                type='text'
+                                value={this.state.name}
+                                placeholder='License Name'
+                            />
+                        </Col>
+                    </FormGroup>
+                    <FormGroup controlId='cost'>
+                        <Col componentClass={ControlLabel} sm={3}>
+                            Monthly subscription cost*
+                        </Col>
+                        <Col sm={6}>
+                            <FormControl
+                                type='number'
+                                step={'any'}
+                                value={this.state.cost}
+                                placeholder='Monthly cost'
+                            />
+                        </Col>
+                    </FormGroup>
+                    <FormGroup>
+                        <Col smOffset={3} sm={1}>
+                            <Button
+                                onClick={this.handleSubmit}
+                                bsStyle='success'
+                                disabled={invalid}
+                            >
+                                Add <FontAwesomeIcon icon='check'/>
+                            </Button>
+                        </Col>
+                    </FormGroup>
+                </Form>
             </React.Fragment>            
         );
     }

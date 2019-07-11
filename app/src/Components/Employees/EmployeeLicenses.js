@@ -128,7 +128,7 @@ export default class EmployeeLicenses extends Component{
                         </thead>
                         <tbody style={{height: this.state.theight, overflowY: 'auto'}}>
                             {this.state.filtered.map((license) => 
-                                <tr>
+                                <tr key={license.software_id}>
                                     <td>{license.name}</td>
                                     <td>{moment(license.start).utc().format('YYYY-MM-DD')}</td>
                                     <td>

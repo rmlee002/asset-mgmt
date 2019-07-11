@@ -77,18 +77,18 @@ export default class NonLaptops extends Component{
             {
                 Header: "Serial Number",
                 accessor: "serial_number",
-                style: { 'white-space': 'unset' },
+                style: { 'whiteSpace': 'unset' },
                 width: 140
             },
             {
                 Header: "Model",
                 accessor: "model",
-                style: { 'white-space': 'unset' }
+                style: { 'whiteSpace': 'unset' }
             },
             {
                 Header: "Description",
                 accessor: "description",
-                style: { 'white-space': 'unset' }
+                style: { 'whiteSpace': 'unset' }
             },
             {
                 Header: "Warranty Provider",
@@ -118,7 +118,7 @@ export default class NonLaptops extends Component{
             {
                 Header: "Order Number",
                 accessor: "order_number",
-                style: { 'white-space': 'unset' }
+                style: { 'whiteSpace': 'unset' }
             },
             {
                 Header: "Warranty",
@@ -146,7 +146,7 @@ export default class NonLaptops extends Component{
             {
                 Header: "Comment",
                 accessor: "comment",
-                style: { 'white-space': 'unset' }
+                style: { 'whiteSpace': 'unset' }
             }
         ];
 

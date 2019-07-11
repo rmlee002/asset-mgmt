@@ -131,7 +131,7 @@ export default class EditOwner extends Component{
                         </thead>
                         <tbody style={{height: this.state.theight}}>
                             {this.state.filtered.map(employee => 
-                                <tr>
+                                <tr key={employee.emp_id}>
                                     <td>{employee.first_name+" "+employee.last_name}</td>
                                     <td>{employee.email}</td>
                                     <td>{employee.affiliation}</td>

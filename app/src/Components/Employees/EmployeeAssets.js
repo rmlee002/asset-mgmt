@@ -120,7 +120,7 @@ export default class EmployeeAssets extends Component{
                         </thead>
                         <tbody style={{height: this.state.theight, overflowY: 'scroll'}}>
                             {this.state.assets.map(item => 
-                                <tr>
+                                <tr key={item.laptop_id}>
                                     <td>{item.serial_number}</td>
                                     <td>{item.model}</td>
                                     <td>{item.comment}</td>

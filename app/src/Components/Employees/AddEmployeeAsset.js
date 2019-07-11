@@ -108,14 +108,6 @@ export default class AddLaptop extends Component{
     }
     
     render(){
-        /*if (this.state.archived){
-            return (
-                <div>
-                    <h1>Error</h1>
-                    <span>Cannot add assets to retired employee</span>
-                </div>
-            )
-        }*/
         return(
             <React.Fragment>
                 <FormGroup controlid="search">
@@ -139,7 +131,7 @@ export default class AddLaptop extends Component{
                         </thead>
                         <tbody style={{height: this.state.theight}}>
                             {this.state.filtered.map(item =>                             
-                                <tr>
+                                <tr key={item.laptop_id}>
                                     <td>{item.serial_number}</td>
                                     <td>{item.model}</td>                                
                                     <td>{item.comment}</td>                          

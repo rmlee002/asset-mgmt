@@ -47,7 +47,7 @@ export default class ManageModal extends Component{
             <React.Fragment>
                 <Button 
                     bsStyle={this.state.style}
-                    bsSize={this.props.size?this.props.size:'small'}
+                    bsSize={this.props.size?this.props.size:null}
                     onClick={this.handleClick}
                 >
                     {this.props.type} <FontAwesomeIcon icon={this.props.type==='Retire'?'archive':'check'}/>
@@ -59,7 +59,7 @@ export default class ManageModal extends Component{
                     <Modal.Header closeButton>
                         <Modal.Title>{this.props.title}</Modal.Title>
                     </Modal.Header>
-                        <form>
+                        {/*<form>*/}
                             <Modal.Body>
                                 <Form horizontal>
                                     <FormGroup>
@@ -85,7 +85,7 @@ export default class ManageModal extends Component{
                                     {this.props.type} <FontAwesomeIcon icon={this.props.type==='Retire'?'archive':'check'}/>
                                 </Button>
                             </Modal.Footer>
-                        </form>
+                        {/*</form>*/}
                 </Modal>
             </React.Fragment>
         );

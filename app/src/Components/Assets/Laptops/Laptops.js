@@ -79,13 +79,13 @@ export default class Laptops extends Component{
             {
                 Header: "Serial Number",
                 accessor: "serial_number",
-                style: { 'white-space': 'unset' },
+                style: { 'whiteSpace': 'unset' },
                 width: 140
             },
             {
                 Header: "Model",
                 accessor: "model",
-                style: { 'white-space': 'unset' }
+                style: { 'whiteSpace': 'unset' }
             },
             {
                 Header: "Warranty Provider",
@@ -96,7 +96,7 @@ export default class Laptops extends Component{
                 Header: "Owner",
                 id: "owner",
                 accessor: val => val.first_name?val.first_name + " " + val.last_name : "",
-                style: { 'white-space': 'unset' }
+                style: { 'whiteSpace': 'unset' }
             },
             {
                 Header: "Cost",
@@ -111,7 +111,7 @@ export default class Laptops extends Component{
             {
                 Header: "Order Number",
                 accessor: "order_num",
-                style: { 'white-space': 'unset' }
+                style: { 'whiteSpace': 'unset' }
             },
             {
                 Header: "Warranty",
@@ -147,7 +147,7 @@ export default class Laptops extends Component{
             {
                 Header: "Comment",
                 accessor: "comment",
-                style: { 'white-space': 'unset' }
+                style: { 'whiteSpace': 'unset' }
             }
         ];
 

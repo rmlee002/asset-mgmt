@@ -57,10 +57,6 @@ export default class Data extends Component{
                 .map(item => data[moment(item.inDate).utc().month()].total += parseFloat(item.cost));
         }
         else{
-            console.log(
-                this.props.data
-                    .filter(item => item.inDate != null && item.cost != null && moment(item.inDate).utc().year() === this.state.year.value)
-            );
             this.props.data
                 .filter(item => item.inDate != null && item.cost != null && moment(item.inDate).utc().year() === this.state.year.value)
                 .map(item => data[moment(item.inDate).utc().month()].total += parseFloat(item.cost));
