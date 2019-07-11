@@ -19,7 +19,6 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
 app.set('view engine', 'ejs');
@@ -37,6 +36,8 @@ app.use('/hwReporting', hwReportingRouter);
 app.get('/checkToken', authorized, (req, res) => {
 	res.sendStatus(200);
 });
+
+app.use(express.static(path.join(__dirname, './build')));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
