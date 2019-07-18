@@ -151,8 +151,7 @@ export default class ManageEmployee extends Component{
         })
     }
 
-    handleUpdate(e){
-        e.preventDefault();
+    handleUpdate(){
         axios.post('/employee/update', {
             emp_id: this.state.emp_id,
             first_name: this.state.first_name,
@@ -167,9 +166,9 @@ export default class ManageEmployee extends Component{
             outDate: this.state.end?moment(this.state.end).utc().format('YYYY-MM-DD'):null,
             notes: this.state.notes
         })
-        .then(res => {
+        /*.then(res => {
             window.location.reload();
-        })
+        })*/
         .catch(err => {
             console.log(err);
             alert(err.response.data)
