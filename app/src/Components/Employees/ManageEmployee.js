@@ -180,7 +180,7 @@ export default class ManageEmployee extends Component{
         const isValid2 = this.state.first_name && this.state.last_name && this.state.email && this.state.start && this.state.depts.length !==0 && this.state.end;
         return (
             <React.Fragment>
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={this.handleUpdate}>
                     <Form horizontal>
                         <FormGroup controlId='first_name'>
                             <Col componentClass={ControlLabel} sm={3}>
