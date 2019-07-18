@@ -181,166 +181,168 @@ export default class ManageEmployee extends Component{
         const isValid2 = this.state.first_name && this.state.last_name && this.state.email && this.state.start && this.state.depts.length !==0 && this.state.end;
         return (
             <React.Fragment>
-                <Form horizontal>
-                    <FormGroup controlId='first_name'>
-                        <Col componentClass={ControlLabel} sm={3}>
-                            First Name*
-                        </Col>
-                        <Col sm={7}>
-                            <FormControl
-                                type='text'
-                                value={this.state.first_name}
-                                placeholder='First name'
-                                onChange={this.handleChange}
-                            />
-                        </Col>
-                    </FormGroup>
-                    <FormGroup controlId='last_name'>
-                        <Col componentClass={ControlLabel} sm={3}>
-                            Last Name*
-                        </Col>
-                        <Col sm={7}>
-                            <FormControl
-                                type='text'
-                                value={this.state.last_name}
-                                placeholder='Last name'
-                                help='Required'
-                                onChange={this.handleChange}
-                            />
-                        </Col>
-                    </FormGroup>
-                    <FormGroup controlId='email'>
-                        <Col componentClass={ControlLabel} sm={3}>
-                            Email*
-                        </Col>
-                        <Col sm={7}>
-                            <FormControl
-                                type='email'
-                                value={this.state.email}
-                                placeholder='Email'
-                                onChange={this.handleChange}
-                            />
-                        </Col>
-                    </FormGroup>
-                    <FormGroup controlId='affiliation'>
-                        <Col componentClass={ControlLabel} sm={3}>Affiliation*</Col>
-                        <Col sm={7}>
-                            <Select
-                                onChange={this.handleAffiliation}
-                                options={[
-                                    {value: 'Contractor', label: 'Contractor'},
-                                    {value: 'Employee', label: 'Employee'},
-                                    {value: 'Part-time/Hourly', label: 'Part-time/Hourly'},
-                                    {value: 'Intern', label: 'Intern'}
-                                ]}
-                                value={{value: this.state.affiliation, label: this.state.affiliation}}
-                            >
-                            </Select>
-                        </Col>
-                    </FormGroup>
-                    <FormGroup controlId='department'>
-                        <Col componentClass={ControlLabel} sm={3}>Department*</Col>
-                        <Col sm={7}>
-                            <Departments
-                                defaultvalue={this.state.depts}
-                                createDept={this.handleCreateDepartmentOption}
-                                handleChange={this.handleDepartment}
-                                depts={this.state.depts}
-                            />
-                        </Col>
-                    </FormGroup>
-                    <FormGroup controlId='supervisor'>
-                        <Col componentClass={ControlLabel} sm={3}>
-                            Supervisor*
-                        </Col>
-                        <Col sm={7}>
-                            <EmployeeSelect
-                                value={this.state.supervisor}
-                                onChange={this.handleEmployeeAssign('supervisor')}
-                            />
-                        </Col>
-                    </FormGroup>
-                    <FormGroup controlId='reviewer'>
-                        <Col componentClass={ControlLabel} sm={3}>
-                            Reviewer*
-                        </Col>
-                        <Col sm={7}>
-                            <EmployeeSelect
-                                value={this.state.reviewer}
-                                onChange={this.handleEmployeeAssign('reviewer')}
-                            />
-                        </Col>
-                    </FormGroup>
-                    <FormGroup controlId='time_approver'>
-                        <Col componentClass={ControlLabel} sm={3}>
-                            Time Approver*
-                        </Col>
-                        <Col sm={7}>
-                            <EmployeeSelect
-                                value={this.state.time_approver}
-                                onChange={this.handleEmployeeAssign('time_approver')}
-                            />
-                        </Col>
-                    </FormGroup>
-                    <FormGroup controlId='start'>
-                        <Col componentClass={ControlLabel} sm={3}>
-                            Start date*
-                        </Col>
-                        <Col sm={7}>
-                            <DatePicker
-                                className='form-control'
-                                selected={this.state.start}
-                                onChange={this.handleStart}
-                            />
-                        </Col>
-                    </FormGroup>
-                    {this.state.archived ?
-                        <FormGroup controlId='end'>
+                <form onSubmit={this.handleSubmit}>
+                    <Form horizontal>
+                        <FormGroup controlId='first_name'>
                             <Col componentClass={ControlLabel} sm={3}>
-                                End date
+                                First Name*
                             </Col>
                             <Col sm={7}>
-                                <DatePicker
-                                    isClearable
-                                    className='form-control'
-                                    selected={this.state.end}
-                                    onChange={this.handleEnd}
+                                <FormControl
+                                    type='text'
+                                    value={this.state.first_name}
+                                    placeholder='First name'
+                                    onChange={this.handleChange}
                                 />
                             </Col>
                         </FormGroup>
-                        : null
-                    }
-                    <FormGroup controlId='notes'>
-                        <Col componentClass={ControlLabel} sm={3}>
-                            Notes
-                        </Col>
-                        <Col sm={7}>
-                            <FormControl
-                                type='text'
-                                value={this.state.notes}
-                                placeholder='Notes'
-                                onChange={this.handleChange}
-                            />
-                        </Col>
-                    </FormGroup>
-                    <FormGroup>
-                        <Col smOffset={3} sm={7}>
-                            <ButtonToolbar>
-                                <Button onClick={this.handleUpdate} bsStyle='success' disabled={this.state.archived?!isValid2:!isValid1}>Update
-                                    employee <FontAwesomeIcon icon='check'/></Button>
-                                {!this.state.archived ?
-                                    <ManageModal
-                                        type='Retire'
-                                        title='Retire employee'
-                                        date={this.state.date}
-                                        handleSubmit={this.handleRetire}
-                                        handleDate={this.handleDate}
+                        <FormGroup controlId='last_name'>
+                            <Col componentClass={ControlLabel} sm={3}>
+                                Last Name*
+                            </Col>
+                            <Col sm={7}>
+                                <FormControl
+                                    type='text'
+                                    value={this.state.last_name}
+                                    placeholder='Last name'
+                                    help='Required'
+                                    onChange={this.handleChange}
+                                />
+                            </Col>
+                        </FormGroup>
+                        <FormGroup controlId='email'>
+                            <Col componentClass={ControlLabel} sm={3}>
+                                Email*
+                            </Col>
+                            <Col sm={7}>
+                                <FormControl
+                                    type='email'
+                                    value={this.state.email}
+                                    placeholder='Email'
+                                    onChange={this.handleChange}
+                                />
+                            </Col>
+                        </FormGroup>
+                        <FormGroup controlId='affiliation'>
+                            <Col componentClass={ControlLabel} sm={3}>Affiliation*</Col>
+                            <Col sm={7}>
+                                <Select
+                                    onChange={this.handleAffiliation}
+                                    options={[
+                                        {value: 'Contractor', label: 'Contractor'},
+                                        {value: 'Employee', label: 'Employee'},
+                                        {value: 'Part-time/Hourly', label: 'Part-time/Hourly'},
+                                        {value: 'Intern', label: 'Intern'}
+                                    ]}
+                                    value={{value: this.state.affiliation, label: this.state.affiliation}}
+                                >
+                                </Select>
+                            </Col>
+                        </FormGroup>
+                        <FormGroup controlId='department'>
+                            <Col componentClass={ControlLabel} sm={3}>Department*</Col>
+                            <Col sm={7}>
+                                <Departments
+                                    defaultvalue={this.state.depts}
+                                    createDept={this.handleCreateDepartmentOption}
+                                    handleChange={this.handleDepartment}
+                                    depts={this.state.depts}
+                                />
+                            </Col>
+                        </FormGroup>
+                        <FormGroup controlId='supervisor'>
+                            <Col componentClass={ControlLabel} sm={3}>
+                                Supervisor*
+                            </Col>
+                            <Col sm={7}>
+                                <EmployeeSelect
+                                    value={this.state.supervisor}
+                                    onChange={this.handleEmployeeAssign('supervisor')}
+                                />
+                            </Col>
+                        </FormGroup>
+                        <FormGroup controlId='reviewer'>
+                            <Col componentClass={ControlLabel} sm={3}>
+                                Reviewer*
+                            </Col>
+                            <Col sm={7}>
+                                <EmployeeSelect
+                                    value={this.state.reviewer}
+                                    onChange={this.handleEmployeeAssign('reviewer')}
+                                />
+                            </Col>
+                        </FormGroup>
+                        <FormGroup controlId='time_approver'>
+                            <Col componentClass={ControlLabel} sm={3}>
+                                Time Approver*
+                            </Col>
+                            <Col sm={7}>
+                                <EmployeeSelect
+                                    value={this.state.time_approver}
+                                    onChange={this.handleEmployeeAssign('time_approver')}
+                                />
+                            </Col>
+                        </FormGroup>
+                        <FormGroup controlId='start'>
+                            <Col componentClass={ControlLabel} sm={3}>
+                                Start date*
+                            </Col>
+                            <Col sm={7}>
+                                <DatePicker
+                                    className='form-control'
+                                    selected={this.state.start}
+                                    onChange={this.handleStart}
+                                />
+                            </Col>
+                        </FormGroup>
+                        {this.state.archived ?
+                            <FormGroup controlId='end'>
+                                <Col componentClass={ControlLabel} sm={3}>
+                                    End date
+                                </Col>
+                                <Col sm={7}>
+                                    <DatePicker
+                                        isClearable
+                                        className='form-control'
+                                        selected={this.state.end}
+                                        onChange={this.handleEnd}
                                     />
-                                    : <Button bsStyle='primary' onClick={this.handleUnretire}>Unarchive</Button>}
-                            </ButtonToolbar>
-                        </Col>
-                    </FormGroup>
-                </Form>
+                                </Col>
+                            </FormGroup>
+                            : null
+                        }
+                        <FormGroup controlId='notes'>
+                            <Col componentClass={ControlLabel} sm={3}>
+                                Notes
+                            </Col>
+                            <Col sm={7}>
+                                <FormControl
+                                    type='text'
+                                    value={this.state.notes}
+                                    placeholder='Notes'
+                                    onChange={this.handleChange}
+                                />
+                            </Col>
+                        </FormGroup>
+                        <FormGroup>
+                            <Col smOffset={3} sm={7}>
+                                <ButtonToolbar>
+                                    <Button onClick={this.handleUpdate} bsStyle='success' disabled={this.state.archived?!isValid2:!isValid1}>Update
+                                        employee <FontAwesomeIcon icon='check'/></Button>
+                                    {!this.state.archived ?
+                                        <ManageModal
+                                            type='Retire'
+                                            title='Retire employee'
+                                            date={this.state.date}
+                                            handleSubmit={this.handleRetire}
+                                            handleDate={this.handleDate}
+                                        />
+                                        : <Button bsStyle='primary' onClick={this.handleUnretire}>Unarchive</Button>}
+                                </ButtonToolbar>
+                            </Col>
+                        </FormGroup>
+                    </Form>
+                </form>
             </React.Fragment>
         );
     }
