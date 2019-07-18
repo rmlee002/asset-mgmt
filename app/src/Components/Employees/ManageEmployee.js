@@ -327,7 +327,7 @@ export default class ManageEmployee extends Component{
                         <FormGroup>
                             <Col smOffset={3} sm={7}>
                                 <ButtonToolbar>
-                                    <Button onClick={this.handleUpdate} bsStyle='success' disabled={this.state.archived?!isValid2:!isValid1}>Update
+                                    <Button type={'submit'} bsStyle='success' disabled={this.state.archived?!isValid2:!isValid1}>Update
                                         employee <FontAwesomeIcon icon='check'/></Button>
                                     {!this.state.archived ?
                                         <ManageModal
