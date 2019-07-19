@@ -89,7 +89,7 @@ export default class ManageSoftware extends Component{
 
         return (
             <React.Fragment>
-                <Form horizontal onChange={this.handleChange}>
+                <Form horizontal>
                     <FormGroup controlId='name'>
                         <Col componentClass={ControlLabel} sm={3}>
                             License*
@@ -99,6 +99,7 @@ export default class ManageSoftware extends Component{
                                 type='text'
                                 value={this.state.name}
                                 placeholder='License Name'
+                                onChange={this.handleChange}
                             />
                         </Col>
                     </FormGroup>
@@ -112,6 +113,7 @@ export default class ManageSoftware extends Component{
                                 step={'any'}
                                 value={this.state.cost}
                                 placeholder='Monthly cost'
+                                onChange={this.handleChange}
                             />
                         </Col>
                     </FormGroup>
