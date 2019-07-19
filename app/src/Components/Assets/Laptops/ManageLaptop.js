@@ -209,7 +209,7 @@ export default class ManageLaptop extends Component{
                         <Col sm={6}>
                             <FormControl
                                 type='number'
-                                step={'any'}
+                                step={'0.01'}
                                 value={this.state.cost}
                                 placeholder='Cost'
                                 onChange={this.handleChange}
