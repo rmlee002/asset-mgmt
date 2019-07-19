@@ -110,7 +110,7 @@ export default class ManageSoftware extends Component{
                         <Col sm={6}>
                             <FormControl
                                 type='number'
-                                step={'any'}
+                                step={'0.01'}
                                 value={this.state.cost}
                                 placeholder='Monthly cost'
                                 onChange={this.handleChange}
