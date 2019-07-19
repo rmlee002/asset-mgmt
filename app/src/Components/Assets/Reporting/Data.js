@@ -128,7 +128,6 @@ export default class Data extends Component{
 
                 <div style={{width: '90%', height: '700px', 'textAlign': 'center'}}>
                     <h2>{`Cost distribution for ${this.state.year.value}`}</h2>
-                    {barData.some(item => item.total !== 0)?
                         <VictoryChart
                             domainPadding={10}
                             theme={VictoryTheme.material}
@@ -151,18 +150,13 @@ export default class Data extends Component{
                                 style={{ labels: { fontSize: 8 } }}
                             />
                         </VictoryChart>
-                        :
-                        <p>No bar graph data available</p>
-                    }
-                    {pieData.length !== 0?
                         <VictoryPie
                             data={pieData}
                             colorScale={["LimeGreen","DarkGreen","LightSeaGreen","Yellow"]}
                             labels={val=>`${val.x}: \n$${val.y.toFixed(2)}`}
+                            width={400}
+                            height={300}
                         />
-                        :
-                        <p>No pie chart data available</p>
-                    }
                 </div>
             </div>
         )
