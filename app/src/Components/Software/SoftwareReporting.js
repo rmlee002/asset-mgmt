@@ -570,7 +570,7 @@ export default class SoftwareReporting extends Component {
                                     </Form>
                                     <br/>
                                     <br/>
-                                    <div className="graphics" style={{'textAlign': 'center'}}>
+                                    <div className="graphics" style={{width: '90%', height: '700px', 'textAlign': 'center'}}>
                                         <h2>{`Cost distribution for ${this.state.year.value}`}</h2>
                                         {barData.some(item => item.total !== 0) ?
                                             <VictoryChart
