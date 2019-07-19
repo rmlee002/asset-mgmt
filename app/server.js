@@ -23,6 +23,11 @@ app.use(cors());
 
 app.set('view engine', 'ejs');
 
+app.use((req, res, next) => {
+    res.header("Vary", "X-Requested-With");
+    next();
+});
+
 app.use('/authenticate', authenticateRouter);
 app.use('/employee', employeeRouter);
 app.use('/laptops', laptopRouter);
