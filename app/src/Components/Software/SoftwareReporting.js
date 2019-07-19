@@ -34,7 +34,7 @@ export default class SoftwareReporting extends Component {
     }
 
     componentDidMount(){
-        Axios.get('/software/reporting')
+        Axios.get('/softwares/reporting')
         .then(res => {
             this.setState({
                 data: res.data

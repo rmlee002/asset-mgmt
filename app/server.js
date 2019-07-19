@@ -31,7 +31,7 @@ app.use((req, res, next) => {
 app.use('/authenticate', authenticateRouter);
 app.use('/employee', employeeRouter);
 app.use('/laptops', laptopRouter);
-app.use('/software', softwareRouter);
+app.use('/softwares', softwareRouter);
 app.use('/licenses', licensesRouter);
 app.use('/departments', departmentRouter);
 app.use('/laptopHistory', historyRouter);

@@ -18,7 +18,7 @@ export default class AddSoftware extends Component{
 
     handleSubmit(e){
         e.preventDefault();
-        Axios.post('/software/add', {
+        Axios.post('/softwares/add', {
             name: this.state.name,
             cost: this.state.cost
         })

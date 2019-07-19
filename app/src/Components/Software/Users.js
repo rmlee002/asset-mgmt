@@ -58,7 +58,7 @@ export default class Users extends Component{
             console.log(err)
         });
 
-        Axios.post('/software/checkArchived', {
+        Axios.post('/softwares/checkArchived', {
             software_id: this.props.match.params.software_id
         })
         .then(res => {

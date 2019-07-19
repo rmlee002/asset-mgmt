@@ -39,7 +39,7 @@ export default class AddUser extends Component{
             alert(err.response.data)
         });
 
-        Axios.post('/software/checkArchived', {
+        Axios.post('/softwares/checkArchived', {
             software_id: this.props.match.params.software_id
         })
         .then(res => {
