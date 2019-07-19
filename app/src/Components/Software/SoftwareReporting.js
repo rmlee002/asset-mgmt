@@ -598,15 +598,13 @@ export default class SoftwareReporting extends Component {
                                             :
                                             <p>No bar data available</p>
                                         }
-                                        {pieData.length !== 0 ?
-                                            <VictoryPie
-                                                data={pieData}
-                                                colorScale={["LimeGreen","DarkGreen","LightSeaGreen","Yellow"]}
-                                                labels={val=>`${val.x}: \n$${val.y.toFixed(2)}`}
-                                            />
-                                            :
-                                            <p>No pie data available</p>
-                                        }
+                                        <VictoryPie
+                                            data={pieData}
+                                            colorScale={["LimeGreen","DarkGreen","LightSeaGreen","Yellow"]}
+                                            labels={val=>`${val.x}: \n$${val.y.toFixed(2)}`}
+                                            width={400}
+                                            height={300}
+                                        />
                                     </div>
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="highest">
