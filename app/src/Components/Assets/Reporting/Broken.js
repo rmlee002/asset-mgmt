@@ -32,7 +32,7 @@ export default class BrokenDevices extends Component{
     }
 
     render(){
-        var providers = [];
+        let providers = [];
         const data = this.getData();
         const columns = [
             {
@@ -72,9 +72,19 @@ export default class BrokenDevices extends Component{
             {
                 Header: "Warranty End",
                 id: "warranty_end",
-                accessor: val => val.warranty?
-                    moment(val.inDate).utc().add(parseInt(val.warranty.replace(/\D+/, '')), 'years').format('YYYY-MM-DD')
-                    : "No warranty",
+                accessor: val => {
+                    if (val.warranty){
+                        if (val.warranty.replace(/[\d\s]+/, '').trim() === 'yr.'){
+                            return moment(val.inDate).utc().add(val.warranty.replace(/\D+/, ''), 'years').format('YYYY-MM-DD')
+                        }
+                        else{
+                            return moment(val.inDate).utc().add(val.warranty.replace(/\D+/, ''), 'months').format('YYYY-MM-DD');
+                        }
+                    }
+                    else {
+                        return "No warranty"
+                    }
+                },
                 Cell: row => (
                     <div style={getColor(row)}>
                         {row.value}
@@ -121,7 +131,13 @@ export default class BrokenDevices extends Component{
 }
 
 function getColor(item){
-    if (item.original.warranty == null || moment().isSameOrAfter(moment(item.original.inDate).add(parseInt(item.original.warranty.replace(/\D+/, '')), 'years').subtract(3, 'months'))){
+    let unit;
+    if (item.original.warranty != null){
+        const unitParse = item.original.warranty.replace(/[\d\s]+/, '').trim();
+        unit = unitParse === 'yr.' ? 'years' : 'months';
+    }
+    if (item.original.warranty == null || moment().utc().isSameOrAfter(moment(item.original.inDate)
+        .add(parseInt(item.original.warranty.replace(/\D+/, '')), unit).subtract(3, 'months'))){
         return {'background': '#f2dede'}
     }
     return null

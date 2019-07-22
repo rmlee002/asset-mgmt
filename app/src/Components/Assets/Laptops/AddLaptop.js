@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, FormControl, ControlLabel, Col, ButtonToolbar } from 'react-bootstrap';
+import { Button, Form, FormGroup, FormControl, ControlLabel, Col, ButtonToolbar, Radio } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import axios from 'axios';
@@ -14,12 +14,14 @@ export default class AddLaptop extends Component{
         this.handleAdd = this.handleAdd.bind(this);
         this.handleRemove = this.handleRemove.bind(this);
         this.getValidationState = this.getValidationState.bind(this);
+        this.handleWarranty = this.handleWarranty.bind(this);
 
         this.state = {
             warranty_provider: null,
             vendor: null,
             order_num: null,
             warranty: null,
+            warrantyUnit: 'yr.',
             inDate: new Date(),
             assets: [{
                 model: null,
@@ -60,13 +62,20 @@ export default class AddLaptop extends Component{
         });
     }
 
+    handleWarranty(e){
+        const val = e.target.value === '0'? null : e.target.value;
+        this.setState({
+            warranty: val
+        })
+    }
+
     handleSubmit(e){
         e.preventDefault();
         axios.post('/laptops/add', {
             order_num: this.state.order_num,
             vendor: this.state.vendor,
             inDate: this.state.inDate?moment(this.state.inDate).format('YYYY-MM-DD'):null,
-            warranty: this.state.warranty,            
+            warranty: this.state.warranty ? this.state.warranty + ' ' + this.state.warrantyUnit : null,
             warranty_provider: this.state.warranty_provider,
             assets: JSON.stringify(this.state.assets)
         })
@@ -88,154 +97,185 @@ export default class AddLaptop extends Component{
     render(){
         return(
             <React.Fragment>
-                <Form horizontal>
-                    <FormGroup controlId='order_num'>
-                        <Col componentClass={ControlLabel} sm={3}>
-                            Order Number*
-                        </Col>
-                        <Col sm={6}>
-                            <FormControl
-                                type='text'
-                                value={this.state.order_num}
-                                placeholder='Order Number'
-                                onChange={this.handleOrderChange.bind(this)}
-                            />
-                        </Col>
-                    </FormGroup>
-                    <FormGroup controlId='vendor'>
-                        <Col componentClass={ControlLabel} sm={3}>
-                            Vendor
-                        </Col>
-                        <Col sm={6}>
-                            <FormControl
-                                type='text'
-                                value={this.state.vendor}
-                                placeholder='Vendor'
-                                onChange={this.handleOrderChange.bind(this)}
-                            />
-                        </Col>
-                    </FormGroup>
-                    <FormGroup controlId='inDate'>
-                        <Col componentClass={ControlLabel} sm={3}>
-                            In Date*
-                        </Col>
-                        <Col sm={6}>
-                            <DatePicker
-                                className='form-control'
-                                selected={this.state.inDate}
-                                onChange={this.handleIn}
-                            />
-                        </Col>
-                    </FormGroup>
-                    <FormGroup controlId='warranty_provider'>
-                        <Col componentClass={ControlLabel} sm={3}>
-                            Warranty Provider
-                        </Col>
-                        <Col sm={6}>
-                            <FormControl
-                                type='text'
-                                value={this.state.warranty_provider}
-                                placeholder='Warranty Provider'
-                                onChange={this.handleOrderChange.bind(this)}
-                            />
-                        </Col>
-                    </FormGroup>
-                    <FormGroup controlId='warranty'>
-                        <Col componentClass={ControlLabel} sm={3}>
-                            Warranty
-                        </Col>
-                        <Col sm={6}>
-                            <FormControl
-                                type='text'
-                                value={this.state.warranty}
-                                placeholder='Warranty'
-                                onChange={this.handleOrderChange.bind(this)}
-                            />
-                        </Col>
-                    </FormGroup>
-                    {this.state.assets.map((item, index) =>
-                        <div key={index}>
-                            <br />
-                            <FormGroup>
-                                <Col componentClass={ControlLabel} sm={3}>
-                                    Item #{index+1}
-                                </Col>
-                                <Col sm={6}>
-                                    <Button bsStyle='danger' onClick={() => this.handleRemove(index)}>
-                                        <FontAwesomeIcon icon='trash'/> Remove
-                                    </Button>
-                                </Col>
-                            </FormGroup>
-                            <FormGroup controlId='serial_number'>
-                                <Col componentClass={ControlLabel} sm={3}>
-                                    Serial Number*
-                                </Col>
-                                <Col sm={6}>
-                                    <FormControl
-                                        type='text'
-                                        value={this.state.serial_number}
-                                        placeholder='Serial Number'
-                                        onChange={this.handleAssetChange(index)}
-                                    />
-                                </Col>
-                            </FormGroup>
-                            <FormGroup controlId='model'>
-                                <Col componentClass={ControlLabel} sm={3}>
-                                    Model*
-                                </Col>
-                                <Col sm={6}>
-                                    <FormControl
-                                        type='text'
-                                        value={this.state.model}
-                                        placeholder='Model'
-                                        onChange={this.handleAssetChange(index)}
-                                    />
-                                </Col>
-                            </FormGroup>
-                            <FormGroup controlId='cost'>
-                                <Col componentClass={ControlLabel} sm={3}>
-                                    Cost*
-                                </Col>
-                                <Col sm={6}>
-                                    <FormControl
-                                        type='number'
-                                        step={'0.01'}
-                                        value={this.state.cost}
-                                        placeholder='Cost'
-                                        onChange={this.handleAssetChange(index)}
-                                    />
-                                </Col>
-                            </FormGroup>
-                            <FormGroup controlId='comment'>
-                                <Col componentClass={ControlLabel} sm={3}>
-                                    Comment
-                                </Col>
-                                <Col sm={6}>
-                                    <FormControl
-                                        type='text'
-                                        value={this.state.comment}
-                                        placeholder='Comment'
-                                        onChange={this.handleAssetChange(index)}
-                                    />
-                                </Col>
-                            </FormGroup>
-                        </div>
-                    )}
-                    <FormGroup>
-                        <Col smOffset={3} sm={2}>
-                            <ButtonToolbar>
-                                <Button onClick={this.handleAdd}><FontAwesomeIcon icon='laptop-medical'/> Add more</Button>
-                                <Button
-                                    onClick={this.handleSubmit}
-                                    bsStyle='success'
-                                    disabled={this.getValidationState()}
+                <form onSubmit={this.handleSubmit}>
+                    <Form horizontal>
+                        <FormGroup controlId='order_num'>
+                            <Col componentClass={ControlLabel} sm={3}>
+                                Order Number*
+                            </Col>
+                            <Col sm={6}>
+                                <FormControl
+                                    type='text'
+                                    value={this.state.order_num}
+                                    placeholder='Order Number'
+                                    onChange={this.handleOrderChange.bind(this)}
+                                />
+                            </Col>
+                        </FormGroup>
+                        <FormGroup controlId='vendor'>
+                            <Col componentClass={ControlLabel} sm={3}>
+                                Vendor
+                            </Col>
+                            <Col sm={6}>
+                                <FormControl
+                                    type='text'
+                                    value={this.state.vendor}
+                                    placeholder='Vendor'
+                                    onChange={this.handleOrderChange.bind(this)}
+                                />
+                            </Col>
+                        </FormGroup>
+                        <FormGroup controlId='inDate'>
+                            <Col componentClass={ControlLabel} sm={3}>
+                                In Date*
+                            </Col>
+                            <Col sm={6}>
+                                <DatePicker
+                                    className='form-control'
+                                    selected={this.state.inDate}
+                                    onChange={this.handleIn}
+                                />
+                            </Col>
+                        </FormGroup>
+                        <FormGroup controlId='warranty_provider'>
+                            <Col componentClass={ControlLabel} sm={3}>
+                                Warranty Provider
+                            </Col>
+                            <Col sm={6}>
+                                <FormControl
+                                    type='text'
+                                    value={this.state.warranty_provider}
+                                    placeholder='Warranty Provider'
+                                    onChange={this.handleOrderChange.bind(this)}
+                                />
+                            </Col>
+                        </FormGroup>
+                        <FormGroup controlId='warranty'>
+                            <Col componentClass={ControlLabel} sm={3}>
+                                Warranty
+                            </Col>
+                            {/*<Col sm={6}>
+                                <FormControl
+                                    type='text'
+                                    value={this.state.warranty}
+                                    placeholder='Warranty'
+                                    onChange={this.handleOrderChange.bind(this)}
+                                />
+                            </Col>*/}
+                            <Col sm={2}>
+                                <FormControl
+                                    type={'number'}
+                                    step={'1'}
+                                    min={0}
+                                    value={this.state.warranty}
+                                    onChange={this.handleWarranty}
+                                    placeholder={'Warranty'}
+                                />
+                            </Col>
+                            <Col sm={2}>
+                                <Radio
+                                    name={'unit'}
+                                    checked={this.state.warrantyUnit==='yr.'}
+                                    onChange={() => this.setState({warrantyUnit: 'yr.'})}
+                                    inline
                                 >
-                                    <FontAwesomeIcon icon='check'/> Submit
-                                </Button>
-                            </ButtonToolbar>
-                        </Col>
-                    </FormGroup>
-                </Form>
+                                    Years
+                                </Radio>{' '}
+                                <Radio
+                                    name={'unit'}
+                                    checked={this.state.warrantyUnit==='mo.'}
+                                    onChange={() => this.setState({warrantyUnit: 'mo.'})}
+                                    inline
+                                >
+                                    Months
+                                </Radio>
+                            </Col>
+                        </FormGroup>
+                        {this.state.assets.map((item, index) =>
+                            <div key={index}>
+                                <br />
+                                <FormGroup>
+                                    <Col componentClass={ControlLabel} sm={3}>
+                                        Item #{index+1}
+                                    </Col>
+                                    <Col sm={6}>
+                                        <Button bsStyle='danger' onClick={() => this.handleRemove(index)}>
+                                            <FontAwesomeIcon icon='trash'/> Remove
+                                        </Button>
+                                    </Col>
+                                </FormGroup>
+                                <FormGroup controlId='serial_number'>
+                                    <Col componentClass={ControlLabel} sm={3}>
+                                        Serial Number*
+                                    </Col>
+                                    <Col sm={6}>
+                                        <FormControl
+                                            type='text'
+                                            value={this.state.serial_number}
+                                            placeholder='Serial Number'
+                                            onChange={this.handleAssetChange(index)}
+                                        />
+                                    </Col>
+                                </FormGroup>
+                                <FormGroup controlId='model'>
+                                    <Col componentClass={ControlLabel} sm={3}>
+                                        Model*
+                                    </Col>
+                                    <Col sm={6}>
+                                        <FormControl
+                                            type='text'
+                                            value={this.state.model}
+                                            placeholder='Model'
+                                            onChange={this.handleAssetChange(index)}
+                                        />
+                                    </Col>
+                                </FormGroup>
+                                <FormGroup controlId='cost'>
+                                    <Col componentClass={ControlLabel} sm={3}>
+                                        Cost*
+                                    </Col>
+                                    <Col sm={6}>
+                                        <FormControl
+                                            type='number'
+                                            step={'0.01'}
+                                            value={this.state.cost}
+                                            placeholder='Cost'
+                                            onChange={this.handleAssetChange(index)}
+                                        />
+                                    </Col>
+                                </FormGroup>
+                                <FormGroup controlId='comment'>
+                                    <Col componentClass={ControlLabel} sm={3}>
+                                        Comment
+                                    </Col>
+                                    <Col sm={6}>
+                                        <FormControl
+                                            type='text'
+                                            value={this.state.comment}
+                                            placeholder='Comment'
+                                            onChange={this.handleAssetChange(index)}
+                                        />
+                                    </Col>
+                                </FormGroup>
+                            </div>
+                        )}
+                        <FormGroup>
+                            <Col smOffset={3} sm={2}>
+                                <ButtonToolbar>
+                                    <Button onClick={this.handleAdd}><FontAwesomeIcon icon='laptop-medical'/> Add more</Button>
+                                    <Button
+                                        /*onClick={this.handleSubmit}*/
+                                        type={'submit'}
+                                        bsStyle='success'
+                                        disabled={this.getValidationState()}
+                                    >
+                                        <FontAwesomeIcon icon='check'/> Submit
+                                    </Button>
+                                </ButtonToolbar>
+                            </Col>
+                        </FormGroup>
+                    </Form>
+                </form>
             </React.Fragment>
         );
     }

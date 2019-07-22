@@ -5,8 +5,16 @@ import moment from 'moment';
 export default class OOWDevices extends Component{
 
     render(){
-        const data = this.props.data.filter(item =>
-            item.warranty?moment(item.inDate).utc().isBefore(moment().utc().subtract(parseInt(item.warranty.replace(/\D+/, '')), 'years')):true);
+        const data = this.props.data.filter(item => {
+            if (item.warranty){
+                const length = item.warranty.replace(/\D+/, '');
+                const unit = item.warranty.replace(/[\d\s]+/, '').trim() === 'yr.' ? 'years' : 'months';
+                return moment().utc().isSameOrAfter(moment(item.inDate).utc().add(length, unit))
+            }
+            else{
+                return true;
+            }
+        });
 
         const columns = [
             {
